@@ -5,7 +5,7 @@
 
             <svg class="arr"><use xlink:href="@/assets/sprite.svg#ic_arr_down"></use></svg>
 
-            <router-link to="/" class="prices_link">
+            <router-link to="/prices" class="prices_link">
                 <span>{{ $t('message.btn_prices') }}</span>
                 <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_prices"></use></svg>
             </router-link>

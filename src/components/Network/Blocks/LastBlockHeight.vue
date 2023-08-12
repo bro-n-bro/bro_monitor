@@ -1,7 +1,7 @@
 <template>
-    <div class="block">
+    <div class="block" :class="{ pinned: pinned }">
         <div class="btns">
-            <button class="btn">
+            <button class="pin_btn btn" @click.prevent="pinned = !pinned">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
         </div>
@@ -21,7 +21,8 @@
     import { onBeforeMount, ref } from 'vue'
 
 
-    const data = ref(0)
+    const pinned= ref(false),
+        data = ref(0)
 
 
     onBeforeMount(async () => {

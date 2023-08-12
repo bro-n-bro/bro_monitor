@@ -41,6 +41,17 @@ app.config.globalProperties.$filters = {
             : newValue = value
 
         return Number(newValue)
+    },
+
+    // Scientific to regular
+    scientificToRegular(scientificNotation, limit) {
+        let parts = String(scientificNotation).split('e'),
+            coefficient = parseFloat(parts[0]),
+            exponent = parseInt(parts[1])
+
+        let result = coefficient * Math.pow(10, exponent)
+
+        return result.toFixed(limit)
     }
 }
 

@@ -8,5 +8,9 @@ module.exports = defineConfig({
 		plugins: [
 			new NodePolyfillPlugin(),
 		],
+	},
+
+	devServer: {
+		allowedHosts: ['stats.bronbro.io']
 	}
 })

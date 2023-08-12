@@ -1,7 +1,7 @@
 <template>
-    <div class="block">
+    <div class="block" :class="{ pinned: pinned }">
         <div class="btns">
-            <button class="btn">
+            <button class="pin_btn btn" @click.prevent="pinned = !pinned">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
 
@@ -30,6 +30,7 @@
 
 
     const store = useGlobalStore(),
+        pinned= ref(false),
         data = ref({
             today: 0
         })

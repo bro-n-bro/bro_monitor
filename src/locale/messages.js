@@ -20,7 +20,13 @@ export default {
             'network_tab_IBC_Relaying': 'IBC & Relaying',
             'network_tab_validators': 'Validators',
 
+            'network_type_blocks': 'Blocks',
+            'network_type_charts': 'Charts',
+            'network_type_parameters': 'Parameters',
+
             'network_network_page_title': 'Network page',
+            'network_charts_page_title': 'Network page',
+            'network_parameters_page_title': 'Blockchain Parameters',
 
             'network_blocks_price_title': 'Price',
             'network_blocks_market_cap_title': 'Market Cap',
@@ -28,6 +34,19 @@ export default {
             'network_blocks_active_proposals_title': 'Active Proposals',
             'network_blocks_unbonded_tokens_title': 'Total amount of unbonded {token}',
             'network_blocks_block_height_title': 'Last Block Height',
+
+
+            // Prices
+            'prices_BOOT_title': 'BOOT',
+            'prices_ATOM_title': 'ATOM',
+            'prices_JUNO_title': 'JUNO',
+            'prices_OSMO_title': 'OSMO',
+            'prices_GRAVITON_title': 'GRAVITON',
+            'prices_STARS_title': 'STARS',
+            'prices_CRE_title': 'CRE',
+            'prices_DSM_title': 'DSM',
+            'prices_EVMOS_title': 'EVMOS',
+            'prices_FLIX_title': 'FLIX',
 
 
             // Footer

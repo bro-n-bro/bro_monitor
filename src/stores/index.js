@@ -10,26 +10,27 @@ const networks = {
 
 export const useGlobalStore = defineStore('global', {
     state: () => ({
-        isAppFullLoaded: false,
-        isKeplrConnected: false,
-        isAuth: false,
+        prices: {},
 
         tooltip: 'Bro_n_Bro foundation has come to light at early 2021 as a Validator for Cosmos Ecosystem. Some time after we started relaying and expanding other services to networks and projects.',
         tooltipAnimate: false,
 
         currentNetwork: null,
 
-        account: {
-            userName: null,
-            moonPassport: null,
-            moonPassportOwner: null,
-        },
-
         networks
     }),
 
 
     actions: {
-
+        // Currencies price
+        async getCurrenciesPrice() {
+            try {
+                await fetch('https://rpc.bronbro.io/price_feed_api/tokens/')
+                    .then(response => response.json())
+                    .then(data => this.prices = data)
+            } catch (error) {
+                console.error(error)
+            }
+        },
     }
 })

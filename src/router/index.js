@@ -29,6 +29,14 @@ const routes = [
 			layout: defaultLayout
 		}
 	},
+    {
+		path: '/prices',
+		name: 'Prices',
+		component: () => import('../views/Prices.vue'),
+		meta: {
+			layout: defaultLayout
+		}
+	},
 ]
 
 
