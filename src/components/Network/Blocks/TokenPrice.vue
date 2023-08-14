@@ -1,13 +1,13 @@
 <template>
-    <div class="block" :class="{ pinned: pinned }">
+    <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.blocks.tokenPrice'] }">
         <div class="btns">
-            <button class="pin_btn btn" @click.prevent="pinned = !pinned">
+            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.blocks.tokenPrice')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
 
-            <button class="btn">
+            <router-link to="/" class="btn">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-            </button>
+            </router-link>
         </div>
 
         <div class="title">
@@ -25,12 +25,12 @@
 
 
 <script setup>
-    import { onBeforeMount, ref } from 'vue'
+    import { onBeforeMount, ref, inject } from 'vue'
     import { useGlobalStore } from '@/stores'
 
 
     const store = useGlobalStore(),
-        pinned= ref(false),
+        emitter = inject('emitter'),
         data = ref({
             today: 0
         })

@@ -1,165 +1,50 @@
 <template>
     <div class="blocks charts">
         <div class="row">
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
+            <!-- Token price -->
+            <TokenPrice />
 
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-                    </button>
-                </div>
+            <!-- Market cap -->
+            <MarketCap />
 
-                <div class="title">ATOM Price</div>
+            <!-- APR -->
+            <APR />
 
-                <div class="chart"></div>
-            </div>
+            <!-- APY -->
+            <APY />
 
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
+            <!-- Bonded tokens -->
+            <BondedToken />
 
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-                    </button>
-                </div>
+            <!-- Bonded ratio -->
+            <BondedRatio />
 
-                <div class="title">ATOM Market Cap</div>
+            <!-- Bonded token / APR -->
+            <BondedTokenAPR />
 
-                <div class="chart"></div>
-            </div>
+            <!-- Inflation -->
+            <Inflation />
 
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
+            <!-- Current Block Time -->
+            <CurrentBlockTime />
 
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">APR</div>
-
-                <div class="chart"></div>
-            </div>
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">APY</div>
-
-                <div class="chart"></div>
-            </div>
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Total Amount of Bonded ATOM</div>
-
-                <div class="chart"></div>
-            </div>
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Total Bonded Ratio</div>
-
-                <div class="chart"></div>
-            </div>
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Bonded ATOM / APR</div>
-
-                <div class="chart"></div>
-            </div>
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Inflation</div>
-
-                <div class="chart"></div>
-            </div>
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Current Block Time</div>
-
-                <div class="chart"></div>
-            </div>
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Total Amount of Unbonded ATOM</div>
-
-                <div class="chart"></div>
-            </div>
+            <!-- Unbonded token -->
+            <UnbondedToken />
         </div>
     </div>
 </template>
+
+
+<script setup>
+    // Components
+    import TokenPrice from '@/components/network/charts/TokenPrice.vue'
+    import MarketCap from '@/components/network/charts/MarketCap.vue'
+    import APR from '@/components/network/charts/APR.vue'
+    import APY from '@/components/network/charts/APY.vue'
+    import BondedToken from '@/components/network/charts/BondedToken.vue'
+    import BondedRatio from '@/components/network/charts/BondedRatio.vue'
+    import BondedTokenAPR from '@/components/network/charts/BondedTokenAPR.vue'
+    import Inflation from '@/components/network/charts/Inflation.vue'
+    import CurrentBlockTime from '@/components/network/charts/CurrentBlockTime.vue'
+    import UnbondedToken from '@/components/network/charts/UnbondedToken.vue'
+</script>

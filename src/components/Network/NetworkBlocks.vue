@@ -1,170 +1,46 @@
 <template>
     <div class="blocks">
         <div class="row">
+            <!-- Token price -->
             <TokenPrice />
 
+            <!-- APR -->
+            <APR />
 
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
+            <!-- Inflation -->
+            <Inflation />
 
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">APR</div>
-
-                <div class="val">15.3%</div>
-
-                <div class="chart"></div>
-            </div>
-
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Inflation</div>
-
-                <div class="val">24.7%</div>
-
-                <div class="chart"></div>
-            </div>
-
-
+            <!-- Market cap -->
             <MarketCap />
 
+            <!-- APY -->
+            <APY />
 
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
+            <!-- Unbonded tokens -->
+            <UnbondedTokens />
 
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">APY</div>
-
-                <div class="val">150%</div>
-
-                <div class="chart"></div>
-            </div>
-
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Total amount of unbonded ATOM</div>
-
-                <div class="val">7 320 612</div>
-
-                <div class="chart"></div>
-            </div>
-
-
+            <!-- Pending proposals -->
             <PendingProposals />
 
+            <!-- Active proposals -->
             <ActiveProposals />
 
+            <!-- Bonded tokens -->
+            <BondedTokens />
 
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
+            <!-- Bonded ratio -->
+            <BondedRatio />
 
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-                    </button>
-                </div>
+            <!-- Total supply -->
+            <Supply />
 
-                <div class="title">Total amount of bonded ATOM</div>
+            <!-- Circulating Supply -->
+            <CirculatingSupply />
 
-                <div class="val">246 379 529</div>
+            <!-- Community Pool -->
+            <CommunityPool />
 
-                <div class="chart"></div>
-            </div>
-
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Total bonded ratio</div>
-
-                <div class="val">70.19%</div>
-
-                <div class="chart"></div>
-            </div>
-
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Total Supply</div>
-
-                <div class="val">351 021 947</div>
-            </div>
-
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Cosmos Circulating Supply</div>
-
-                <div class="val">351 022 192</div>
-            </div>
-
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Community Pool</div>
-
-                <div class="val">3 500 000</div>
-            </div>
-
-
+            <!-- Last block height -->
             <LastBlockHeight />
         </div>
     </div>
@@ -173,9 +49,18 @@
 
 <script setup>
     // Components
-    import TokenPrice from  '@/components/Network/Blocks/TokenPrice.vue'
-    import MarketCap from  '@/components/Network/Blocks/MarketCap.vue'
-    import PendingProposals from  '@/components/Network/Blocks/PendingProposals.vue'
-    import ActiveProposals from  '@/components/Network/Blocks/ActiveProposals.vue'
-    import LastBlockHeight from  '@/components/Network/Blocks/LastBlockHeight.vue'
+    import TokenPrice from '@/components/network/blocks/TokenPrice.vue'
+    import APR from '@/components/network/blocks/APR.vue'
+    import Inflation from '@/components/network/blocks/Inflation.vue'
+    import MarketCap from '@/components/network/blocks/MarketCap.vue'
+    import APY from '@/components/network/blocks/APY.vue'
+    import UnbondedTokens from '@/components/network/blocks/UnbondedTokens.vue'
+    import PendingProposals from '@/components/network/blocks/PendingProposals.vue'
+    import ActiveProposals from '@/components/network/blocks/ActiveProposals.vue'
+    import BondedTokens from '@/components/network/blocks/BondedTokens.vue'
+    import BondedRatio from '@/components/network/blocks/BondedRatio.vue'
+    import Supply from '@/components/network/blocks/Supply.vue'
+    import CirculatingSupply from '@/components/network/blocks/CirculatingSupply.vue'
+    import CommunityPool from '@/components/network/blocks/CommunityPool.vue'
+    import LastBlockHeight from '@/components/network/blocks/LastBlockHeight.vue'
 </script>

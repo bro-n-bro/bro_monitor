@@ -29,7 +29,7 @@
         </div>
 
         <div class="page_title" v-if="activeType == 3">
-            {{ $t('message.network_parameters_page_title') }}
+            {{ $t('message.network_parameters_blockchain_title') }}
         </div>
 
 
@@ -70,9 +70,9 @@
     import { ref } from 'vue'
 
     // Components
-    import NetworkBlocks from  '@/components/Network/NetworkBlocks.vue'
-    import NetworkCharts from  '@/components/Network/NetworkCharts.vue'
-    import NetworkParameters from  '@/components/Network/NetworkParameters.vue'
+    import NetworkBlocks from  '@/components/network/NetworkBlocks.vue'
+    import NetworkCharts from  '@/components/network/NetworkCharts.vue'
+    import NetworkParameters from  '@/components/network/NetworkParameters.vue'
 
 
     const activeTab = ref(1),

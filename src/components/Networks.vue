@@ -12,7 +12,7 @@
         </div>
 
         <div class="list">
-            <button class="network" :class="{'active': store.currentNetwork == 'cosmoshub'}">
+            <router-link to="/network/cosmoshub" class="network" :class="{'active': store.currentNetwork == 'cosmoshub'}">
                 <div class="logo">
                     <img src="/cosmoshub_logo.png" alt="">
                 </div>
@@ -23,7 +23,7 @@
                 </div>
 
                 <svg class="check" v-if="store.currentNetwork == 'cosmoshub'"><use xlink:href="@/assets/sprite.svg#ic_check"></use></svg>
-            </button>
+            </router-link>
         </div>
     </section>
 </template>
@@ -145,6 +145,8 @@
 
     .networks .network
     {
+        color: currentColor;
+
         position: relative;
 
         display: flex;
@@ -154,6 +156,7 @@
 
         transition: background .2s linear;
         text-align: left;
+        text-decoration: none;
 
         border-radius: 14px;
 

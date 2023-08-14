@@ -1,7 +1,7 @@
 <template>
-    <div class="block" :class="{ pinned: pinned }">
+    <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.blocks.LastblockHeight'] }">
         <div class="btns">
-            <button class="pin_btn btn" @click.prevent="pinned = !pinned">
+            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.blocks.LastblockHeight')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
         </div>
@@ -18,10 +18,12 @@
 
 
 <script setup>
-    import { onBeforeMount, ref } from 'vue'
+    import { onBeforeMount, ref, inject } from 'vue'
+    import { useGlobalStore } from '@/stores'
 
 
-    const pinned= ref(false),
+    const store = useGlobalStore(),
+        emitter = inject('emitter'),
         data = ref(0)
 
 

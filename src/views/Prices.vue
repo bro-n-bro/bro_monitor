@@ -1,6 +1,8 @@
 <template>
     <div class="head">
-        <div class="page_title">Network Prices</div>
+        <div class="page_title">
+            {{ $t('message.prices_page_title') }}
+        </div>
     </div>
 
     <div class="blocks prices">

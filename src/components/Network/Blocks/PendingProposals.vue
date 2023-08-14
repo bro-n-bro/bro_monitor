@@ -19,8 +19,7 @@
     import { onBeforeMount, ref } from 'vue'
 
 
-    const pinned= ref(false),
-        data = ref(0)
+    const data = ref(0)
 
 
     onBeforeMount(async () => {

@@ -1,194 +1,93 @@
 <template>
     <div class="blocks">
         <div class="row">
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-                </div>
+            <!-- Unbonding Time -->
+            <UnbondingTime />
 
-                <div class="title">Unbonding Time</div>
-
-                <div class="val">28 Days</div>
-            </div>
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Max Validators</div>
-
-                <div class="val">150</div>
-            </div>
+            <!-- Max Validators -->
+            <MaxValidators />
         </div>
     </div>
 
 
     <div class="blocks">
-        <div class="title">Governance Parameters</div>
+        <div class="title">
+            {{ $t('message.network_parameters_governance_title') }}
+        </div>
 
         <div class="row">
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-                </div>
+            <!-- Voting Period -->
+            <VotingPeriod />
 
-                <div class="title">Voting Period</div>
+            <!-- Min Deposit -->
+            <MinDeposit />
 
-                <div class="val">5 Days</div>
-            </div>
+            <!-- Max Deposit Period -->
+            <MaxDepositPeriod />
 
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-                </div>
+            <!-- Quorum -->
+            <Quorum />
 
-                <div class="title">Min Deposit</div>
+            <!-- Threshold -->
+            <Threshold />
 
-                <div class="val">9 000 000 000</div>
-            </div>
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Max Deposit Period</div>
-
-                <div class="val">10 Days</div>
-            </div>
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Quorum</div>
-
-                <div class="val">33.4%</div>
-            </div>
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Threshold</div>
-
-                <div class="val">50%</div>
-            </div>
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Veto Threshold</div>
-
-                <div class="val">33.4%</div>
-            </div>
+            <!-- Veto Threshold -->
+            <VetoThreshold />
         </div>
     </div>
 
 
     <div class="blocks">
-        <div class="title">Distribution Parameters</div>
+        <div class="title">
+            {{ $t('message.network_parameters_distribution_title') }}
+        </div>
 
         <div class="row">
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Community Tax</div>
-
-                <div class="val">10%</div>
-            </div>
+            <!-- Community Tax -->
+            <CommunityTax />
         </div>
     </div>
 
 
     <div class="blocks">
-        <div class="title">Slashing Parameters</div>
+        <div class="title">
+            {{ $t('message.network_parameters_slashing_title') }}
+        </div>
 
         <div class="row">
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-                </div>
+            <!-- Signed Blocks Window -->
+            <SignedBlocksWindow />
 
-                <div class="title">Signed Blocks Window</div>
+            <!-- Min Signed Per Window -->
+            <MinSignedPerWindow />
 
-                <div class="val">10 000</div>
-            </div>
+            <!-- Downtime Jail Duration -->
+            <DowntimeJailDuration />
 
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-                </div>
+            <!-- Slash Fraction Double Sign -->
+            <SlashFractionDoubleSign />
 
-                <div class="title">Min Signed Per Window</div>
-
-                <div class="val">5%</div>
-            </div>
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Downtime Jail Duration</div>
-
-                <div class="val">10 Mins</div>
-            </div>
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Slash Fraction Double Sign</div>
-
-                <div class="val">5%</div>
-            </div>
-
-            <div class="block">
-                <div class="btns">
-                    <button class="btn">
-                        <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                    </button>
-                </div>
-
-                <div class="title">Slash Fraction Downtime</div>
-
-                <div class="val">0.01%</div>
-            </div>
+            <!-- Slash Fraction Downtime -->
+            <SlashFractionDowntime />
         </div>
     </div>
 </template>
+
+
+<script setup>
+    // Components
+    import UnbondingTime from '@/components/network/parameters/UnbondingTime.vue'
+    import MaxValidators from '@/components/network/parameters/MaxValidators.vue'
+    import VotingPeriod from '@/components/network/parameters/VotingPeriod.vue'
+    import MinDeposit from '@/components/network/parameters/MinDeposit.vue'
+    import MaxDepositPeriod from '@/components/network/parameters/MaxDepositPeriod.vue'
+    import Quorum from '@/components/network/parameters/Quorum.vue'
+    import Threshold from '@/components/network/parameters/Threshold.vue'
+    import VetoThreshold from '@/components/network/parameters/VetoThreshold.vue'
+    import CommunityTax from '@/components/network/parameters/CommunityTax.vue'
+    import SignedBlocksWindow from '@/components/network/parameters/SignedBlocksWindow.vue'
+    import MinSignedPerWindow from '@/components/network/parameters/MinSignedPerWindow.vue'
+    import DowntimeJailDuration from '@/components/network/parameters/DowntimeJailDuration.vue'
+    import SlashFractionDoubleSign from '@/components/network/parameters/SlashFractionDoubleSign.vue'
+    import SlashFractionDowntime from '@/components/network/parameters/SlashFractionDowntime.vue'
+</script>

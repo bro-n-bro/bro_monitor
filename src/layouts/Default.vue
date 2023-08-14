@@ -291,6 +291,8 @@
 
     .blocks .block .btns .btn
     {
+        color: currentColor;
+
         display: flex;
 
         width: 34px;
@@ -298,6 +300,7 @@
         padding: 8px;
 
         transition: background .2s linear;
+        text-decoration: none;
 
         border-radius: 50%;
         background: #353535;
@@ -569,4 +572,5 @@
             padding-top: 4px;
         }
     }
+
 </style>
