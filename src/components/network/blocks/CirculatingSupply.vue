@@ -10,7 +10,10 @@
             {{ $t('message.network_blocks_circulating_supply_title') }}
         </div>
 
-        <div class="val">351 022 192</div>
+        <div class="val">
+            <Loader v-if="!data" />
+            <span v-else>{{ data.toLocaleString() }}</span>
+        </div>
 
         <div class="chart"></div>
     </div>
@@ -18,10 +21,14 @@
 
 
 <script setup>
-    import { inject } from 'vue'
+    import { inject, ref } from 'vue'
     import { useGlobalStore } from '@/stores'
+
+    // Components
+    import Loader from '@/components/Loader.vue'
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter')
+        emitter = inject('emitter'),
+        data = ref(351022192)
 </script>

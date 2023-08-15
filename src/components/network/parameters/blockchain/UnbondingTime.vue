@@ -10,7 +10,11 @@
             {{ $t('message.network_parameters_unbonding_time_title') }}
         </div>
 
-        <div class="val">28 Days</div>
+        <div class="val">
+            <Loader v-if="!props.unbonding_time" />
+            <span v-else>{{ props.unbonding_time / 60 / 60 /24 }}</span>
+            {{ $t('message.network_parameters_days_unit') }}
+        </div>
     </div>
 </template>
 
@@ -19,7 +23,11 @@
     import { inject } from 'vue'
     import { useGlobalStore } from '@/stores'
 
+    // Components
+    import Loader from '@/components/Loader.vue'
+
 
     const store = useGlobalStore(),
-        emitter = inject('emitter')
+        emitter = inject('emitter'),
+        props = defineProps(['unbonding_time'])
 </script>

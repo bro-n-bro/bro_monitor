@@ -10,7 +10,11 @@
             {{ $t('message.network_parameters_community_tax_title') }}
         </div>
 
-        <div class="val">10%</div>
+        <div class="val">
+            <Loader v-if="!props.community_tax" />
+            <span v-else>{{ props.community_tax * 100 }}</span>
+            %
+        </div>
     </div>
 </template>
 
@@ -19,7 +23,11 @@
     import { inject } from 'vue'
     import { useGlobalStore } from '@/stores'
 
+    // Components
+    import Loader from '@/components/Loader.vue'
+
 
     const store = useGlobalStore(),
-        emitter = inject('emitter')
+        emitter = inject('emitter'),
+        props = defineProps(['community_tax'])
 </script>

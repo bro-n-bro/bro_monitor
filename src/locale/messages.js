@@ -23,9 +23,13 @@ export default {
             'network_type_blocks': 'Blocks',
             'network_type_charts': 'Charts',
             'network_type_parameters': 'Parameters',
+            'network_type_IBC': 'IBC',
+            'network_type_relaying': 'Relaying',
 
             'network_network_page_title': 'Network page',
             'network_charts_page_title': 'Network page',
+            'network_IBC_page_title': 'IBC',
+            'network_relaying_page_title': 'Relaying',
 
             'network_parameters_blockchain_title': 'Blockchain Parameters',
             'network_parameters_governance_title': 'Governance Parameters',
@@ -73,6 +77,27 @@ export default {
             'network_parameters_downtime_jail_duration_title': 'Downtime Jail Duration',
             'network_parameters_slash_fraction_double_sign_title': 'Slash Fraction Double Sign',
             'network_parameters_slash_downtime_title': 'Slash Fraction Downtime',
+
+            'network_parameters_days_unit': 'Days',
+
+            'network_IBC_table_label_chain': 'Chain',
+            'network_IBC_table_label_total_txs': 'Total Txs',
+            'network_IBC_table_label_receive_txs': 'Receive Txs',
+            'network_IBC_table_label_send_txs': 'Send Txs',
+            'network_IBC_table_label_IBC_volume': 'IBC Volume',
+            'network_IBC_table_label_IBC_volume_in': 'IBC Volume In',
+            'network_IBC_table_label_IBC_volume_out': 'IBC Volume Out',
+            'network_IBC_table_label_channel': 'Authed Channel',
+
+            'network_relaying_table_label_moniker': 'Moniker',
+            'network_relaying_table_label_address': 'Relayer Address',
+            'network_relaying_table_label_balance': 'Balance',
+            'network_relaying_table_label_txs1D': 'Txs 1D',
+            'network_relaying_table_label_spent1D': 'Spent 1D',
+            'network_relaying_table_label_txs7D': 'Txs 7D',
+            'network_relaying_table_label_spent7D': 'Spent 7D',
+            'network_relaying_table_label_txs30D': 'Txs 30D',
+            'network_relaying_table_label_spent30D': 'Spent 30D',
 
 
             // Prices page

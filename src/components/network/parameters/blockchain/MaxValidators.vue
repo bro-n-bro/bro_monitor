@@ -10,7 +10,10 @@
             {{ $t('message.network_parameters_max_validators_title') }}
         </div>
 
-        <div class="val">150</div>
+        <div class="val">
+            <Loader v-if="!props.max_validators" />
+            <span v-else>{{ props.max_validators }}</span>
+        </div>
     </div>
 </template>
 
@@ -19,7 +22,11 @@
     import { inject } from 'vue'
     import { useGlobalStore } from '@/stores'
 
+    // Components
+    import Loader from '@/components/Loader.vue'
+
 
     const store = useGlobalStore(),
-        emitter = inject('emitter')
+        emitter = inject('emitter'),
+        props = defineProps(['max_validators'])
 </script>

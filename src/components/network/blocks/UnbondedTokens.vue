@@ -14,7 +14,10 @@
             {{ $t('message.network_blocks_unbonded_tokens_title', { token: store.networks[store.currentNetwork].token_name }) }}
         </div>
 
-        <div class="val">7 320 612</div>
+        <div class="val">
+            <Loader v-if="!data" />
+            <span v-else>{{ data.toLocaleString() }}</span>
+        </div>
 
         <div class="chart"></div>
     </div>
@@ -22,10 +25,14 @@
 
 
 <script setup>
-    import { inject } from 'vue'
+    import { inject, ref } from 'vue'
     import { useGlobalStore } from '@/stores'
+
+    // Components
+    import Loader from '@/components/Loader.vue'
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter')
+        emitter = inject('emitter'),
+        data = ref(7320612)
 </script>

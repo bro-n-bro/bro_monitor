@@ -239,7 +239,7 @@
     }
 
 
-    .blocks .block
+    .block
     {
         position: relative;
 
@@ -252,7 +252,7 @@
     }
 
 
-    .blocks .block .link
+    .block .link
     {
         color: #fff;
 
@@ -264,7 +264,7 @@
         text-decoration: none;
     }
 
-    .blocks .block .link svg
+    .block .link svg
     {
         display: block;
 
@@ -273,7 +273,7 @@
     }
 
 
-    .blocks .block .btns
+    .block .btns
     {
         position: absolute;
         z-index: 5;
@@ -289,7 +289,7 @@
     }
 
 
-    .blocks .block .btns .btn
+    .block .btns .btn
     {
         color: currentColor;
 
@@ -311,13 +311,13 @@
         flex-wrap: wrap;
     }
 
-    .blocks .block .btns .btn + .btn
+    .block .btns .btn + .btn
     {
         margin-left: 4px;
     }
 
 
-    .blocks .block .btns .btn svg
+    .block .btns .btn svg
     {
         display: block;
 
@@ -326,14 +326,14 @@
     }
 
 
-    .blocks .block .btns .btn:hover,
-    .blocks .block.pinned .btns .pin_btn
+    .block .btns .btn:hover,
+    .block.pinned .btns .pin_btn
     {
         background: #950fff;
     }
 
 
-    .blocks .block .title
+    .block .title
     {
         font-size: 16px;
         line-height: 120%;
@@ -346,8 +346,13 @@
         padding-top: 3px;
     }
 
+    .block .title.big
+    {
+        font-size: 18px;
+    }
 
-    .blocks .block .val
+
+    .block .val
     {
         font-size: 28px;
         font-weight: 600;
@@ -355,6 +360,102 @@
 
         position: relative;
         z-index: 3;
+    }
+
+
+    .block .val .loader_wrap
+    {
+        position: relative;
+
+        display: inline-block;
+
+        width: 24px;
+        height: 24px;
+        margin-left: 4px;
+
+        vertical-align: middle;
+
+        background: none;
+    }
+
+    .block .val .loader
+    {
+        width: 24px;
+        height: 24px;
+    }
+
+
+    .block .table_wrap
+    {
+        width: calc(100% + 16px);
+        margin: 0 -8px -12px;
+    }
+
+
+    .block table
+    {
+        width: 100%;
+
+        border-spacing: 0;
+        border-collapse: collapse;
+    }
+
+
+    .block table th
+    {
+        color: rgba(255, 255, 255, .70);
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 120%;
+
+        height: 42px;
+        padding: 4px 12px;
+
+        text-align: right;
+        vertical-align: top;
+
+        border-bottom: 1px solid #191919;
+        background: #141414;
+    }
+
+    .block table th + th
+    {
+        border-left: 1px solid #191919;
+    }
+
+
+    .block table td
+    {
+        color: #fff;
+        font-size: 12px;
+        line-height: 100%;
+
+        height: 42px;
+        padding: 7px 12px;
+
+        text-align: right;
+        vertical-align: middle;
+
+        border-top: 1px solid #191919;
+    }
+
+    .block table td + td
+    {
+        border-left: 1px solid #191919;
+    }
+
+
+    .block table td .grey
+    {
+        margin-top: 4px;
+
+        opacity: .5;
+    }
+
+
+    .block table .alignleft
+    {
+        text-align: left;
     }
 
 
@@ -373,7 +474,7 @@
 
 
 
-        .blocks .block .val
+        .block .val
         {
             font-size: 26px;
         }
@@ -395,7 +496,7 @@
 
 
 
-        .blocks .block .val
+        .block .val
         {
             font-size: 25px;
         }
@@ -417,7 +518,7 @@
 
 
 
-        .blocks .block .val
+        .block .val
         {
             font-size: 24px;
         }
@@ -565,7 +666,7 @@
 
 
 
-        .blocks .block .title
+        .block .title
         {
             font-size: 15px;
 

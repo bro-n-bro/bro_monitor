@@ -11,7 +11,8 @@
         </div>
 
         <div class="val">
-            {{ data.toLocaleString() }}
+            <Loader v-if="!data" />
+            <span v-else>{{ data.toLocaleString() }}</span>
         </div>
     </div>
 </template>
@@ -21,10 +22,13 @@
     import { onBeforeMount, ref, inject } from 'vue'
     import { useGlobalStore } from '@/stores'
 
+    // Components
+    import Loader from '@/components/Loader.vue'
+
 
     const store = useGlobalStore(),
         emitter = inject('emitter'),
-        data = ref(0)
+        data = ref(null)
 
 
     onBeforeMount(async () => {

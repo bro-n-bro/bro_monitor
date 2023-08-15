@@ -19,6 +19,9 @@
     import { inject } from 'vue'
     import { useGlobalStore } from '@/stores'
 
+    // Components
+    import Loader from '@/components/Loader.vue'
+
 
     const store = useGlobalStore(),
         emitter = inject('emitter')

@@ -16,7 +16,9 @@
         </div>
 
         <div class="val">
-            ${{ $filters.toFixed(data.today, 0).toLocaleString() }}
+            $
+            <Loader v-if="!data" />
+            <span v-else>{{ $filters.toFixed(data.today, 0).toLocaleString() }}</span>
         </div>
 
         <div class="chart"></div>
@@ -28,12 +30,13 @@
     import { onBeforeMount, ref, inject } from 'vue'
     import { useGlobalStore } from '@/stores'
 
+    // Components
+    import Loader from '@/components/Loader.vue'
+
 
     const store = useGlobalStore(),
         emitter = inject('emitter'),
-        data = ref({
-            today: 0
-        })
+        data = ref(null)
 
 
     onBeforeMount(async () => {

@@ -8,7 +8,10 @@
             {{ $t('message.network_blocks_active_proposals_title') }}
         </div>
 
-        <div class="val">{{ data }}</div>
+        <div class="val">
+            <Loader v-if="!data" />
+            <span v-else>{{ data }}</span>
+        </div>
 
         <div class="chart"></div>
     </div>
@@ -18,9 +21,11 @@
 <script setup>
     import { onBeforeMount, ref } from 'vue'
 
+    // Components
+    import Loader from '@/components/Loader.vue'
 
-    const pinned= ref(false),
-        data = ref(0)
+
+    const data = ref(null)
 
 
     onBeforeMount(async () => {
