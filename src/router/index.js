@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useGlobalStore } from '@/stores'
 
-
 // Layouts
 import errorLayout from '@/layouts/Error.vue'
 import defaultLayout from '@/layouts/Default.vue'
