@@ -238,6 +238,11 @@
         margin-left: 20px;
     }
 
+    .blocks.charts .row > *.full_w
+    {
+        width: calc(100% - 20px);
+    }
+
 
     .block
     {
@@ -341,7 +346,7 @@
         position: relative;
         z-index: 3;
 
-        width: calc(100% - 80px);
+        width: calc(100% - 100px);
         margin-bottom: 24px;
         padding-top: 3px;
     }

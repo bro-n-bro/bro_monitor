@@ -21,15 +21,11 @@
     <!-- Network tab -->
     <template v-if="activeTab == 1">
     <div class="head">
-        <div class="page_title" v-if="activeType == 1">
+        <div class="page_title" v-if="networkActiveType == 1 || networkActiveType == 2">
             {{ $t('message.network_network_page_title') }}
         </div>
 
-        <div class="page_title" v-if="activeType == 2">
-            {{ $t('message.network_charts_page_title') }}
-        </div>
-
-        <div class="page_title" v-if="activeType == 3">
+        <div class="page_title" v-if="networkActiveType == 3">
             {{ $t('message.network_parameters_blockchain_title') }}
         </div>
 
@@ -64,6 +60,40 @@
     </template>
 
 
+    <!-- Accounts -->
+    <template v-if="activeTab == 2">
+    <div class="head">
+        <div class="page_title" v-if="accountsActiveType == 1">
+            {{ $t('message.network_accounts_blocks_page_title') }}
+        </div>
+
+        <div class="page_title" v-if="accountsActiveType == 2">
+            {{ $t('message.network_accounts_charts_page_title') }}
+        </div>
+
+
+        <div class="types">
+            <button class="btn" :class="{'active': accountsActiveType == 1}" @click.prevent="accountsActiveType = 1">
+                <svg><use xlink:href="@/assets/sprite.svg#ic_network_data_type_blocks"></use></svg>
+                <span>{{ $t('message.network_type_blocks') }}</span>
+            </button>
+
+            <button class="btn" :class="{'active': accountsActiveType == 2}" @click.prevent="accountsActiveType = 2">
+                <svg><use xlink:href="@/assets/sprite.svg#ic_network_data_type_charts"></use></svg>
+                <span>{{ $t('message.network_type_charts') }}</span>
+            </button>
+        </div>
+    </div>
+
+
+    <!-- Accounts blocks -->
+    <AccountsBlocks v-if="accountsActiveType == 1" />
+
+    <!-- Accounts charts -->
+    <AccountsCharts v-if="accountsActiveType == 2" />
+    </template>
+
+
     <!-- IBC & Relaying tab -->
     <template v-if="activeTab == 3">
     <div class="head">
@@ -93,7 +123,6 @@
     <!-- Network IBC -->
     <NetworkIBC v-if="IBCRelayingActiveType == 1" />
 
-
     <!-- Network Relaying -->
     <NetworkRelaying v-if="IBCRelayingActiveType == 2" />
     </template>
@@ -107,11 +136,14 @@
     import NetworkBlocks from  '@/components/network/NetworkBlocks.vue'
     import NetworkCharts from  '@/components/network/NetworkCharts.vue'
     import NetworkParameters from  '@/components/network/NetworkParameters.vue'
-    import NetworkIBC from  '@/components/network/IBC_relaying/IBC.vue'
-    import NetworkRelaying from  '@/components/network/IBC_relaying/Relaying.vue'
+    import NetworkIBC from  '@/components/network/IBC.vue'
+    import NetworkRelaying from  '@/components/network/Relaying.vue'
+    import AccountsBlocks from  '@/components/network/AccountsBlocks.vue'
+    import AccountsCharts from  '@/components/network/AccountsCharts.vue'
 
 
-    const activeTab = ref(3),
+    const activeTab = ref(2),
         networkActiveType = ref(1),
+        accountsActiveType = ref(2),
         IBCRelayingActiveType = ref(1)
 </script>
