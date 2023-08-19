@@ -126,6 +126,40 @@
     <!-- Network Relaying -->
     <NetworkRelaying v-if="IBCRelayingActiveType == 2" />
     </template>
+
+
+    <!-- Validators -->
+    <template v-if="activeTab == 4">
+    <div class="head">
+        <div class="page_title" v-if="validatorsActiveType == 1">
+            {{ $t('message.network_validators_blocks_page_title') }}
+        </div>
+
+        <div class="page_title" v-if="validatorsActiveType == 2">
+            {{ $t('message.network_validators_charts_page_title') }}
+        </div>
+
+
+        <div class="types">
+            <button class="btn" :class="{'active': validatorsActiveType == 1}" @click.prevent="validatorsActiveType = 1">
+                <svg><use xlink:href="@/assets/sprite.svg#ic_network_data_type_ibc"></use></svg>
+                <span>{{ $t('message.network_type_IBC') }}</span>
+            </button>
+
+            <button class="btn" :class="{'active': validatorsActiveType == 2}" @click.prevent="validatorsActiveType = 2">
+                <svg><use xlink:href="@/assets/sprite.svg#ic_network_data_type_relaying"></use></svg>
+                <span>{{ $t('message.network_type_relaying') }}</span>
+            </button>
+        </div>
+    </div>
+
+
+    <!-- Validators blocks -->
+    <ValidatorsBlocks v-if="validatorsActiveType == 1" />
+
+    <!-- Validators charts -->
+    <ValidatorsCharts v-if="validatorsActiveType == 2" />
+    </template>
 </template>
 
 
@@ -140,10 +174,13 @@
     import NetworkRelaying from  '@/components/network/Relaying.vue'
     import AccountsBlocks from  '@/components/network/AccountsBlocks.vue'
     import AccountsCharts from  '@/components/network/AccountsCharts.vue'
+    import ValidatorsBlocks from  '@/components/network/ValidatorsBlocks.vue'
+    import ValidatorsCharts from  '@/components/network/ValidatorsCharts.vue'
 
 
-    const activeTab = ref(2),
+    const activeTab = ref(4),
         networkActiveType = ref(1),
-        accountsActiveType = ref(2),
-        IBCRelayingActiveType = ref(1)
+        accountsActiveType = ref(1),
+        IBCRelayingActiveType = ref(1),
+        validatorsActiveType = ref(1)
 </script>

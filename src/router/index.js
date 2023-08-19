@@ -36,6 +36,14 @@ const routes = [
 			layout: defaultLayout
 		}
 	},
+	{
+		path: '/validator/:operator_address',
+		name: 'Validator',
+		component: () => import('../views/Validator.vue'),
+		meta: {
+			layout: defaultLayout
+		}
+	},
 ]
 
 

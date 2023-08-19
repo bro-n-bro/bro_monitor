@@ -31,6 +31,8 @@ export default {
             'network_accounts_charts_page_title': 'Accounts',
             'network_IBC_page_title': 'IBC',
             'network_relaying_page_title': 'Relaying',
+            'network_validators_blocks_page_title': 'Validators page',
+            'network_validators_charts_page_title': 'Charts',
 
             'network_charts_delegations_statistics_title': 'Delegations Statistics',
             'network_charts_restake_statistics_title': 'Restake Statistics',
@@ -99,6 +101,10 @@ export default {
             'network_charts_transactions_to_gas_paid_title': 'Transactions / Gas Paid',
             'network_charts_unique_addresses_in_voting_title': 'The number of those who received unique addresses in the voting',
             'network_charts_governance_participation_title': 'Governance Participation',
+            'network_charts_validator_group_map_title': 'Validator Group Map',
+            'network_charts_сommission_earned_title': 'Commission Earned',
+            'network_charts_unique_delegators_title': 'Unique Delegators',
+            'network_charts_voting_power_title': 'Voting Power',
 
             'network_parameters_unbonding_time_title': 'Unbonding Time',
             'network_parameters_max_validators_title': 'Max Validators',
@@ -135,6 +141,40 @@ export default {
             'network_relaying_table_label_spent7D': 'Spent 7D',
             'network_relaying_table_label_txs30D': 'Txs 30D',
             'network_relaying_table_label_spent30D': 'Spent 30D',
+
+            'network_validators_table_title': 'Validators ',
+
+            'network_validators_table_label_number': '№',
+            'network_validators_table_label_moniker': 'Moniker',
+            'network_validators_table_label_voting_power': 'Voting Power',
+            'network_validators_table_label_self_bonded': 'Self<br> Bonded',
+            'network_validators_table_label_commission': 'Commission',
+            'network_validators_table_label_commission_changes': 'Commission changes<br> (max/min/per day); %',
+            'network_validators_table_label_slashing_count': 'Slashing<br> Count',
+            'network_validators_table_label_commission_earned': 'Commission<br> Earned',
+            'network_validators_table_label_restake_enabled': 'Restake<br> Enabled',
+            'network_validators_table_label_unique_delegators': 'Unique<br> Delegators',
+            'network_validators_table_label_new_delegators': 'New<br> Delegators',
+            'network_validators_table_label_voting_participation': 'Voting<br> Participation',
+
+
+            // Validator page
+            'validator_page_title': 'Validators / {moniker} Statistics',
+            'validator_operator_address_label': 'Operator Address',
+            'validator_btn_website': 'Website',
+            'validator_btn_mintscan': 'Mintscan',
+            'validator_btn_broscore': 'Bro Score',
+
+            'validator_features_label_voting_power': 'Voting Power',
+            'validator_features_label_self_bonded': 'Self Bonded',
+            'validator_features_label_commission': 'Commission',
+            'validator_features_label_commission_changes': 'Commission changes<br> (max/min/per day)',
+            'validator_features_label_slashing_count': 'Slashing Count',
+            'validator_features_label_commission_earned': 'Commission Earned',
+            'validator_features_label_restake_enabled': 'Restake Enabled',
+            'validator_features_label_unique_delegators': 'Unique Delegators',
+            'validator_features_label_new_delegators': 'New Delegators',
+            'validator_features_label_voting_participation': 'Voting Participation',
 
 
             // Prices page
