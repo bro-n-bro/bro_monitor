@@ -28,7 +28,7 @@
                 <tbody>
                     <tr>
                         <td class="col_chain">
-                            <div class="chain">
+                            <router-link to="/ibc/cosmoshub" class="chain">
                                 <div class="logo">
                                     <img src="@/assets/osmosis_logo.png" alt="">
                                 </div>
@@ -38,7 +38,7 @@
 
                                     <div class="chain_id grey">osmosis-1</div>
                                 </div>
-                            </div>
+                            </router-link>
                         </td>
 
                         <td class="col_total_txs">
@@ -592,6 +592,11 @@
 </template>
 
 
+<script setup>
+
+</script>
+
+
 <style scoped>
     table td.col_total_txs,
     table td.col_receive_txs,
@@ -617,12 +622,14 @@
 
     .chain
     {
+        color: currentColor;
         font-size: 12px;
         line-height: 100%;
 
         display: flex;
 
         text-align: left;
+        text-decoration: none;
 
         justify-content: space-between;
         align-items: flex-start;

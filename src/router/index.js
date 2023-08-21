@@ -44,6 +44,22 @@ const routes = [
 			layout: defaultLayout
 		}
 	},
+	{
+		path: '/:network/chart/:chart_name',
+		name: 'Chart',
+		component: () => import('../views/Chart.vue'),
+		meta: {
+			layout: defaultLayout
+		}
+	},
+	{
+		path: '/ibc/:network',
+		name: 'Chart',
+		component: () => import('../views/IBCNetwork.vue'),
+		meta: {
+			layout: defaultLayout
+		}
+	},
 ]
 
 
@@ -59,6 +75,11 @@ router.beforeResolve(async (to, from, next) => {
     // Current network from url
 	if (to.params.network) {
 		store.currentNetwork = to.params.network
+	}
+
+    // Current chart from url
+	if (to.params.chart_name) {
+		store.currentChart = to.params.chart_name
 	}
 
     // App full loaded

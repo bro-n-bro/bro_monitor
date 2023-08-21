@@ -17,6 +17,7 @@ export const useGlobalStore = defineStore('global', {
         tooltipAnimate: false,
 
         currentNetwork: null,
+        currentChart: null,
 
         networks,
 

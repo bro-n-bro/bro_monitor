@@ -191,6 +191,34 @@ export default {
             'prices_FLIX_title': 'FLIX',
 
 
+            // Chart page
+            'chart_token_price_page_title': 'Network / {token} Price',
+
+
+            // IBC network page
+            'ibc_network_page_title': 'IBC / {network}',
+            'ibc_network_title_details': 'Details',
+
+            'ibc_network_features_label_IBC_volume': 'IBC Volume',
+            'ibc_network_features_label_IBC_volume_in': 'IBC Volume IN',
+            'ibc_network_features_label_IBC_volume_out': 'IBC Volume Out',
+            'ibc_network_features_label_IBC_transfers': 'IBC Transfers',
+            'ibc_network_features_label_active_IBC_addresses': 'Active IBC Addresses',
+
+
+            // Time range
+            'time_range_1h': '1H',
+            'time_range_24h': '24H',
+            'time_range_7D': '7D',
+            'time_range_30D': '30D',
+            'time_range_3M': '3M',
+            'time_range_6M': '6M',
+            'time_range_1Y': '1Y',
+            'time_range_label_from': 'From',
+            'time_range_label_to': 'To',
+            'time_range_calendar_title': 'Select a time range',
+
+
             // Footer
             'footer_contact': 'Contact',
             'footer_support': 'Support',
@@ -212,6 +240,7 @@ export default {
             // Buttons
             'btn_back_home': 'Back to home',
             'btn_prices': 'Prices',
+            'btn_apply_time': 'Apply time range'
         }
     }
 }
