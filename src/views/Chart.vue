@@ -34,66 +34,6 @@
 
 
 <style scoped>
-    .head
-    {
-        display: flex;
-
-        margin-bottom: 20px;
-
-        justify-content: flex-start;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
-    }
-
-
-
-    .back_btn .btn
-    {
-        color: currentColor;
-
-        display: flex;
-
-        width: 36px;
-        height: 36px;
-        margin-right: 16px;
-
-        transition: background .2s linear;
-        text-decoration: none;
-
-        border-radius: 50%;
-        background: #141414;
-
-        justify-content: center;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
-    }
-
-
-    .back_btn .icon
-    {
-        display: block;
-
-        width: 14px;
-        height: 14px;
-    }
-
-
-    .back_btn .btn:hover
-    {
-        background: #950fff;
-    }
-
-
-
-    .title
-    {
-        font-size: 24px;
-        font-weight: 600;
-    }
-
-
     .chart
     {
         padding: 8px;

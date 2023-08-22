@@ -1,0 +1,32 @@
+<template>
+    <div class="head">
+        <div class="back_btn">
+            <router-link :to="router.options.history.state.back ? router.options.history.state.back : '/network/cosmoshub'" class="btn">
+                <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_arr_hor"></use></svg>
+            </router-link>
+        </div>
+
+        <div class="title">
+            {{ $t('message.validators_page_title') }}
+        </div>
+
+        <!-- Validators search -->
+        <ValidatorsSearch class="alignright" />
+    </div>
+
+
+    <!-- Validators table -->
+    <ValidatorsTable class="big_table" />
+</template>
+
+
+<script setup>
+    import { useRouter } from 'vue-router'
+
+    // Components
+    import ValidatorsTable from  '@/components/network/ValidatorsTable.vue'
+    import ValidatorsSearch from  '@/components/network/valodators/Search.vue'
+
+
+    const router = useRouter()
+</script>

@@ -1,7 +1,7 @@
 <template>
     <div class="block">
         <div class="btns">
-            <router-link to="/" class="btn">
+            <router-link to="/validators" class="btn">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
             </router-link>
         </div>
@@ -648,9 +648,9 @@
     }
 
 
-    table td.col_number,
-    table td.col_slashing_count,
-    table td.col_restake_enabled
+    table .col_number,
+    table .col_slashing_count,
+    table .col_restake_enabled
     {
         width: 60px;
         min-width: 60px;
@@ -658,7 +658,7 @@
         table-layout: fixed;
     }
 
-    table td.col_voting_power
+    table .col_voting_power
     {
         width: 120px;
         min-width: 120px;
@@ -666,7 +666,7 @@
         table-layout: fixed;
     }
 
-    table td.col_self_bonded
+    table .col_self_bonded
     {
         width: 90px;
         min-width: 90px;
@@ -674,8 +674,8 @@
         table-layout: fixed;
     }
 
-    table td.col_commission,
-    table td.col_commission_earned
+    table .col_commission,
+    table .col_commission_earned
     {
         width: 80px;
         min-width: 80px;
@@ -683,7 +683,7 @@
         table-layout: fixed;
     }
 
-    table td.col_commission_changes
+    table .col_commission_changes
     {
         width: 130px;
         min-width: 130px;
@@ -691,8 +691,8 @@
         table-layout: fixed;
     }
 
-    table td.col_unique_delegators,
-    table td.col_new_delegators
+    table .col_unique_delegators,
+    table .col_new_delegators
     {
         width: 70px;
         min-width: 70px;
@@ -700,7 +700,7 @@
         table-layout: fixed;
     }
 
-    table td.col_voting_participation
+    table .col_voting_participation
     {
         width: 100px;
         min-width: 100px;
@@ -774,6 +774,68 @@
     table td .red
     {
         color: #eb5757;
+    }
+
+
+
+    .block.big_table
+    {
+        overflow: hidden;
+
+        padding: 0;
+    }
+
+
+    .big_table .btns,
+    .big_table .title
+    {
+        display: none;
+    }
+
+
+    .big_table .table_wrap
+    {
+        width: 100%;
+        margin: 0;
+    }
+
+
+    .big_table table th,
+    .big_table table td
+    {
+        padding: 7px 4px;
+    }
+
+
+
+    .big_table table .col_commission,
+    .big_table table .col_slashing_count
+    {
+        width: 100px;
+        min-width: 100px;
+    }
+
+    .big_table table .col_voting_power,
+    .big_table table .col_commission_earned,
+    .big_table table .col_commission_changes
+    {
+        width: 150px;
+        min-width: 150px;
+    }
+
+    .big_table table .col_self_bonded,
+    .big_table table .col_restake_enabled
+    {
+        width: 110px;
+        min-width: 110px;
+    }
+
+    .big_table table .col_unique_delegators,
+    .big_table table .col_new_delegators,
+    .big_table table .col_voting_participation
+    {
+        width: 114px;
+        min-width: 114px;
     }
 
 </style>

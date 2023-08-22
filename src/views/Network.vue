@@ -139,23 +139,25 @@
             {{ $t('message.network_validators_charts_page_title') }}
         </div>
 
-
         <div class="types">
             <button class="btn" :class="{'active': validatorsActiveType == 1}" @click.prevent="validatorsActiveType = 1">
-                <svg><use xlink:href="@/assets/sprite.svg#ic_network_data_type_ibc"></use></svg>
-                <span>{{ $t('message.network_type_IBC') }}</span>
+                <svg><use xlink:href="@/assets/sprite.svg#ic_network_data_type_table"></use></svg>
+                <span>{{ $t('message.network_type_table') }}</span>
             </button>
 
             <button class="btn" :class="{'active': validatorsActiveType == 2}" @click.prevent="validatorsActiveType = 2">
-                <svg><use xlink:href="@/assets/sprite.svg#ic_network_data_type_relaying"></use></svg>
-                <span>{{ $t('message.network_type_relaying') }}</span>
+                <svg><use xlink:href="@/assets/sprite.svg#ic_network_data_type_charts"></use></svg>
+                <span>{{ $t('message.network_type_charts') }}</span>
             </button>
         </div>
+
+        <!-- Validators search -->
+        <ValidatorsSearch />
     </div>
 
 
-    <!-- Validators blocks -->
-    <ValidatorsBlocks v-if="validatorsActiveType == 1" />
+    <!-- Validators table -->
+    <ValidatorsTable v-if="validatorsActiveType == 1" />
 
     <!-- Validators charts -->
     <ValidatorsCharts v-if="validatorsActiveType == 2" />
@@ -174,8 +176,9 @@
     import NetworkRelaying from  '@/components/network/Relaying.vue'
     import AccountsBlocks from  '@/components/network/AccountsBlocks.vue'
     import AccountsCharts from  '@/components/network/AccountsCharts.vue'
-    import ValidatorsBlocks from  '@/components/network/ValidatorsBlocks.vue'
+    import ValidatorsTable from  '@/components/network/ValidatorsTable.vue'
     import ValidatorsCharts from  '@/components/network/ValidatorsCharts.vue'
+    import ValidatorsSearch from  '@/components/network/valodators/Search.vue'
 
 
     const activeTab = ref(1),

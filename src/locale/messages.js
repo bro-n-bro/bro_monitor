@@ -21,6 +21,7 @@ export default {
             'network_tab_validators': 'Validators',
 
             'network_type_blocks': 'Blocks',
+            'network_type_table': 'Table',
             'network_type_charts': 'Charts',
             'network_type_parameters': 'Parameters',
             'network_type_IBC': 'IBC',
@@ -219,6 +220,22 @@ export default {
             'time_range_calendar_title': 'Select a time range',
 
 
+            // Validators page
+            'validators_page_title': 'Validators / -',
+
+
+            // Rich list page
+            'rich_list_page_title': 'Validators / Rich List',
+
+            'rich_list_table_label_number': '№',
+            'rich_list_table_label_address': 'Address',
+            'rich_list_table_label_token_amount': 'Token Amount',
+            'rich_list_table_label_liquid_tokens': 'Liquid Tokens',
+            'rich_list_table_label_staked_tokens': 'Staked Tokens',
+            'rich_list_table_label_validator': 'Validator',
+            'rich_list_table_label_unbound_tokens': 'Unbound Tokens',
+
+
             // Footer
             'footer_contact': 'Contact',
             'footer_support': 'Support',
@@ -235,6 +252,10 @@ export default {
             // Notofications
             'notice_username': "Chosen keplr account",
             'notice_avatar': "Your Moon passport avatar",
+
+
+            // Search
+            'search_placeholder': 'Search',
 
 
             // Buttons

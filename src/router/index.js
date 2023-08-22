@@ -4,6 +4,7 @@ import { useGlobalStore } from '@/stores'
 // Layouts
 import errorLayout from '@/layouts/Error.vue'
 import defaultLayout from '@/layouts/Default.vue'
+import fullWidthLayout from '@/layouts/FullWidth.vue'
 
 
 const routes = [
@@ -49,7 +50,7 @@ const routes = [
 		name: 'Chart',
 		component: () => import('../views/Chart.vue'),
 		meta: {
-			layout: defaultLayout
+			layout: fullWidthLayout
 		}
 	},
 	{
@@ -58,6 +59,21 @@ const routes = [
 		component: () => import('../views/IBCNetwork.vue'),
 		meta: {
 			layout: defaultLayout
+		}
+	},
+	{
+		path: '/validators',
+		name: 'Validators',
+		component: () => import('../views/Validators.vue'),
+		meta: {
+			layout: fullWidthLayout
+		}
+	},{
+		path: '/rich_list',
+		name: 'RichList',
+		component: () => import('../views/RichList.vue'),
+		meta: {
+			layout: fullWidthLayout
 		}
 	},
 ]
