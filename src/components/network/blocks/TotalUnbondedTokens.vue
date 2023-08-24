@@ -16,7 +16,7 @@
 
         <div class="val">
             <Loader v-if="!data" />
-            <span v-else>{{ data.toLocaleString() }}</span>
+            <span v-else>{{ data.toLocaleString('ru-RU') }}</span>
         </div>
 
         <div class="chart"></div>
@@ -25,7 +25,7 @@
 
 
 <script setup>
-    import { inject, ref } from 'vue'
+    import { onBeforeMount, inject, ref } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -34,5 +34,20 @@
 
     const store = useGlobalStore(),
         emitter = inject('emitter'),
-        data = ref(7320612)
+        data = ref(null)
+
+
+    onBeforeMount(async () => {
+        // Get data
+        try {
+            await fetch('https://rpc.bronbro.io/statistics/unbonded_tokens/actual')
+                .then(res => res.json())
+                .then(response => {
+                    // Set data
+                    data.value = response.data
+                })
+        } catch (error) {
+            console.error(error)
+        }
+    })
 </script>

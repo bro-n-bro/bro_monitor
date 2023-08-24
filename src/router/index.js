@@ -68,10 +68,27 @@ const routes = [
 		meta: {
 			layout: fullWidthLayout
 		}
-	},{
+	},
+	{
 		path: '/rich_list',
 		name: 'RichList',
 		component: () => import('../views/RichList.vue'),
+		meta: {
+			layout: fullWidthLayout
+		}
+	},
+	{
+		path: '/whale_transactions',
+		name: 'WhaleTransactions',
+		component: () => import('../views/WhaleTransactions.vue'),
+		meta: {
+			layout: fullWidthLayout
+		}
+	},
+	{
+		path: '/governance_participation',
+		name: 'GovernanceParticipation',
+		component: () => import('../views/GovernanceParticipation.vue'),
 		meta: {
 			layout: fullWidthLayout
 		}
@@ -99,7 +116,7 @@ router.beforeResolve(async (to, from, next) => {
 	}
 
     // App full loaded
-    if(!store.isAppFullLoaded) {
+    if (!store.isAppFullLoaded) {
         store.isAppFullLoaded = true
     }
 

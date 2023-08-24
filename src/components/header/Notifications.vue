@@ -21,7 +21,7 @@
 <style scoped>
     .notifications
     {
-        width: calc(100% - 497px);
+        width: calc(100% - 477px);
 
         --shine-degree: 120deg;
         --shine-color: rgba(255, 255, 255, .15);

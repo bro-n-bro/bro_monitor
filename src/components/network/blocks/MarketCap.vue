@@ -18,7 +18,7 @@
         <div class="val">
             $
             <Loader v-if="!data" />
-            <span v-else>{{ $filters.toFixed(data.today, 0).toLocaleString() }}</span>
+            <span v-else>{{ $filters.toFixed(data.today, 0).toLocaleString('ru-RU') }}</span>
         </div>
 
         <div class="chart"></div>
@@ -36,7 +36,7 @@
 
     const store = useGlobalStore(),
         emitter = inject('emitter'),
-        data = ref(null)
+        data = ref(0)
 
 
     onBeforeMount(async () => {

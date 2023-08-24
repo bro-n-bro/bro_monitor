@@ -12,7 +12,7 @@
 
         <div class="val">
             <Loader v-if="!data" />
-            <span v-else>{{ data.toLocaleString() }}</span>
+            <span v-else>{{ $filters.toFixed(data, 0).toLocaleString('ru-RU') }}</span>
         </div>
 
         <div class="chart"></div>
@@ -21,7 +21,7 @@
 
 
 <script setup>
-    import { inject, ref } from 'vue'
+    import { inject, ref, onBeforeMount } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -30,5 +30,20 @@
 
     const store = useGlobalStore(),
         emitter = inject('emitter'),
-        data = ref(3500000)
+        data = ref(null)
+
+
+    onBeforeMount(async () => {
+        // Get data
+        try {
+            await fetch('https://rpc.bronbro.io/statistics/community_pool/actual')
+                .then(res => res.json())
+                .then(response => {
+                    // Set data
+                    data.value = response.data
+                })
+        } catch (error) {
+            console.error(error)
+        }
+    })
 </script>

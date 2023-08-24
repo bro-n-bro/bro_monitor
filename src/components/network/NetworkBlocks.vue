@@ -17,7 +17,7 @@
             <APY />
 
             <!-- Unbonded tokens -->
-            <UnbondedTokens />
+            <TotalUnbondedTokens />
 
             <!-- Pending proposals -->
             <PendingProposals />
@@ -26,13 +26,13 @@
             <ActiveProposals />
 
             <!-- Bonded tokens -->
-            <BondedTokens />
+            <TotalBondedTokens />
 
             <!-- Bonded ratio -->
-            <BondedRatio />
+            <TotalBondedRatio />
 
             <!-- Total supply -->
-            <Supply />
+            <TotalSupply />
 
             <!-- Circulating Supply -->
             <CirculatingSupply />
@@ -54,12 +54,12 @@
     import Inflation from '@/components/network/blocks/Inflation.vue'
     import MarketCap from '@/components/network/blocks/MarketCap.vue'
     import APY from '@/components/network/blocks/APY.vue'
-    import UnbondedTokens from '@/components/network/blocks/UnbondedTokens.vue'
+    import TotalUnbondedTokens from '@/components/network/blocks/TotalUnbondedTokens.vue'
     import PendingProposals from '@/components/network/blocks/PendingProposals.vue'
     import ActiveProposals from '@/components/network/blocks/ActiveProposals.vue'
-    import BondedTokens from '@/components/network/blocks/BondedTokens.vue'
-    import BondedRatio from '@/components/network/blocks/BondedRatio.vue'
-    import Supply from '@/components/network/blocks/Supply.vue'
+    import TotalBondedTokens from '@/components/network/blocks/TotalBondedTokens.vue'
+    import TotalBondedRatio from '@/components/network/blocks/TotalBondedRatio.vue'
+    import TotalSupply from '@/components/network/blocks/TotalSupply.vue'
     import CirculatingSupply from '@/components/network/blocks/CirculatingSupply.vue'
     import CommunityPool from '@/components/network/blocks/CommunityPool.vue'
     import LastBlockHeight from '@/components/network/blocks/LastBlockHeight.vue'

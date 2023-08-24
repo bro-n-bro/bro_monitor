@@ -225,7 +225,7 @@ export default {
 
 
             // Rich list page
-            'rich_list_page_title': 'Validators / Rich List',
+            'rich_list_page_title': 'Accounts / Rich List',
 
             'rich_list_table_label_number': '№',
             'rich_list_table_label_address': 'Address',
@@ -234,6 +234,37 @@ export default {
             'rich_list_table_label_staked_tokens': 'Staked Tokens',
             'rich_list_table_label_validator': 'Validator',
             'rich_list_table_label_unbound_tokens': 'Unbound Tokens',
+
+
+            // Whale transactions page
+            'whale_transactions_page_title': 'Accounts / 🐳 Whale Transactions',
+
+            'whale_transactions_table_label_address': 'Address',
+            'whale_transactions_table_label_action': 'Action',
+            'whale_transactions_table_label_amount': 'Amount',
+            'whale_transactions_table_label_details': 'Details',
+            'whale_transactions_table_label_TX_link': 'TX Link',
+
+            'whale_transactions_action_redelegate': 'Redelegate',
+            'whale_transactions_action_send': 'Send',
+            'whale_transactions_action_undelegate': 'Undelegate',
+            'whale_transactions_action_delegate': 'Delegate',
+            'whale_transactions_action_IBC_transfer': 'IBC-Transfer',
+
+            'whale_transactions_TX_link': 'TX Link',
+
+
+            // Governance participation page
+            'governance_participation_page_title': 'Accounts / Governance Participation',
+
+            'governance_participation_table_label_number': 'Number Of Proposal',
+            'governance_participation_table_label_account_validator_amount': 'Account/ Validator Amount',
+            'governance_participation_table_label_account_amount': 'Account Token Amount, {token}',
+            'governance_participation_table_label_status': 'Proposal Status',
+            'governance_participation_table_label_vote_power': 'Average Vote Power',
+
+            'governance_participation_status_rejected': 'Rejected',
+            'governance_participation_status_passed': 'Passed',
 
 
             // Footer
@@ -259,8 +290,10 @@ export default {
 
 
             // Buttons
+            'btn_connect': 'Connect wallet',
             'btn_back_home': 'Back to home',
-            'btn_prices': 'Prices',
+            'btn_prices_label': 'Price',
+            'btn_prices_exp': 'All Networks',
             'btn_apply_time': 'Apply time range'
         }
     }

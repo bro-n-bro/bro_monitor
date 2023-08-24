@@ -39,7 +39,8 @@
                                 <img src="@/assets/osmosis_logo.png" alt="">
                                 <img src="@/assets/osmosis_logo.png" alt="">
                                 <img src="@/assets/osmosis_logo.png" alt="">
-                                <img src="@/assets/osmosis_logo.png" alt="">                            </div>
+                                <img src="@/assets/osmosis_logo.png" alt="">
+                            </div>
                         </td>
 
                         <td class="col_unbound_tokens alignleft">
@@ -127,10 +128,10 @@
         table-layout: fixed;
     }
 
-    table .col_restake_enabled,
-    table .col_restake_enabled,
-    table .col_restake_enabled,
-    table .col_restake_enabled
+    table .col_token_amount,
+    table .col_liquid_tokens,
+    table .col_staked_tokens,
+    table .col_unbound_tokens
     {
         width: 240px;
         min-width: 240px;
@@ -224,9 +225,11 @@
 
     .logos img
     {
+        position: relative;
+
         width: 24px;
         height: 24px;
-position: relative;
+
         border: 1px solid #0d0d0d;
         border-radius: 50%;
         background: #000;

@@ -4,15 +4,25 @@
             <span>{{ $t('message.networks_title') }}</span>
 
             <svg class="arr"><use xlink:href="@/assets/sprite.svg#ic_arr_down"></use></svg>
-
-            <router-link to="/prices" class="prices_link">
-                <span>{{ $t('message.btn_prices') }}</span>
-                <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_prices"></use></svg>
-            </router-link>
         </div>
 
+
         <div class="list">
-            <router-link to="/network/cosmoshub" class="network" :class="{'active': store.currentNetwork == 'cosmoshub'}">
+            <router-link to="/prices" class="link" :class="{'active': route.path == '/prices'}">
+                <div class="icon">
+                    <svg><use xlink:href="@/assets/sprite.svg#ic_prices"></use></svg>
+                </div>
+
+                <div>
+                    <div class="name">{{ $t('message.btn_prices_label') }}</div>
+                    <div class="exp">{{ $t('message.btn_prices_exp') }}</div>
+                </div>
+
+                <svg class="check" v-if="route.path == '/prices'"><use xlink:href="@/assets/sprite.svg#ic_check"></use></svg>
+            </router-link>
+
+
+            <router-link to="/network/cosmoshub" class="link" :class="{'active': store.currentNetwork == 'cosmoshub'}">
                 <div class="logo">
                     <img src="/cosmoshub_logo.png" alt="">
                 </div>
@@ -30,10 +40,12 @@
 
 
 <script setup>
+    import { useRoute } from 'vue-router'
     import { useGlobalStore } from '@/stores'
 
 
-    const store = useGlobalStore()
+    const route = useRoute(),
+        store = useGlobalStore()
 
 
     // Toggle active class
@@ -95,55 +107,13 @@
     }
 
 
-    .networks .title .prices_link
-    {
-        color: currentColor;
-        font-size: 18px;
-        font-weight: 400;
-        line-height: 100%;
-
-        display: flex;
-
-        margin-left: auto;
-        padding: 10px;
-
-        transition: box-shadow .2s linear;
-        text-decoration: none;
-        pointer-events: auto;
-
-        border-radius: 8px;
-        background: #950fff;
-
-        justify-content: center;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
-    }
-
-
-    .networks .title .prices_link .icon
-    {
-        display: block;
-
-        width: 16px;
-        height: 16px;
-        margin-left: 4px;
-    }
-
-
-    .networks .title .prices_link:hover
-    {
-        box-shadow: 2px 5px 15px rgba(149, 15, 255, .45);
-    }
-
-
     .networks .list > * + *
     {
         margin-top: 4px;
     }
 
 
-    .networks .network
+    .networks .link
     {
         color: currentColor;
 
@@ -167,16 +137,24 @@
     }
 
 
-    .networks .logo
+    .networks .logo,
+    .networks .icon
     {
         position: relative;
 
+        display: flex;
         overflow: hidden;
 
         width: 40px;
         height: 40px;
 
         border-radius: 50%;
+        background: #282828;
+
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        flex-wrap: wrap;
     }
 
 
@@ -197,7 +175,17 @@
     }
 
 
-    .networks .logo + *
+    .networks .icon svg
+    {
+        display: block;
+
+        width: 20px;
+        height: 20px;
+    }
+
+
+    .networks .logo + *,
+    .networks .icon + *
     {
         width: calc(100% - 54px);
         margin-left: auto;
@@ -212,15 +200,14 @@
     }
 
 
-    .networks .token
+    .networks .token,
+    .networks .exp
     {
         color: #555;
         font-size: 12px;
         line-height: 15px;
 
         margin-top: 6px;
-
-        text-transform: uppercase;
     }
 
 
@@ -237,8 +224,8 @@
     }
 
 
-    .networks .network:hover,
-    .networks .network.active
+    .networks .link:hover,
+    .networks .link.active
     {
         background: #141414;
     }
@@ -337,12 +324,6 @@
             font-size: 22px;
             line-height: 28px;
         }
-
-
-        .networks .title .prices_link
-        {
-            font-size: 16px;
-        }
     }
 
 
@@ -358,16 +339,6 @@
         {
             font-size: 20px;
             line-height: 26px;
-        }
-    }
-
-
-
-    @media print, (max-width: 479px)
-    {
-        .networks .title .prices_link
-        {
-            font-size: 15px;
         }
     }
 

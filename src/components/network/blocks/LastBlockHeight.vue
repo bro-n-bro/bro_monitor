@@ -12,7 +12,7 @@
 
         <div class="val">
             <Loader v-if="!data" />
-            <span v-else>{{ data.toLocaleString() }}</span>
+            <span v-else>{{ data.toLocaleString('ru-RU') }}</span>
         </div>
     </div>
 </template>

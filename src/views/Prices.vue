@@ -66,6 +66,9 @@
 
 
     onBeforeMount(async () => {
+        // Reset current network
+        store.currentNetwork = null
+
         // Get prices
         await store.getCurrenciesPrice()
 

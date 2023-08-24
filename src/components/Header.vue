@@ -29,6 +29,9 @@
             <Notifications />
 
             <!-- User info -->
+            <ConnectBtn v-if="!store.isAuth" />
+
+            <!-- User info -->
             <User v-if="store.isAuth" />
         </div>
     </header>
@@ -43,6 +46,7 @@
 
     // Components
     import Notifications from '../components/header/Notifications.vue'
+    import ConnectBtn from '../components/header/ConnectBtn.vue'
     import User from '../components/header/User.vue'
 
 
