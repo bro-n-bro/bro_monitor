@@ -32,4 +32,52 @@
         background: #7700e1;
     }
 
+
+
+    @media print, (max-width: 1279px)
+    {
+        .btn
+        {
+            width: 200px;
+            height: 60px;
+        }
+    }
+
+
+
+    @media print, (max-width: 1023px)
+    {
+        .btn
+        {
+            width: 180px;
+            height: 52px;
+        }
+    }
+
+
+
+    @media print, (max-width: 767px)
+    {
+        .btn
+        {
+            font-size: 14px;
+
+            width: 160px;
+            height: 48px;
+
+            border-radius: 12px;
+        }
+    }
+
+
+
+    @media print, (max-width: 767px)
+    {
+        .btn
+        {
+            width: 148px;
+            height: 44px;
+        }
+    }
+
 </style>

@@ -2,7 +2,7 @@
     <div class="blocks">
         <div class="row">
             <!-- Total Number of Addresses -->
-            <TokenPrice />
+            <Addresses />
 
             <!-- Active users -->
             <ActiveUsers />
@@ -37,7 +37,7 @@
 
 <script setup>
     // Components
-    import TokenPrice from '@/components/network/blocks/Addresses.vue'
+    import Addresses from '@/components/network/blocks/Addresses.vue'
     import ActiveUsers from '@/components/network/blocks/ActiveUsers.vue'
     import NewUsers from '@/components/network/blocks/NewUsers.vue'
     import InactiveAccounts from '@/components/network/blocks/InactiveAccounts.vue'

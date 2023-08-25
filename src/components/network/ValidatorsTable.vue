@@ -10,7 +10,9 @@
             {{ $t('message.network_validators_table_title') }}
         </div>
 
-        <div class="table_wrap">
+        <Loader v-if="loading" />
+
+        <div class="table_wrap" v-else>
             <table>
                 <thead>
                     <tr>
@@ -38,573 +40,62 @@
                 </thead>
 
                 <tbody>
-                    <tr>
-                        <td class="col_number alignleft">№ 1</td>
+                    <tr v-for="(validator, index) in validators" :key="index">
+                        <td class="col_number alignleft">{{ $t('message.network_validators_table_label_number') }} {{ index + 1 }}</td>
 
-                        <td class="col_moniker">
-                            <router-link to="/validator/cosmovaloper" class="moniker">
+                        <td class="col_moniker alignleft">
+                            <router-link :to="`/validator/${validator.operator_address}`" class="moniker">
                                 <div class="logo">
-                                    <!-- <img src="@/assets/osmosis_logo.png" alt=""> -->
+                                    <img :src="validator.mintscan_avatar_url" alt="">
                                 </div>
 
                                 <div>
-                                    <div class="name">Coinbase</div>
+                                    <div class="name">
+                                        {{ validator.moniker }}
+                                    </div>
                                 </div>
                             </router-link>
                         </td>
 
                         <td class="col_voting_power">
-                            <div>784 436 547</div>
-                            <div class="price grey">$ 435 463 765</div>
+                            <div>{{ Number(validator.voting_power).toLocaleString('ru-RU') }}</div>
+                            <div class="price grey">$ 0</div>
                         </td>
 
                         <td class="col_self_bonded">
-                            <div>354 643.01</div>
+                            <div></div>
                         </td>
 
                         <td class="col_commission">
-                            <div>5%</div>
+                            <div>{{ $filters.toFixed(validator.commission * 100, 1) }}%</div>
                         </td>
 
                         <td class="col_commission_changes">
-                            <div>6 | 25 | <span class="red">97</span></div>
+                            <div></div>
                         </td>
 
                         <td class="col_slashing_count">
-                            <div>7</div>
+                            <div></div>
                         </td>
 
                         <td class="col_commission_earned">
-                            <div>674 325.57</div>
+                            <div></div>
                         </td>
 
                         <td class="col_restake_enabled">
-                            <div>Yes</div>
+                            <div></div>
                         </td>
 
                         <td class="col_unique_delegators">
-                            <div>656 768</div>
+                            <div></div>
                         </td>
 
                         <td class="col_new_delegators">
-                            <div>765</div>
+                            <div></div>
                         </td>
 
                         <td class="col_voting_participation">
-                            <div>79 / 79</div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="col_number alignleft">№ 1</td>
-
-                        <td class="col_moniker">
-                            <router-link to="/validator/cosmovaloper" class="moniker">
-                                <div class="logo">
-                                    <!-- <img src="@/assets/osmosis_logo.png" alt=""> -->
-                                </div>
-
-                                <div>
-                                    <div class="name">Coinbase</div>
-                                </div>
-                            </router-link>
-                        </td>
-
-                        <td class="col_voting_power">
-                            <div>784 436 547</div>
-                            <div class="price grey">$ 435 463 765</div>
-                        </td>
-
-                        <td class="col_self_bonded">
-                            <div>354 643.01</div>
-                        </td>
-
-                        <td class="col_commission">
-                            <div>5%</div>
-                        </td>
-
-                        <td class="col_commission_changes">
-                            <div>6 | 25 | <span class="red">97</span></div>
-                        </td>
-
-                        <td class="col_slashing_count">
-                            <div>7</div>
-                        </td>
-
-                        <td class="col_commission_earned">
-                            <div>674 325.57</div>
-                        </td>
-
-                        <td class="col_restake_enabled">
-                            <div>Yes</div>
-                        </td>
-
-                        <td class="col_unique_delegators">
-                            <div>656 768</div>
-                        </td>
-
-                        <td class="col_new_delegators">
-                            <div>765</div>
-                        </td>
-
-                        <td class="col_voting_participation">
-                            <div>79 / 79</div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="col_number alignleft">№ 1</td>
-
-                        <td class="col_moniker">
-                            <router-link to="/validator/cosmovaloper" class="moniker">
-                                <div class="logo">
-                                    <!-- <img src="@/assets/osmosis_logo.png" alt=""> -->
-                                </div>
-
-                                <div>
-                                    <div class="name">Coinbase</div>
-                                </div>
-                            </router-link>
-                        </td>
-
-                        <td class="col_voting_power">
-                            <div>784 436 547</div>
-                            <div class="price grey">$ 435 463 765</div>
-                        </td>
-
-                        <td class="col_self_bonded">
-                            <div>354 643.01</div>
-                        </td>
-
-                        <td class="col_commission">
-                            <div>5%</div>
-                        </td>
-
-                        <td class="col_commission_changes">
-                            <div>6 | 25 | <span class="red">97</span></div>
-                        </td>
-
-                        <td class="col_slashing_count">
-                            <div>7</div>
-                        </td>
-
-                        <td class="col_commission_earned">
-                            <div>674 325.57</div>
-                        </td>
-
-                        <td class="col_restake_enabled">
-                            <div>Yes</div>
-                        </td>
-
-                        <td class="col_unique_delegators">
-                            <div>656 768</div>
-                        </td>
-
-                        <td class="col_new_delegators">
-                            <div>765</div>
-                        </td>
-
-                        <td class="col_voting_participation">
-                            <div>79 / 79</div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="col_number alignleft">№ 1</td>
-
-                        <td class="col_moniker">
-                            <router-link to="/validator/cosmovaloper" class="moniker">
-                                <div class="logo">
-                                    <!-- <img src="@/assets/osmosis_logo.png" alt=""> -->
-                                </div>
-
-                                <div>
-                                    <div class="name">Coinbase</div>
-                                </div>
-                            </router-link>
-                        </td>
-
-                        <td class="col_voting_power">
-                            <div>784 436 547</div>
-                            <div class="price grey">$ 435 463 765</div>
-                        </td>
-
-                        <td class="col_self_bonded">
-                            <div>354 643.01</div>
-                        </td>
-
-                        <td class="col_commission">
-                            <div>5%</div>
-                        </td>
-
-                        <td class="col_commission_changes">
-                            <div>6 | 25 | <span class="red">97</span></div>
-                        </td>
-
-                        <td class="col_slashing_count">
-                            <div>7</div>
-                        </td>
-
-                        <td class="col_commission_earned">
-                            <div>674 325.57</div>
-                        </td>
-
-                        <td class="col_restake_enabled">
-                            <div>Yes</div>
-                        </td>
-
-                        <td class="col_unique_delegators">
-                            <div>656 768</div>
-                        </td>
-
-                        <td class="col_new_delegators">
-                            <div>765</div>
-                        </td>
-
-                        <td class="col_voting_participation">
-                            <div>79 / 79</div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="col_number alignleft">№ 1</td>
-
-                        <td class="col_moniker">
-                            <router-link to="/validator/cosmovaloper" class="moniker">
-                                <div class="logo">
-                                    <!-- <img src="@/assets/osmosis_logo.png" alt=""> -->
-                                </div>
-
-                                <div>
-                                    <div class="name">Coinbase</div>
-                                </div>
-                            </router-link>
-                        </td>
-
-                        <td class="col_voting_power">
-                            <div>784 436 547</div>
-                            <div class="price grey">$ 435 463 765</div>
-                        </td>
-
-                        <td class="col_self_bonded">
-                            <div>354 643.01</div>
-                        </td>
-
-                        <td class="col_commission">
-                            <div>5%</div>
-                        </td>
-
-                        <td class="col_commission_changes">
-                            <div>6 | 25 | <span class="red">97</span></div>
-                        </td>
-
-                        <td class="col_slashing_count">
-                            <div>7</div>
-                        </td>
-
-                        <td class="col_commission_earned">
-                            <div>674 325.57</div>
-                        </td>
-
-                        <td class="col_restake_enabled">
-                            <div>Yes</div>
-                        </td>
-
-                        <td class="col_unique_delegators">
-                            <div>656 768</div>
-                        </td>
-
-                        <td class="col_new_delegators">
-                            <div>765</div>
-                        </td>
-
-                        <td class="col_voting_participation">
-                            <div>79 / 79</div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="col_number alignleft">№ 1</td>
-
-                        <td class="col_moniker">
-                            <router-link to="/validator/cosmovaloper" class="moniker">
-                                <div class="logo">
-                                    <!-- <img src="@/assets/osmosis_logo.png" alt=""> -->
-                                </div>
-
-                                <div>
-                                    <div class="name">Coinbase</div>
-                                </div>
-                            </router-link>
-                        </td>
-
-                        <td class="col_voting_power">
-                            <div>784 436 547</div>
-                            <div class="price grey">$ 435 463 765</div>
-                        </td>
-
-                        <td class="col_self_bonded">
-                            <div>354 643.01</div>
-                        </td>
-
-                        <td class="col_commission">
-                            <div>5%</div>
-                        </td>
-
-                        <td class="col_commission_changes">
-                            <div>6 | 25 | <span class="red">97</span></div>
-                        </td>
-
-                        <td class="col_slashing_count">
-                            <div>7</div>
-                        </td>
-
-                        <td class="col_commission_earned">
-                            <div>674 325.57</div>
-                        </td>
-
-                        <td class="col_restake_enabled">
-                            <div>Yes</div>
-                        </td>
-
-                        <td class="col_unique_delegators">
-                            <div>656 768</div>
-                        </td>
-
-                        <td class="col_new_delegators">
-                            <div>765</div>
-                        </td>
-
-                        <td class="col_voting_participation">
-                            <div>79 / 79</div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="col_number alignleft">№ 1</td>
-
-                        <td class="col_moniker">
-                            <router-link to="/validator/cosmovaloper" class="moniker">
-                                <div class="logo">
-                                    <!-- <img src="@/assets/osmosis_logo.png" alt=""> -->
-                                </div>
-
-                                <div>
-                                    <div class="name">Coinbase</div>
-                                </div>
-                            </router-link>
-                        </td>
-
-                        <td class="col_voting_power">
-                            <div>784 436 547</div>
-                            <div class="price grey">$ 435 463 765</div>
-                        </td>
-
-                        <td class="col_self_bonded">
-                            <div>354 643.01</div>
-                        </td>
-
-                        <td class="col_commission">
-                            <div>5%</div>
-                        </td>
-
-                        <td class="col_commission_changes">
-                            <div>6 | 25 | <span class="red">97</span></div>
-                        </td>
-
-                        <td class="col_slashing_count">
-                            <div>7</div>
-                        </td>
-
-                        <td class="col_commission_earned">
-                            <div>674 325.57</div>
-                        </td>
-
-                        <td class="col_restake_enabled">
-                            <div>Yes</div>
-                        </td>
-
-                        <td class="col_unique_delegators">
-                            <div>656 768</div>
-                        </td>
-
-                        <td class="col_new_delegators">
-                            <div>765</div>
-                        </td>
-
-                        <td class="col_voting_participation">
-                            <div>79 / 79</div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="col_number alignleft">№ 1</td>
-
-                        <td class="col_moniker">
-                            <router-link to="/validator/cosmovaloper" class="moniker">
-                                <div class="logo">
-                                    <!-- <img src="@/assets/osmosis_logo.png" alt=""> -->
-                                </div>
-
-                                <div>
-                                    <div class="name">Coinbase</div>
-                                </div>
-                            </router-link>
-                        </td>
-
-                        <td class="col_voting_power">
-                            <div>784 436 547</div>
-                            <div class="price grey">$ 435 463 765</div>
-                        </td>
-
-                        <td class="col_self_bonded">
-                            <div>354 643.01</div>
-                        </td>
-
-                        <td class="col_commission">
-                            <div>5%</div>
-                        </td>
-
-                        <td class="col_commission_changes">
-                            <div>6 | 25 | <span class="red">97</span></div>
-                        </td>
-
-                        <td class="col_slashing_count">
-                            <div>7</div>
-                        </td>
-
-                        <td class="col_commission_earned">
-                            <div>674 325.57</div>
-                        </td>
-
-                        <td class="col_restake_enabled">
-                            <div>Yes</div>
-                        </td>
-
-                        <td class="col_unique_delegators">
-                            <div>656 768</div>
-                        </td>
-
-                        <td class="col_new_delegators">
-                            <div>765</div>
-                        </td>
-
-                        <td class="col_voting_participation">
-                            <div>79 / 79</div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="col_number alignleft">№ 1</td>
-
-                        <td class="col_moniker">
-                            <router-link to="/validator/cosmovaloper" class="moniker">
-                                <div class="logo">
-                                    <!-- <img src="@/assets/osmosis_logo.png" alt=""> -->
-                                </div>
-
-                                <div>
-                                    <div class="name">Coinbase</div>
-                                </div>
-                            </router-link>
-                        </td>
-
-                        <td class="col_voting_power">
-                            <div>784 436 547</div>
-                            <div class="price grey">$ 435 463 765</div>
-                        </td>
-
-                        <td class="col_self_bonded">
-                            <div>354 643.01</div>
-                        </td>
-
-                        <td class="col_commission">
-                            <div>5%</div>
-                        </td>
-
-                        <td class="col_commission_changes">
-                            <div>6 | 25 | <span class="red">97</span></div>
-                        </td>
-
-                        <td class="col_slashing_count">
-                            <div>7</div>
-                        </td>
-
-                        <td class="col_commission_earned">
-                            <div>674 325.57</div>
-                        </td>
-
-                        <td class="col_restake_enabled">
-                            <div>Yes</div>
-                        </td>
-
-                        <td class="col_unique_delegators">
-                            <div>656 768</div>
-                        </td>
-
-                        <td class="col_new_delegators">
-                            <div>765</div>
-                        </td>
-
-                        <td class="col_voting_participation">
-                            <div>79 / 79</div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="col_number alignleft">№ 1</td>
-
-                        <td class="col_moniker">
-                            <router-link to="/validator/cosmovaloper" class="moniker">
-                                <div class="logo">
-                                    <!-- <img src="@/assets/osmosis_logo.png" alt=""> -->
-                                </div>
-
-                                <div>
-                                    <div class="name">Coinbase</div>
-                                </div>
-                            </router-link>
-                        </td>
-
-                        <td class="col_voting_power">
-                            <div>784 436 547</div>
-                            <div class="price grey">$ 435 463 765</div>
-                        </td>
-
-                        <td class="col_self_bonded">
-                            <div>354 643.01</div>
-                        </td>
-
-                        <td class="col_commission">
-                            <div>5%</div>
-                        </td>
-
-                        <td class="col_commission_changes">
-                            <div>6 | 25 | <span class="red">97</span></div>
-                        </td>
-
-                        <td class="col_slashing_count">
-                            <div>7</div>
-                        </td>
-
-                        <td class="col_commission_earned">
-                            <div>674 325.57</div>
-                        </td>
-
-                        <td class="col_restake_enabled">
-                            <div>Yes</div>
-                        </td>
-
-                        <td class="col_unique_delegators">
-                            <div>656 768</div>
-                        </td>
-
-                        <td class="col_new_delegators">
-                            <div>765</div>
-                        </td>
-
-                        <td class="col_voting_participation">
-                            <div>79 / 79</div>
+                            <div></div>
                         </td>
                     </tr>
                 </tbody>
@@ -614,7 +105,45 @@
 </template>
 
 
+<script setup>
+    import { onBeforeMount, ref } from 'vue'
+
+    // Components
+    import Loader from '@/components/Loader.vue'
+
+
+    const loading = ref(true),
+        validators = ref([])
+
+
+    onBeforeMount(async () => {
+        // Get data
+        try {
+            await fetch('https://rpc.bronbro.io/statistics/validators?limit=10')
+                .then(res => res.json())
+                .then(response => {
+                    // Set data
+                    validators.value = response.validators
+
+                    // Hide loading
+                    loading.value = false
+                })
+        } catch (error) {
+            console.error(error)
+        }
+    })
+</script>
+
+
 <style scoped>
+    .loader_wrap
+    {
+        position: relative;
+
+        background: none;
+    }
+
+
     table th
     {
         position: relative;
@@ -660,8 +189,8 @@
 
     table .col_voting_power
     {
-        width: 120px;
-        min-width: 120px;
+        width: 125px;
+        min-width: 125px;
 
         table-layout: fixed;
     }
@@ -725,9 +254,12 @@
 
         display: flex;
 
+        width: 159px;
+        max-width: 100%;
+
         text-align: left;
 
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: flex-start;
         align-content: flex-start;
         flex-wrap: wrap;
@@ -765,9 +297,19 @@
 
     .moniker .logo + *
     {
-        width: calc(100% - 28px);
+        max-width: calc(100% - 28px);
+        margin-left: 4px;
 
         align-self: center;
+    }
+
+
+    .moniker .name
+    {
+        overflow: hidden;
+
+        white-space: nowrap;
+        text-overflow: ellipsis;
     }
 
 

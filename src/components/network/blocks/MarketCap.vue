@@ -18,7 +18,7 @@
         <div class="val">
             $
             <Loader v-if="!data" />
-            <span v-else>{{ $filters.toFixed(data.today, 0).toLocaleString('ru-RU') }}</span>
+            <span v-else>{{ $filters.toFixed(data.today / Math.pow(10, store.networks[store.currentNetwork].exponent), 0).toLocaleString('ru-RU') }}</span>
         </div>
 
         <div class="chart"></div>

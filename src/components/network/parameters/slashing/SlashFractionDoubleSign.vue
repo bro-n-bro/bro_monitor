@@ -10,7 +10,11 @@
             {{ $t('message.network_parameters_slash_fraction_double_sign_title') }}
         </div>
 
-        <div class="val">5%</div>
+        <div class="val">
+            <Loader v-if="!props.slash_fraction_double_sign" />
+            <span v-else>{{ props.slash_fraction_double_sign * 100 }}</span>
+            %
+        </div>
     </div>
 </template>
 
@@ -24,5 +28,6 @@
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter')
+        emitter = inject('emitter'),
+        props = defineProps(['slash_fraction_double_sign'])
 </script>

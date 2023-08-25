@@ -6,19 +6,19 @@
 
         <div class="row">
             <!-- Signed Blocks Window -->
-            <SignedBlocksWindow />
+            <SignedBlocksWindow :signed_blocks_window="data.signed_blocks_window" />
 
             <!-- Min Signed Per Window -->
-            <MinSignedPerWindow />
+            <MinSignedPerWindow :min_signed_per_window="data.min_signed_per_window" />
 
             <!-- Downtime Jail Duration -->
-            <DowntimeJailDuration />
+            <DowntimeJailDuration :downtime_jail_duration_seconds="data.downtime_jail_duration_seconds" />
 
             <!-- Slash Fraction Double Sign -->
-            <SlashFractionDoubleSign />
+            <SlashFractionDoubleSign :slash_fraction_double_sign="data.slash_fraction_double_sign" />
 
             <!-- Slash Fraction Downtime -->
-            <SlashFractionDowntime />
+            <SlashFractionDowntime :slash_fraction_downtime="data.slash_fraction_downtime" />
         </div>
     </div>
 </template>

@@ -122,6 +122,8 @@ export default {
             'network_parameters_slash_fraction_double_sign_title': 'Slash Fraction Double Sign',
             'network_parameters_slash_downtime_title': 'Slash Fraction Downtime',
 
+            'network_parameters_slash_downtime_unit': 'Mins',
+
             'network_parameters_days_unit': 'Days',
 
             'network_IBC_table_label_chain': 'Chain',

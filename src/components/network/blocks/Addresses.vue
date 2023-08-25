@@ -25,7 +25,7 @@
 
 
 <script setup>
-    import { inject, ref } from 'vue'
+    import { inject, ref, onBeforeMount } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -34,5 +34,20 @@
 
     const store = useGlobalStore(),
         emitter = inject('emitter'),
-        data = ref(7033976621)
+        data = ref(null)
+
+
+    onBeforeMount(async () => {
+        // Get data
+        try {
+            await fetch('https://rpc.bronbro.io/statistics/total_accounts')
+                .then(res => res.json())
+                .then(response => {
+                    // Set data
+                    data.value = response.data
+                })
+        } catch (error) {
+            console.error(error)
+        }
+    })
 </script>

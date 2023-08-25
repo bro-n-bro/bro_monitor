@@ -10,7 +10,10 @@
             {{ $t('message.network_parameters_signed_blocks_window_title') }}
         </div>
 
-        <div class="val">10000</div>
+        <div class="val">
+            <Loader v-if="!props.signed_blocks_window" />
+            <span v-else>{{ props.signed_blocks_window.toLocaleString('ru-RU') }}</span>
+        </div>
     </div>
 </template>
 
@@ -24,5 +27,6 @@
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter')
+        emitter = inject('emitter'),
+        props = defineProps(['signed_blocks_window'])
 </script>

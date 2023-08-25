@@ -340,7 +340,7 @@
 
     .block .title
     {
-        font-size: 16px;
+        font-size: 18px;
         line-height: 120%;
 
         position: relative;
@@ -351,15 +351,10 @@
         padding-top: 3px;
     }
 
-    .block .title.big
-    {
-        font-size: 18px;
-    }
-
 
     .block .val
     {
-        font-size: 28px;
+        font-size: 26px;
         font-weight: 600;
         line-height: 100%;
 
@@ -476,13 +471,6 @@
         {
             width: calc(100% - 344px);
         }
-
-
-
-        .block .val
-        {
-            font-size: 26px;
-        }
     }
 
 
@@ -497,13 +485,6 @@
         .col_main
         {
             width: calc(100% - 320px);
-        }
-
-
-
-        .block .val
-        {
-            font-size: 25px;
         }
     }
 
@@ -523,9 +504,9 @@
 
 
 
-        .block .val
+        .block .title
         {
-            font-size: 24px;
+            font-size: 16px;
         }
     }
 

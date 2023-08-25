@@ -10,7 +10,11 @@
             {{ $t('message.network_parameters_min_signed_per_window_title') }}
         </div>
 
-        <div class="val">5%</div>
+        <div class="val">
+            <Loader v-if="!props.min_signed_per_window" />
+            <span v-else>{{ props.min_signed_per_window * 100 }}</span>
+            %
+        </div>
     </div>
 </template>
 
@@ -24,5 +28,6 @@
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter')
+        emitter = inject('emitter'),
+        props = defineProps(['min_signed_per_window'])
 </script>

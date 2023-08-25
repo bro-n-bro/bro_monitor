@@ -9,7 +9,7 @@
         </div>
 
         <div class="val">
-            <Loader v-if="!data" />
+            <Loader v-if="!data == null" />
             <span v-else>{{ data }}</span>
         </div>
 

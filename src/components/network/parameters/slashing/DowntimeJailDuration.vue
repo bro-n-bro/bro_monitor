@@ -10,7 +10,13 @@
             {{ $t('message.network_parameters_downtime_jail_duration_title') }}
         </div>
 
-        <div class="val">10 Mins</div>
+        <div class="val">
+            <Loader v-if="!props.downtime_jail_duration_seconds" />
+            <span v-else>
+                {{ props.downtime_jail_duration_seconds / 60 }}
+                {{ $t('message.network_parameters_slash_downtime_unit') }}
+            </span>
+        </div>
     </div>
 </template>
 
@@ -24,5 +30,6 @@
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter')
+        emitter = inject('emitter'),
+        props = defineProps(['downtime_jail_duration_seconds'])
 </script>
