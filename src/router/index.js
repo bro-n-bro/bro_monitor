@@ -62,7 +62,7 @@ const routes = [
 		}
 	},
 	{
-		path: '/validators',
+		path: '/:network/validators',
 		name: 'Validators',
 		component: () => import('../views/Validators.vue'),
 		meta: {
@@ -113,6 +113,11 @@ router.beforeResolve(async (to, from, next) => {
     // Current chart from url
 	if (to.params.chart_name) {
 		store.currentChart = to.params.chart_name
+	}
+
+	// Get currencies price
+	if (!store.prices) {
+		await store.getCurrenciesPrice()
 	}
 
     // App full loaded

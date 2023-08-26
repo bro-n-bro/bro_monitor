@@ -248,6 +248,8 @@
     {
         position: relative;
 
+        overflow: hidden;
+
         min-height: 146px;
         padding: 12px 8px;
 
@@ -285,12 +287,17 @@
         top: 8px;
         right: 8px;
 
-        display: flex;
+        display: none;
 
         justify-content: flex-start;
         align-items: center;
         align-content: stretch;
         flex-wrap: wrap;
+    }
+
+    .col_main .block .btns
+    {
+        display: flex;
     }
 
 
@@ -385,6 +392,67 @@
     }
 
 
+
+    .block .titles
+    {
+        color: rgba(255, 255, 255, .70);
+        font-size: 12px;
+        line-height: 120%;
+
+        display: flex;
+
+        padding-right: 6px;
+
+        text-align: right;
+
+        background: #141414;
+
+        justify-content: flex-start;
+        align-items: stretch;
+        align-content: stretch;
+        flex-wrap: nowrap;
+    }
+
+
+    .block .titles > *
+    {
+        position: relative;
+
+        padding: 4px;
+
+        white-space: nowrap;
+    }
+
+    .block .titles > * + *
+    {
+        border-left: 1px solid #191919;
+    }
+
+
+    .block .titles .notice
+    {
+        position: absolute;
+        top: 4px;
+        left: 4px;
+
+        display: block;
+
+        width: 14px;
+        height: 14px;
+
+        cursor: help;
+        transition: opacity .2s linear;
+
+        opacity: .7;
+    }
+
+    .block .titles .notice:hover
+    {
+        opacity: 1;
+    }
+
+
+
     .block .table_wrap
     {
         width: calc(100% + 16px);
@@ -445,7 +513,7 @@
     }
 
 
-    .block table td .grey
+    .block .grey
     {
         margin-top: 4px;
 
@@ -453,9 +521,16 @@
     }
 
 
-    .block table .alignleft
+    .block .alignleft
     {
         text-align: left;
+    }
+
+
+
+    .block.big .titles > *
+    {
+        padding: 7px;
     }
 
 

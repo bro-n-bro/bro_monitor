@@ -6,9 +6,7 @@
     </div>
 
     <div class="blocks prices">
-        <Loader v-if="loading" />
-
-        <div class="row" v-else>
+        <div class="row">
             <!-- BOOT -->
             <BOOT />
 
@@ -44,11 +42,10 @@
 
 
 <script setup>
-    import { onBeforeMount, ref } from 'vue'
+    import { onBeforeMount } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
-    import Loader from  '@/components/Loader.vue'
     import BOOT from  '@/components/prices/BOOT.vue'
     import ATOM from  '@/components/prices/ATOM.vue'
     import JUNO from  '@/components/prices/JUNO.vue'
@@ -61,19 +58,12 @@
     import FLIX from  '@/components/prices/FLIX.vue'
 
 
-    const store = useGlobalStore(),
-        loading = ref(true)
+    const store = useGlobalStore()
 
 
-    onBeforeMount(async () => {
+    onBeforeMount(() => {
         // Reset current network
         store.currentNetwork = null
-
-        // Get prices
-        await store.getCurrenciesPrice()
-
-        // Hide loader
-        loading.value = false
     })
 </script>
 

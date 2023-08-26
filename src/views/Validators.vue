@@ -16,7 +16,7 @@
 
 
     <!-- Validators table -->
-    <ValidatorsTable class="big_table" />
+    <ValidatorsTable class="big" />
 </template>
 
 
