@@ -20,13 +20,13 @@
             %
         </div>
 
-        <div class="chart"></div>
+        <apexchart class="chart" height="47px" :options="chartOptions" :series="series" v-if="chartLoading" />
     </div>
 </template>
 
 
 <script setup>
-    import { inject, ref, onBeforeMount } from 'vue'
+    import { inject, ref, reactive, onBeforeMount } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -35,17 +35,132 @@
 
     const store = useGlobalStore(),
         emitter = inject('emitter'),
-        data = ref(null)
+        data = ref(null),
+        chartLoading = ref(false),
+        chartData = ref([]),
+        chartColors= ref([]),
+        series = reactive([
+            {
+                data: chartData
+            }
+        ]),
+        chartOptions = reactive({
+            chart: {
+                type: 'area',
+                fontFamily: 'var(--font_family)',
+                background: 'transparent',
+                parentHeightOffset: 0,
+                offsetX: 0,
+                offsetY: 0,
+                toolbar: {
+                    show: false
+                },
+                zoom: {
+                    enabled: false
+                }
+            },
+            colors: chartColors.value,
+            fill: {
+                colors: chartColors.value,
+                opacity: 0.2
+            },
+            stroke: {
+                width: 2,
+                curve: 'smooth',
+            },
+            dataLabels: {
+                enabled: false
+            },
+            grid: {
+                show: false,
+                padding: {
+                    left: -5,
+                    right: -5,
+                    bottom: -32,
+                    top: -30,
+                }
+            },
+            legend: {
+                show: false
+            },
+            tooltip: {
+                enabled: false
+            },
+            yaxis: {
+                show: false
+            },
+            xaxis: {
+                x: 0,
+                offsetX: 0,
+                offsetY: 0,
+                padding: {
+                    left: 0,
+                    right: 0
+                },
+                labels: {
+                    show: false
+                },
+                axisBorder: {
+                    show: false
+                },
+                axisTicks: {
+                    show: false
+                },
+                crosshairs: {
+                    show: false
+                },
+                tooltip: {
+                    enabled: false
+                }
+            }
+        })
 
 
     onBeforeMount(async () => {
         // Get data
         try {
-            await fetch('https://rpc.bronbro.io/statistics/inflation/actual')
+            fetch('https://rpc.bronbro.io/statistics/inflation/actual')
                 .then(res => res.json())
                 .then(response => {
                     // Set data
                     data.value = response.data
+                })
+        } catch (error) {
+            console.error(error)
+        }
+
+
+        // Get chart data
+        try {
+            // Request params
+            let currentDate = new Date(),
+                to_date = currentDate.toLocaleDateString('en-CA', {
+                    year: 'numeric',
+                    month: '2-digit',
+                    day: '2-digit',
+                }).split('.').join('-'),
+                detailing = 'day'
+
+            currentDate.setMonth(currentDate.getMonth() - 1)
+
+            let from_date = currentDate.toLocaleDateString('en-CA', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+            }).split('.').join('-')
+
+            // Request
+            fetch(`https://rpc.bronbro.io/statistics/inflation?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
+                .then(res => res.json())
+                .then(response => {
+                    // Set chart data
+                    response.data.forEach(el => chartData.value.push(el.y))
+
+                    // Set colors
+                    chartColors.value.push(response.data[response.data.length - 1].y > response.data[response.data.length - 2].y ? '#1BC562' : '#EB5757')
+
+                    // Show chart
+                    chartLoading.value = true
                 })
         } catch (error) {
             console.error(error)

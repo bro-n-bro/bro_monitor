@@ -9,13 +9,15 @@
     },
     "dependencies": {
         "@vueuse/core": "^10.3.0",
+        "apexcharts": "^3.42.0",
         "core-js": "^3.8.3",
         "gh-pages": "^4.0.0",
         "mitt": "^3.0.0",
         "pinia": "^2.0.18",
         "vue": "^3.2.13",
         "vue-i18n": "^9.2.2",
-        "vue-router": "^4.0.3"
+        "vue-router": "^4.0.3",
+        "vue3-apexcharts": "^1.4.4"
     },
     "devDependencies": {
         "@vue/cli-plugin-babel": "~5.0.0",

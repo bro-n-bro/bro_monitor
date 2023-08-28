@@ -355,7 +355,7 @@
 
         width: calc(100% - 100px);
         margin-bottom: 24px;
-        padding-top: 3px;
+        padding-top: 1px;
     }
 
 
@@ -389,6 +389,17 @@
     {
         width: 24px;
         height: 24px;
+    }
+
+
+    .block .chart
+    {
+        position: absolute;
+        z-index: 1;
+        bottom: 0;
+        left: 0;
+
+        width: 100%;
     }
 
 
