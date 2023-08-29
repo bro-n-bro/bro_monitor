@@ -34,5 +34,5 @@
 
     const store = useGlobalStore(),
         emitter = inject('emitter'),
-        data = ref(7864390024)
+        data = ref(null)
 </script>
