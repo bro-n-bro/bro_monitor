@@ -1,7 +1,7 @@
 <template>
-    <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.APY'] }">
+    <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.undondedToken'] }">
         <div class="btns">
-            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.APY')">
+            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.undondedToken')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
 
@@ -11,7 +11,7 @@
         </div>
 
         <div class="title">
-            {{ $t('message.network_charts_APY_title') }}
+            {{ $t('message.network_charts_undonded_token_title', { token: store.networks[store.currentNetwork].token_name }) }}
         </div>
 
         <Loader v-if="!loading" />
@@ -116,7 +116,7 @@
                         fontFamily: 'var(--font_family)',
                     },
                     offsetX: -16,
-                    formatter: value => { return (value * 100).toFixed(2) + '%' }
+                    formatter: value => { return Number((value / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') },
                 },
                 axisBorder: {
                     show: false,
@@ -173,14 +173,14 @@
             }).split('.').join('-')
 
             // Request
-            fetch(`https://rpc.bronbro.io/statistics/apy?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
+            fetch(`https://rpc.bronbro.io/statistics/unbonded_tokens?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
                 .then(res => res.json())
                 .then(response => {
                     // Set chart data
                     response.data.forEach(el => chartData.value.push(el.y))
 
-                    chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
-                    chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
+                    chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.1
+                    chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.1
 
                     // Set colors
                     chartColors.value.push(response.data[response.data.length - 1].y > response.data[response.data.length - 2].y ? '#1BC562' : '#EB5757')

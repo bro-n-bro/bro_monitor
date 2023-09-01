@@ -107,6 +107,8 @@ export default {
             'network_charts_unique_delegators_title': 'Unique Delegators',
             'network_charts_voting_power_title': 'Voting Power',
 
+            'network_charts_unit_sec': 'sec',
+
             'network_parameters_unbonding_time_title': 'Unbonding Time',
             'network_parameters_max_validators_title': 'Max Validators',
             'network_parameters_voting_period_title': 'Voting Period',

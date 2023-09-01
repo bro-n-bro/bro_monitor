@@ -2,10 +2,10 @@
     <div class="blocks charts">
         <div class="row">
             <!-- Token price -->
-            <TokenPrice />
+            <!-- <TokenPrice /> -->
 
             <!-- Market cap -->
-            <MarketCap />
+            <!-- <MarketCap /> -->
 
             <!-- APR -->
             <APR />
@@ -14,10 +14,10 @@
             <APY />
 
             <!-- Bonded tokens -->
-            <BondedToken />
+            <TotalBondedToken />
 
             <!-- Bonded ratio -->
-            <BondedRatio />
+            <TotalBondedRatio />
 
             <!-- Bonded token / APR -->
             <BondedTokenAPR />
@@ -29,7 +29,7 @@
             <CurrentBlockTime />
 
             <!-- Unbonded token -->
-            <UnbondedToken />
+            <TotalUnbondedToken />
         </div>
     </div>
 </template>
@@ -41,10 +41,10 @@
     import MarketCap from '@/components/network/charts/MarketCap.vue'
     import APR from '@/components/network/charts/APR.vue'
     import APY from '@/components/network/charts/APY.vue'
-    import BondedToken from '@/components/network/charts/BondedToken.vue'
-    import BondedRatio from '@/components/network/charts/BondedRatio.vue'
+    import TotalBondedToken from '@/components/network/charts/TotalBondedToken.vue'
+    import TotalBondedRatio from '@/components/network/charts/TotalBondedRatio.vue'
     import BondedTokenAPR from '@/components/network/charts/BondedTokenAPR.vue'
     import Inflation from '@/components/network/charts/Inflation.vue'
     import CurrentBlockTime from '@/components/network/charts/CurrentBlockTime.vue'
-    import UnbondedToken from '@/components/network/charts/UnbondedToken.vue'
+    import TotalUnbondedToken from '@/components/network/charts/TotalUnbondedToken.vue'
 </script>
