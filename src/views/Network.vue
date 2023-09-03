@@ -182,7 +182,7 @@
 
 
     const activeTab = ref(1),
-        networkActiveType = ref(2),
+        networkActiveType = ref(1),
         accountsActiveType = ref(1),
         IBCRelayingActiveType = ref(1),
         validatorsActiveType = ref(1)

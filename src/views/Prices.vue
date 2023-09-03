@@ -7,23 +7,11 @@
 
     <div class="blocks prices">
         <div class="row">
-            <!-- BOOT -->
-            <BOOT />
-
             <!-- ATOM -->
             <ATOM />
 
-            <!-- JUNO -->
-            <JUNO />
-
-            <!-- OSMO -->
-            <OSMO />
-
-            <!-- GRAVITON -->
-            <GRAVITON />
-
-            <!-- STARS -->
-            <STARS />
+            <!-- BOOT -->
+            <BOOT />
 
             <!-- CRE -->
             <CRE />
@@ -36,6 +24,30 @@
 
             <!-- FLIX -->
             <FLIX />
+
+            <!-- GRAV -->
+            <GRAV />
+
+            <!-- JUNO -->
+            <JUNO />
+
+            <!-- MPWR -->
+            <MPWR />
+
+            <!-- OSMO -->
+            <OSMO />
+
+            <!-- PICA -->
+            <PICA />
+
+            <!-- QWOYN -->
+            <QWOYN />
+
+            <!-- STARS -->
+            <STARS />
+
+            <!-- STRD -->
+            <STRD />
         </div>
     </div>
 </template>
@@ -50,12 +62,16 @@
     import ATOM from  '@/components/prices/ATOM.vue'
     import JUNO from  '@/components/prices/JUNO.vue'
     import OSMO from  '@/components/prices/OSMO.vue'
-    import GRAVITON from  '@/components/prices/GRAVITON.vue'
+    import GRAV from  '@/components/prices/GRAV.vue'
     import STARS from  '@/components/prices/STARS.vue'
     import CRE from  '@/components/prices/CRE.vue'
     import DSM from  '@/components/prices/DSM.vue'
     import EVMOS from  '@/components/prices/EVMOS.vue'
     import FLIX from  '@/components/prices/FLIX.vue'
+    import MPWR from  '@/components/prices/MPWR.vue'
+    import PICA from  '@/components/prices/PICA.vue'
+    import QWOYN from  '@/components/prices/QWOYN.vue'
+    import STRD from  '@/components/prices/STRD.vue'
 
 
     const store = useGlobalStore()

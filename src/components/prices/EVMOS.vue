@@ -4,18 +4,14 @@
             <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.prices.EVMOS')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
-
-            <router-link to="/" class="btn">
-                <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-            </router-link>
         </div>
 
-        <div class="title">
-            {{ $t('message.prices_EVMOS_title') }}
+        <div class="title" :style="`color: ${color};`">
+            <b>{{ $t('message.prices_EVMOS_title') }}</b>
         </div>
 
         <div class="val">
-            ${{ $filters.toFixed(store.prices.find(el => el.symbol == 'EVMOS').price, 2) }}
+            ${{ $filters.toFixed(store.prices.find(el => el.symbol == 'EVMOS').price, 3) }}
         </div>
 
         <div class="chart"></div>
@@ -29,5 +25,6 @@
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter')
+        emitter = inject('emitter'),
+        color = '#ED4E33'
 </script>

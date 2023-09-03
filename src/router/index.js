@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { useGlobalStore } from '@/stores'
 
+
 // Layouts
 import errorLayout from '@/layouts/Error.vue'
 import defaultLayout from '@/layouts/Default.vue'
@@ -38,7 +39,7 @@ const routes = [
 		}
 	},
 	{
-		path: '/validator/:operator_address',
+		path: '/:network/validator/:operator_address',
 		name: 'Validator',
 		component: () => import('../views/Validator.vue'),
 		meta: {
@@ -113,6 +114,11 @@ router.beforeResolve(async (to, from, next) => {
     // Current chart from url
 	if (to.params.chart_name) {
 		store.currentChart = to.params.chart_name
+	}
+
+    // Current validator from url
+	if (to.params.operator_address) {
+		store.currentValidatorAddress = to.params.operator_address
 	}
 
 	// Get currencies price

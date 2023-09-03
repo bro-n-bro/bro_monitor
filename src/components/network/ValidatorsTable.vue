@@ -16,9 +16,9 @@
                 <div class="col_moniker alignleft">{{ $t('message.network_validators_table_label_moniker') }}</div>
                 <div class="col_voting_power">{{ $t('message.network_validators_table_label_voting_power') }}</div>
                 <div class="col_self_bonded" v-html="$t('message.network_validators_table_label_self_bonded')"></div>
-                <div class="col_commission">{{ $t('message.network_validators_table_label_commission') }}</div>
                 <div class="col_commission_changes" v-html="$t('message.network_validators_table_label_commission_changes')"></div>
                 <div class="col_slashing_count" v-html="$t('message.network_validators_table_label_slashing_count')"></div>
+                <div class="col_uptime" v-html="$t('message.network_validators_table_label_uptime')"></div>
                 <div class="col_commission_earned" v-html="$t('message.network_validators_table_label_commission_earned')"></div>
                 <div class="col_restake_enabled" v-html="$t('message.network_validators_table_label_restake_enabled')"></div>
                 <div class="col_unique_delegators" v-html="$t('message.network_validators_table_label_unique_delegators')"></div>
@@ -43,7 +43,7 @@
                     <div class="col_number alignleft">{{ $t('message.network_validators_table_label_number') }} {{ index + 1 }}</div>
 
                     <div class="col_moniker alignleft">
-                        <router-link :to="`/validator/${validator.operator_address}`" class="moniker">
+                        <router-link :to="`/${store.currentNetwork}/validator/${validator.operator_address}`" class="moniker">
                             <div class="logo">
                                 <img :src="validator.mintscan_avatar_url" alt="" @error="imageLoadError">
                                 <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_user"></use></svg>
@@ -73,17 +73,24 @@
                         <div v-else>0</div>
                     </div>
 
-                    <div class="col_commission">
-                        <div>{{ $filters.toFixed(validator.commission * 100, 1) }}%</div>
-                    </div>
-
                     <div class="col_commission_changes">
-                        <div>{{ validator.commission }} | {{ validator.max_change_rate }} | <span :class="{ red: validator.commission > 0.25 || validator.max_change_rate > 0.25 || validator.max_rate > 0.25}">{{ validator.max_rate }}</span></div>
+                        <div>
+                            {{ $filters.toFixed(validator.commission * 100, 1) }} |
+                            {{ $filters.toFixed(validator.max_change_rate * 100, 1) }} |
+
+                            <span :class="{ red: validator.commission > 0.25 || validator.max_change_rate > 0.25 || validator.max_rate > 0.25}">
+                                {{ $filters.toFixed(validator.max_rate * 100, 1) }}
+                            </span>
+                        </div>
                     </div>
 
                     <div class="col_slashing_count">
                         <div v-if="validator.slashing">{{ validator.slashing }}</div>
                         <div v-else>&#8212;</div>
+                    </div>
+
+                    <div class="col_uptime">
+
                     </div>
 
                     <div class="col_commission_earned">
@@ -217,7 +224,6 @@
         min-width: 90px;
     }
 
-    .col_commission,
     .col_commission_earned
     {
         width: 80px;
@@ -226,8 +232,13 @@
 
     .col_commission_changes
     {
-        width: 130px;
-        min-width: 130px;
+        width: 144px;
+        min-width: 144px;
+    }
+
+    .col_uptime{
+        width: 50px;
+        min-width: 50px;
     }
 
     .col_unique_delegators,
@@ -310,7 +321,7 @@
 
     .col_main .validator .moniker
     {
-        width: 155px;
+        width: 170px;
     }
 
 
@@ -403,8 +414,8 @@
 
 
 
-    .block.big .col_commission,
-    .block.big .col_slashing_count
+    .block.big .col_slashing_count,
+    .block.big .col_uptime
     {
         width: 100px;
         min-width: 100px;

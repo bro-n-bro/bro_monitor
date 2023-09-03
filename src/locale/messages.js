@@ -106,6 +106,7 @@ export default {
             'network_charts_сommission_earned_title': 'Commission Earned',
             'network_charts_unique_delegators_title': 'Unique Delegators',
             'network_charts_voting_power_title': 'Voting Power',
+            'network_charts_uptime_title': 'Uptime',
 
             'network_charts_unit_sec': 'sec',
 
@@ -153,9 +154,9 @@ export default {
             'network_validators_table_label_moniker': 'Moniker',
             'network_validators_table_label_voting_power': 'Voting Power',
             'network_validators_table_label_self_bonded': 'Self<br> Bonded',
-            'network_validators_table_label_commission': 'Commission',
-            'network_validators_table_label_commission_changes': 'Commission changes<br> (max/min/per day); %',
+            'network_validators_table_label_commission_changes': 'Commission changes %<br> current/max/per day',
             'network_validators_table_label_slashing_count': 'Slashing<br> Count',
+            'network_validators_table_label_uptime': 'Uptime<br> %',
             'network_validators_table_label_commission_earned': 'Commission<br> Earned',
             'network_validators_table_label_restake_enabled': 'Restake<br> Enabled',
             'network_validators_table_label_unique_delegators': 'Unique<br> Delegators',
@@ -172,14 +173,14 @@ export default {
 
             'validator_features_label_voting_power': 'Voting Power',
             'validator_features_label_self_bonded': 'Self Bonded',
-            'validator_features_label_commission': 'Commission',
-            'validator_features_label_commission_changes': 'Commission changes<br> (max/min/per day)',
+            'validator_features_label_commission_changes': 'Commission %<br> current/max/per day',
             'validator_features_label_slashing_count': 'Slashing Count',
             'validator_features_label_commission_earned': 'Commission Earned',
             'validator_features_label_restake_enabled': 'Restake Enabled',
             'validator_features_label_unique_delegators': 'Unique Delegators',
             'validator_features_label_new_delegators': 'New Delegators',
             'validator_features_label_voting_participation': 'Voting Participation',
+            'validator_features_label_uptime': 'Uptime',
 
 
             // Prices page
@@ -188,12 +189,16 @@ export default {
             'prices_ATOM_title': 'ATOM',
             'prices_JUNO_title': 'JUNO',
             'prices_OSMO_title': 'OSMO',
-            'prices_GRAVITON_title': 'GRAVITON',
+            'prices_GRAV_title': 'GRAV',
             'prices_STARS_title': 'STARS',
             'prices_CRE_title': 'CRE',
             'prices_DSM_title': 'DSM',
             'prices_EVMOS_title': 'EVMOS',
             'prices_FLIX_title': 'FLIX',
+            'prices_MPWR_title': 'MPWR',
+            'prices_PICA_title': 'PICA',
+            'prices_QWOYN_title': 'QWOYN',
+            'prices_STRD_title': 'STRD',
 
 
             // Chart page
@@ -212,7 +217,6 @@ export default {
 
 
             // Time range
-            'time_range_1h': '1H',
             'time_range_24h': '24H',
             'time_range_7D': '7D',
             'time_range_30D': '30D',

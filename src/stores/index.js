@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { useLocalStorage } from '@vueuse/core'
 
+
 // Networks
 import cosmoshub from '@/stores/networks/cosmoshub'
 
@@ -18,6 +19,7 @@ export const useGlobalStore = defineStore('global', {
 
         currentNetwork: null,
         currentChart: null,
+        currentValidatorAddress: null,
 
         networks,
 

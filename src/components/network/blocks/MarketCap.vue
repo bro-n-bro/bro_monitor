@@ -4,10 +4,6 @@
             <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.blocks.marketCap')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
-
-            <router-link to="/" class="btn">
-                <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-            </router-link>
         </div>
 
         <div class="title">

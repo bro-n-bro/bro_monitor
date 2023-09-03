@@ -355,7 +355,12 @@
 
         width: calc(100% - 100px);
         margin-bottom: 24px;
-        padding-top: 1px;
+        padding-top: 2px;
+    }
+
+    .block .title b
+    {
+        font-weight: 500;
     }
 
 
@@ -631,7 +636,8 @@
             margin-left: -12px;
         }
 
-        .blocks .row > *
+        .blocks .row > *,
+        .blocks.charts .row > *
         {
             width: calc(50% - 12px);
             margin-left: 12px;
@@ -713,7 +719,8 @@
 
 
 
-        .blocks .row > *
+        .blocks .row > *,
+        .blocks.charts .row > *
         {
             width: calc(100% - 12px);
         }

@@ -9,7 +9,7 @@ const network = {
     mintscanAlias: 'cosmos',
     prefix: 'cosmos',
     address_prefix: 'cosmos',
-    exponent: 6,
+    exponent: 6
 }
 
 export default network

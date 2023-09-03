@@ -7,8 +7,9 @@
                 </div>
 
                 <div class="val">
-                    <div>784 436 547</div>
-                    <div class="grey">435 463 765 $</div>
+                    <div>{{ $filters.toFixed(props.validator.voting_power / Math.pow(10, store.networks[props.validator.network].exponent), 0).toLocaleString('ru-RU') }}</div>
+
+                    <div class="grey">{{ $filters.toFixed(props.validator.voting_power / Math.pow(10, store.networks[props.validator.network].exponent) * store.prices.find(el => el.symbol == store.networks[store.currentNetwork].token_name).price, 0).toLocaleString('ru-RU') }} $</div>
                 </div>
             </div>
 
@@ -18,17 +19,7 @@
                 </div>
 
                 <div class="val">
-                    <div>354 643,01</div>
-                </div>
-            </div>
-
-            <div class="feature">
-                <div class="label">
-                    {{ $t('message.validator_features_label_commission') }}
-               </div>
-
-                <div class="val">
-                    <div>4.00%</div>
+                    <div>{{ $filters.toFixed(props.validator.self_delegations / Math.pow(10, store.networks[store.currentNetwork].exponent), 0).toLocaleString('ru-RU') }}</div>
                 </div>
             </div>
 
@@ -36,7 +27,19 @@
                 <div class="label" v-html="$t('message.validator_features_label_commission_changes')"></div>
 
                 <div class="val">
-                    <div>5% / 20% / <span class="red">20%</span></div>
+                    <div>
+                        {{ $filters.toFixed(props.validator.commission * 100, 1) }}%
+
+                        <span class="sep">|</span>
+
+                        {{ $filters.toFixed(props.validator.max_change_rate * 100, 1) }}%
+
+                        <span class="sep">|</span>
+
+                        <span :class="{ red: props.validator.commission > 0.25 || props.validator.max_change_rate > 0.25 || props.validator.max_rate > 0.25}">
+                            {{ $filters.toFixed(props.validator.max_rate * 100, 1) }}%
+                        </span>
+                    </div>
                 </div>
             </div>
 
@@ -46,7 +49,8 @@
                </div>
 
                 <div class="val">
-                    <div>—</div>
+                    <div v-if="props.validator.slashing">{{ props.validator.slashing }}</div>
+                    <div v-else>&#8212;</div>
                 </div>
             </div>
 
@@ -56,7 +60,7 @@
                </div>
 
                 <div class="val">
-                    <div>674 325,57</div>
+                    <div></div>
                 </div>
             </div>
 
@@ -66,7 +70,7 @@
                </div>
 
                 <div class="val">
-                    <div>Yes</div>
+                    <div></div>
                 </div>
             </div>
 
@@ -76,7 +80,7 @@
                </div>
 
                 <div class="val">
-                    <div>656 768 777</div>
+                    <div>{{ props.validator.delegators.toLocaleString('ru-RU') }}</div>
                 </div>
             </div>
 
@@ -86,7 +90,7 @@
                </div>
 
                 <div class="val">
-                    <div>765</div>
+                    <div>{{ props.validator.new_delegators ? props.validator.new_delegators.toLocaleString('ru-RU') : 0 }}</div>
                 </div>
             </div>
 
@@ -96,7 +100,17 @@
                </div>
 
                 <div class="val">
-                    <div>15 / 15</div>
+                    <div>{{ props.validator.votes ? props.validator.votes : 0 }} / 0 </div>
+                </div>
+            </div>
+
+            <div class="feature">
+                <div class="label">
+                    {{ $t('message.validator_features_label_uptime') }}
+               </div>
+
+                <div class="val">
+                    <div></div>
                 </div>
             </div>
         </div>
@@ -105,7 +119,11 @@
 
 
 <script setup>
+    import { useGlobalStore } from '@/stores'
 
+
+    const store = useGlobalStore(),
+        props = defineProps(['validator'])
 </script>
 
 
@@ -138,6 +156,7 @@
         display: flex;
         flex-direction: column;
 
+        min-height: 112px;
         padding: 10px 8px;
 
         border-radius: 12px;
@@ -150,7 +169,6 @@
         line-height: 120%;
 
         min-height: 42px;
-        margin-bottom: 10px;
 
         opacity: .4;
     }
@@ -158,7 +176,7 @@
 
     .features .val
     {
-        font-size: 30px;
+        font-size: 26px;
         font-weight: 600;
         line-height: 100%;
 
@@ -184,4 +202,147 @@
     {
         color: #eb5757;
     }
+
+
+    .features .val .sep
+    {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 100%;
+
+        position: relative;
+        top: -2px;
+
+        display: inline-block;
+
+        vertical-align: middle;
+    }
+
+    .features .val .sep:nth-last-child(2)
+    {
+        margin-right: 4px;
+    }
+
+
+
+    @media print, (max-width: 1439px)
+    {
+        .features
+        {
+            margin-top: 24px;
+        }
+
+
+        .features .row
+        {
+            margin-bottom: -20px;
+            margin-left: -20px;
+        }
+
+        .features .row > *
+        {
+            width: calc(25% - 20px);
+            margin-bottom: 20px;
+            margin-left: 20px;
+        }
+
+
+        .features .feature
+        {
+            min-height: 105px;
+        }
+
+
+        .features .label
+        {
+            font-size: 15px;
+        }
+
+
+        .features .val
+        {
+            font-size: 23px;
+        }
+
+        .features .val .grey
+        {
+            font-size: 15px;
+        }
+    }
+
+
+
+    @media print, (max-width: 1359px)
+    {
+        .features .val
+        {
+            font-size: 22px;
+        }
+    }
+
+
+
+    @media print, (max-width: 1023px)
+    {
+        .features .row > *
+        {
+            width: calc(33.333% - 20px);
+        }
+
+
+        .features .val
+        {
+            font-size: 23px;
+        }
+    }
+
+
+
+    @media print, (max-width: 767px)
+    {
+        .features .row > *
+        {
+            width: calc(50% - 20px);
+        }
+
+
+        .features .val
+        {
+            font-size: 21px;
+        }
+
+        .features .val .grey
+        {
+            font-size: 14px;
+        }
+
+
+        .features .val .sep
+        {
+            font-size: 13px;
+        }
+    }
+
+
+
+    @media print, (max-width: 479px)
+    {
+        .features .row
+        {
+            margin-left: 0;
+        }
+
+        .features .row > *
+        {
+            width: 100%;
+            margin-left: 0;
+        }
+
+
+        .features .feature
+        {
+            min-height: 101px;
+        }
+    }
+
 </style>

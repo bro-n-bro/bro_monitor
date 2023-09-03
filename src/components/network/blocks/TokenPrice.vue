@@ -4,10 +4,6 @@
             <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.blocks.tokenPrice')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
-
-            <router-link :to="`/${store.currentNetwork}/chart/token_price`" class="btn">
-                <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-            </router-link>
         </div>
 
         <div class="title">
@@ -18,7 +14,7 @@
         <div class="val">
             $
             <Loader v-if="!data" />
-            <span v-else>{{ $filters.toFixed(data.today, 2) }}</span>
+            <span v-else>{{ $filters.toFixed(data.today, 3) }}</span>
         </div>
 
         <div class="chart"></div>

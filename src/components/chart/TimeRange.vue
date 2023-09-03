@@ -1,9 +1,5 @@
 <template>
     <div class="time_range">
-        <button class="btn" :class="{ active: activeTime == 1 }" @click.prevent="activeTime = 1">
-            {{ $t('message.time_range_1h') }}
-        </button>
-
         <button class="btn" :class="{ active: activeTime == 2 }" @click.prevent="activeTime = 2">
             {{ $t('message.time_range_24h') }}
         </button>
