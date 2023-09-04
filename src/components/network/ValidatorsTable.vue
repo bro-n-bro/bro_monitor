@@ -58,6 +58,8 @@
                     </div>
 
                     <div class="col_voting_power">
+                        <div class="mob_label">{{ $t('message.network_validators_table_label_voting_power') }}</div>
+
                         <div>{{ $filters.toFixed(validator.voting_power / Math.pow(10, store.networks[store.currentNetwork].exponent), 2).toLocaleString('ru-RU') }}</div>
 
                         <div class="price grey">
@@ -66,6 +68,8 @@
                     </div>
 
                     <div class="col_self_bonded">
+                        <div class="mob_label" v-html="$t('message.network_validators_table_label_self_bonded')"></div>
+
                         <div v-if="validator.self_delegations">
                             {{ $filters.toFixed(validator.self_delegations / Math.pow(10, store.networks[store.currentNetwork].exponent), 2) }}
                         </div>
@@ -74,6 +78,8 @@
                     </div>
 
                     <div class="col_commission_changes">
+                        <div class="mob_label" v-html="$t('message.network_validators_table_label_commission_changes')"></div>
+
                         <div>
                             {{ $filters.toFixed(validator.commission * 100, 1) }} |
                             {{ $filters.toFixed(validator.max_change_rate * 100, 1) }} |
@@ -85,31 +91,43 @@
                     </div>
 
                     <div class="col_slashing_count">
+                        <div class="mob_label" v-html="$t('message.network_validators_table_label_slashing_count')"></div>
+
                         <div v-if="validator.slashing">{{ validator.slashing }}</div>
                         <div v-else>&#8212;</div>
                     </div>
 
                     <div class="col_uptime">
-
+                        <div class="mob_label" v-html="$t('message.network_validators_table_label_uptime')"></div>
                     </div>
 
                     <div class="col_commission_earned">
+                        <div class="mob_label" v-html="$t('message.network_validators_table_label_commission_earned')"></div>
+
                         <div></div>
                     </div>
 
                     <div class="col_restake_enabled">
+                        <div class="mob_label" v-html="$t('message.network_validators_table_label_restake_enabled')"></div>
+
                         <div></div>
                     </div>
 
                     <div class="col_unique_delegators">
+                        <div class="mob_label" v-html="$t('message.network_validators_table_label_unique_delegators')"></div>
+
                         <div>{{ validator.delegators }}</div>
                     </div>
 
                     <div class="col_new_delegators">
+                        <div class="mob_label" v-html="$t('message.network_validators_table_label_new_delegators')"></div>
+
                         <div>{{ validator.new_delegators ? validator.new_delegators : 0 }}</div>
                     </div>
 
                     <div class="col_voting_participation">
+                        <div class="mob_label" v-html="$t('message.network_validators_table_label_voting_participation')"></div>
+
                         <div>{{ validator.votes ? validator.votes : 0 }} / 0 </div>
                     </div>
                 </div>
@@ -236,7 +254,8 @@
         min-width: 144px;
     }
 
-    .col_uptime{
+    .col_uptime
+    {
         width: 50px;
         min-width: 50px;
     }
@@ -391,6 +410,18 @@
     }
 
 
+    .validator .mob_label
+    {
+        display: none;
+
+        margin-bottom: 8px;
+
+        opacity: .5;
+
+        flex: 1 0 auto;
+    }
+
+
     .validator .red
     {
         color: #eb5757;
@@ -448,6 +479,234 @@
     .block.big .validator > *
     {
         padding: 7px;
+    }
+
+
+
+    @media print, (max-width: 1899px)
+    {
+        .block.block.big .col_slashing_count,
+        .block.big .col_uptime
+        {
+            width: 80px;
+            min-width: 80px;
+        }
+
+        .block.block.big .col_voting_power
+        {
+            width: 125px;
+            min-width: 125px;
+        }
+
+        .block.block.big .col_commission_earned
+        {
+            width: 80px;
+            min-width: 80px;
+        }
+
+        .block.big .col_restake_enabled
+        {
+            width: 60px;
+            min-width: 60px;
+        }
+
+        .block.big .col_self_bonded
+        {
+            width: 90px;
+            min-width: 90px;
+        }
+
+        .block.big .col_unique_delegators,
+        .block.big .col_new_delegators
+        {
+            width: 70px;
+            min-width: 70px;
+        }
+
+        .block.big .col_voting_participation
+        {
+            width: 100px;
+            min-width: 100px;
+        }
+
+
+        .block.big .validator .moniker
+        {
+            width: 400px;
+        }
+    }
+
+
+
+    @media print, (max-width: 1439px)
+    {
+        .block.big .validator .moniker
+        {
+            width: 320px;
+        }
+    }
+
+
+
+    @media print, (max-width: 1359px)
+    {
+        .block.big .validator .moniker
+        {
+            width: 248px;
+        }
+    }
+
+
+
+    @media print, (max-width: 1279px)
+    {
+        .block .titles
+        {
+            display: none;
+        }
+
+
+        .scroll
+        {
+            display: flex;
+            overflow: visible;
+
+            max-height: none;
+            margin-bottom: -8px;
+            margin-left: -8px;
+            padding: 8px;
+
+            justify-content: flex-start;
+            align-items: stretch;
+            align-content: stretch;
+            flex-wrap: wrap;
+        }
+
+        .scroll > *
+        {
+            width: calc(50% - 8px);
+            margin-bottom: 8px;
+            margin-left: 8px;
+        }
+
+
+        .validator
+        {
+            padding: 16px;
+
+            text-align: left;
+
+            border-radius: 16px;
+            background: #141414;
+
+            flex-wrap: wrap;
+            align-items: stretch;
+            align-content: stretch;
+        }
+
+        .validator + .validator,
+        .validator > * + *
+        {
+            border: none;
+        }
+
+        .validator > *,
+        .block.big .validator > *
+        {
+            padding: 0;
+        }
+
+
+        .col_number
+        {
+            width: 100%;
+            min-width: 0;
+            margin-bottom: 8px;
+        }
+
+        .col_moniker
+        {
+            width: 100%;
+            min-width: 0;
+        }
+
+
+        .col_voting_power,
+        .col_self_bonded,
+        .col_commission_changes,
+        .col_slashing_count,
+        .col_uptime,
+        .col_commission_earned,
+        .col_restake_enabled,
+        .col_unique_delegators,
+        .col_new_delegators,
+        .col_voting_participation
+        {
+            display: flex;
+            flex-direction: column;
+
+            width: 33.333% !important;
+            min-width: 0 !important;
+            margin-top: 16px;
+        }
+
+
+        .block.big .validator .moniker
+        {
+            width: 100%;
+        }
+
+
+        .validator .mob_label
+        {
+            display: block;
+        }
+    }
+
+
+
+    @media print, (max-width: 1023px)
+    {
+        .col_voting_power,
+        .col_self_bonded,
+        .col_commission_changes,
+        .col_slashing_count,
+        .col_uptime,
+        .col_commission_earned,
+        .col_restake_enabled,
+        .col_unique_delegators,
+        .col_new_delegators,
+        .col_voting_participation
+        {
+            width: 50% !important;
+        }
+    }
+
+
+
+    @media print, (max-width: 767px)
+    {
+        .scroll
+        {
+            margin-left: 0;
+        }
+
+        .scroll > *
+        {
+            width: 100%;
+            margin-left: 0;
+        }
+    }
+
+
+
+    @media print, (max-width: 479px)
+    {
+        .scroll,
+        .validator
+        {
+            padding: 10px;
+        }
     }
 
 </style>

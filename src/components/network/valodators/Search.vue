@@ -101,4 +101,31 @@
         width: 280px;
     }
 
+
+
+    @media print, (max-width: 1023px)
+    {
+        .search .input
+        {
+            height: 51px;
+        }
+    }
+
+
+    @media print, (max-width: 767px)
+    {
+        .search
+        {
+            width: 100%;
+            margin-top: 16px;
+            margin-left: 0;
+        }
+
+        .search .input,
+        .search .input:focus
+        {
+            width: 100%;
+        }
+    }
+
 </style>

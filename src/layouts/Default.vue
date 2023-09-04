@@ -709,12 +709,14 @@
             width: 100%;
             margin-top: 20px;
             margin-left: 0;
+
+            flex-wrap: nowrap;
         }
 
 
         .head .types .btn
         {
-            width: 33.333%;
+            width: 100%;
         }
 
 
@@ -741,6 +743,11 @@
 
             width: auto;
             padding: 12px 16px;
+        }
+
+        .head .types.mob_equal_w .btn
+        {
+            width: 100%;
         }
 
 

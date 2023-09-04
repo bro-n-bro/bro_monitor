@@ -139,7 +139,7 @@
             {{ $t('message.network_validators_charts_page_title') }}
         </div>
 
-        <div class="types">
+        <div class="types mob_equal_w">
             <button class="btn" :class="{'active': validatorsActiveType == 1}" @click.prevent="validatorsActiveType = 1">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_network_data_type_table"></use></svg>
                 <span>{{ $t('message.network_type_table') }}</span>
@@ -181,7 +181,7 @@
     import ValidatorsSearch from  '@/components/network/valodators/Search.vue'
 
 
-    const activeTab = ref(1),
+    const activeTab = ref(4),
         networkActiveType = ref(1),
         accountsActiveType = ref(1),
         IBCRelayingActiveType = ref(1),

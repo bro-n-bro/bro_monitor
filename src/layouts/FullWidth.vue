@@ -87,4 +87,24 @@
         font-weight: 600;
     }
 
+
+
+    @media print, (max-width: 1023px)
+    {
+        .head .title
+        {
+            font-size: 22px;
+        }
+    }
+
+
+
+    @media print, (max-width: 767px)
+    {
+        .head .title
+        {
+            font-size: 20px;
+        }
+    }
+
 </style>
