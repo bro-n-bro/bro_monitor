@@ -181,7 +181,7 @@
     import ValidatorsSearch from  '@/components/network/valodators/Search.vue'
 
 
-    const activeTab = ref(4),
+    const activeTab = ref(1),
         networkActiveType = ref(1),
         accountsActiveType = ref(1),
         IBCRelayingActiveType = ref(1),

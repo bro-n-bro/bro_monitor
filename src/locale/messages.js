@@ -10,6 +10,12 @@ export default {
             'error_title_404': 'Page was lost in space....<br> Are you sure that it exist?',
 
 
+            // Home page
+            'home_label': 'monitor',
+            'home_title': 'Analytics.',
+            'home_desc': "Validator's rating created by Bro_n_Bro.Bro rating is aimed at community needs with regard to an appropriate funds decentralization in different Cosmos networks.",
+
+
             // Networks block
             'networks_title': 'Networks',
 

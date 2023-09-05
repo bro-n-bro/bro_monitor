@@ -202,8 +202,7 @@
 </script>
 
 
-
-    <style scoped>
+<style scoped>
     .block .chart
     {
         position: relative;

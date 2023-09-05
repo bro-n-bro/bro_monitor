@@ -26,7 +26,7 @@
     <div class="blocks charts">
         <div class="row">
             <!-- Commission Earned -->
-            <CommissionEarned />
+            <CommissionEarned :validator="validator" />
 
             <!-- Unique Delegators -->
             <UniqueDelegators />

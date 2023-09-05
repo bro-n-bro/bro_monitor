@@ -3,6 +3,7 @@ import { useGlobalStore } from '@/stores'
 
 
 // Layouts
+import mainLayout from '@/layouts/Index.vue'
 import errorLayout from '@/layouts/Error.vue'
 import defaultLayout from '@/layouts/Default.vue'
 import fullWidthLayout from '@/layouts/FullWidth.vue'
@@ -20,7 +21,11 @@ const routes = [
     },
     {
         path: '/',
-        redirect: '/network/cosmoshub'
+        name: 'Main',
+		component: () => import('../views/Index.vue'),
+		meta: {
+			layout: mainLayout
+		}
     },
     {
 		path: '/network/:network',

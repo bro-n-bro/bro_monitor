@@ -26,13 +26,13 @@
             </div>
 
             <!-- Notifications -->
-            <Notifications />
+            <Notifications v-if="route.path != '/'" />
 
             <!-- User info -->
-            <ConnectBtn v-if="!store.isAuth" />
+            <ConnectBtn v-if="!store.isAuth && route.path != '/'" />
 
             <!-- User info -->
-            <User v-if="store.isAuth" />
+            <User v-if="store.isAuth && route.path != '/'" />
         </div>
     </header>
 </template>
