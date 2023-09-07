@@ -16,7 +16,7 @@
 
         <div class="val">
             <Loader v-if="!data" />
-            <span v-else>{{ data.toLocaleString('ru-RU') }}</span>
+            <span v-else>{{ $filters.toFixed(data / Math.pow(10, store.networks[store.currentNetwork].exponent), 0).toLocaleString('ru-RU') }}</span>
         </div>
 
         <apexchart class="chart" height="47px" :options="chartOptions" :series="series" v-if="chartLoading" />
@@ -115,7 +115,20 @@
         })
 
 
-    onBeforeMount(async () => {
+    onBeforeMount(() => {
+        // Get data
+        try {
+            fetch('https://rpc.bronbro.io/statistics/gas_paid/actual')
+                .then(res => res.json())
+                .then(response => {
+                    // Set data
+                    data.value = response.data
+                })
+        } catch (error) {
+            console.error(error)
+        }
+
+
         // Get chart data
         try {
             // Request params
@@ -143,7 +156,7 @@
                     response.data.forEach(el => chartData.value.push(el.y))
 
                     // Set colors
-                    chartColors.value.push(response.data[response.data.length - 1].y > response.data[response.data.length - 2].y ? '#1BC562' : '#EB5757')
+                    chartColors.value.push(response.data[response.data.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
 
                     // Show chart
                     chartLoading.value = true

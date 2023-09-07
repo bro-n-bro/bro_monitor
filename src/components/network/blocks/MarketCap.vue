@@ -35,10 +35,10 @@
         data = ref(0)
 
 
-    onBeforeMount(async () => {
+    onBeforeMount(() => {
         // Get data
         try {
-            await fetch('https://rpc.bronbro.io/statistics/market_cap')
+            fetch('https://rpc.bronbro.io/statistics/market_cap')
                 .then(res => res.json())
                 .then(response => {
                     // Set data

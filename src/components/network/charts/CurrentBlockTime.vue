@@ -31,6 +31,7 @@
 
     const store = useGlobalStore(),
         emitter = inject('emitter'),
+        i18n = inject('i18n'),
         loading = ref(false),
         chartData = ref([]),
         chartColors = ref([]),
@@ -112,11 +113,11 @@
                     align: 'left',
                     style: {
                         colors: 'rgba(255, 255, 255, 0.50)',
-                        fontSize: '14px',
+                        fontSize: '12px',
                         fontFamily: 'var(--font_family)',
                     },
                     offsetX: -16,
-                    formatter: value => { return value + ' ' + i18n.global.t('message.network_charts_unit_sec') },
+                    formatter: value => { return value.toFixed(2) + ' ' + i18n.global.t('message.network_charts_unit_sec') },
                 },
                 axisBorder: {
                     show: false,
@@ -135,7 +136,7 @@
                     rotate: 0,
                     style: {
                         colors: 'rgba(255, 255, 255, 0.50)',
-                        fontSize: '14px',
+                        fontSize: '12px',
                         fontFamily: 'var(--font_family)',
                     }
                 },
@@ -173,7 +174,7 @@
             }).split('.').join('-')
 
             // Request
-            fetch(`https://rpc.bronbro.io/statistics/666?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
+            fetch(`https://rpc.bronbro.io/statistics/blocks?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
                 .then(res => res.json())
                 .then(response => {
                     // Set chart data
@@ -183,7 +184,7 @@
                     chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
 
                     // Set colors
-                    chartColors.value.push(response.data[response.data.length - 1].y > response.data[response.data.length - 2].y ? '#1BC562' : '#EB5757')
+                    chartColors.value.push(response.data[response.data.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
 
                     // Set labels
                     response.data.forEach(el => {

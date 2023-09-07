@@ -39,7 +39,7 @@
 
 
             <div class="scroll" v-else>
-                <div class="validator" v-for="(validator, index) in validators" :key="index">
+                <div class="validator" v-for="(validator, index) in validators" :key="index" :id="validator.operator_address">
                     <div class="col_number alignleft">{{ $t('message.network_validators_table_label_number') }} {{ index + 1 }}</div>
 
                     <div class="col_moniker alignleft">
@@ -157,7 +157,7 @@
                 .then(res => res.json())
                 .then(response => {
                     // Set data
-                    validators.value = response.validators
+                    store.validators = validators.value = response.validators
 
                     // Hide loading
                     loading.value = false
@@ -425,6 +425,32 @@
     .validator .red
     {
         color: #eb5757;
+    }
+
+
+    .validator.flashing
+    {
+        animation: flashing .75s cubic-bezier(.075, .820, .165, 1.000) 2;
+        animation-delay: .75s;
+    }
+
+
+    @keyframes flashing
+    {
+        0%
+        {
+            background: transparent;
+        }
+
+        50%
+        {
+            background: rgba(149, 15, 255, .2);
+        }
+
+        100%
+        {
+            background: transparent;
+        }
     }
 
 

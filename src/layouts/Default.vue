@@ -259,6 +259,22 @@
     }
 
 
+    a.block
+    {
+        color: currentColor;
+
+        display: block;
+
+        transition: border-color .2s linear;
+        text-decoration: none;
+    }
+
+    a.block:hover
+    {
+        border-color: #950fff;
+    }
+
+
     .block .link
     {
         color: #fff;

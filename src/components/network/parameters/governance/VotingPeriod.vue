@@ -10,7 +10,11 @@
             {{ $t('message.network_parameters_voting_period_title') }}
         </div>
 
-        <div class="val">5 Days</div>
+        <div class="val">
+            <Loader v-if="!props.voting_period" />
+            <span v-else>{{ props.voting_period / 60 / 60 /24 }}</span>
+            {{ $t('message.network_parameters_days_unit') }}
+        </div>
     </div>
 </template>
 
@@ -24,5 +28,6 @@
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter')
+        emitter = inject('emitter'),
+        props = defineProps(['voting_period'])
 </script>

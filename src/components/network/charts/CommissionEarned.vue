@@ -113,7 +113,7 @@
                     align: 'left',
                     style: {
                         colors: 'rgba(255, 255, 255, 0.50)',
-                        fontSize: '14px',
+                        fontSize: '12px',
                         fontFamily: 'var(--font_family)',
                     },
                     offsetX: -16,
@@ -136,7 +136,7 @@
                     rotate: 0,
                     style: {
                         colors: 'rgba(255, 255, 255, 0.50)',
-                        fontSize: '14px',
+                        fontSize: '12px',
                         fontFamily: 'var(--font_family)',
                     }
                 },
@@ -184,7 +184,7 @@
                     chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
 
                     // Set colors
-                    chartColors.value.push(response.data[response.data.length - 1].y > response.data[response.data.length - 2].y ? '#1BC562' : '#EB5757')
+                    chartColors.value.push(response.data[response.data.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
 
                     // Set labels
                     response.data.forEach(el => {

@@ -10,7 +10,10 @@
             {{ $t('message.network_parameters_min_deposit_title') }}
         </div>
 
-        <div class="val">9 000 000 000</div>
+        <div class="val">
+            <Loader v-if="!props.min_deposit_amount" />
+            <span v-else>{{ $filters.toFixed(props.min_deposit_amount / Math.pow(10, store.networks[store.currentNetwork].exponent), 0).toLocaleString('ru-RU') }}</span>
+        </div>
     </div>
 </template>
 
@@ -24,5 +27,6 @@
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter')
+        emitter = inject('emitter'),
+        props = defineProps(['min_deposit_amount'])
 </script>

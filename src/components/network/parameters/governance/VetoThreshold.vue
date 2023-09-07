@@ -10,7 +10,11 @@
             {{ $t('message.network_parameters_veto_threshold_title') }}
         </div>
 
-        <div class="val">33.4%</div>
+        <div class="val">
+            <Loader v-if="!props.veto_threshold" />
+            <span v-else>{{ $filters.toFixed(props.veto_threshold * 100, 2) }}</span>
+            %
+        </div>
     </div>
 </template>
 
@@ -24,5 +28,6 @@
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter')
+        emitter = inject('emitter'),
+        props = defineProps(['veto_threshold'])
 </script>

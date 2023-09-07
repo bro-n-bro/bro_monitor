@@ -33,10 +33,10 @@
         data = ref(null)
 
 
-    onBeforeMount(async () => {
+    onBeforeMount(() => {
         // Get data
         try {
-            await fetch('https://rpc.bronbro.io/statistics/total_supply/actual')
+            fetch('https://rpc.bronbro.io/statistics/total_supply/actual')
                 .then(res => res.json())
                 .then(response => {
                     // Set data

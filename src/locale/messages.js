@@ -132,7 +132,6 @@ export default {
             'network_parameters_slash_downtime_title': 'Slash Fraction Downtime',
 
             'network_parameters_slash_downtime_unit': 'Mins',
-
             'network_parameters_days_unit': 'Days',
 
             'network_IBC_table_label_chain': 'Chain',
@@ -301,6 +300,7 @@ export default {
 
             // Search
             'search_placeholder': 'Search',
+            'search_not_found': 'Nothing found',
 
 
             // Buttons

@@ -21,6 +21,8 @@ export const useGlobalStore = defineStore('global', {
         currentChart: null,
         currentValidatorAddress: null,
 
+        searchValidators: null,
+
         networks,
 
         pinnedBlocks: useLocalStorage('pinnedBlocks', {})

@@ -31,10 +31,10 @@
         data = ref(null)
 
 
-    onBeforeMount(async () => {
+    onBeforeMount(() => {
         // Get data
         try {
-            await fetch('https://rpc.bronbro.io/statistics/last_block_height')
+            fetch('https://rpc.bronbro.io/statistics/last_block_height')
                 .then(res => res.json())
                 .then(response => {
                     // Set data

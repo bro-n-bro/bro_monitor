@@ -10,7 +10,11 @@
             {{ $t('message.network_parameters_quorum_title') }}
         </div>
 
-        <div class="val">33.4%</div>
+        <div class="val">
+            <Loader v-if="!props.quorum" />
+            <span v-else>{{ $filters.toFixed(props.quorum * 100, 2) }}</span>
+            %
+        </div>
     </div>
 </template>
 
@@ -24,5 +28,6 @@
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter')
+        emitter = inject('emitter'),
+        props = defineProps(['quorum'])
 </script>

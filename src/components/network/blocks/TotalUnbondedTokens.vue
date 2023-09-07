@@ -115,7 +115,7 @@
         })
 
 
-    onBeforeMount(async () => {
+    onBeforeMount(() => {
         // Get data
         try {
             fetch('https://rpc.bronbro.io/statistics/unbonded_tokens/actual')
@@ -156,7 +156,7 @@
                     response.data.forEach(el => chartData.value.push(el.y))
 
                     // Set colors
-                    chartColors.value.push(response.data[response.data.length - 1].y > response.data[response.data.length - 2].y ? '#1BC562' : '#EB5757')
+                    chartColors.value.push(response.data[response.data.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
 
                     // Show chart
                     chartLoading.value = true
