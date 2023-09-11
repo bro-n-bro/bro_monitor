@@ -131,6 +131,11 @@ router.beforeResolve(async (to, from, next) => {
 		await store.getCurrenciesPrice()
 	}
 
+	// Connect wallet
+	if (!store.isKeplrConnected && window.keplr) {
+		store.connectWallet()
+	}
+
     // App full loaded
     if (!store.isAppFullLoaded) {
         store.isAppFullLoaded = true

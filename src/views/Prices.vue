@@ -92,4 +92,10 @@
         margin: auto;
     }
 
+
+    .blocks.prices .block
+    {
+        min-height: 96px;
+    }
+
 </style>

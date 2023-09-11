@@ -8,6 +8,9 @@
         "build": "vue-cli-service build"
     },
     "dependencies": {
+        "@cosmjs/encoding": "^0.31.1",
+        "@cosmjs/tendermint-rpc": "^0.31.1",
+        "@cybercongress/cyber-js": "^0.3.6",
         "@vueuse/core": "^10.3.0",
         "apexcharts": "^3.42.0",
         "core-js": "^3.8.3",
@@ -20,6 +23,7 @@
         "vue3-apexcharts": "^1.4.4"
     },
     "devDependencies": {
+        "node-polyfill-webpack-plugin": "^2.0.1",
         "@vue/cli-plugin-babel": "~5.0.0",
         "@vue/cli-plugin-router": "~5.0.0",
         "@vue/cli-service": "~5.0.0"

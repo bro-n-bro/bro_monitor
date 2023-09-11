@@ -1,5 +1,5 @@
 <template>
-    <a href="https://monitor.bronbro.io/d/cosmos-stats/cosmos-stats?orgId=2&refresh=5s&viewPanel=16" target="_blank" rel="noopener nofollow" class="block mini">
+    <a href="https://beta.bronbro.io/proposals/cosmoshub?filter=voting" target="_blank" rel="noopener nofollow" class="block mini">
         <div class="link">
             <svg><use xlink:href="@/assets/sprite.svg#ic_link_arrow"></use></svg>
         </div>

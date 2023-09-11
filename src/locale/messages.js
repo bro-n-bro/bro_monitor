@@ -11,7 +11,6 @@ export default {
 
 
             // Home page
-            'home_label': 'monitor',
             'home_title': 'Analytics.',
             'home_desc': "Validator's rating created by Bro_n_Bro.Bro rating is aimed at community needs with regard to an appropriate funds decentralization in different Cosmos networks.",
 
@@ -294,8 +293,8 @@ export default {
 
 
             // Notofications
-            'notice_username': "Chosen keplr account",
-            'notice_avatar': "Your Moon passport avatar",
+            'notice_username': 'Chosen keplr account',
+            'notice_avatar': 'Your Moon passport avatar',
 
 
             // Search

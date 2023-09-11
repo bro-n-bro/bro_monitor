@@ -1,18 +1,16 @@
 <template>
     <div class="user">
-        <div class="account_link">
-            <div class="icon">
-                <svg><use xlink:href="@/assets/sprite.svg#ic_wallet"></use></svg>
-            </div>
+        <div class="icon">
+            <svg><use xlink:href="@/assets/sprite.svg#ic_wallet"></use></svg>
+        </div>
 
-            <div class="name" @mouseover="emitter.emit('setNotification', $t('message.notice_username'))">
-                <span v-if="store.account.moonPassportOwner">{{ store.account.moonPassportOwner.extension.nickname }}</span>
-                <span v-else>{{ store.account.userName }}</span>
-            </div>
+        <div class="name" @mouseover="emitter.emit('setNotification', $t('message.notice_username'))">
+            <span v-if="store.user.moonPassport">{{ store.user.moonPassport.extension.nickname }}</span>
+            <span v-else>{{ store.user.userName }}</span>
         </div>
 
         <div class="photo" @mouseover="emitter.emit('setNotification', $t('message.notice_avatar'))">
-            <img :src="store.account.avatar" alt="">
+            <img :src="store.user.avatar" alt="">
         </div>
     </div>
 </template>
@@ -37,11 +35,12 @@
 
         display: flex;
 
-        width: 216px;
-        margin-left: 32px;
+        width: 219px;
+        margin-left: auto;
         padding: 15px 10px;
 
         text-align: left;
+        align-self: center;
 
         border-radius: 20px;
         background: #141414;
@@ -53,28 +52,12 @@
     }
 
 
-    .user .account_link
-    {
-        color: currentColor;
-
-        display: flex;
-
-        width: calc(100% - 50px);
-
-        text-decoration: none;
-
-        justify-content: flex-start;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
-    }
-
-
     .user .icon
     {
         display: flex;
 
         width: 40px;
+        min-width: 40px;
         height: 40px;
         margin-right: 10px;
 
@@ -100,7 +83,7 @@
     {
         overflow: hidden;
 
-        width: calc(100% - 50px);
+        width: calc(100% - 100px);
 
         white-space: nowrap;
         text-overflow: ellipsis;
@@ -117,6 +100,7 @@
         overflow: hidden;
 
         width: 40px;
+        min-width: 40px;
         height: 40px;
         margin-left: 10px;
 

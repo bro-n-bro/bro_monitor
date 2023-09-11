@@ -1,10 +1,6 @@
 <template>
     <section class="home_page">
         <div class="data">
-            <div class="label">
-                {{ $t('message.home_label') }}
-            </div>
-
             <div class="title">
                 Bro <span>{{ $t('message.home_title') }}</span>
             </div>
@@ -77,25 +73,6 @@
         margin-left: auto;
 
         text-align: center;
-    }
-
-
-    .label
-    {
-        color: #950fff;
-        font-weight: 600;
-        line-height: 100%;
-
-        display: inline-block;
-
-        margin-bottom: 2px;
-        padding: 14px;
-
-        vertical-align: top;
-        text-transform: uppercase;
-
-        border: 2px solid #950fff;
-        border-radius: 50px;
     }
 
 

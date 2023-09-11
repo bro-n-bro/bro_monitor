@@ -29,10 +29,10 @@
             <Notifications v-if="route.path != '/'" />
 
             <!-- User info -->
-            <ConnectBtn v-if="!store.isAuth && route.path != '/'" />
+            <ConnectBtn v-if="!store.isKeplrConnected && route.path != '/'" />
 
             <!-- User info -->
-            <User v-if="store.isAuth && route.path != '/'" />
+            <User v-if="store.isKeplrConnected && route.path != '/'" />
         </div>
     </header>
 </template>

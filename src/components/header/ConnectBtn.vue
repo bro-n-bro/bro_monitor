@@ -1,12 +1,17 @@
 <template>
-    <button class="btn">
+    <button class="btn" @click.prevent="emitter.emit('connectWallet')" v-if="!store.isKeplrConnected">
         {{ $t('message.btn_connect') }}
     </button>
 </template>
 
 
 <script setup>
+    import { inject } from 'vue'
+    import { useGlobalStore } from '@/stores'
 
+
+    const store = useGlobalStore(),
+        emitter = inject('emitter')
 </script>
 
 

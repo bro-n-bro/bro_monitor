@@ -21,6 +21,9 @@
     onBeforeMount(() => {
         // Set title
         title.value = i18n.global.t('message.page_title')
+
+        // Change Keplr account
+        window.addEventListener('keplr_keystorechange', () => store.connectWallet())
     })
 
 
@@ -40,5 +43,11 @@
     // Event "toggle pin block"
     emitter.on('togglePinBlock', path => {
         store.pinnedBlocks[path] = !store.pinnedBlocks[path]
+    })
+
+
+    // Event "connect wallet"
+    emitter.on('connectWallet', () => {
+        store.connectWallet()
     })
 </script>
