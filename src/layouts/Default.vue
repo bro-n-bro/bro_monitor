@@ -484,6 +484,31 @@
     }
 
 
+    .block .titles .icon
+    {
+        color: #fff;
+
+        display: none;
+
+        width: 16px;
+        height: 16px;
+        margin-left: 4px;
+
+        order: 2;
+    }
+
+
+    .block.big .titles .icon ~ span
+    {
+        width: calc(100% - 20px);
+    }
+
+    .block.big .titles .icon
+    {
+        display: block;
+    }
+
+
 
     .block .table_wrap
     {

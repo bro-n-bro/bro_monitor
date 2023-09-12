@@ -7,9 +7,9 @@
                 </div>
 
                 <div class="val">
-                    <div>{{ $filters.toFixed(props.validator.voting_power / Math.pow(10, store.networks[props.validator.network].exponent), 0).toLocaleString('ru-RU') }}</div>
+                    <div>{{ $filters.toFixed(props.validator.voting_power, 0).toLocaleString('ru-RU') }}</div>
 
-                    <div class="grey">{{ $filters.toFixed(props.validator.voting_power / Math.pow(10, store.networks[props.validator.network].exponent) * store.prices.find(el => el.symbol == store.networks[store.currentNetwork].token_name).price, 0).toLocaleString('ru-RU') }} $</div>
+                    <div class="grey">{{ $filters.toFixed(props.validator.voting_power * store.prices.find(el => el.symbol == store.networks[store.currentNetwork].token_name).price, 0).toLocaleString('ru-RU') }} $</div>
                 </div>
             </div>
 

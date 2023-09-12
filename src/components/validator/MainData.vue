@@ -3,7 +3,7 @@
         <div class="row">
             <div class="logo">
                 <div class="power">
-                    <span>{{ props.validator.voting_power_rank }}</span>
+                    <span>{{ props.validator.rank }}</span>
                     <svg><use xlink:href="@/assets/sprite.svg#bg_rank"></use></svg>
                 </div>
 

@@ -12,24 +12,65 @@
 
         <div class="hor_scroll">
             <div class="titles">
-                <div class="col_number alignleft">{{ $t('message.network_validators_table_label_number') }}</div>
-                <div class="col_moniker alignleft">{{ $t('message.network_validators_table_label_moniker') }}</div>
-                <div class="col_voting_power">{{ $t('message.network_validators_table_label_voting_power') }}</div>
-                <div class="col_self_bonded" v-html="$t('message.network_validators_table_label_self_bonded')"></div>
-                <div class="col_commission_changes" v-html="$t('message.network_validators_table_label_commission_changes')"></div>
-                <div class="col_slashing_count" v-html="$t('message.network_validators_table_label_slashing_count')"></div>
-                <div class="col_uptime" v-html="$t('message.network_validators_table_label_uptime')"></div>
-                <div class="col_commission_earned" v-html="$t('message.network_validators_table_label_commission_earned')"></div>
-                <div class="col_restake_enabled" v-html="$t('message.network_validators_table_label_restake_enabled')"></div>
-                <div class="col_unique_delegators" v-html="$t('message.network_validators_table_label_unique_delegators')"></div>
+                <div class="col_number alignleft" @click="sort('rank')">
+                    <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_sort"></use></svg>
+                    <span>{{ $t('message.network_validators_table_label_number') }}</span>
+                </div>
 
-                <div class="col_new_delegators">
+                <div class="col_moniker alignleft" @click="sort('moniker')">
+                    <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_sort"></use></svg>
+                    <span>{{ $t('message.network_validators_table_label_moniker') }}</span>
+                </div>
+
+                <div class="col_voting_power" @click="sort('voting_power')">
+                    <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_sort"></use></svg>
+                    <span>{{ $t('message.network_validators_table_label_voting_power') }}</span>
+                </div>
+
+                <div class="col_self_bonded" @click="sort('self_delegations')">
+                    <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_sort"></use></svg>
+                    <span v-html="$t('message.network_validators_table_label_self_bonded')"></span>
+                </div>
+
+                <div class="col_commission_changes">
+                    <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_sort"></use></svg>
+                    <span v-html="$t('message.network_validators_table_label_commission_changes')"></span>
+                </div>
+
+                <div class="col_slashing_count" @click="sort('slashing')">
+                    <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_sort"></use></svg>
+                    <span v-html="$t('message.network_validators_table_label_slashing_count')"></span>
+                </div>
+
+                <div class="col_uptime">
+                    <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_sort"></use></svg>
+                    <span v-html="$t('message.network_validators_table_label_uptime')"></span>
+                </div>
+
+                <div class="col_commission_earned">
+                    <span v-html="$t('message.network_validators_table_label_commission_earned')"></span>
+                    <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_sort"></use></svg>
+                </div>
+
+                <div class="col_restake_enabled">
+                    <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_sort"></use></svg>
+                    <span v-html="$t('message.network_validators_table_label_restake_enabled')"></span>
+                </div>
+
+                <div class="col_unique_delegators" @click="sort('delegators')">
+                    <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_sort"></use></svg>
+                    <span v-html="$t('message.network_validators_table_label_unique_delegators')"></span>
+                </div>
+
+                <div class="col_new_delegators" @click="sort('new_delegators')">
                     <svg class="notice"><use xlink:href="@/assets/sprite.svg#ic_notice"></use></svg>
+                    <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_sort"></use></svg>
                     <span v-html="$t('message.network_validators_table_label_new_delegators')"></span>
                 </div>
 
                 <div class="col_voting_participation">
                     <svg class="notice"><use xlink:href="@/assets/sprite.svg#ic_notice"></use></svg>
+                    <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_sort"></use></svg>
                     <span v-html="$t('message.network_validators_table_label_voting_participation')"></span>
                 </div>
             </div>
@@ -40,7 +81,9 @@
 
             <div class="scroll" v-else>
                 <div class="validator" v-for="(validator, index) in validators" :key="index" :id="validator.operator_address">
-                    <div class="col_number alignleft">{{ $t('message.network_validators_table_label_number') }} {{ index + 1 }}</div>
+                    <div class="col_number alignleft">
+                        {{ $t('message.network_validators_table_label_number') }} {{ validator.rank }}
+                    </div>
 
                     <div class="col_moniker alignleft">
                         <router-link :to="`/${store.currentNetwork}/validator/${validator.operator_address}`" class="moniker">
@@ -60,10 +103,10 @@
                     <div class="col_voting_power">
                         <div class="mob_label">{{ $t('message.network_validators_table_label_voting_power') }}</div>
 
-                        <div>{{ $filters.toFixed(validator.voting_power / Math.pow(10, store.networks[store.currentNetwork].exponent), 2).toLocaleString('ru-RU') }}</div>
+                        <div>{{ $filters.toFixed(validator.voting_power, 2).toLocaleString('ru-RU') }}</div>
 
                         <div class="price grey">
-                            $ {{ $filters.toFixed(validator.voting_power / Math.pow(10, store.networks[store.currentNetwork].exponent) * store.prices.find(el => el.symbol == store.networks[store.currentNetwork].token_name).price, 0).toLocaleString('ru-RU') }}
+                            $ {{ $filters.toFixed(validator.voting_power * store.prices.find(el => el.symbol == store.networks[store.currentNetwork].token_name).price, 0).toLocaleString('ru-RU') }}
                         </div>
                     </div>
 
@@ -147,25 +190,48 @@
 
     const store = useGlobalStore(),
         loading = ref(true),
-        validators = ref([])
+        validators = ref([]),
+        currentSort = ref('rank')
 
 
     onBeforeMount(async () => {
         // Get data
-        try {
-            await fetch('https://rpc.bronbro.io/statistics/validators?limit=180')
-                .then(res => res.json())
-                .then(response => {
-                    // Set data
-                    store.validators = validators.value = response.validators
+        if (!store.validators.length) {
+            try {
+                await fetch('https://rpc.bronbro.io/statistics/validators?limit=180')
+                    .then(res => res.json())
+                    .then(response => {
+                        // Set data
+                        store.validators = validators.value = response.validators.sort((a, b) => {
+                            if (a.rank > b.rank) { return 1 }
+                            if (a.rank < b.rank) { return -1 }
+                            return 0
+                        })
 
-                    // Hide loading
-                    loading.value = false
-                })
-        } catch (error) {
-            console.error(error)
+                        // Hide loading
+                        loading.value = false
+                    })
+            } catch (error) {
+                console.error(error)
+            }
         }
     })
+
+
+    // Sort validators
+    function sort(param) {
+        if (currentSort.value == param) {
+            validators.value = store.validators.reverse()
+        } else {
+            validators.value = store.validators.sort((a, b) => {
+                if (a[param] > b[param]) { return 1 }
+                if (a[param] < b[param]) { return -1 }
+                return 0
+            })
+        }
+
+        currentSort.value = param
+    }
 
 
     // Replacement of the logo if it is not present
@@ -467,6 +533,27 @@
     .block.big .title
     {
         display: none;
+    }
+
+
+    .block.big .titles > *
+    {
+        display: flex;
+
+        cursor: pointer;
+
+        justify-content: flex-start;
+        align-items: flex-start;
+        align-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+
+
+    .block.big .titles span,
+    .block.big .titles .icon
+    {
+        pointer-events: none;
     }
 
 

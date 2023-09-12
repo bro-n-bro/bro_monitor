@@ -158,7 +158,7 @@ export default {
             'network_validators_table_label_moniker': 'Moniker',
             'network_validators_table_label_voting_power': 'Voting Power',
             'network_validators_table_label_self_bonded': 'Self<br> Bonded',
-            'network_validators_table_label_commission_changes': 'Commission changes %<br> current/max/per day',
+            'network_validators_table_label_commission_changes': 'Commission %<br> current/max/per day',
             'network_validators_table_label_slashing_count': 'Slashing<br> Count',
             'network_validators_table_label_uptime': 'Uptime<br> %',
             'network_validators_table_label_commission_earned': 'Commission<br> Earned',

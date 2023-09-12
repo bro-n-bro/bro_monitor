@@ -1,15 +1,16 @@
 <template>
-    <div class="search">
+    <div class="search" ref="target">
         <form action="">
             <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_search"></use></svg>
 
-            <input type="text" name="" value="" class="input" :placeholder="$t('message.search_placeholder')" :disabled="!store.validators">
+            <input type="text" v-model="query" class="input" :class="{ active: query.length }" :placeholder="$t('message.search_placeholder')" :disabled="!store.validators.length">
         </form>
 
 
         <div class="tips" v-if="showDropdown">
             <template v-if="searchValidators.length">
-            <div class="tip" v-for="(validator, index) in searchValidators" :key="index" @click.prevent="scrollToValidator(validator.opeartor_address)">
+
+            <div class="tip" v-for="(validator, index) in searchValidators" :key="index" @click.prevent="scrollToValidator(validator.operator_address)">
                 <div class="logo">
                     <img :src="validator.mintscan_avatar_url" alt="" @error="imageLoadError">
                     <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_user"></use></svg>
@@ -28,25 +29,30 @@
 <script setup>
     import { ref, watch } from 'vue'
     import { useGlobalStore } from '@/stores'
+    import { onClickOutside } from '@vueuse/core'
 
 
     const store = useGlobalStore(),
-        query = ref(null),
+        query = ref(''),
         showDropdown = ref(false),
-        searchValidators = ref([])
+        searchValidators = ref([]),
+        target = ref(null)
 
 
     watch(query, value => {
+        // Reset result
+        searchValidators.value = []
+
         setTimeout(() => {
             // Filtering validators by moniker
             store.validators.forEach(el => {
-                if(el.moniker.toLowerCase().includes(value.toLowerCase())) {
+                if(el.moniker.toLowerCase().includes(value)) {
                     searchValidators.value.push(el)
                 }
             })
 
             // Show tips
-            showDropdown.value = false
+            showDropdown.value = true
         })
     })
 
@@ -73,6 +79,10 @@
         // Hide tips
         showDropdown.value = false
     }
+
+
+    // Сlick element outside
+    onClickOutside(target, () => showDropdown.value = false)
 </script>
 
 
@@ -80,6 +90,7 @@
     .search
     {
         position: relative;
+
         margin-left: 10px;
 
         align-self: center;
@@ -159,7 +170,8 @@
         background: #000;
     }
 
-    .search .input:focus
+    .search .input:focus,
+    .search .input.active
     {
         width: 280px;
     }
@@ -185,17 +197,27 @@
 
     .search .tips::-webkit-scrollbar
     {
-        border-radius: 5px;
+        width: 5px;
+        height: 5px;
+
+        background-color: var(--bg);
     }
 
-    .search .tips.show
+    .search .tips::-webkit-scrollbar-thumb
     {
-        display: block;
+        border-radius: 5px;
+        background-color: #950fff;
     }
 
     .search .tips > * + *
     {
         margin-top: 6px;
+    }
+
+
+    .search .tips.show
+    {
+        display: block;
     }
 
 

@@ -28,6 +28,7 @@ export const useGlobalStore = defineStore('global', {
 
         isKeplrConnected: false,
         searchValidators: null,
+        validators: [],
 
         networks,
 
