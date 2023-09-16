@@ -32,7 +32,7 @@
                     <span v-html="$t('message.network_validators_table_label_self_bonded')"></span>
                 </div>
 
-                <div class="col_commission_changes">
+                <div class="col_commission_changes" @click="sort('commission')">
                     <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_sort"></use></svg>
                     <span v-html="$t('message.network_validators_table_label_commission_changes')"></span>
                 </div>
@@ -68,7 +68,7 @@
                     <span v-html="$t('message.network_validators_table_label_new_delegators')"></span>
                 </div>
 
-                <div class="col_voting_participation">
+                <div class="col_voting_participation" @click="sort('votes')">
                     <svg class="notice"><use xlink:href="@/assets/sprite.svg#ic_notice"></use></svg>
                     <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_sort"></use></svg>
                     <span v-html="$t('message.network_validators_table_label_voting_participation')"></span>
@@ -196,24 +196,22 @@
 
     onBeforeMount(async () => {
         // Get data
-        if (!store.validators.length) {
-            try {
-                await fetch('https://rpc.bronbro.io/statistics/validators?limit=180')
-                    .then(res => res.json())
-                    .then(response => {
-                        // Set data
-                        store.validators = validators.value = response.validators.sort((a, b) => {
-                            if (a.rank > b.rank) { return 1 }
-                            if (a.rank < b.rank) { return -1 }
-                            return 0
-                        })
-
-                        // Hide loading
-                        loading.value = false
+        try {
+            await fetch('https://rpc.bronbro.io/statistics/validators?limit=180')
+                .then(res => res.json())
+                .then(response => {
+                    // Set data
+                    store.validators = validators.value = response.validators.sort((a, b) => {
+                        if (a.rank > b.rank) { return 1 }
+                        if (a.rank < b.rank) { return -1 }
+                        return 0
                     })
-            } catch (error) {
-                console.error(error)
-            }
+
+                    // Hide loading
+                    loading.value = false
+                })
+        } catch (error) {
+            console.error(error)
         }
     })
 

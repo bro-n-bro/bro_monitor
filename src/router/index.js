@@ -126,6 +126,16 @@ router.beforeResolve(async (to, from, next) => {
 		store.currentValidatorAddress = to.params.operator_address
 	}
 
+    // Current tab from url
+	if (to.query.tab) {
+		store.currentNetworkTab = to.query.tab
+	}
+
+    // Current type from url
+	if (to.query.type) {
+		store.currentNetworkType = to.query.type
+	}
+
 	// Get currencies price
 	if (!store.prices) {
 		await store.getCurrenciesPrice()

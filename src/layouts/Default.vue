@@ -248,8 +248,6 @@
     {
         position: relative;
 
-        overflow: hidden;
-
         min-height: 146px;
         padding: 12px 8px;
 
@@ -416,7 +414,6 @@
     .block .chart
     {
         position: absolute;
-        z-index: 1;
         bottom: 0;
         left: 0;
 

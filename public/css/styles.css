@@ -401,6 +401,96 @@ button
 
 
 
+/*-----------
+    Chart
+-----------*/
+.apexcharts-tooltip
+{
+    position: static !important;
+
+    overflow: visible !important;
+
+    border: none !important;
+    background: none !important;
+}
+
+
+.chart_tooltip
+{
+    color: var(--text_color);
+    font-family: var(--font_family);
+    font-size: 12px;
+
+    position: absolute;
+    z-index: 100;
+
+    width: auto;
+    margin: 0;
+    padding: 9px;
+
+    transform: translate(-50%, calc(-100% - 8px));
+    white-space: nowrap;
+
+    border: 1px solid rgba(255, 255, 255, .10);
+    border-radius: 10px;
+    background: #141414;
+}
+
+.chart_tooltip:after
+{
+    position: absolute;
+    top: 100%;
+    right: 0;
+    left: 0;
+
+    display: block;
+
+    width: 29px;
+    height: 7px;
+    margin: 0 auto;
+
+    content: '';
+
+    background: url(/tooltip_tail.svg) 0 0 no-repeat;
+}
+
+
+.chart_tooltip .tooltip_date
+{
+    color: #555;
+
+    margin-bottom: 4px;
+}
+
+
+.chart_tooltip .tooltip_val
+{
+    position: relative;
+
+    padding-left: 12px;
+}
+
+.chart_tooltip .tooltip_val:before
+{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+
+    display: block;
+
+    width: 8px;
+    height: 8px;
+    margin: auto;
+
+    content: '';
+
+    border-radius: 50%;
+    background: currentColor;
+}
+
+
+
 @media print, (max-width: 1279px)
 {
     .main
