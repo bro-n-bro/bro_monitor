@@ -21,12 +21,7 @@
 
 
 <script setup>
-    import { useRouter } from 'vue-router'
-
     // Components
     import ValidatorsTable from  '@/components/network/ValidatorsTable.vue'
     import ValidatorsSearch from  '@/components/network/valodators/Search.vue'
-
-
-    const router = useRouter()
 </script>

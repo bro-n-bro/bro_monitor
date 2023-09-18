@@ -16,8 +16,6 @@
             <Loader v-if="!data" />
             <span v-else>{{ $filters.toFixed(data.today, 3) }}</span>
         </div>
-
-        <div class="chart"></div>
     </div>
 </template>
 

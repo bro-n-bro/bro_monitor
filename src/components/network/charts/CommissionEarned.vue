@@ -31,8 +31,10 @@
 
     const store = useGlobalStore(),
         emitter = inject('emitter'),
+        i18n = inject('i18n'),
         props = defineProps(['validator']),
         loading = ref(false),
+        responseData = ref([]),
         chartData = ref([]),
         chartColors = ref([]),
         chartLabels = ref([]),
@@ -70,6 +72,18 @@
             dataLabels: {
                 enabled: false
             },
+            markers: {
+                size: 0,
+                colors: '#fff',
+                strokeColors: ['#fff'],
+                strokeWidth: 8,
+                strokeOpacity: 0.3,
+                shape: 'circle',
+                radius: 50,
+                hover: {
+                    size: 4
+                }
+            },
             grid: {
                 show: true,
                 borderColor: '#282828',
@@ -101,7 +115,21 @@
                 show: false
             },
             tooltip: {
-                enabled: false
+                shared: false,
+                fixed: {
+                    enabled: true,
+                    position: 'topLeft'
+                },
+                custom: function({series, seriesIndex, dataPointIndex, w}) {
+                    let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
+                        top = w.globals.seriesYvalues[0][dataPointIndex],
+                        html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
+                                    '<div class="tooltip_date">' + responseData.value[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_сommission_earned_title')+ ': ' + Number((series[0][dataPointIndex] / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                '</div>'
+
+                    return html
+                }
             },
             yaxis: {
                 show: true,
@@ -116,7 +144,7 @@
                         fontSize: '12px',
                         fontFamily: 'var(--font_family)',
                     },
-                    offsetX: -16,
+                    offsetX: -13,
                     formatter: value => { return Number((value / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') },
                 },
                 axisBorder: {
@@ -153,7 +181,7 @@
         })
 
 
-    onBeforeMount(async () => {
+    onBeforeMount(() => {
         // Get chart data
         try {
             // Request params
@@ -177,6 +205,8 @@
             fetch(`https://rpc.bronbro.io/statistics/bonded_tokens?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}&operator_address=${props.validator.operator_address}`)
                 .then(res => res.json())
                 .then(response => {
+                    responseData.value = response.data
+
                     // Set chart data
                     response.data.forEach(el => chartData.value.push(el.y))
 

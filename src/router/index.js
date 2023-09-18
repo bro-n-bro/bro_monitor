@@ -15,8 +15,7 @@ const routes = [
         name: 'Error',
         component: () => import('../views/Error404.vue'),
         meta: {
-            layout: errorLayout,
-            accessDenied: []
+            layout: errorLayout
         }
     },
     {
@@ -61,7 +60,7 @@ const routes = [
 	},
 	{
 		path: '/ibc/:network',
-		name: 'Chart',
+		name: 'IBC',
 		component: () => import('../views/IBCNetwork.vue'),
 		meta: {
 			layout: defaultLayout
@@ -110,6 +109,8 @@ const router = createRouter({
 
 router.beforeResolve(async (to, from, next) => {
 	let store = useGlobalStore()
+
+	console.log(to.params)
 
     // Current network from url
 	if (to.params.network) {

@@ -386,6 +386,8 @@
 
         position: relative;
         z-index: 3;
+
+        pointer-events: none;
     }
 
 
@@ -418,6 +420,12 @@
         left: 0;
 
         width: 100%;
+    }
+
+
+    .block .chart svg
+    {
+        border-radius: 0 0 14px 14px;
     }
 
 
