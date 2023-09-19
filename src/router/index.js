@@ -110,8 +110,6 @@ const router = createRouter({
 router.beforeResolve(async (to, from, next) => {
 	let store = useGlobalStore()
 
-	console.log(to.params)
-
     // Current network from url
 	if (to.params.network) {
 		store.currentNetwork = to.params.network

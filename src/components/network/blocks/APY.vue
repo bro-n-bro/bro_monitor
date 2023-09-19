@@ -5,7 +5,7 @@
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
 
-            <router-link to="/" class="btn">
+            <router-link :to="`/${store.currentNetwork}/chart/APY`" class="btn">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
             </router-link>
         </div>
@@ -43,7 +43,7 @@
         chartColors= ref([]),
         series = reactive([
             {
-                data: chartData
+                data: chartData.value
             }
         ]),
         chartOptions = reactive({

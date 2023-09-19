@@ -6,16 +6,20 @@
             </router-link>
         </div>
 
-        <div class="title" v-if="store.currentChart == 'token_price'">
-            {{ $t('message.chart_token_price_page_title', { token: store.networks[store.currentNetwork].token_name }) }}
+        <div class="title" v-if="store.currentChart == 'APR'">
+            {{ $t('message.chart_APR_page_title') }}
         </div>
 
         <TimeRange />
     </div>
 
 
-    <div class="chart">
+    <div class="full_chart">
+        <APRChart v-if="store.currentChart == 'APR'" />
 
+        <InflationChart v-if="store.currentChart == 'inflation'" />
+
+        <APYChart v-if="store.currentChart == 'APY'" />
     </div>
 </template>
 
@@ -27,19 +31,32 @@
     // Components
     import TimeRange from  '@/components/chart/TimeRange.vue'
 
+    import APRChart from  '@/components/chart/APR.vue'
+    import InflationChart from  '@/components/chart/Inflation.vue'
+    import APYChart from  '@/components/chart/APY.vue'
+
 
     const router = useRouter(),
         store = useGlobalStore()
 </script>
 
 
-<style scoped>
-    .chart
+<style>
+    .full_chart .chart
     {
+        position: relative;
+
+        height: 730px;
         padding: 8px;
 
         border: 2px solid #212121;
         border-radius: 20px;
+    }
+
+
+    .full_chart .loader_wrap
+    {
+        background: none;
     }
 
 </style>

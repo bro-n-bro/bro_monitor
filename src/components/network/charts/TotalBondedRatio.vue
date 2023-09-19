@@ -41,7 +41,7 @@
         chartMax = ref(0),
         series = reactive([
             {
-                data: chartData
+                data: chartData.value
             }
         ]),
         chartOptions = reactive({
@@ -143,7 +143,7 @@
                     fontSize: '12px',
                     fontFamily: 'var(--font_family)',
                 },
-                offsetX: -16,
+                offsetX: -13,
                 formatter: value => { return value.toFixed(2) + '%' }
             },
             axisBorder: {
@@ -217,9 +217,11 @@
 
                     // Set labels
                     response.data.forEach(el => {
-                        let parseDate = el.x.split('-')
+                        let parseDate = new Date(el.x),
+                            month = parseDate.getMonth() < 10 ? '0' + parseDate.getMonth() : parseDate.getMonth(),
+                            date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
 
-                        chartLabels.value.push(parseDate[1] + '/' + parseDate[2])
+                        chartLabels.value.push(month + '/' + date)
                     })
 
                     // Hide loader

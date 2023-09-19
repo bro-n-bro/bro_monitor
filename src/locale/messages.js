@@ -206,7 +206,7 @@ export default {
 
 
             // Chart page
-            'chart_token_price_page_title': 'Network / {token} Price',
+            'chart_APR_page_title': 'Network / APR',
 
 
             // IBC network page

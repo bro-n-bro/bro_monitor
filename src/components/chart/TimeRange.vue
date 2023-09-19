@@ -1,26 +1,26 @@
 <template>
     <div class="time_range">
-        <button class="btn" :class="{ active: activeTime == 2 }" @click.prevent="activeTime = 2">
+        <button class="btn" :class="{ active: store.currentTimeRange == 'day' }" @click.prevent="store.currentTimeRange = 'day'">
             {{ $t('message.time_range_24h') }}
         </button>
 
-        <button class="btn" :class="{ active: activeTime == 3 }" @click.prevent="activeTime = 3">
+        <button class="btn" :class="{ active: store.currentTimeRange == 'week' }" @click.prevent="store.currentTimeRange = 'week'">
             {{ $t('message.time_range_7D') }}
         </button>
 
-        <button class="btn" :class="{ active: activeTime == 4 }" @click.prevent="activeTime = 4">
+        <button class="btn" :class="{ active: store.currentTimeRange == 'month' }" @click.prevent="store.currentTimeRange = 'month'">
             {{ $t('message.time_range_30D') }}
         </button>
 
-        <button class="btn" :class="{ active: activeTime == 5 }" @click.prevent="activeTime = 5">
+        <button class="btn" :class="{ active: store.currentTimeRange == 'quarter' }" @click.prevent="store.currentTimeRange = 'quarter'">
             {{ $t('message.time_range_3M') }}
         </button>
 
-        <button class="btn" :class="{ active: activeTime == 6 }" @click.prevent="activeTime = 6">
+        <button class="btn" :class="{ active: store.currentTimeRange == 'half_year' }" @click.prevent="store.currentTimeRange = 'half_year'">
             {{ $t('message.time_range_6M') }}
         </button>
 
-        <button class="btn" :class="{ active: activeTime == 7 }" @click.prevent="activeTime = 7">
+        <button class="btn" :class="{ active: store.currentTimeRange == 'year' }" @click.prevent="store.currentTimeRange = 'year'">
             {{ $t('message.time_range_1Y') }}
         </button>
 
@@ -77,9 +77,10 @@
 
 <script setup>
     import { ref } from 'vue'
+    import { useGlobalStore } from '@/stores'
 
 
-    const activeTime = ref(1),
+    const store = useGlobalStore(),
         showDropdown = ref(false),
         showCalendar = ref(false)
 </script>

@@ -42,7 +42,7 @@
         chartColors= ref([]),
         series = reactive([
             {
-                data: chartData
+                data: chartData.value
             }
         ]),
         chartOptions = reactive({

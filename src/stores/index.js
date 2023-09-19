@@ -27,6 +27,7 @@ export const useGlobalStore = defineStore('global', {
         currentNetwork: null,
         currentChart: null,
         currentValidatorAddress: null,
+        currentTimeRange: 'month',
 
         isKeplrConnected: false,
         searchValidators: null,
