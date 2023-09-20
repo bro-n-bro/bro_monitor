@@ -110,7 +110,7 @@
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_date">' + responseData.value[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">' + i18n.global.t('message.network_blocks_inflation_title') + ': ' + (series[0][dataPointIndex] * 100).toFixed(2) + '%</div>' +
+                                    '<div class="tooltip_val">' + i18n.global.t('message.network_blocks_bonded_tokens_title', { token: store.networks[store.currentNetwork].token_name }) + ': ' + Number((series[0][dataPointIndex] / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html
@@ -129,7 +129,7 @@
                         fontFamily: 'var(--font_family)',
                     },
                     offsetX: -8,
-                    formatter: value => { return (value * 100).toFixed(2) + '%' },
+                    formatter: value => { return Number((value / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') },
                 },
                 axisBorder: {
                     show: false,
@@ -239,7 +239,7 @@
             }).split('.').join('-')
 
             // Request
-            await fetch(`https://rpc.bronbro.io/statistics/inflation?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
+            await fetch(`https://rpc.bronbro.io/statistics/bonded_tokens?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
                 .then(res => res.json())
                 .then(response => {
                     responseData.value = response.data

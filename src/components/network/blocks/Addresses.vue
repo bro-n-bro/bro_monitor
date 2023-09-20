@@ -25,7 +25,7 @@
 
 
 <script setup>
-    import { inject, ref, onBeforeMount, reactive } from 'vue'
+    import { inject, ref, reactive, onBeforeMount, computed } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -42,7 +42,7 @@
         chartColors= ref([]),
         series = reactive([
             {
-                data: chartData.value
+                data: computed(() => chartData.value)
             }
         ]),
         chartOptions = reactive({
@@ -60,9 +60,9 @@
                     enabled: false
                 }
             },
-            colors: chartColors.value,
+            colors: computed(() => chartColors.value),
             fill: {
-                colors: chartColors.value,
+                colors: computed(() => chartColors.value),
                 opacity: 0.2
             },
             stroke: {

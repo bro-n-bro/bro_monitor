@@ -14,7 +14,7 @@
             <APY />
 
             <!-- Bonded tokens -->
-            <TotalBondedToken />
+            <TotalBondedTokens />
 
             <!-- Bonded ratio -->
             <TotalBondedRatio />
@@ -29,7 +29,7 @@
             <CurrentBlockTime />
 
             <!-- Unbonded token -->
-            <TotalUnbondedToken />
+            <TotalUnbondedTokens />
         </div>
     </div>
 </template>
@@ -37,14 +37,12 @@
 
 <script setup>
     // Components
-    import TokenPrice from '@/components/network/charts/TokenPrice.vue'
-    import MarketCap from '@/components/network/charts/MarketCap.vue'
     import APR from '@/components/network/charts/APR.vue'
     import APY from '@/components/network/charts/APY.vue'
-    import TotalBondedToken from '@/components/network/charts/TotalBondedToken.vue'
+    import TotalBondedTokens from '@/components/network/charts/TotalBondedTokens.vue'
     import TotalBondedRatio from '@/components/network/charts/TotalBondedRatio.vue'
     import BondedTokenAPR from '@/components/network/charts/BondedTokenAPR.vue'
     import Inflation from '@/components/network/charts/Inflation.vue'
     import CurrentBlockTime from '@/components/network/charts/CurrentBlockTime.vue'
-    import TotalUnbondedToken from '@/components/network/charts/TotalUnbondedToken.vue'
+    import TotalUnbondedTokens from '@/components/network/charts/TotalUnbondedTokens.vue'
 </script>

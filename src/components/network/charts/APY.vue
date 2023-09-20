@@ -5,7 +5,7 @@
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
 
-            <router-link to="/" class="btn">
+            <router-link :to="`/${store.currentNetwork}/chart/APY`" class="btn">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
             </router-link>
         </div>
@@ -41,7 +41,7 @@
         chartMax = ref(0),
         series = reactive([
             {
-                data: chartData.value
+                data: computed(() => chartData.value)
             }
         ]),
         chartOptions = reactive({
@@ -59,9 +59,9 @@
                     enabled: false
                 }
             },
-            colors: chartColors.value,
+            colors: computed(() => chartColors.value),
             fill: {
-                colors: chartColors.value,
+                colors: computed(() => chartColors.value),
                 opacity: 0.2
             },
             stroke: {
@@ -157,7 +157,7 @@
                 }
             },
             xaxis: {
-                categories: chartLabels.value,
+                categories: computed(() => chartLabels.value),
                 tickAmount: 8,
                 labels: {
                     rotate: 0,
@@ -180,7 +180,7 @@
         })
 
 
-    onBeforeMount(async () => {
+    onBeforeMount(() => {
         // Get chart data
         try {
             // Request params
@@ -218,7 +218,7 @@
                     // Set labels
                     response.data.forEach(el => {
                         let parseDate = new Date(el.x),
-                            month = parseDate.getMonth() < 10 ? '0' + parseDate.getMonth() : parseDate.getMonth(),
+                            month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
                             date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
 
                         chartLabels.value.push(month + '/' + date)

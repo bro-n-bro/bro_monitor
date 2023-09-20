@@ -5,7 +5,7 @@
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
 
-            <router-link to="/" class="btn">
+            <router-link :to="`/${store.currentNetwork}/chart/total_bonded_ratio`" class="btn">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
             </router-link>
         </div>
@@ -14,10 +14,10 @@
             {{ $t('message.network_charts_bonded_ratio_title') }}
         </div>
 
-<Loader v-if="!loading" />
+        <Loader v-if="!loading" />
 
-<apexchart v-else class="chart" height="145px" :options="chartOptions" :series="series" />
-</div>
+        <apexchart v-else class="chart" height="145px" :options="chartOptions" :series="series" />
+    </div>
 </template>
 
 
@@ -41,7 +41,7 @@
         chartMax = ref(0),
         series = reactive([
             {
-                data: chartData.value
+                data: computed(() => chartData.value)
             }
         ]),
         chartOptions = reactive({
@@ -180,7 +180,7 @@
     })
 
 
-    onBeforeMount(async () => {
+    onBeforeMount(() => {
         // Get chart data
         try {
             // Request params
@@ -218,7 +218,7 @@
                     // Set labels
                     response.data.forEach(el => {
                         let parseDate = new Date(el.x),
-                            month = parseDate.getMonth() < 10 ? '0' + parseDate.getMonth() : parseDate.getMonth(),
+                            month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
                             date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
 
                         chartLabels.value.push(month + '/' + date)

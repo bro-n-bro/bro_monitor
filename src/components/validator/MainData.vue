@@ -33,7 +33,7 @@
                     <span>{{ $t('message.validator_btn_mintscan') }}</span>
                 </a>
 
-                <a :href="`${props.validator.website}`" target="_blank" rel="noopener nofollow" class="link">
+                <a :href="`https://${props.validator.website.replace('https://', '')}`" target="_blank" rel="noopener nofollow" class="link">
                     <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_website"></use></svg>
                     <span>{{ $t('message.validator_btn_website') }}</span>
                 </a>

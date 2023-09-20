@@ -29,13 +29,13 @@
             <CommissionEarned :validator="validator" />
 
             <!-- Unique Delegators -->
-            <UniqueDelegators />
+            <UniqueDelegators :validator="validator" />
 
             <!-- Voting Power -->
-            <VotingPower />
+            <VotingPower :validator="validator" />
 
             <!-- Uptime -->
-            <Uptime />
+            <Uptime :validator="validator" />
         </div>
     </div>
 </template>

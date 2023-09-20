@@ -110,7 +110,7 @@
                </div>
 
                 <div class="val">
-                    <div></div>
+                    <div>{{ $filters.toFixed(props.validator.uptime_stat * 100, 2) }}%</div>
                 </div>
             </div>
         </div>

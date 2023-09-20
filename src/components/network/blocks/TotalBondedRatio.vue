@@ -5,7 +5,7 @@
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
 
-            <router-link to="/" class="btn">
+            <router-link :to="`/${store.currentNetwork}/chart/total_bonded_ratio`" class="btn">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
             </router-link>
         </div>
@@ -26,7 +26,7 @@
 
 
 <script setup>
-    import { inject, ref, reactive, onBeforeMount } from 'vue'
+    import { inject, ref, reactive, onBeforeMount, computed } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -43,7 +43,7 @@
         chartColors= ref([]),
         series = reactive([
             {
-                data: chartData.value
+                data: computed(() => chartData.value)
             }
         ]),
         chartOptions = reactive({
@@ -61,9 +61,9 @@
                     enabled: false
                 }
             },
-            colors: chartColors.value,
+            colors: computed(() => chartColors.value),
             fill: {
-                colors: chartColors.value,
+                colors: computed(() => chartColors.value),
                 opacity: 0.2
             },
             stroke: {

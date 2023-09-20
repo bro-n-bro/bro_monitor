@@ -1,17 +1,17 @@
 <template>
-    <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.undondedToken'] }">
+    <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.bondedToken'] }">
         <div class="btns">
-            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.undondedToken')">
+            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.bondedToken')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
 
-            <router-link to="/" class="btn">
+            <router-link :to="`/${store.currentNetwork}/chart/total_bonded_tokens`" class="btn">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
             </router-link>
         </div>
 
         <div class="title">
-            {{ $t('message.network_charts_undonded_token_title', { token: store.networks[store.currentNetwork].token_name }) }}
+            {{ $t('message.network_charts_bonded_token_title', { token: store.networks[store.currentNetwork].token_name }) }}
         </div>
 
         <Loader v-if="!loading" />
@@ -41,7 +41,7 @@
         chartMax = ref(0),
         series = reactive([
             {
-                data: chartData.value
+                data: computed(() => chartData.value)
             }
         ]),
         chartOptions = reactive({
@@ -59,9 +59,9 @@
                     enabled: false
                 }
             },
-            colors: chartColors.value,
+            colors: computed(() => chartColors.value),
             fill: {
-                colors: chartColors.value,
+                colors: computed(() => chartColors.value),
                 opacity: 0.2
             },
             stroke: {
@@ -124,7 +124,7 @@
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_date">' + responseData.value[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">' + i18n.global.t('message.network_charts_undonded_token_title', { token: store.networks[store.currentNetwork].token_name }) + ': ' + Number((series[0][dataPointIndex] / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_bonded_token_title', { token: store.networks[store.currentNetwork].token_name })+ ': ' + Number((series[0][dataPointIndex] / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html
@@ -143,7 +143,7 @@
                         fontSize: '12px',
                         fontFamily: 'var(--font_family)',
                     },
-                    offsetX: -16,
+                    offsetX: -13,
                     formatter: value => { return Number((value / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') },
                 },
                 axisBorder: {
@@ -157,7 +157,7 @@
                 }
             },
             xaxis: {
-                categories: chartLabels.value,
+                categories: computed(() => chartLabels.value),
                 tickAmount: 8,
                 labels: {
                     rotate: 0,
@@ -180,7 +180,7 @@
         })
 
 
-    onBeforeMount(async () => {
+    onBeforeMount(() => {
         // Get chart data
         try {
             // Request params
@@ -201,7 +201,7 @@
             }).split('.').join('-')
 
             // Request
-            fetch(`https://rpc.bronbro.io/statistics/unbonded_tokens?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
+            fetch(`https://rpc.bronbro.io/statistics/bonded_tokens?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
                 .then(res => res.json())
                 .then(response => {
                     responseData.value = response.data
@@ -209,8 +209,8 @@
                     // Set chart data
                     response.data.forEach(el => chartData.value.push(el.y))
 
-                    chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.1
-                    chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.1
+                    chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
+                    chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
 
                     // Set colors
                     chartColors.value.push(response.data[response.data.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
@@ -218,7 +218,7 @@
                     // Set labels
                     response.data.forEach(el => {
                         let parseDate = new Date(el.x),
-                            month = parseDate.getMonth() < 10 ? '0' + parseDate.getMonth() : parseDate.getMonth(),
+                            month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
                             date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
 
                         chartLabels.value.push(month + '/' + date)
@@ -232,7 +232,6 @@
         }
     })
 </script>
-
 
 
 <style scoped>

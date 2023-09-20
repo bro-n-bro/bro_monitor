@@ -25,9 +25,9 @@
         chartLabels = ref([]),
         chartMin = ref(0),
         chartMax = ref(0),
-                series = reactive([
+        series = reactive([
             {
-                data: chartData.value
+                data: computed(() => chartData.value)
             }
         ]),
         chartOptions = reactive({
@@ -180,11 +180,11 @@
         chartData.value = []
         chartColors.value = []
         chartLabels.value = []
+        chartMin.value = 0
+        chartMax.value = 0
 
         // Get chart data
         await getChartData ()
-
-        console.log(chartLabels)
     })
 
 
@@ -254,7 +254,7 @@
                     // Set labels
                     response.data.forEach(el => {
                         let parseDate = new Date(el.x),
-                            month = parseDate.getMonth() < 10 ? '0' + parseDate.getMonth() : parseDate.getMonth(),
+                            month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
                             date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
 
                         chartLabels.value.push(month + '/' + date)
