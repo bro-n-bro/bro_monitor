@@ -28,6 +28,18 @@
         <TotalBondedRatioChart v-if="store.currentChart == 'total_bonded_ratio'" />
 
         <CurrentBlockTimeChart v-if="store.currentChart == 'current_block_time'" />
+
+        <NewUsersChart v-if="store.currentChart == 'new_users'" />
+
+        <ActiveUsersChart v-if="store.currentChart == 'active_users'" />
+
+        <TotalNumberAddressesChart v-if="store.currentChart == 'total_ddresses'" />
+
+        <GasPaidChart v-if="store.currentChart == 'gas_paid'" />
+
+        <TransactionsChart v-if="store.currentChart == 'transactions'" />
+
+        <AutoRestakeTokenAmountChart v-if="store.currentChart == 'auto_restake_token_amount'" />
     </div>
 </template>
 
@@ -46,6 +58,12 @@
     import TotalBondedTokensChart from  '@/components/chart/TotalBondedTokens.vue'
     import TotalBondedRatioChart from  '@/components/chart/TotalBondedRatio.vue'
     import CurrentBlockTimeChart from  '@/components/chart/CurrentBlockTime.vue'
+    import NewUsersChart from  '@/components/chart/NewUsers.vue'
+    import ActiveUsersChart from  '@/components/chart/ActiveUsers.vue'
+    import TotalNumberAddressesChart from  '@/components/chart/TotalNumberAddresses.vue'
+    import GasPaidChart from  '@/components/chart/GasPaid.vue'
+    import TransactionsChart from  '@/components/chart/Transactions.vue'
+    import AutoRestakeTokenAmountChart from  '@/components/chart/AutoRestakeTokenAmount.vue'
 
 
     const router = useRouter(),

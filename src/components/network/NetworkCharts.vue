@@ -1,12 +1,6 @@
 <template>
     <div class="blocks charts">
         <div class="row">
-            <!-- Token price -->
-            <!-- <TokenPrice /> -->
-
-            <!-- Market cap -->
-            <!-- <MarketCap /> -->
-
             <!-- APR -->
             <APR />
 

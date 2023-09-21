@@ -1,28 +1,14 @@
 <template>
-     <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.newUsers'] }">
-        <div class="btns">
-            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.newUsers')">
-                <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-            </button>
+    <div class="chart">
+        <Loader v-if="loading" />
 
-            <router-link :to="`/${store.currentNetwork}/chart/new_users`" class="btn">
-                <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-            </router-link>
-        </div>
-
-        <div class="title">
-            {{ $t('message.network_charts_new_users_title') }}
-        </div>
-
-        <Loader v-if="!loading" />
-
-        <apexchart v-else class="chart" height="145px" :options="chartOptions" :series="series" />
+        <apexchart v-else height="710px" :options="chartOptions" :series="series" />
     </div>
 </template>
 
 
 <script setup>
-    import { inject, ref, reactive, onBeforeMount, computed } from 'vue'
+    import { inject, ref, reactive, onBeforeMount, computed, watch } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -30,9 +16,9 @@
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter'),
         i18n = inject('i18n'),
-        loading = ref(false),
+        loading = ref(true),
+        timeFrame = computed(() => store.currentTimeRange),
         responseData = ref([]),
         chartData = ref([]),
         chartColors = ref([]),
@@ -88,9 +74,9 @@
                 borderColor: '#282828',
                 strokeDashArray: 2,
                 padding: {
-                    left: 0,
-                    right: -17,
-                    bottom: -9,
+                    left: 8,
+                    right: 0,
+                    bottom: -8,
                     top: -20,
                 },
                 xaxis: {
@@ -124,7 +110,7 @@
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_date">' + responseData.value[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_new_users_title')+ ': ' + series[0][dataPointIndex].toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_gas_paid_title')+ ': ' + Number((series[0][dataPointIndex] / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html
@@ -133,7 +119,6 @@
             yaxis: {
                 show: true,
                 logBase: 0,
-                tickAmount: 3,
                 min: computed(() => chartMin.value),
                 max: computed(() => chartMax.value),
                 labels: {
@@ -143,8 +128,8 @@
                         fontSize: '12px',
                         fontFamily: 'var(--font_family)',
                     },
-                    offsetX: -16,
-                    formatter: value => { return value.toLocaleString('ru-RU') },
+                    offsetX: -8,
+                    formatter: value => { return Number((value / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') },
                 },
                 axisBorder: {
                     show: false,
@@ -158,7 +143,7 @@
             },
             xaxis: {
                 categories: computed(() => chartLabels.value),
-                tickAmount: 8,
+                tickAmount: 16,
                 labels: {
                     rotate: 0,
                     style: {
@@ -180,8 +165,33 @@
         })
 
 
-    onBeforeMount(() => {
+    onBeforeMount(async () => {
         // Get chart data
+        await getChartData ()
+    })
+
+
+    watch(timeFrame, async () => {
+        // Show loader
+        loading.value = true
+
+        // Reset chart data
+        responseData.value = []
+        chartData.value = []
+        chartColors.value = []
+        chartLabels.value = []
+        chartMin.value = 0
+        chartMax.value = 0
+
+        // Get chart data
+        await getChartData ()
+
+        console.log(chartLabels)
+    })
+
+
+    // Get chart data
+    async function getChartData () {
         try {
             // Request params
             let currentDate = new Date(),
@@ -190,9 +200,37 @@
                     month: '2-digit',
                     day: '2-digit',
                 }).split('.').join('-'),
-                detailing = 'day'
+                detailing = ''
 
-            currentDate.setMonth(currentDate.getMonth() - 1)
+            if (store.currentTimeRange == 'day') {
+                currentDate.setDate(currentDate.getDate() - 1)
+                detailing = 'hour'
+            }
+
+            if (store.currentTimeRange == 'week') {
+                currentDate.setDate(currentDate.getDate() - 7)
+                detailing = 'hour'
+            }
+
+            if (store.currentTimeRange == 'month') {
+                currentDate.setMonth(currentDate.getMonth() - 1)
+                detailing = 'day'
+            }
+
+            if (store.currentTimeRange == 'quarter') {
+                currentDate.setMonth(currentDate.getMonth() - 3)
+                detailing = 'week'
+            }
+
+            if (store.currentTimeRange == 'half_year') {
+                currentDate.setMonth(currentDate.getMonth() - 6)
+                detailing = 'week'
+            }
+
+            if (store.currentTimeRange == 'year') {
+                currentDate.setFullYear(currentDate.getFullYear() - 1)
+                detailing = 'week'
+            }
 
             let from_date = currentDate.toLocaleDateString('en-CA', {
                 year: 'numeric',
@@ -201,7 +239,7 @@
             }).split('.').join('-')
 
             // Request
-            fetch(`https://rpc.bronbro.io/statistics/new_accounts?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
+            await fetch(`https://rpc.bronbro.io/statistics/gas_paid?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
                 .then(res => res.json())
                 .then(response => {
                     responseData.value = response.data
@@ -225,32 +263,10 @@
                     })
 
                     // Hide loader
-                    loading.value = true
+                    loading.value = false
                 })
         } catch (error) {
             console.error(error)
         }
-    })
+    }
 </script>
-
-
-<style scoped>
-    .block .chart
-    {
-        position: relative;
-    }
-
-
-    .loader_wrap
-    {
-        position: relative;
-
-        width: auto;
-        height: auto;
-        margin: 0;
-        padding: 20px 0 0;
-
-        background: none;
-    }
-
-</style>
