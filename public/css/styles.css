@@ -491,6 +491,189 @@ button
 
 
 
+/*----------------
+    Datepicker
+----------------*/
+.dp__theme_light
+{
+    --dp-background-color: #1c1c1c !important;
+    --dp-text-color: #fff !important;
+    --dp-hover-color: #950fff !important;
+    --dp-hover-text-color: #fff !important;
+    --dp-hover-icon-color: #fff !important;
+    --dp-primary-color: #950fff !important;
+    --dp-primary-text-color: #fff !important;
+    --dp-secondary-color: #fff !important;
+    --dp-border-color: none !important;
+    --dp-menu-border-color: none !important;
+    --dp-border-color-hover: none !important;
+    --dp-scroll-bar-background: none !important;
+    --dp-scroll-bar-color: #950fff !important;
+}
+
+
+.dp__main
+{
+    font-family: var(--font_family);
+}
+
+
+.dp__outer_menu_wrap
+{
+    width: 100%;
+}
+
+
+.dp__instance_calendar + .dp__instance_calendar
+{
+    margin-left: 12px !important;
+}
+
+
+.dp__menu_inner
+{
+    padding: 0 !important;
+}
+
+
+.dp__month_year_row
+{
+    height: 36px !important;
+    margin-bottom: 8px;
+    padding: 6px 0 !important;
+}
+
+
+.dp__inner_nav
+{
+    color: #fff !important;
+
+    width: 24px !important;
+    height: 24px !important;
+
+    border-radius: 6px !important;
+    background: #353535 !important;
+
+    align-self: center;
+}
+
+.dp__inner_nav:hover
+{
+    background: #950fff !important;
+}
+
+.dp__inner_nav svg
+{
+    width: 16px !important;
+    height: 16px !important;
+}
+
+
+.dp--year-select,
+.dp__month_year_select
+{
+    height: 24px !important;
+
+    align-items: flex-start !important;
+}
+
+
+.dp__calendar_header
+{
+    font-size: 16px !important;
+    font-weight: 500 !important;
+
+    border-radius: 8px;
+    background: #353535;
+}
+
+
+.dp__calendar_header_item
+{
+    line-height: 30px;
+
+    width: 39px !important;
+    height: 30px !important;
+    padding: 0 !important;
+}
+
+
+.dp__cell_inner
+{
+    width: 39px  !important;
+    height: 28px !important;
+    padding: 0 !important;
+
+    border: none !important;
+    border-radius: 6px !important;
+}
+
+.dp__cell_disabled
+{
+    pointer-events: none;
+
+    opacity: .5;
+}
+
+.dp__today
+{
+    border: none !important;
+}
+
+
+.dp__cell_inner.dp__range_between
+{
+    border-radius: 0 !important;
+}
+
+.dp__cell_auto_range_end,
+.dp__date_hover_end:hover,
+.dp__range_end
+{
+    border-end-start-radius: 0 !important;
+    border-start-start-radius: 0 !important;
+}
+
+.dp__cell_auto_range_start,
+.dp__date_hover_start:hover,
+.dp__range_start
+{
+    border-end-end-radius: 0 !important;
+    border-start-end-radius: 0 !important;
+}
+
+.dp__cell_offset
+{
+    pointer-events: none;
+    opacity: 0;
+}
+
+.dp__overlay_cell_pad
+{
+    padding: 6px 0 !important;
+}
+
+
+.dp__overlay_col[aria-disabled='true']
+{
+    display: none !important;
+}
+
+
+.dp__button
+{
+    border-radius: 6px;
+}
+
+
+.dp__menu_inner ~ *,
+.dp__action_row
+{
+    display: none !important;
+}
+
+
+
 @media print, (max-width: 1279px)
 {
     .main

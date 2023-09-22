@@ -39,7 +39,7 @@
                         <svg><use xlink:href="@/assets/sprite.svg#ic_calendar"></use></svg>
                     </div>
 
-                    <input type="text" name="" value="" class="input">
+                    <input type="text" v-model="formattingDate[0]" class="input" @focus="showCalendar = true">
                 </div>
             </div>
 
@@ -53,7 +53,7 @@
                         <svg><use xlink:href="@/assets/sprite.svg#ic_calendar"></use></svg>
                     </div>
 
-                    <input type="text" name="" value="" class="input">
+                    <input type="text" v-model="formattingDate[1]" class="input" @focus="showCalendar = true">
                 </div>
             </div>
 
@@ -65,9 +65,11 @@
                 <div class="title">
                     {{ $t('message.time_range_calendar_title') }}
                 </div>
+
+                <VueDatePicker inline range multi-calendars month-name-format="long" min-date="2019-12-11T16:11:34Z" :max-date="new Date()" v-model="date" auto-apply :format="format" />
             </div>
 
-            <button class="apply_time_btn">
+            <button class="apply_time_btn" @click.prevent="applyCustomPeriod()">
                 {{ $t('message.btn_apply_time') }}
             </button>
         </div>
@@ -79,10 +81,39 @@
     import { ref } from 'vue'
     import { useGlobalStore } from '@/stores'
 
+    import VueDatePicker from '@vuepic/vue-datepicker'
+    import '@vuepic/vue-datepicker/dist/main.css'
+
 
     const store = useGlobalStore(),
         showDropdown = ref(false),
-        showCalendar = ref(false)
+        showCalendar = ref(false),
+        date = ref([]),
+        formattingDate = ref([]),
+        months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+
+
+    // Format dates
+    function format(date) {
+        date.forEach(el => {
+            let day = el.getDate(),
+                month = months[el.getMonth()],
+                year = el.getFullYear()
+
+            formattingDate.value.push(`${day} ${month} ${year}`)
+        })
+
+        // Hide calendar
+        showCalendar.value = false
+    }
+
+
+    // Apply custom period
+    function applyCustomPeriod() {
+
+        // Hide dropdown
+        showDropdown.value = false
+    }
 </script>
 
 
@@ -90,6 +121,7 @@
     .time_range
     {
         position: relative;
+        z-index: 90;
 
         display: flex;
 
@@ -189,7 +221,7 @@
     {
         color: var(--text_color);
         font-family: var(--font_family);
-        font-size: var(--font_size);
+        font-size: 14px;
 
         display: block;
 
