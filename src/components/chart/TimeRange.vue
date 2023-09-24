@@ -24,7 +24,7 @@
             {{ $t('message.time_range_1Y') }}
         </button>
 
-        <button class="btn calendar_btn" @click.prevent="showDropdown = !showDropdown">
+        <button class="btn calendar_btn" :class="{ active: store.currentTimeRange == 'range' }" @click.prevent="showDropdown = !showDropdown">
             <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_plus"></use></svg>
         </button>
 
@@ -69,7 +69,7 @@
                 <VueDatePicker inline range multi-calendars month-name-format="long" min-date="2019-12-11T16:11:34Z" :max-date="new Date()" v-model="date" auto-apply :format="format" />
             </div>
 
-            <button class="apply_time_btn" @click.prevent="applyCustomPeriod()">
+            <button class="apply_time_btn" @click.prevent="applyCustomPeriod()" :disabled="!formattingDate.length">
                 {{ $t('message.btn_apply_time') }}
             </button>
         </div>
@@ -80,6 +80,7 @@
 <script setup>
     import { ref } from 'vue'
     import { useGlobalStore } from '@/stores'
+    import { differenceInDays, differenceInMonths, differenceInYears } from 'date-fns'
 
     import VueDatePicker from '@vuepic/vue-datepicker'
     import '@vuepic/vue-datepicker/dist/main.css'
@@ -90,11 +91,15 @@
         showCalendar = ref(false),
         date = ref([]),
         formattingDate = ref([]),
-        months = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+        months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 
     // Format dates
     function format(date) {
+        // Clear dates
+        formattingDate.value = []
+
+        // Set dates
         date.forEach(el => {
             let day = el.getDate(),
                 month = months[el.getMonth()],
@@ -110,6 +115,15 @@
 
     // Apply custom period
     function applyCustomPeriod() {
+        // Calculating the difference between dates
+        store.timeRangeDateFrom = new Date(date.value[0])
+        store.timeRangeDateTo = new Date(date.value[1])
+
+        store.timeRangeDaysDifference = differenceInDays(store.timeRangeDateFrom, store.timeRangeDateTo) * -1,
+        store.timeRangeMonthsDifference = differenceInMonths(store.timeRangeDateFrom, store.timeRangeDateTo) * -1,
+        store.timeRangeYearsDifference = differenceInYears(store.timeRangeDateFrom, store.timeRangeDateTo) * -1
+
+        store.currentTimeRange = 'range'
 
         // Hide dropdown
         showDropdown.value = false
@@ -286,10 +300,17 @@
         margin-top: 16px;
         padding: 10px;
 
-        transition: box-shadow .2s linear;
+        transition: .2s linear;
 
         border-radius: 6px;
         background: #950fff;
+    }
+
+    .apply_time_btn:disabled
+    {
+        pointer-events: none;
+
+        opacity: .7;
     }
 
     .apply_time_btn:hover

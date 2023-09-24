@@ -10,6 +10,7 @@
 <script setup>
     import { inject, ref, reactive, onBeforeMount, computed, watch } from 'vue'
     import { useGlobalStore } from '@/stores'
+    import { getChartParams } from '@/utils'
 
     // Components
     import Loader from '@/components/Loader.vue'
@@ -185,61 +186,17 @@
 
         // Get chart data
         await getChartData ()
-
-        console.log(chartLabels)
     })
 
 
     // Get chart data
     async function getChartData () {
         try {
-            // Request params
-            let currentDate = new Date(),
-                to_date = currentDate.toLocaleDateString('en-CA', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                }).split('.').join('-'),
-                detailing = ''
-
-            if (store.currentTimeRange == 'day') {
-                currentDate.setDate(currentDate.getDate() - 1)
-                detailing = 'hour'
-            }
-
-            if (store.currentTimeRange == 'week') {
-                currentDate.setDate(currentDate.getDate() - 7)
-                detailing = 'hour'
-            }
-
-            if (store.currentTimeRange == 'month') {
-                currentDate.setMonth(currentDate.getMonth() - 1)
-                detailing = 'day'
-            }
-
-            if (store.currentTimeRange == 'quarter') {
-                currentDate.setMonth(currentDate.getMonth() - 3)
-                detailing = 'week'
-            }
-
-            if (store.currentTimeRange == 'half_year') {
-                currentDate.setMonth(currentDate.getMonth() - 6)
-                detailing = 'week'
-            }
-
-            if (store.currentTimeRange == 'year') {
-                currentDate.setFullYear(currentDate.getFullYear() - 1)
-                detailing = 'week'
-            }
-
-            let from_date = currentDate.toLocaleDateString('en-CA', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-            }).split('.').join('-')
+            // Get chart params
+            let params = getChartParams()
 
             // Request
-            await fetch(`https://rpc.bronbro.io/statistics/apr?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
+            await fetch(`https://rpc.bronbro.io/statistics/apr?from_date=${params.from_date}&to_date=${params.to_date}&detailing=${params.detailing}`)
                 .then(res => res.json())
                 .then(response => {
                     responseData.value = response.data

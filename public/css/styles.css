@@ -645,6 +645,7 @@ button
 .dp__cell_offset
 {
     pointer-events: none;
+
     opacity: 0;
 }
 
@@ -654,9 +655,16 @@ button
 }
 
 
+.dp__overlay_cell_disabled
+{
+    background: none !important;
+}
+
 .dp__overlay_col[aria-disabled='true']
 {
-    display: none !important;
+    pointer-events: none;
+
+    opacity: .3;
 }
 
 

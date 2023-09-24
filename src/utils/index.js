@@ -28,3 +28,85 @@ export const createKeplrOfflineSinger = async chainId => {
     // Set username
     store.user.userName = store.Keplr.key.name
 }
+
+
+// Create Keplr offline singer
+export const getChartParams = () => {
+    let store = useGlobalStore(),
+        detailing = '',
+        from_date = '',
+        to_date = ''
+
+    if (store.currentTimeRange == 'range') {
+        if (!store.timeRangeDaysDifference || store.timeRangeDaysDifference && !store.TimeRangeMonthsDifference) {
+            detailing = 'hour'
+        }
+
+        if (store.timeRangeMonthsDifference >= 1 && store.TimeRangeMonthsDifference < 3) {
+            detailing = 'day'
+        }
+
+        if (store.timeRangeMonthsDifference >= 3) {
+            detailing = 'week'
+        }
+
+        from_date = new Date(store.timeRangeDateFrom).toLocaleDateString('en-CA', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+        }).split('.').join('-')
+
+        to_date = new Date(store.timeRangeDateTo).toLocaleDateString('en-CA', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+        }).split('.').join('-')
+    } else {
+        let currentDate = new Date()
+
+        to_date = currentDate.toLocaleDateString('en-CA', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+        }).split('.').join('-')
+
+        if (store.currentTimeRange == 'day') {
+            currentDate.setDate(currentDate.getDate() - 1)
+            detailing = 'hour'
+        }
+
+        if (store.currentTimeRange == 'week') {
+            currentDate.setDate(currentDate.getDate() - 7)
+            detailing = 'hour'
+        }
+
+        if (store.currentTimeRange == 'month') {
+            currentDate.setMonth(currentDate.getMonth() - 1)
+            detailing = 'day'
+        }
+
+        if (store.currentTimeRange == 'quarter') {
+            currentDate.setMonth(currentDate.getMonth() - 3)
+            detailing = 'week'
+        }
+
+        if (store.currentTimeRange == 'half_year') {
+            currentDate.setMonth(currentDate.getMonth() - 6)
+            detailing = 'week'
+        }
+
+        if (store.currentTimeRange == 'year') {
+            currentDate.setFullYear(currentDate.getFullYear() - 1)
+            detailing = 'week'
+        }
+
+        from_date = currentDate.toLocaleDateString('en-CA', {
+            year: 'numeric',
+            month: '2-digit',
+            day: '2-digit',
+        }).split('.').join('-')
+    }
+
+
+    return { to_date, from_date, detailing }
+}
