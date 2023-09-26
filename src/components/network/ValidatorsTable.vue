@@ -52,7 +52,7 @@
                     <span v-html="$t('message.network_validators_table_label_commission_earned')"></span>
                 </div>
 
-                <div class="col_restake_enabled">
+                <div class="col_restake_enabled" @click="sort('restake_enabled')">
                     <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_sort"></use></svg>
                     <span v-html="$t('message.network_validators_table_label_restake_enabled')"></span>
                 </div>
@@ -155,7 +155,7 @@
                     <div class="col_restake_enabled">
                         <div class="mob_label" v-html="$t('message.network_validators_table_label_restake_enabled')"></div>
 
-                        <div></div>
+                        <div>{{ validator.restake_enabled ? $t('message.yes') : $t('message.no') }}</div>
                     </div>
 
                     <div class="col_unique_delegators">

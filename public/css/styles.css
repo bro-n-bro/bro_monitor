@@ -708,4 +708,11 @@ button
     {
         padding-top: 92px;
     }
+
+
+    .dp__instance_calendar + .dp__instance_calendar
+    {
+        margin-top: 20px;
+        margin-left: 0 !important;
+    }
 }

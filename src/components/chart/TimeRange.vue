@@ -323,6 +323,7 @@
     .calendar
     {
         position: absolute;
+        z-index: 9;
         top: -2px;
         right: 100%;
 
@@ -380,6 +381,67 @@
     .calendar .close_btn:hover
     {
         color: #fff;
+    }
+
+
+
+    @media print, (max-width: 1023px)
+    {
+        .time_range .btn
+        {
+            font-size: 15px;
+
+            width: 56px;
+            height: 42px;
+        }
+
+
+        .calendar
+        {
+            right: 0;
+
+            margin-right: -2px;
+        }
+    }
+
+
+
+    @media print, (max-width: 767px)
+    {
+        .time_range
+        {
+            width: 100%;
+            margin-top: 12px;
+            margin-left: 0;
+
+            justify-content: space-between;
+        }
+
+
+        .calendar
+        {
+            width: calc(100vw - 40px);
+        }
+    }
+
+
+
+    @media print, (max-width: 479px)
+    {
+        .time_range .btn
+        {
+            font-size: 14px;
+
+            width: 46px;
+            height: 40px;
+        }
+
+
+        .time_range .btn .icon
+        {
+            width: 16px;
+            height: 16px;
+        }
     }
 
 </style>

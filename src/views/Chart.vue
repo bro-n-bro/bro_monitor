@@ -40,6 +40,8 @@
         <TransactionsChart v-if="store.currentChart == 'transactions'" />
 
         <AutoRestakeTokenAmountChart v-if="store.currentChart == 'auto_restake_token_amount'" />
+
+        <FeesPaidChart v-if="store.currentChart == 'fees_paid'" />
     </div>
 </template>
 
@@ -64,6 +66,7 @@
     import GasPaidChart from  '@/components/chart/GasPaid.vue'
     import TransactionsChart from  '@/components/chart/Transactions.vue'
     import AutoRestakeTokenAmountChart from  '@/components/chart/AutoRestakeTokenAmount.vue'
+    import FeesPaidChart from  '@/components/chart/FeesPaid.vue'
 
 
     const router = useRouter(),
@@ -87,6 +90,12 @@
     .full_chart .loader_wrap
     {
         background: none;
+    }
+
+
+    @media print, (max-width: 1899px)
+    {
+
     }
 
 </style>

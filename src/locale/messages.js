@@ -307,7 +307,11 @@ export default {
             'btn_back_home': 'Back to home',
             'btn_prices_label': 'Price',
             'btn_prices_exp': 'All Networks',
-            'btn_apply_time': 'Apply time range'
+            'btn_apply_time': 'Apply time range',
+
+
+            'yes': 'Yes',
+            'no': 'No',
         }
     }
 }

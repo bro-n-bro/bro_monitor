@@ -20,7 +20,6 @@
 
     <!-- Features -->
     <Features :validator="validator" />
-    </template>
 
 
     <div class="blocks charts">
@@ -38,6 +37,7 @@
             <Uptime :validator="validator" />
         </div>
     </div>
+    </template>
 </template>
 
 

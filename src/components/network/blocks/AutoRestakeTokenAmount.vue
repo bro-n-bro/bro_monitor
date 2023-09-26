@@ -143,6 +143,18 @@
 
 
     onBeforeMount(() => {
+        // Get data
+        try {
+            fetch('https://rpc.bronbro.io//statistics/restake_token_amount/actual')
+                .then(res => res.json())
+                .then(response => {
+                    // Set data
+                    data.value = response.data
+                })
+        } catch (error) {
+            console.error(error)
+        }
+
         // Get chart data
         try {
             // Request params

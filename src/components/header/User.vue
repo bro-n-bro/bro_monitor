@@ -128,16 +128,6 @@
 
 
 
-    @media print, (max-width: 1599px)
-    {
-        .user
-        {
-            margin-left: 24px;
-        }
-    }
-
-
-
     @media print, (max-width: 1023px)
     {
         .user
@@ -153,7 +143,6 @@
         .user
         {
             width: auto;
-            margin-left: 20px;
             padding: 6px;
 
             border-radius: 50%;
@@ -177,12 +166,6 @@
 
     @media print, (max-width: 479px)
     {
-        .user
-        {
-            margin-left: 10px;
-        }
-
-
         .user .photo
         {
             width: 38px;
