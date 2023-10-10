@@ -28,6 +28,7 @@
 <script setup>
     import { inject, ref, reactive, onBeforeMount, computed } from 'vue'
     import { useGlobalStore } from '@/stores'
+    import { getChartParams } from '@/utils'
 
     // Components
     import Loader from '@/components/Loader.vue'
@@ -145,54 +146,44 @@
 
     onBeforeMount(() => {
         // Get data
-        try {
-            fetch('https://rpc.bronbro.io/statistics/apy/actual')
-                .then(res => res.json())
-                .then(response => {
-                    // Set data
-                    data.value = response.data
-                })
-        } catch (error) {
-            console.error(error)
+        if (!store.cache.apy_actual) {
+            try {
+                fetch('https://rpc.bronbro.io/statistics/apy/actual')
+                    .then(res => res.json())
+                    .then(response => {
+                        // Set data
+                        store.cache.apy_actual = data.value = response.data
+                    })
+            } catch (error) {
+                console.error(error)
+            }
         }
 
 
         // Get chart data
-        try {
-            // Request params
-            let currentDate = new Date(),
-                to_date = currentDate.toLocaleDateString('en-CA', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                }).split('.').join('-'),
-                detailing = 'day'
+        if (!store.cache.apy) {
+            try {
+                // Request params
+                let { from_date, to_date, detailing } = getChartParams()
 
-            currentDate.setMonth(currentDate.getMonth() - 1)
+                // Request
+                fetch(`https://rpc.bronbro.io/statistics/apy?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
+                    .then(res => res.json())
+                    .then(response => {
+                        store.cache.apy = responseData.value = response.data
 
-            let from_date = currentDate.toLocaleDateString('en-CA', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-            }).split('.').join('-')
+                        // Set chart data
+                        response.data.forEach(el => chartData.value.push(el.y))
 
-            // Request
-            fetch(`https://rpc.bronbro.io/statistics/apy?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
-                .then(res => res.json())
-                .then(response => {
-                    responseData.value = response.data
+                        // Set colors
+                        chartColors.value.push(response.data[response.data.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
 
-                    // Set chart data
-                    response.data.forEach(el => chartData.value.push(el.y))
-
-                    // Set colors
-                    chartColors.value.push(response.data[response.data.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
-
-                    // Show chart
-                    chartLoading.value = true
-                })
-        } catch (error) {
-            console.error(error)
+                        // Show chart
+                        chartLoading.value = true
+                    })
+            } catch (error) {
+                console.error(error)
+            }
         }
     })
 </script>

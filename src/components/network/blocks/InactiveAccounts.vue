@@ -18,8 +18,6 @@
             <Loader v-if="!data" />
             <span v-else>{{ data.toLocaleString('ru-RU') }}</span>
         </div>
-
-        <div class="chart"></div>
     </div>
 </template>
 
@@ -38,16 +36,18 @@
 
 
     onBeforeMount(() => {
+        if (!store.cache.inactive_accounts_actual) {
         // Get data
-        try {
-            fetch('https://rpc.bronbro.io/statistics/inactive_accounts')
-                .then(res => res.json())
-                .then(response => {
-                    // Set data
-                    data.value = response.data
-                })
-        } catch (error) {
-            console.error(error)
+            try {
+                fetch('https://rpc.bronbro.io/statistics/inactive_accounts')
+                    .then(res => res.json())
+                    .then(response => {
+                        // Set data
+                        store.cache.inactive_accounts_actual = data.value = response.data
+                    })
+            } catch (error) {
+                console.error(error)
+            }
         }
     })
 </script>

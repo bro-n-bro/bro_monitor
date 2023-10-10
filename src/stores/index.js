@@ -28,18 +28,23 @@ export const useGlobalStore = defineStore('global', {
         currentChart: null,
         currentValidatorAddress: null,
         currentTimeRange: 'month',
+        currentTimeRangeDates: [],
+        currentTimeRangeDetailing: 'hour',
 
         isKeplrConnected: false,
         searchValidators: null,
         validators: [],
+        whaleTransactions: [],
 
         networks,
 
         pinnedBlocks: useLocalStorage('pinnedBlocks', {}),
 
         Keplr: {},
+        cache: {},
 
         user: {
+            balance: null,
             moonPassport: null,
             userName: null,
             avatar: null
@@ -76,6 +81,32 @@ export const useGlobalStore = defineStore('global', {
                 // Get moon passport
                 await this.getMoonPassport()
 
+                // Get user blance
+                if (!this.user.moonPassport || !this.user.moonPassport.extension.addresses) {
+                    // Without passport
+                    await this.getUserBalance([this.Keplr.account.address])
+                } else {
+                    // With passport
+                    let addresses = [],
+                        uniqWallets = []
+
+                    // Create uniq wallets array
+                    this.user.moonPassport.extension.addresses.forEach(address => {
+                        // Drop eth and terra addresses
+                        if(address.address.substring(0, 2) != '0x' && address.address.substring(0, 5) != 'terra') {
+                            let tempAddress = generateAddress('cosmos', address.address)
+
+                            if (!uniqWallets[tempAddress]) {
+                                uniqWallets[tempAddress] = false
+                                addresses.push(tempAddress)
+                            }
+                        }
+                    })
+
+                    await this.getUserBalance(addresses)
+                }
+
+                // Set Keplr status
                 this.isKeplrConnected = true
             }
         },
@@ -104,6 +135,23 @@ export const useGlobalStore = defineStore('global', {
 
                 // Generate passport avatar
                 this.user.avatar = `https://robohash.org/${this.user.userName.toLowerCase()}?set=set4`
+            }
+        },
+
+
+        // Get user blance
+        async getUserBalance(addresses) {
+            try {
+                await fetch('https://rpc.bronbro.io/statistics/staked_amount', {
+                    method: 'POST',
+                    cache: "no-cache",
+                    headers: { 'Content-Type': 'application/json', },
+                    body: JSON.stringify({ addresses }),
+                })
+                    .then(response => response.json())
+                    .then(data => this.user.balance = data.data)
+            } catch (error) {
+                console.error(error)
             }
         },
     }

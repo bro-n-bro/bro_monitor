@@ -10,6 +10,7 @@
 <script setup>
     import { inject, ref, reactive, onBeforeMount, computed, watch } from 'vue'
     import { useGlobalStore } from '@/stores'
+    import { setChartParams } from '@/utils'
 
     // Components
     import Loader from '@/components/Loader.vue'
@@ -18,7 +19,7 @@
     const store = useGlobalStore(),
         i18n = inject('i18n'),
         loading = ref(true),
-        timeFrame = computed(() => store.currentTimeRange),
+        currentTimeRangeDates = computed(() => store.currentTimeRangeDates),
         responseData = ref([]),
         chartData = ref([]),
         chartColors = ref([]),
@@ -165,13 +166,13 @@
         })
 
 
-    onBeforeMount(async () => {
-        // Get chart data
-        await getChartData ()
+    onBeforeMount(() => {
+        // Set chart params
+        setChartParams()
     })
 
 
-    watch(timeFrame, async () => {
+    watch(currentTimeRangeDates, async () => {
         // Show loader
         loading.value = true
 
@@ -193,53 +194,8 @@
     // Get chart data
     async function getChartData () {
         try {
-            // Request params
-            let currentDate = new Date(),
-                to_date = currentDate.toLocaleDateString('en-CA', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                }).split('.').join('-'),
-                detailing = ''
-
-            if (store.currentTimeRange == 'day') {
-                currentDate.setDate(currentDate.getDate() - 1)
-                detailing = 'hour'
-            }
-
-            if (store.currentTimeRange == 'week') {
-                currentDate.setDate(currentDate.getDate() - 7)
-                detailing = 'hour'
-            }
-
-            if (store.currentTimeRange == 'month') {
-                currentDate.setMonth(currentDate.getMonth() - 1)
-                detailing = 'day'
-            }
-
-            if (store.currentTimeRange == 'quarter') {
-                currentDate.setMonth(currentDate.getMonth() - 3)
-                detailing = 'week'
-            }
-
-            if (store.currentTimeRange == 'half_year') {
-                currentDate.setMonth(currentDate.getMonth() - 6)
-                detailing = 'week'
-            }
-
-            if (store.currentTimeRange == 'year') {
-                currentDate.setFullYear(currentDate.getFullYear() - 1)
-                detailing = 'week'
-            }
-
-            let from_date = currentDate.toLocaleDateString('en-CA', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-            }).split('.').join('-')
-
             // Request
-            await fetch(`https://rpc.bronbro.io/statistics/inflation?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
+            await fetch(`https://rpc.bronbro.io/statistics/active_accounts?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
                 .then(res => res.json())
                 .then(response => {
                     responseData.value = response.data

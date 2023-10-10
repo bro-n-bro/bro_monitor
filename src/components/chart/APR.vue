@@ -10,7 +10,7 @@
 <script setup>
     import { inject, ref, reactive, onBeforeMount, computed, watch } from 'vue'
     import { useGlobalStore } from '@/stores'
-    import { getChartParams } from '@/utils'
+    import { setChartParams } from '@/utils'
 
     // Components
     import Loader from '@/components/Loader.vue'
@@ -19,7 +19,7 @@
     const store = useGlobalStore(),
         i18n = inject('i18n'),
         loading = ref(true),
-        timeFrame = computed(() => store.currentTimeRange),
+        currentTimeRangeDates = computed(() => store.currentTimeRangeDates),
         responseData = ref([]),
         chartData = ref([]),
         chartColors = ref([]),
@@ -166,13 +166,13 @@
         })
 
 
-    onBeforeMount(async () => {
-        // Get chart data
-        await getChartData ()
+    onBeforeMount(() => {
+        // Set chart params
+        setChartParams()
     })
 
 
-    watch(timeFrame, async () => {
+    watch(currentTimeRangeDates, async () => {
         // Show loader
         loading.value = true
 
@@ -192,11 +192,8 @@
     // Get chart data
     async function getChartData () {
         try {
-            // Get chart params
-            let params = getChartParams()
-
             // Request
-            await fetch(`https://rpc.bronbro.io/statistics/apr?from_date=${params.from_date}&to_date=${params.to_date}&detailing=${params.detailing}`)
+            await fetch(`https://rpc.bronbro.io/statistics/active_accounts?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
                 .then(res => res.json())
                 .then(response => {
                     responseData.value = response.data

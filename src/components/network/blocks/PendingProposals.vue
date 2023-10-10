@@ -12,33 +12,35 @@
             <Loader v-if="!data == null" />
             <span v-else>{{ data }}</span>
         </div>
-
-        <div class="chart"></div>
     </a>
 </template>
 
 
 <script setup>
     import { onBeforeMount, ref } from 'vue'
+    import { useGlobalStore } from '@/stores'
 
     // Components
     import Loader from '@/components/Loader.vue'
 
 
-    const data = ref(null)
+    const store = useGlobalStore(),
+        data = ref(null)
 
 
     onBeforeMount(() => {
         // Get data
-        try {
-            fetch('https://rpc.bronbro.io/statistics/pending_proposals')
-                .then(res => res.json())
-                .then(response => {
-                    // Set data
-                    data.value = response.data
-                })
-        } catch (error) {
-            console.error(error)
+        if (!store.cache.pending_proposals_actual) {
+            try {
+                fetch('https://rpc.bronbro.io/statistics/pending_proposals')
+                    .then(res => res.json())
+                    .then(response => {
+                        // Set data
+                        store.cache.pending_proposals_actual = data.value = response.data
+                    })
+            } catch (error) {
+                console.error(error)
+            }
         }
     })
 </script>

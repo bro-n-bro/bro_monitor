@@ -35,15 +35,17 @@
 
     onBeforeMount(() => {
         // Get data
-        try {
-            fetch('https://rpc.bronbro.io/statistics/market_cap')
-                .then(res => res.json())
-                .then(response => {
-                    // Set data
-                    data.value = response.data
-                })
-        } catch (error) {
-            console.error(error)
+        if (!store.cache.market_cap) {
+            try {
+                fetch('https://rpc.bronbro.io/statistics/market_cap')
+                    .then(res => res.json())
+                    .then(response => {
+                        // Set data
+                        store.cache.market_cap = data.value = response.data
+                    })
+            } catch (error) {
+                console.error(error)
+            }
         }
     })
 </script>

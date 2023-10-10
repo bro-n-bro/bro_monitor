@@ -91,11 +91,4 @@
     {
         background: none;
     }
-
-
-    @media print, (max-width: 1899px)
-    {
-
-    }
-
 </style>

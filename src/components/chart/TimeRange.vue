@@ -1,26 +1,26 @@
 <template>
     <div class="time_range">
-        <button class="btn" :class="{ active: store.currentTimeRange == 'day' }" @click.prevent="store.currentTimeRange = 'day'">
+        <button class="btn" :class="{ active: store.currentTimeRange == 'day' }" @click.prevent="setTimeRangeDay()">
             {{ $t('message.time_range_24h') }}
         </button>
 
-        <button class="btn" :class="{ active: store.currentTimeRange == 'week' }" @click.prevent="store.currentTimeRange = 'week'">
+        <button class="btn" :class="{ active: store.currentTimeRange == 'week' }" @click.prevent="setTimeRangeWeek()">
             {{ $t('message.time_range_7D') }}
         </button>
 
-        <button class="btn" :class="{ active: store.currentTimeRange == 'month' }" @click.prevent="store.currentTimeRange = 'month'">
+        <button class="btn" :class="{ active: store.currentTimeRange == 'month' }" @click.prevent="setTimeRangeMonth()">
             {{ $t('message.time_range_30D') }}
         </button>
 
-        <button class="btn" :class="{ active: store.currentTimeRange == 'quarter' }" @click.prevent="store.currentTimeRange = 'quarter'">
+        <button class="btn" :class="{ active: store.currentTimeRange == 'quarter' }" @click.prevent="setTimeRangeQuarter()">
             {{ $t('message.time_range_3M') }}
         </button>
 
-        <button class="btn" :class="{ active: store.currentTimeRange == 'half_year' }" @click.prevent="store.currentTimeRange = 'half_year'">
+        <button class="btn" :class="{ active: store.currentTimeRange == 'half_year' }" @click.prevent="setTimeRangeHalfYear()">
             {{ $t('message.time_range_6M') }}
         </button>
 
-        <button class="btn" :class="{ active: store.currentTimeRange == 'year' }" @click.prevent="store.currentTimeRange = 'year'">
+        <button class="btn" :class="{ active: store.currentTimeRange == 'year' }" @click.prevent="setTimeRangeYear()">
             {{ $t('message.time_range_1Y') }}
         </button>
 
@@ -66,7 +66,7 @@
                     {{ $t('message.time_range_calendar_title') }}
                 </div>
 
-                <VueDatePicker inline range multi-calendars month-name-format="long" min-date="2019-12-11T16:11:34Z" :max-date="new Date()" v-model="date" auto-apply :format="format" />
+                <VueDatePicker inline range multi-calendars month-name-format="long" min-date="2021-02-18" :max-date="new Date()" v-model="date" auto-apply :format="format" />
             </div>
 
             <button class="apply_time_btn" @click.prevent="applyCustomPeriod()" :disabled="!formattingDate.length">
@@ -80,7 +80,7 @@
 <script setup>
     import { ref } from 'vue'
     import { useGlobalStore } from '@/stores'
-    import { differenceInDays, differenceInMonths, differenceInYears } from 'date-fns'
+    import { setChartParams } from '@/utils'
 
     import VueDatePicker from '@vuepic/vue-datepicker'
     import '@vuepic/vue-datepicker/dist/main.css'
@@ -95,7 +95,7 @@
 
 
     // Format dates
-    function format(date) {
+    function format (date) {
         // Clear dates
         formattingDate.value = []
 
@@ -113,17 +113,73 @@
     }
 
 
+    // Set time range - Day
+    function setTimeRangeDay () {
+        // Set current time range
+        store.currentTimeRange = 'day'
+
+        // Set chart params
+        setChartParams()
+    }
+
+
+    // Set time range - Week
+    function setTimeRangeWeek () {
+        // Set current time range
+        store.currentTimeRange = 'week'
+
+        // Set chart params
+        setChartParams()
+    }
+
+
+    // Set time range - Month
+    function setTimeRangeMonth () {
+        // Set current time range
+        store.currentTimeRange = 'month'
+
+        // Set chart params
+        setChartParams()
+    }
+
+
+    // Set time range - Quarter
+    function setTimeRangeQuarter () {
+        // Set current time range
+        store.currentTimeRange = 'quarter'
+
+        // Set chart params
+        setChartParams()
+    }
+
+
+    // Set time range - Day
+    function setTimeRangeHalfYear () {
+        // Set current time range
+        store.currentTimeRange = 'half_year'
+
+        // Set chart params
+        setChartParams()
+    }
+
+
+    // Set time range - Year
+    function setTimeRangeYear () {
+        // Set current time range
+        store.currentTimeRange = 'year'
+
+        // Set chart params
+        setChartParams()
+    }
+
+
     // Apply custom period
-    function applyCustomPeriod() {
-        // Calculating the difference between dates
-        store.timeRangeDateFrom = new Date(date.value[0])
-        store.timeRangeDateTo = new Date(date.value[1])
-
-        store.timeRangeDaysDifference = differenceInDays(store.timeRangeDateFrom, store.timeRangeDateTo) * -1,
-        store.timeRangeMonthsDifference = differenceInMonths(store.timeRangeDateFrom, store.timeRangeDateTo) * -1,
-        store.timeRangeYearsDifference = differenceInYears(store.timeRangeDateFrom, store.timeRangeDateTo) * -1
-
+    function applyCustomPeriod () {
+        // Set current time range
         store.currentTimeRange = 'range'
+
+        // Set chart params
+        setChartParams([date.value[0], date.value[1]])
 
         // Hide dropdown
         showDropdown.value = false

@@ -33,15 +33,17 @@
 
     onBeforeMount(() => {
         // Get data
-        try {
-            fetch('https://rpc.bronbro.io/statistics/circulating_supply/actual')
-                .then(res => res.json())
-                .then(response => {
-                    // Set data
-                    data.value = response.data
-                })
-        } catch (error) {
-            console.error(error)
+        if (!store.cache.circulating_supply_actual) {
+            try {
+                fetch('https://rpc.bronbro.io/statistics/circulating_supply/actual')
+                    .then(res => res.json())
+                    .then(response => {
+                        // Set data
+                        store.cache.circulating_supply_actual = data.value = response.data
+                    })
+            } catch (error) {
+                console.error(error)
+            }
         }
     })
 </script>

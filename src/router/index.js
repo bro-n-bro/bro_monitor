@@ -83,7 +83,7 @@ const routes = [
 		}
 	},
 	{
-		path: '/whale_transactions',
+		path: '/:network/whale_transactions',
 		name: 'WhaleTransactions',
 		component: () => import('../views/WhaleTransactions.vue'),
 		meta: {

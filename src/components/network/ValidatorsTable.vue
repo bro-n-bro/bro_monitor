@@ -125,10 +125,10 @@
 
                         <div>
                             {{ $filters.toFixed(validator.commission * 100, 1) }} |
-                            {{ $filters.toFixed(validator.max_change_rate * 100, 1) }} |
+                            {{ $filters.toFixed(validator.max_rate * 100, 1) }} |
 
                             <span :class="{ red: validator.commission > 0.25 || validator.max_change_rate > 0.25 || validator.max_rate > 0.25}">
-                                {{ $filters.toFixed(validator.max_rate * 100, 1) }}
+                                {{ $filters.toFixed(validator.max_change_rate * 100, 1) }}
                             </span>
                         </div>
                     </div>
