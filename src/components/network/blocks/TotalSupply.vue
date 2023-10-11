@@ -11,15 +11,15 @@
         </div>
 
         <div class="val">
-            <Loader v-if="!data" />
-            <span v-else>{{ $filters.toFixed(data / Math.pow(10, store.networks[store.currentNetwork].exponent), 0).toLocaleString('ru-RU') }}</span>
+            <Loader v-if="!store.cache.total_supply_actual" />
+            <span v-else>{{ $filters.toFixed(store.cache.total_supply_actual / Math.pow(10, store.networks[store.currentNetwork].exponent), 0).toLocaleString('ru-RU') }}</span>
         </div>
     </div>
 </template>
 
 
 <script setup>
-    import { inject, ref, onBeforeMount } from 'vue'
+    import { inject, onBeforeMount } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -27,8 +27,7 @@
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter'),
-        data = ref(null)
+        emitter = inject('emitter')
 
 
     onBeforeMount(() => {
@@ -37,10 +36,7 @@
             try {
                 fetch('https://rpc.bronbro.io/statistics/total_supply/actual')
                     .then(res => res.json())
-                    .then(response => {
-                        // Set data
-                        store.cache.total_supply_actual = data.value = response.data
-                    })
+                    .then(response => store.cache.total_supply_actual = response.data)
             } catch (error) {
                 console.error(error)
             }

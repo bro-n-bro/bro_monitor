@@ -13,8 +13,6 @@
         <div class="title">
             {{ $t('message.network_charts_bonded_token_apr_title', { token: store.networks[store.currentNetwork].token_name }) }}
         </div>
-
-        <div class="chart"></div>
     </div>
 </template>
 

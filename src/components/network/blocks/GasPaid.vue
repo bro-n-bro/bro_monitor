@@ -15,8 +15,8 @@
         </div>
 
         <div class="val">
-            <Loader v-if="!data" />
-            <span v-else>{{ $filters.toFixed(data / Math.pow(10, store.networks[store.currentNetwork].exponent), 0).toLocaleString('ru-RU') }}</span>
+            <Loader v-if="!store.cache.gas_paid_actual" />
+            <span v-else>{{ $filters.toFixed(store.cache.gas_paid_actual / Math.pow(10, store.networks[store.currentNetwork].exponent), 0).toLocaleString('ru-RU') }}</span>
         </div>
 
         <apexchart class="chart" height="47px" :options="chartOptions" :series="series" v-if="chartLoading" />
@@ -36,8 +36,6 @@
     const store = useGlobalStore(),
         emitter = inject('emitter'),
         i18n = inject('i18n'),
-        data = ref(null),
-        responseData = ref([]),
         chartLoading = ref(false),
         chartData = ref([]),
         chartColors= ref([]),
@@ -107,7 +105,7 @@
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + responseData.value[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_date">' + store.cache.gas_paid[dataPointIndex].x + '</div>' +
                                     '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_gas_paid_title')+ ': ' + Number((series[0][dataPointIndex] / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
@@ -144,16 +142,13 @@
         })
 
 
-    onBeforeMount(() => {
+    onBeforeMount(async () => {
         // Get data
         if (!store.cache.gas_paid_actual) {
             try {
                 fetch('https://rpc.bronbro.io/statistics/gas_paid/actual')
                     .then(res => res.json())
-                    .then(response => {
-                        // Set data
-                        store.cache.gas_paid_actual = data.value = response.data
-                    })
+                    .then(response => store.cache.gas_paid_actual = response.data)
             } catch (error) {
                 console.error(error)
             }
@@ -167,23 +162,29 @@
                 let { from_date, to_date, detailing } = getChartParams()
 
                 // Request
-                fetch(`https://rpc.bronbro.io/statistics/gas_paid?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
+                await fetch(`https://rpc.bronbro.io/statistics/gas_paid?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
                     .then(res => res.json())
-                    .then(response => {
-                        store.cache.gas_paid = responseData.value = response.data
-
-                        // Set chart data
-                        response.data.forEach(el => chartData.value.push(el.y))
-
-                        // Set colors
-                        chartColors.value.push(response.data[response.data.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
-
-                        // Show chart
-                        chartLoading.value = true
-                    })
+                    .then(response => store.cache.gas_paid = response.data)
             } catch (error) {
                 console.error(error)
             }
         }
+
+
+        // Init chart
+        initChart()
     })
+
+
+    // Init chart
+    function initChart() {
+        // Set chart data
+        store.cache.gas_paid.forEach(el => chartData.value.push(el.y))
+
+        // Set colors
+        chartColors.value.push(store.cache.gas_paid[store.cache.gas_paid.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
+
+        // Show chart
+        chartLoading.value = true
+    }
 </script>

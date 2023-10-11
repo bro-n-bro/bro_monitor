@@ -15,15 +15,15 @@
         </div>
 
         <div class="val">
-            <Loader v-if="!data" />
-            <span v-else>{{ data.toLocaleString('ru-RU') }}</span>
+            <Loader v-if="!store.cache.inactive_accounts_actual" />
+            <span v-else>{{ store.cache.inactive_accounts_actual.toLocaleString('ru-RU') }}</span>
         </div>
     </div>
 </template>
 
 
 <script setup>
-    import { inject, ref, onBeforeMount } from 'vue'
+    import { inject, onBeforeMount } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -31,8 +31,7 @@
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter'),
-        data = ref(null)
+        emitter = inject('emitter')
 
 
     onBeforeMount(() => {
@@ -41,10 +40,7 @@
             try {
                 fetch('https://rpc.bronbro.io/statistics/inactive_accounts')
                     .then(res => res.json())
-                    .then(response => {
-                        // Set data
-                        store.cache.inactive_accounts_actual = data.value = response.data
-                    })
+                    .then(response => store.cache.inactive_accounts_actual = response.data)
             } catch (error) {
                 console.error(error)
             }

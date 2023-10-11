@@ -15,8 +15,8 @@
         </div>
 
         <div class="val">
-            <Loader v-if="!data" />
-            <span v-else>{{ $filters.toFixed(data / Math.pow(10, store.networks[store.currentNetwork].exponent), 0).toLocaleString('ru-RU') }}</span>
+            <Loader v-if="!store.cache.unbonded_tokens_actual" />
+            <span v-else>{{ $filters.toFixed(store.cache.unbonded_tokens_actual / Math.pow(10, store.networks[store.currentNetwork].exponent), 0).toLocaleString('ru-RU') }}</span>
         </div>
 
         <apexchart class="chart" height="47px" :options="chartOptions" :series="series" v-if="chartLoading" />
@@ -36,8 +36,6 @@
     const store = useGlobalStore(),
         emitter = inject('emitter'),
         i18n = inject('i18n'),
-        data = ref(null),
-        responseData = ref([]),
         chartLoading = ref(false),
         chartData = ref([]),
         chartColors= ref([]),
@@ -107,7 +105,7 @@
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + responseData.value[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_date">' + store.cache.unbonded_tokens[dataPointIndex].x + '</div>' +
                                     '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_unbonded_tokens_title', { token: store.networks[store.currentNetwork].token_name })+ ': ' + Number((series[0][dataPointIndex] / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
                     return html
@@ -143,7 +141,7 @@
         })
 
 
-    onBeforeMount(() => {
+    onBeforeMount(async () => {
         // Get data
         if (!store.cache.unbonded_tokens_actual) {
             try {
@@ -151,7 +149,7 @@
                     .then(res => res.json())
                     .then(response => {
                         // Set data
-                        store.cache.unbonded_tokens_actual = data.value = response.data
+                        store.cache.unbonded_tokens_actual = response.data
                     })
             } catch (error) {
                 console.error(error)
@@ -166,23 +164,29 @@
                 let { from_date, to_date, detailing } = getChartParams()
 
                 // Request
-                fetch(`https://rpc.bronbro.io/statistics/unbonded_tokens?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
+                await fetch(`https://rpc.bronbro.io/statistics/unbonded_tokens?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
                     .then(res => res.json())
-                    .then(response => {
-                        store.cache.unbonded_tokens = responseData.value = response.data
-
-                        // Set chart data
-                        response.data.forEach(el => chartData.value.push(el.y))
-
-                        // Set colors
-                        chartColors.value.push(response.data[response.data.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
-
-                        // Show chart
-                        chartLoading.value = true
-                    })
+                    .then(response => store.cache.unbonded_tokens = response.data)
             } catch (error) {
                 console.error(error)
             }
         }
+
+
+        // Init chart
+        initChart()
     })
+
+
+    // Init chart
+    function initChart() {
+        // Set chart data
+        store.cache.unbonded_tokens.forEach(el => chartData.value.push(el.y))
+
+        // Set colors
+        chartColors.value.push(store.cache.unbonded_tokens[store.cache.unbonded_tokens.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
+
+        // Show chart
+        chartLoading.value = true
+    }
 </script>

@@ -13,15 +13,15 @@
 
         <div class="val">
             $
-            <Loader v-if="!data" />
-            <span v-else>{{ $filters.toFixed(data, 0).toLocaleString('ru-RU') }}</span>
+            <Loader v-if="!store.cache.market_cap" />
+            <span v-else>{{ $filters.toFixed(store.cache.market_cap, 0).toLocaleString('ru-RU') }}</span>
         </div>
     </div>
 </template>
 
 
 <script setup>
-    import { onBeforeMount, ref, inject } from 'vue'
+    import { onBeforeMount, inject } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -29,8 +29,7 @@
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter'),
-        data = ref(0)
+        emitter = inject('emitter')
 
 
     onBeforeMount(() => {
@@ -39,10 +38,7 @@
             try {
                 fetch('https://rpc.bronbro.io/statistics/market_cap')
                     .then(res => res.json())
-                    .then(response => {
-                        // Set data
-                        store.cache.market_cap = data.value = response.data
-                    })
+                    .then(response => store.cache.market_cap = response.data)
             } catch (error) {
                 console.error(error)
             }

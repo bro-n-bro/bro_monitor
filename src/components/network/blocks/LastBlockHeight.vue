@@ -11,15 +11,15 @@
         </div>
 
         <div class="val">
-            <Loader v-if="!data" />
-            <span v-else>{{ data.toLocaleString('ru-RU') }}</span>
+            <Loader v-if="!store.cache.last_block_height" />
+            <span v-else>{{ store.cache.last_block_height.toLocaleString('ru-RU') }}</span>
         </div>
     </div>
 </template>
 
 
 <script setup>
-    import { onBeforeMount, ref, inject } from 'vue'
+    import { onBeforeMount, inject } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -27,8 +27,7 @@
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter'),
-        data = ref(null)
+        emitter = inject('emitter')
 
 
     onBeforeMount(() => {
@@ -37,10 +36,7 @@
             try {
                 fetch('https://rpc.bronbro.io/statistics/last_block_height')
                     .then(res => res.json())
-                    .then(response => {
-                        // Set data
-                        store.cache.last_block_height = data.value = response.data
-                    })
+                    .then(response => store.cache.last_block_height = response.data)
             } catch (error) {
                 console.error(error)
             }

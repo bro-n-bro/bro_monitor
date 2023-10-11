@@ -13,15 +13,15 @@
 
         <div class="val">
             $
-            <Loader v-if="!data" />
-            <span v-else>{{ $filters.toFixed(data.today, 3) }}</span>
+            <Loader v-if="!store.cache.token_prices_actual" />
+            <span v-else>{{ $filters.toFixed(store.cache.token_prices_actual.today, 3) }}</span>
         </div>
     </div>
 </template>
 
 
 <script setup>
-    import { onBeforeMount, ref, inject } from 'vue'
+    import { onBeforeMount, inject } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -29,8 +29,7 @@
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter'),
-        data = ref(null)
+        emitter = inject('emitter')
 
 
     onBeforeMount(() => {
@@ -39,10 +38,7 @@
             try {
                 fetch('https://rpc.bronbro.io/statistics/token_prices')
                     .then(res => res.json())
-                    .then(response => {
-                        // Set data
-                        store.cache.token_prices_actual = data.value = response.data
-                    })
+                    .then(response => store.cache.token_prices_actual = response.data)
             } catch (error) {
                 console.error(error)
             }

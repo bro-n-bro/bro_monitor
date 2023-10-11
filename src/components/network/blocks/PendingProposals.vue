@@ -9,23 +9,22 @@
         </div>
 
         <div class="val">
-            <Loader v-if="!data == null" />
-            <span v-else>{{ data }}</span>
+            <Loader v-if="!store.cache.pending_proposals_actual == null" />
+            <span v-else>{{ store.cache.pending_proposals_actual }}</span>
         </div>
     </a>
 </template>
 
 
 <script setup>
-    import { onBeforeMount, ref } from 'vue'
+    import { onBeforeMount } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
     import Loader from '@/components/Loader.vue'
 
 
-    const store = useGlobalStore(),
-        data = ref(null)
+    const store = useGlobalStore()
 
 
     onBeforeMount(() => {
@@ -34,10 +33,7 @@
             try {
                 fetch('https://rpc.bronbro.io/statistics/pending_proposals')
                     .then(res => res.json())
-                    .then(response => {
-                        // Set data
-                        store.cache.pending_proposals_actual = data.value = response.data
-                    })
+                    .then(response => store.cache.pending_proposals_actual = response.data)
             } catch (error) {
                 console.error(error)
             }

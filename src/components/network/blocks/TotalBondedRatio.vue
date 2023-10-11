@@ -15,8 +15,8 @@
         </div>
 
         <div class="val">
-            <Loader v-if="!data" />
-            <span v-else>{{ $filters.toFixed(data * 100, 2) }}</span>
+            <Loader v-if="!store.cache.bonded_ratio_actual" />
+            <span v-else>{{ $filters.toFixed(store.cache.bonded_ratio_actual * 100, 2) }}</span>
             %
         </div>
 
@@ -37,8 +37,6 @@
     const store = useGlobalStore(),
         emitter = inject('emitter'),
         i18n = inject('i18n'),
-        data = ref(null),
-        responseData = ref([]),
         chartLoading = ref(false),
         chartData = ref([]),
         chartColors= ref([]),
@@ -108,7 +106,7 @@
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + responseData.value[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_date">' + store.cache.bonded_ratio[dataPointIndex].x + '</div>' +
                                     '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_bonded_ratio_title')+ ': ' + series[0][dataPointIndex].toFixed(2) + '%</div>' +
                                 '</div>'
                     return html
@@ -144,7 +142,7 @@
         })
 
 
-    onBeforeMount(() => {
+    onBeforeMount(async () => {
         // Get data
         if (!store.cache.bonded_ratio_actual) {
             try {
@@ -152,7 +150,7 @@
                     .then(res => res.json())
                     .then(response => {
                         // Set data
-                        store.cache.bonded_ratio_actual = data.value = response.data
+                        store.cache.bonded_ratio_actual = response.data
                     })
             } catch (error) {
                 console.error(error)
@@ -167,23 +165,29 @@
                 let { from_date, to_date, detailing } = getChartParams()
 
                 // Request
-                fetch(`https://rpc.bronbro.io/statistics/bonded_ratio?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
+                await fetch(`https://rpc.bronbro.io/statistics/bonded_ratio?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
                     .then(res => res.json())
-                    .then(response => {
-                        store.cache.bonded_ratio = responseData.value = response.data
-
-                        // Set chart data
-                        response.data.forEach(el => chartData.value.push(el.y))
-
-                        // Set colors
-                        chartColors.value.push(response.data[response.data.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
-
-                        // Show chart
-                        chartLoading.value = true
-                    })
+                    .then(response => store.cache.bonded_ratio = response.data)
             } catch (error) {
                 console.error(error)
             }
         }
+
+
+        // Init chart
+        initChart()
     })
+
+
+    // Init chart
+    function initChart() {
+        // Set chart data
+        store.cache.bonded_ratio.forEach(el => chartData.value.push(el.y))
+
+        // Set colors
+        chartColors.value.push(store.cache.bonded_ratio[store.cache.bonded_ratio.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
+
+        // Show chart
+        chartLoading.value = true
+    }
 </script>
