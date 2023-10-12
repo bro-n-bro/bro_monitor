@@ -24,6 +24,7 @@
 <script setup>
     import { inject, ref, reactive, onBeforeMount, computed } from 'vue'
     import { useGlobalStore } from '@/stores'
+    import { getChartParams } from '@/utils'
 
     // Components
     import Loader from '@/components/Loader.vue'
@@ -33,7 +34,6 @@
         emitter = inject('emitter'),
         i18n = inject('i18n'),
         loading = ref(false),
-        responseData = ref([]),
         chartData = ref([]),
         chartColors = ref([]),
         chartLabels = ref([]),
@@ -123,7 +123,7 @@
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + responseData.value[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_date">' + store.cache.bonded_tokens[dataPointIndex].x + '</div>' +
                                     '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_bonded_token_title', { token: store.networks[store.currentNetwork].token_name })+ ': ' + Number((series[0][dataPointIndex] / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
@@ -180,57 +180,51 @@
         })
 
 
-    onBeforeMount(() => {
+    onBeforeMount(async () => {
         // Get chart data
-        try {
-            // Request params
-            let currentDate = new Date(),
-                to_date = currentDate.toLocaleDateString('en-CA', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                }).split('.').join('-'),
-                detailing = 'day'
+        if (!store.cache.bonded_tokens) {
+            try {
+                // Request params
+                let { from_date, to_date, detailing } = getChartParams()
 
-            currentDate.setMonth(currentDate.getMonth() - 1)
-
-            let from_date = currentDate.toLocaleDateString('en-CA', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-            }).split('.').join('-')
-
-            // Request
-            fetch(`https://rpc.bronbro.io/statistics/bonded_tokens?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
-                .then(res => res.json())
-                .then(response => {
-                    responseData.value = response.data
-
-                    // Set chart data
-                    response.data.forEach(el => chartData.value.push(el.y))
-
-                    chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
-                    chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
-
-                    // Set colors
-                    chartColors.value.push(response.data[response.data.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
-
-                    // Set labels
-                    response.data.forEach(el => {
-                        let parseDate = new Date(el.x),
-                            month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
-                            date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
-
-                        chartLabels.value.push(month + '/' + date)
-                    })
-
-                    // Hide loader
-                    loading.value = true
-                })
-        } catch (error) {
-            console.error(error)
+                // Request
+                await fetch(`https://rpc.bronbro.io/statistics/bonded_tokens?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
+                    .then(res => res.json())
+                    .then(response => store.cache.bonded_tokens = response.data)
+            } catch (error) {
+                console.error(error)
+            }
         }
+
+
+        // Init chart
+        initChart()
     })
+
+
+    // Init chart
+    function initChart() {
+        // Set chart data
+        store.cache.bonded_tokens.forEach(el => chartData.value.push(el.y))
+
+        chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
+        chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
+
+        // Set colors
+        chartColors.value.push(store.cache.bonded_tokens[store.cache.bonded_tokens.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
+
+        // Set labels
+        store.cache.bonded_tokens.forEach(el => {
+            let parseDate = new Date(el.x),
+                month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
+                date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
+
+            chartLabels.value.push(month + '/' + date)
+        })
+
+        // Hide loader
+        loading.value = true
+    }
 </script>
 
 

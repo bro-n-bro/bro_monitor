@@ -106,7 +106,7 @@
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_date">' + store.cache.active_accounts[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_active_users_title')+ ': ' + series[0][dataPointIndex].toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_active_users_title') + ': ' + series[0][dataPointIndex].toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html

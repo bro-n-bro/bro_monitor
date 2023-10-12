@@ -13,18 +13,15 @@
         <div class="title">
             {{ $t('message.network_charts_transactions_to_gas_paid_title') }}
         </div>
-
-        <div class="chart"></div>
     </div>
 </template>
 
 
 <script setup>
-    import { ref, inject } from 'vue'
+    import { inject } from 'vue'
     import { useGlobalStore } from '@/stores'
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter'),
-        data = ref({})
+        emitter = inject('emitter')
 </script>

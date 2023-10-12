@@ -24,6 +24,7 @@
 <script setup>
     import { inject, ref, reactive, onBeforeMount, computed } from 'vue'
     import { useGlobalStore } from '@/stores'
+    import { getChartParams } from '@/utils'
 
     // Components
     import Loader from '@/components/Loader.vue'
@@ -69,6 +70,18 @@
             dataLabels: {
                 enabled: false
             },
+            markers: {
+                size: 0,
+                colors: '#fff',
+                strokeColors: ['#fff'],
+                strokeWidth: 8,
+                strokeOpacity: 0.3,
+                shape: 'circle',
+                radius: 50,
+                hover: {
+                    size: 4
+                }
+            },
             grid: {
                 show: true,
                 borderColor: '#282828',
@@ -100,7 +113,21 @@
                 show: false
             },
             tooltip: {
-                enabled: false
+                shared: false,
+                fixed: {
+                    enabled: true,
+                    position: 'topLeft'
+                },
+                custom: function({series, seriesIndex, dataPointIndex, w}) {
+                    let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
+                        top = w.globals.seriesYvalues[0][dataPointIndex],
+                        html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
+                                    '<div class="tooltip_date">' + store.cache.inactive_accounts[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_val">' + i18n.global.t('message.network_blocks_inactive_users_title') + ': ' + series[0][dataPointIndex].toLocaleString('ru-RU') + '</div>' +
+                                '</div>'
+
+                    return html
+                }
             },
             yaxis: {
                 show: true,
@@ -152,55 +179,51 @@
         })
 
 
-    onBeforeMount(() => {
+    onBeforeMount(async () => {
         // Get chart data
-        try {
-            // Request params
-            let currentDate = new Date(),
-                to_date = currentDate.toLocaleDateString('en-CA', {
-                    year: 'numeric',
-                    month: '2-digit',
-                    day: '2-digit',
-                }).split('.').join('-'),
-                detailing = 'day'
+        if (!store.cache.inactive_accounts) {
+            try {
+                // Request params
+                let { from_date, to_date, detailing } = getChartParams()
 
-            currentDate.setMonth(currentDate.getMonth() - 1)
-
-            let from_date = currentDate.toLocaleDateString('en-CA', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-            }).split('.').join('-')
-
-            // Request
-            fetch(`https://rpc.bronbro.io/statistics/666?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
-                .then(res => res.json())
-                .then(response => {
-                    // Set chart data
-                    response.data.forEach(el => chartData.value.push(el.y))
-
-                    chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
-                    chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
-
-                    // Set colors
-                    chartColors.value.push(response.data[response.data.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
-
-                    // Set labels
-                    response.data.forEach(el => {
-                        let parseDate = new Date(el.x),
-                            month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
-                            date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
-
-                        chartLabels.value.push(month + '/' + date)
-                    })
-
-                    // Hide loader
-                    loading.value = true
-                })
-        } catch (error) {
-            console.error(error)
+                // Request
+                await fetch(`https://rpc.bronbro.io/statistics/666?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
+                    .then(res => res.json())
+                    .then(response => store.cache.inactive_accounts = response.data)
+            } catch (error) {
+                console.error(error)
+            }
         }
+
+
+        // Init chart
+        // initChart()
     })
+
+
+    // Init chart
+    function initChart() {
+        // Set chart data
+        store.cache.inactive_accounts.forEach(el => chartData.value.push(el.y))
+
+        chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
+        chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
+
+        // Set colors
+        chartColors.value.push(store.cache.inactive_accounts[store.cache.inactive_accounts.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
+
+        // Set labels
+        store.cache.inactive_accounts.forEach(el => {
+            let parseDate = new Date(el.x),
+                month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
+                date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
+
+            chartLabels.value.push(month + '/' + date)
+        })
+
+        // Hide loader
+        loading.value = true
+    }
 </script>
 
 
