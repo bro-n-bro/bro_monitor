@@ -31,6 +31,8 @@ export const useGlobalStore = defineStore('global', {
         currentTimeRangeDates: [],
         currentTimeRangeDetailing: 'hour',
 
+        updateTimeRangeDates: 0,
+
         isKeplrConnected: false,
         searchValidators: null,
         validators: [],

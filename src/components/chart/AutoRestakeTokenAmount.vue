@@ -10,7 +10,7 @@
 <script setup>
     import { inject, ref, reactive, onBeforeMount, computed, watch } from 'vue'
     import { useGlobalStore } from '@/stores'
-    import { setChartParams } from '@/utils'
+    import { setChartParams, getChartParams } from '@/utils'
 
     // Components
     import Loader from '@/components/Loader.vue'
@@ -19,8 +19,7 @@
     const store = useGlobalStore(),
         i18n = inject('i18n'),
         loading = ref(true),
-        currentTimeRangeDates = computed(() => store.currentTimeRangeDates),
-        responseData = ref([]),
+        cache = ref(true),
         chartData = ref([]),
         chartColors = ref([]),
         chartLabels = ref([]),
@@ -110,7 +109,7 @@
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + responseData.value[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_date">' + store.cache.restake_token_amount[dataPointIndex].x + '</div>' +
                                     '<div class="tooltip_val">' + i18n.global.t('message.network_charts_auto_restake_token_amount_title') + ': ' + Number((series[0][dataPointIndex] / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
@@ -172,57 +171,70 @@
     })
 
 
-    watch(currentTimeRangeDates, async () => {
+    watch(() => store.updateTimeRangeDates, async () => {
         // Show loader
         loading.value = true
 
         // Reset chart data
-        responseData.value = []
         chartData.value = []
         chartColors.value = []
         chartLabels.value = []
         chartMin.value = 0
         chartMax.value = 0
 
-        // Get chart data
-        await getChartData ()
+        if (store.cache.restake_token_amount && cache.value) {
+            // Init chart
+            initChart()
+        } else {
+            // Get chart data
+            await getChartData ()
+        }
 
-        console.log(chartLabels)
+        cache.value = false
     })
 
 
     // Get chart data
     async function getChartData () {
         try {
+            // Request params
+            let { from_date, to_date, detailing } = getChartParams()
+
             // Request
-            await fetch(`https://rpc.bronbro.io/statistics/active_accounts?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
+            await fetch(`https://rpc.bronbro.io/statistics/active_accounts?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
                 .then(res => res.json())
-                .then(response => {
-                    responseData.value = response.data
-
-                    // Set chart data
-                    response.data.forEach(el => chartData.value.push(el.y))
-
-                    chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
-                    chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
-
-                    // Set colors
-                    chartColors.value.push(response.data[response.data.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
-
-                    // Set labels
-                    response.data.forEach(el => {
-                        let parseDate = new Date(el.x),
-                            month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
-                            date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
-
-                        chartLabels.value.push(month + '/' + date)
-                    })
-
-                    // Hide loader
-                    loading.value = false
-                })
+                .then(response => store.cache.restake_token_amount = response.data)
         } catch (error) {
             console.error(error)
         }
+
+
+        // Init chart
+        initChart()
+    }
+
+
+    // Init chart
+    function initChart() {
+        // Set chart data
+        store.cache.restake_token_amount.forEach(el => chartData.value.push(el.y))
+
+        chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
+        chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
+
+        // Set colors
+        chartColors.value.push(store.cache.restake_token_amount[store.cache.restake_token_amount.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
+
+        // Set labels
+        store.cache.restake_token_amount.forEach(el => {
+            let parseDate = new Date(el.x),
+                month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
+                date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
+
+            chartLabels.value.push(month + '/' + date)
+        })
+
+        // Hide loader
+        loading.value = false
     }
 </script>

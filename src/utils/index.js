@@ -61,13 +61,11 @@ export const setChartParams = (dates) => {
         currentDate = new Date(),
         tempDates = [],
         timeRangeDaysDifference = 0,
-        timeRangeMonthsDifference = 0,
-        timeRangeYearsDifference = 0
+        timeRangeMonthsDifference = 0
 
     if (store.currentTimeRange == 'range') {
         timeRangeDaysDifference = differenceInDays(dates[0], dates[1]) * -1,
-        timeRangeMonthsDifference = differenceInMonths(dates[0], dates[1]) * -1,
-        timeRangeYearsDifference = differenceInYears(dates[0], dates[1]) * -1
+        timeRangeMonthsDifference = differenceInMonths(dates[0], dates[1]) * -1
 
         if (!timeRangeDaysDifference || timeRangeDaysDifference && !timeRangeMonthsDifference) {
             store.currentTimeRangeDetailing = 'hour'
@@ -143,4 +141,7 @@ export const setChartParams = (dates) => {
 
     // Update on store
     store.currentTimeRangeDates = tempDates
+
+    // Update on store
+    store.updateTimeRangeDates++
 }
