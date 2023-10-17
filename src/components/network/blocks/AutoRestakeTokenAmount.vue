@@ -145,7 +145,7 @@
         // Get data
         if (!store.cache.restake_token_amount_actual) {
             try {
-                fetch('https://rpc.bronbro.io//statistics/restake_token_amount/actual')
+                fetch('https://rpc.bronbro.io/statistics/restake_token_amount/actual')
                     .then(res => res.json())
                     .then(response => store.cache.restake_token_amount_actual = response.data)
             } catch (error) {

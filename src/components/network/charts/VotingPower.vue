@@ -189,7 +189,7 @@
                 let { from_date, to_date, detailing } = getChartParams()
 
                 // Request
-                await fetch(`https://rpc.bronbro.io//statistics/validators/${props.validator.operator_address}/voting_power?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
+                await fetch(`https://rpc.bronbro.io/statistics/validators/${props.validator.operator_address}/voting_power?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
                     .then(res => res.json())
                     .then(response => store.cache.voting_power = response.data)
             } catch (error) {

@@ -15,8 +15,8 @@
         </div>
 
         <div class="chart_wrap">
-            <div class="ver_legends_title">{{ $t('message.network_charts_delegators_title') }}</div>
-            <div class="hor_legends_title">{{ $t('message.network_charts_voting_power_title') }}</div>
+            <div class="ver_legends_title">{{ $t('message.network_charts_voting_power_title') }}</div>
+            <div class="hor_legends_title">{{ $t('message.network_charts_commission_title') }}</div>
 
             <apexchart class="chart" height="400px" :options="chartOptions" :series="series" />
         </div>
@@ -113,8 +113,8 @@
                         top = w.globals.seriesYvalues[seriesIndex][dataPointIndex] + 20,
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_date">' + store.cache.validatorsMap[seriesIndex].moniker + '</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_commission_title')+ ': ' + (store.cache.validatorsMap[seriesIndex].commission * 100).toFixed(2) + '%</div>' +
                                     '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_voting_power_title')+ ': ' + (store.cache.validatorsMap[seriesIndex].voting_power * 100).toFixed(2) + '%</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_delegators_title')+ ': ' + store.cache.validatorsMap[seriesIndex].delegators.toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html
@@ -131,8 +131,8 @@
                         fontSize: '12px',
                         fontFamily: 'var(--font_family)',
                     },
-                    offsetX: -17,
-                    formatter: value => { return value.toLocaleString('ru-RU') },
+                    offsetX: -13,
+                    formatter: value => { return (value * 100).toFixed(2) + '%' },
                 },
                 axisBorder: {
                     show: false,
@@ -173,13 +173,13 @@
     onBeforeMount(() => {
         store.cache.validatorsMap.forEach(el => {
             // Set chart data
-            series.value.push({'data': [[el.voting_power * 100, el.delegators]]})
+            series.value.push({'data': [[el.commission * 100, el.voting_power]]})
 
             // Set chart logos
             chartLogos.value.push([el.mintscan_avatar_url])
 
             // Set labels
-            chartLabels.value.push(el.voting_power * 100)
+            chartLabels.value.push(el.commission * 100)
         })
 
         // Set chart max
