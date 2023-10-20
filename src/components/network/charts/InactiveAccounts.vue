@@ -24,7 +24,6 @@
 <script setup>
     import { inject, ref, reactive, onBeforeMount, computed } from 'vue'
     import { useGlobalStore } from '@/stores'
-    import { getChartParams } from '@/utils'
 
     // Components
     import Loader from '@/components/Loader.vue'
@@ -123,7 +122,7 @@
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_date">' + store.cache.inactive_accounts[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">' + i18n.global.t('message.network_blocks_inactive_users_title') + ': ' + series[0][dataPointIndex].toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val">' + i18n.global.t('message.network_blocks_inactive_users_title') + ': ' + store.cache.inactive_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html
@@ -183,11 +182,8 @@
         // Get chart data
         if (!store.cache.inactive_accounts) {
             try {
-                // Request params
-                let { from_date, to_date, detailing } = getChartParams()
-
                 // Request
-                await fetch(`https://rpc.bronbro.io/statistics/666?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
+                await fetch(`https://rpc.bronbro.io/statistics/666?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
                     .then(res => res.json())
                     .then(response => store.cache.inactive_accounts = response.data)
             } catch (error) {

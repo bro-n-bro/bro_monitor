@@ -8,9 +8,9 @@
 
 
 <script setup>
-    import { inject, ref, reactive, onBeforeMount, computed, watch } from 'vue'
+    import { inject, ref, reactive, onBeforeMount, computed } from 'vue'
     import { useGlobalStore } from '@/stores'
-    import { setChartParams, getChartParams } from '@/utils'
+    import { calcTimeRange } from '@/utils'
 
     // Components
     import Loader from '@/components/Loader.vue'
@@ -18,8 +18,12 @@
 
     const store = useGlobalStore(),
         i18n = inject('i18n'),
+        emitter = inject('emitter'),
+        responseData = ref(store.cache.unbonded_tokens),
+        from_date = ref(store.currentTimeRangeDates[0]),
+        to_date = ref(store.currentTimeRangeDates[1]),
+        detailing = ref(store.currentTimeRangeDetailing),
         loading = ref(true),
-        cache = ref(true),
         chartData = ref([]),
         chartColors = ref([]),
         chartLabels = ref([]),
@@ -109,8 +113,8 @@
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + store.cache.unbonded_tokens[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">' + i18n.global.t('message.network_blocks_unbonded_tokens_title', { token: store.networks[store.currentNetwork].token_name }) + ': ' + Number((series[0][dataPointIndex] / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_date">' + responseData.value[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_val">' + i18n.global.t('message.network_blocks_unbonded_tokens_title', { token: store.networks[store.currentNetwork].token_name }) + ': ' + Number((responseData.value[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html
@@ -165,13 +169,19 @@
         })
 
 
-    onBeforeMount(() => {
-        // Set chart params
-        setChartParams()
+    onBeforeMount(async () => {
+        if (typeof store.cache.unbonded_tokens !== 'undefined') {
+            // Init chart
+            initChart()
+        } else {
+            // Get chart data
+            await getChartData()
+        }
     })
 
 
-    watch(() => store.updateTimeRangeDates, async () => {
+    // Event "updateChartTimeRange"
+    emitter.on('updateChartTimeRange', async () => {
         // Show loader
         loading.value = true
 
@@ -182,32 +192,35 @@
         chartMin.value = 0
         chartMax.value = 0
 
-        if (store.cache.unbonded_tokens && cache.value) {
-            // Init chart
-            initChart()
-        } else {
-            // Get chart data
-            await getChartData ()
-        }
+        // Get temp time range
+        let temp = calcTimeRange(type, dates)
 
-        cache.value = false
+        from_date.value = temp.from_date
+        to_date.value = temp.to_date
+        detailing.value = temp.detailing
+
+        // Get chart data
+        await getChartData(false)
     })
 
 
     // Get chart data
-    async function getChartData () {
+    async function getChartData(cacheEnable = true) {
         try {
-            // Request params
-            let { from_date, to_date, detailing } = getChartParams()
+            // Start loading
+            store.chartLoading = true
 
             // Request
-            await fetch(`https://rpc.bronbro.io/statistics/unbonded_tokens?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
+            await fetch(`https://rpc.bronbro.io/statistics/unbonded_tokens?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
                 .then(res => res.json())
-                .then(response => store.cache.unbonded_tokens = response.data)
+                .then(response => {
+                    cacheEnable
+                        ? responseData.value = store.cache.unbonded_tokens = response.data
+                        : responseData.value = response.data
+                })
         } catch (error) {
             console.error(error)
         }
-
 
         // Init chart
         initChart()
@@ -217,16 +230,16 @@
     // Init chart
     function initChart() {
         // Set chart data
-        store.cache.unbonded_tokens.forEach(el => chartData.value.push(el.y))
+        responseData.value.forEach(el => chartData.value.push(el.y))
 
         chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
         chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
 
         // Set colors
-        chartColors.value.push(store.cache.unbonded_tokens[store.cache.unbonded_tokens.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
+        chartColors.value.push(responseData.value[responseData.value.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
 
         // Set labels
-        store.cache.unbonded_tokens.forEach(el => {
+        responseData.value.forEach(el => {
             let parseDate = new Date(el.x),
                 month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
                 date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
@@ -236,5 +249,8 @@
 
         // Hide loader
         loading.value = false
+
+        // Finish loading
+        store.chartLoading = false
     }
 </script>

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 import { useLocalStorage } from '@vueuse/core'
 import { CyberClient } from '@cybercongress/cyber-js'
 import { Tendermint34Client } from '@cosmjs/tendermint-rpc'
-import { generateAddress, createKeplrOfflineSinger } from '@/utils'
+import { generateAddress, createKeplrOfflineSinger, getDefaultTimeRange, calcTimeRange } from '@/utils'
 
 
 // Networks
@@ -27,9 +27,11 @@ export const useGlobalStore = defineStore('global', {
         currentNetwork: null,
         currentChart: null,
         currentValidatorAddress: null,
-        currentTimeRange: 'month',
+
+        chartLoading: false,
+        currentTimeRange: '',
         currentTimeRangeDates: [],
-        currentTimeRangeDetailing: 'hour',
+        currentTimeRangeDetailing: '',
 
         updateTimeRangeDates: 0,
 
@@ -155,6 +157,36 @@ export const useGlobalStore = defineStore('global', {
             } catch (error) {
                 console.error(error)
             }
+        },
+
+
+        // Set default time range
+        setDefaultTimeRange() {
+            let { from_date, to_date, detailing } = getDefaultTimeRange()
+
+            // Update state
+            this.currentTimeRange = 'month'
+            this.currentTimeRangeDetailing = detailing
+
+            this.currentTimeRangeDates.push(from_date)
+            this.currentTimeRangeDates.push(to_date)
+        },
+
+
+        // Set default time range
+        setTimeRange(type, dates) {
+            // Clear dates
+            this.currentTimeRangeDates = []
+
+            // Calc new params
+            let { from_date, to_date, detailing } = calcTimeRange(type, dates)
+
+            // Update state
+            this.currentTimeRange = type
+            this.currentTimeRangeDetailing = detailing
+
+            this.currentTimeRangeDates.push(from_date)
+            this.currentTimeRangeDates.push(to_date)
         },
     }
 })

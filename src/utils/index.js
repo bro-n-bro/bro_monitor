@@ -32,7 +32,7 @@ export const createKeplrOfflineSinger = async chainId => {
 
 
 // Set chart params
-export const getChartParams = () => {
+export const getDefaultTimeRange = () => {
     let currentDate = new Date(),
         to_date = currentDate.toLocaleDateString('en-CA', {
             year: 'numeric',
@@ -54,29 +54,28 @@ export const getChartParams = () => {
 
 
 // Set chart params
-export const setChartParams = (dates) => {
-    let store = useGlobalStore(),
-        from_date = '',
+export const calcTimeRange = (type, dates) => {
+    let from_date = '',
         to_date = '',
         currentDate = new Date(),
-        tempDates = [],
         timeRangeDaysDifference = 0,
-        timeRangeMonthsDifference = 0
+        timeRangeMonthsDifference = 0,
+        detailing
 
-    if (store.currentTimeRange == 'range') {
+    if (type == 'range') {
         timeRangeDaysDifference = differenceInDays(dates[0], dates[1]) * -1,
         timeRangeMonthsDifference = differenceInMonths(dates[0], dates[1]) * -1
 
         if (!timeRangeDaysDifference || timeRangeDaysDifference && !timeRangeMonthsDifference) {
-            store.currentTimeRangeDetailing = 'hour'
+            detailing = 'hour'
         }
 
         if (timeRangeMonthsDifference >= 1 && timeRangeMonthsDifference < 3) {
-            store.currentTimeRangeDetailing = 'day'
+            detailing = 'day'
         }
 
         if (timeRangeMonthsDifference >= 3) {
-            store.currentTimeRangeDetailing = 'week'
+            detailing = 'week'
         }
 
         from_date = new Date(dates[0]).toLocaleDateString('en-CA', {
@@ -97,34 +96,35 @@ export const setChartParams = (dates) => {
             day: '2-digit',
         }).split('.').join('-')
 
-        if (store.currentTimeRange == 'day') {
+        if (type == 'day') {
             currentDate.setDate(currentDate.getDate() - 1)
-            store.currentTimeRangeDetailing = 'hour'
+            detailing = 'hour'
+            console.log(currentDate)
         }
 
-        if (store.currentTimeRange == 'week') {
+        if (type == 'week') {
             currentDate.setDate(currentDate.getDate() - 7)
-            store.currentTimeRangeDetailing = 'hour'
+            detailing = 'hour'
         }
 
-        if (store.currentTimeRange == 'month') {
+        if (type == 'month') {
             currentDate.setMonth(currentDate.getMonth() - 1)
-            store.currentTimeRangeDetailing = 'day'
+            detailing = 'day'
         }
 
-        if (store.currentTimeRange == 'quarter') {
+        if (type == 'quarter') {
             currentDate.setMonth(currentDate.getMonth() - 3)
-            store.currentTimeRangeDetailing = 'week'
+            detailing = 'week'
         }
 
-        if (store.currentTimeRange == 'half_year') {
+        if (type == 'half_year') {
             currentDate.setMonth(currentDate.getMonth() - 6)
-            store.currentTimeRangeDetailing = 'week'
+            detailing = 'week'
         }
 
-        if (store.currentTimeRange == 'year') {
+        if (type == 'year') {
             currentDate.setFullYear(currentDate.getFullYear() - 1)
-            store.currentTimeRangeDetailing = 'week'
+            detailing = 'week'
         }
 
         from_date = currentDate.toLocaleDateString('en-CA', {
@@ -134,14 +134,5 @@ export const setChartParams = (dates) => {
         }).split('.').join('-')
     }
 
-
-    // New dates
-    tempDates.push(from_date)
-    tempDates.push(to_date)
-
-    // Update on store
-    store.currentTimeRangeDates = tempDates
-
-    // Update on store
-    store.updateTimeRangeDates++
+    return { from_date, to_date, detailing, type }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="time_range">
+    <div class="time_range" :class="{ disabled: store.chartLoading }">
         <button class="btn" :class="{ active: store.currentTimeRange == 'day' }" @click.prevent="setTimeRangeDay()">
             {{ $t('message.time_range_24h') }}
         </button>
@@ -78,15 +78,15 @@
 
 
 <script setup>
-    import { ref } from 'vue'
+    import { ref, inject } from 'vue'
     import { useGlobalStore } from '@/stores'
-    import { setChartParams } from '@/utils'
 
     import VueDatePicker from '@vuepic/vue-datepicker'
     import '@vuepic/vue-datepicker/dist/main.css'
 
 
     const store = useGlobalStore(),
+        emitter = inject('emitter'),
         showDropdown = ref(false),
         showCalendar = ref(false),
         date = ref([]),
@@ -114,72 +114,51 @@
 
 
     // Set time range - Day
-    function setTimeRangeDay () {
-        // Set current time range
-        store.currentTimeRange = 'day'
-
-        // Set chart params
-        setChartParams()
+    function setTimeRangeDay() {
+        // Event 'updateChartTimeRange'
+        emitter.emit('updateChartTimeRange', { type: 'day', dates: date.value })
     }
 
 
     // Set time range - Week
-    function setTimeRangeWeek () {
-        // Set current time range
-        store.currentTimeRange = 'week'
-
-        // Set chart params
-        setChartParams()
+    function setTimeRangeWeek() {
+        // Event 'updateChartTimeRange'
+        emitter.emit('updateChartTimeRange', { type: 'week', dates: date.value })
     }
 
 
     // Set time range - Month
-    function setTimeRangeMonth () {
-        // Set current time range
-        store.currentTimeRange = 'month'
-
-        // Set chart params
-        setChartParams()
+    function setTimeRangeMonth() {
+        // Event 'updateChartTimeRange'
+        emitter.emit('updateChartTimeRange', { type: 'month', dates: date.value })
     }
 
 
     // Set time range - Quarter
-    function setTimeRangeQuarter () {
-        // Set current time range
-        store.currentTimeRange = 'quarter'
-
-        // Set chart params
-        setChartParams()
+    function setTimeRangeQuarter() {
+        // Event 'updateChartTimeRange'
+        emitter.emit('updateChartTimeRange', { type: 'quarter', dates: date.value })
     }
 
 
     // Set time range - Day
-    function setTimeRangeHalfYear () {
-        // Set current time range
-        store.currentTimeRange = 'half_year'
-
-        // Set chart params
-        setChartParams()
+    function setTimeRangeHalfYear() {
+        // Event 'updateChartTimeRange'
+        emitter.emit('updateChartTimeRange', { type: 'half_year', dates: date.value })
     }
 
 
     // Set time range - Year
-    function setTimeRangeYear () {
-        // Set current time range
-        store.currentTimeRange = 'year'
-
-        // Set chart params
-        setChartParams()
+    function setTimeRangeYear() {
+        // Event 'updateChartTimeRange'
+        emitter.emit('updateChartTimeRange', { type: 'year', dates: date.value })
     }
 
 
     // Apply custom period
-    function applyCustomPeriod () {
-        // Set current time range
-        store.currentTimeRange = 'range'
-
-        // Set chart params
-        setChartParams([date.value[0], date.value[1]])
+    function applyCustomPeriod() {
+        // Event 'updateChartTimeRange'
+        emitter.emit('updateChartTimeRange', { type: 'range', dates: date.value })
 
         // Hide dropdown
         showDropdown.value = false
@@ -198,6 +177,8 @@
         margin-left: auto;
         padding: 2px;
 
+        transition: opacity .2s linear;
+
         border: 2px solid #212121;
         border-radius: 12px;
 
@@ -205,6 +186,13 @@
         align-items: flex-start;
         align-content: flex-start;
         flex-wrap: wrap;
+    }
+
+    .time_range.disabled
+    {
+        pointer-events: none;
+
+        opacity: .5;
     }
 
 

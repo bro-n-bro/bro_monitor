@@ -24,7 +24,6 @@
 <script setup>
     import { inject, ref, reactive, onBeforeMount, computed } from 'vue'
     import { useGlobalStore } from '@/stores'
-    import { getChartParams } from '@/utils'
 
     // Components
     import Loader from '@/components/Loader.vue'
@@ -184,11 +183,8 @@
         // Get chart data
         if (!store.cache.active_accounts) {
             try {
-                // Request params
-                let { from_date, to_date, detailing } = getChartParams()
-
                 // Request
-                await fetch(`https://rpc.bronbro.io/statistics/active_accounts?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
+                await fetch(`https://rpc.bronbro.io/statistics/active_accounts?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
                     .then(res => res.json())
                     .then(response => store.cache.active_accounts = response.data)
             } catch (error) {

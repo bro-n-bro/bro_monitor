@@ -24,6 +24,11 @@
 
         // Change Keplr account
         window.addEventListener('keplr_keystorechange', () => store.connectWallet())
+
+        // Set default time range
+        if(!store.currentTimeRangeDates.length) {
+            store.setDefaultTimeRange()
+        }
     })
 
 

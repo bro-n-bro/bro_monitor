@@ -28,7 +28,6 @@
 <script setup>
     import { inject, ref, reactive, onBeforeMount, computed } from 'vue'
     import { useGlobalStore } from '@/stores'
-    import { getChartParams } from '@/utils'
 
     // Components
     import Loader from '@/components/Loader.vue'
@@ -102,12 +101,12 @@
                     enabled: true,
                     position: 'topLeft'
                 },
-                custom: function({series, seriesIndex, dataPointIndex, w}) {
+                custom: function({ dataPointIndex, w }) {
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_date">' + store.cache.apy[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_APY_title')+ ': ' + (series[0][dataPointIndex] * 100).toFixed(2) + '%</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_APY_title')+ ': ' + (store.cache.apy[dataPointIndex].y * 100).toFixed(2) + '%</div>' +
                                 '</div>'
                     return html
                 }
@@ -158,11 +157,8 @@
         // Get chart data
         if (!store.cache.apy) {
             try {
-                // Request params
-                let { from_date, to_date, detailing } = getChartParams()
-
                 // Request
-                await fetch(`https://rpc.bronbro.io/statistics/apy?from_date=${from_date}&to_date=${to_date}&detailing=${detailing}`)
+                await fetch(`https://rpc.bronbro.io/statistics/apy?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
                     .then(res => res.json())
                     .then(response => store.cache.apy = response.data)
             } catch (error) {

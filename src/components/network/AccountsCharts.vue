@@ -38,9 +38,6 @@
         <div class="row" v-if="showDelegationsStatistics">
             <!-- Delegations -->
             <Delegations />
-
-            <!-- Delegators / Total Number of Users -->
-            <DelegatorsTOTotalNumberUsers />
         </div>
     </div>
 
@@ -61,9 +58,6 @@
 
             <!-- AutoRestake Token Amount -->
             <AutoRestakeTokenAmount />
-
-            <!-- Autorestake / Delegate Statistics -->
-            <AutorestakeTODelegateStatistics />
         </div>
     </div>
 
@@ -132,11 +126,9 @@
     import TotalNumberAddresses from '@/components/network/charts/TotalNumberAddresses.vue'
     import InactiveAccounts from '@/components/network/charts/InactiveAccounts.vue'
     import Delegations from '@/components/network/charts/Delegations.vue'
-    import DelegatorsTOTotalNumberUsers from '@/components/network/charts/DelegatorsTOTotalNumberUsers.vue'
     import ActiveAutoRestakeUsers from '@/components/network/charts/ActiveAutoRestakeUsers.vue'
     import AutoRestakeEnabledCount from '@/components/network/charts/AutoRestakeEnabledCount.vue'
     import AutoRestakeTokenAmount from '@/components/network/charts/AutoRestakeTokenAmount.vue'
-    import AutorestakeTODelegateStatistics from '@/components/network/charts/AutorestakeTODelegateStatistics.vue'
     import RichList from '@/components/network/charts/RichList.vue'
     import WhaleTransactions from '@/components/network/charts/WhaleTransactions.vue'
     import TodayTOPTransactions from '@/components/network/charts/TodayTOPTransactions.vue'
