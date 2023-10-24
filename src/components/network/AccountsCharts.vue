@@ -53,8 +53,8 @@
             <!-- Active AutoRestake Users -->
             <ActiveAutoRestakeUsers />
 
-            <!-- AutoRestake Enabled Count -->
-            <AutoRestakeEnabledCount />
+            <!-- AutoRestake Executed Count -->
+            <AutoRestakeExecutedCount />
 
             <!-- AutoRestake Token Amount -->
             <AutoRestakeTokenAmount />
@@ -99,7 +99,7 @@
 
     <div class="blocks charts">
         <div class="title" @click.prevent="showGovernanceStatistics = !showGovernanceStatistics" :class="{ active: showGovernanceStatistics }">
-            <span>{{ $t('message.network_charts_transactions_statistics_title') }}</span>
+            <span>{{ $t('message.network_charts_governance_statistics_title') }}</span>
 
             <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_arr_down"></use></svg>
         </div>
@@ -127,7 +127,7 @@
     import InactiveAccounts from '@/components/network/charts/InactiveAccounts.vue'
     import Delegations from '@/components/network/charts/Delegations.vue'
     import ActiveAutoRestakeUsers from '@/components/network/charts/ActiveAutoRestakeUsers.vue'
-    import AutoRestakeEnabledCount from '@/components/network/charts/AutoRestakeEnabledCount.vue'
+    import AutoRestakeExecutedCount from '@/components/network/charts/AutoRestakeExecutedCount.vue'
     import AutoRestakeTokenAmount from '@/components/network/charts/AutoRestakeTokenAmount.vue'
     import RichList from '@/components/network/charts/RichList.vue'
     import WhaleTransactions from '@/components/network/charts/WhaleTransactions.vue'

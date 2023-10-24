@@ -19,7 +19,7 @@
     const store = useGlobalStore(),
         i18n = inject('i18n'),
         emitter = inject('emitter'),
-        responseData = ref(store.cache.transactions),
+        responseData = ref(store.cache.restake_token_amount),
         from_date = ref(store.currentTimeRangeDates[0]),
         to_date = ref(store.currentTimeRangeDates[1]),
         detailing = ref(store.currentTimeRangeDetailing),
@@ -113,8 +113,8 @@
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + responseData.data[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_total_amount_transactions_title')+ ': ' + Number(responseData.data[dataPointIndex].y.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_date">' + responseData.value[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_val">' + i18n.global.t('message.network_charts_auto_restake_executed_count_title') + ': ' + Number(responseData.value[dataPointIndex].y.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html
@@ -170,7 +170,7 @@
 
 
     onBeforeMount(async () => {
-        if (typeof store.cache.transactions !== 'undefined') {
+        if (typeof store.cache.restake_execution_count !== 'undefined') {
             // Init chart
             initChart()
         } else {
@@ -181,7 +181,7 @@
 
 
     // Event "updateChartTimeRange"
-    emitter.on('updateChartTimeRange', async () => {
+    emitter.on('updateChartTimeRange', async ({ type, dates }) => {
         // Show loader
         loading.value = true
 
@@ -211,11 +211,11 @@
             store.chartLoading = true
 
             // Request
-            await fetch(`https://rpc.bronbro.io/statistics/transactions?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
+            await fetch(`https://rpc.bronbro.io/statistics/restake_execution_count?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
                 .then(res => res.json())
                 .then(response => {
                     cacheEnable
-                        ? responseData.value = store.cache.transactions = response.data
+                        ? responseData.value = store.cache.restake_execution_count = response.data
                         : responseData.value = response.data
                 })
         } catch (error) {
@@ -230,13 +230,13 @@
     // Init chart
     function initChart() {
         // Set chart data
-        responseData.data.forEach(el => chartData.value.push(el.y))
+        responseData.value.forEach(el => chartData.value.push(el.y))
 
         chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
         chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
 
         // Set labels
-        responseData.data.forEach(el => {
+        responseData.value.forEach(el => {
             let parseDate = new Date(el.x),
                 month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
                 date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()

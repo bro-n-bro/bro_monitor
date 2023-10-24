@@ -16,7 +16,7 @@
 
         <div class="val">
             <Loader v-if="!store.cache.gas_paid_actual" />
-            <span v-else>{{ $filters.toFixed(store.cache.gas_paid_actual / Math.pow(10, store.networks[store.currentNetwork].exponent), 0).toLocaleString('ru-RU') }}</span>
+            <span v-else>{{ $filters.toFixed(store.cache.gas_paid_actual, 0).toLocaleString('ru-RU') }}</span>
         </div>
 
         <apexchart class="chart" height="47px" :options="chartOptions" :series="series" v-if="chartLoading" />
@@ -105,7 +105,7 @@
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_date">' + store.cache.gas_paid[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_gas_paid_title')+ ': ' + Number((store.cache.gas_paid[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_gas_paid_title') + ': ' + Number(store.cache.gas_paid[dataPointIndex].y.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html

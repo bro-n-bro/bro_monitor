@@ -24,7 +24,6 @@
 <script setup>
     import { inject, ref, reactive, onBeforeMount, computed } from 'vue'
     import { useGlobalStore } from '@/stores'
-    import { getChartParams } from '@/utils'
 
     // Components
     import Loader from '@/components/Loader.vue'
@@ -90,7 +89,7 @@
                 strokeDashArray: 2,
                 padding: {
                     left: 0,
-                    right: -17,
+                    right: 0,
                     bottom: -9,
                     top: -20,
                 },

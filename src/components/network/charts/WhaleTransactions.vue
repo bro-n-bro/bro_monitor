@@ -13,6 +13,8 @@
         <div class="title">
             {{ $t('message.network_charts_whale_transactions_title') }}
         </div>
+
+        <WhaleTransactionsTable />
     </div>
 </template>
 
@@ -20,6 +22,9 @@
 <script setup>
     import { inject } from 'vue'
     import { useGlobalStore } from '@/stores'
+
+    // Components
+    import WhaleTransactionsTable from '@/components/network/WhaleTransactionsTable.vue'
 
 
     const store = useGlobalStore(),

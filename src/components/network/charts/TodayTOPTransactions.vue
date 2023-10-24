@@ -5,7 +5,7 @@
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
 
-            <router-link to="/" class="btn">
+            <router-link :to="`/${store.currentNetwork}/today_TOP_transactions`" class="btn">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
             </router-link>
         </div>
@@ -13,6 +13,8 @@
         <div class="title">
             {{ $t('message.network_charts_today_TOP_transactions_title') }}
         </div>
+
+        <TodayTOPTransactionsTable />
     </div>
 </template>
 
@@ -21,7 +23,18 @@
     import { inject } from 'vue'
     import { useGlobalStore } from '@/stores'
 
+    // Components
+    import TodayTOPTransactionsTable from '@/components/network/TodayTOPTransactionsTable.vue'
+
 
     const store = useGlobalStore(),
         emitter = inject('emitter')
 </script>
+
+
+<style scoped>
+    .block
+    {
+        min-height: 0;
+    }
+</style>

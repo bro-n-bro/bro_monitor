@@ -86,7 +86,7 @@
         </div>
 
 
-        <div class="table_wrap">
+        <!-- <div class="table_wrap">
             <table>
                 <thead>
                     <tr>
@@ -118,7 +118,7 @@
                                 <div class="moniker">
                                     <router-link to="/validator/cosmovaloper">
                                         <div class="logo">
-                                            <!-- <img src="@/assets/osmosis_logo.png" alt=""> -->
+                                            <img src="@/assets/osmosis_logo.png" alt="">
                                         </div>
 
                                         <div class="name">Bro_n_Bro</div>
@@ -130,7 +130,7 @@
                                 <div class="moniker">
                                     <router-link to="/validator/cosmovaloper">
                                         <div class="logo">
-                                            <!-- <img src="@/assets/osmosis_logo.png" alt=""> -->
+                                            <img src="@/assets/osmosis_logo.png" alt="">
                                         </div>
 
                                         <div class="name">Arlene McCoy</div>
@@ -191,7 +191,7 @@
                             <div class="moniker">
                                 <router-link to="/validator/cosmovaloper">
                                     <div class="logo">
-                                        <!-- <img src="@/assets/osmosis_logo.png" alt=""> -->
+                                        <img src="@/assets/osmosis_logo.png" alt="">
                                     </div>
 
                                     <div class="name">Kristin Watson</div>
@@ -239,7 +239,7 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -257,15 +257,15 @@
         transactions = ref([])
 
 
-        onBeforeMount(async () => {
+    onBeforeMount(async () => {
         // Get data
-        if (!store.whaleTransactions.length) {
+        if (!store.cache.whaleTransactions) {
             try {
                 await fetch('https://rpc.bronbro.io/statistics/whale_transactions?limit=100')
                     .then(res => res.json())
                     .then(response => {
                         // Set data
-                        store.whaleTransactions = transactions.value = response.data
+                        store.cache.whaleTransactions = transactions.value = response.data
 
                         // Hide loading
                         loading.value = false
@@ -274,20 +274,12 @@
                 console.error(error)
             }
         } else {
-            transactions.value = store.whaleTransactions
+            transactions.value = store.cache.whaleTransactions
 
             // Hide loading
             loading.value = false
         }
-
-        console.log(transactions.value)
     })
-
-
-    // Replacement of the logo if it is not present
-    function imageLoadError(event) {
-        event.target.classList.add('hide')
-    }
 </script>
 
 

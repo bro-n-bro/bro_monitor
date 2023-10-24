@@ -25,7 +25,7 @@
         detailing = ref(store.currentTimeRangeDetailing),
         loading = ref(true),
         chartData = ref([]),
-        chartColors = ref([]),
+        chartColors = ['#0344E8'],
         chartLabels = ref([]),
         chartMin = ref(0),
         chartMax = ref(0),
@@ -49,7 +49,7 @@
                     enabled: false
                 }
             },
-            colors: computed(() => chartColors.value),
+            colors: chartColors,
             fill: {
                 colors: computed(() => chartColors.value),
                 opacity: 0.2
@@ -234,9 +234,6 @@
 
         chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
         chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
-
-        // Set colors
-        chartColors.value.push(responseData.value[responseData.value.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
 
         // Set labels
         responseData.value.forEach(el => {

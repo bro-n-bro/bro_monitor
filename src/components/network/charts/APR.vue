@@ -88,7 +88,7 @@
                 strokeDashArray: 2,
                 padding: {
                     left: 0,
-                    right: -17,
+                    right: 0,
                     bottom: -9,
                     top: -20,
                 },

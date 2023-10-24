@@ -25,7 +25,7 @@
         detailing = ref(store.currentTimeRangeDetailing),
         loading = ref(true),
         chartData = ref([]),
-        chartColors = ref([]),
+        chartColors = ['#0344E8'],
         chartLabels = ref([]),
         chartMin = ref(0),
         chartMax = ref(0),
@@ -49,7 +49,7 @@
                     enabled: false
                 }
             },
-            colors: computed(() => chartColors.value),
+            colors: chartColors,
             fill: {
                 colors: computed(() => chartColors.value),
                 opacity: 0.2
@@ -114,7 +114,7 @@
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_date">' + responseData.value[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_gas_paid_title')+ ': ' + Number((responseData.value.y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_gas_paid_title')+ ': ' + Number(responseData.value[dataPointIndex].y.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html
@@ -133,7 +133,7 @@
                         fontFamily: 'var(--font_family)',
                     },
                     offsetX: -8,
-                    formatter: value => { return Number((value / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') },
+                    formatter: value => { return Number(value.toFixed(0)).toLocaleString('ru-RU') },
                 },
                 axisBorder: {
                     show: false,
@@ -234,9 +234,6 @@
 
         chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
         chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
-
-        // Set colors
-        chartColors.value.push(responseData.value[responseData.value.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
 
         // Set labels
         responseData.value.forEach(el => {

@@ -19,14 +19,14 @@
     const store = useGlobalStore(),
         i18n = inject('i18n'),
         emitter = inject('emitter'),
-        responseData = ref(store.cache.transactions),
+        responseData = ref(store.cache.wealth_distribution),
         from_date = ref(store.currentTimeRangeDates[0]),
         to_date = ref(store.currentTimeRangeDates[1]),
         detailing = ref(store.currentTimeRangeDetailing),
         loading = ref(true),
         chartData = ref([]),
         chartColors = ['#0344E8'],
-        chartLabels = ref([]),
+        chartLabels = ['0-100', '100-500', '500-2К', '2К-5К ', '5К-10К', '10К-20К','20К-50К', '50К-100К', '100К-500К', '500К+'],
         chartMin = ref(0),
         chartMax = ref(0),
         series = reactive([
@@ -36,7 +36,7 @@
         ]),
         chartOptions = reactive({
             chart: {
-                type: 'area',
+                type: 'bar',
                 fontFamily: 'var(--font_family)',
                 background: 'transparent',
                 parentHeightOffset: 0,
@@ -50,28 +50,8 @@
                 }
             },
             colors: chartColors,
-            fill: {
-                colors: computed(() => chartColors.value),
-                opacity: 0.2
-            },
-            stroke: {
-                width: 1,
-                curve: 'smooth',
-            },
             dataLabels: {
                 enabled: false
-            },
-            markers: {
-                size: 0,
-                colors: '#fff',
-                strokeColors: ['#fff'],
-                strokeWidth: 8,
-                strokeOpacity: 0.3,
-                shape: 'circle',
-                radius: 50,
-                hover: {
-                    size: 4
-                }
             },
             grid: {
                 show: true,
@@ -103,18 +83,23 @@
             legend: {
                 show: false
             },
+            plotOptions: {
+                bar: {
+                    columnWidth: '70%',
+                    distributed: true
+                }
+            },
             tooltip: {
                 shared: false,
                 fixed: {
                     enabled: true,
                     position: 'topLeft'
                 },
-                custom: function({ dataPointIndex, w }) {
+                custom: function( { dataPointIndex, w} ) {
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + responseData.data[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_total_amount_transactions_title')+ ': ' + Number(responseData.data[dataPointIndex].y.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_total_accounts_title') + ': ' + Number(responseData.value[dataPointIndex].total_value.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html
@@ -123,7 +108,7 @@
             yaxis: {
                 show: true,
                 logBase: 0,
-                min: computed(() => chartMin.value),
+                max: computed(() => chartMin.value),
                 max: computed(() => chartMax.value),
                 labels: {
                     align: 'left',
@@ -146,7 +131,7 @@
                 }
             },
             xaxis: {
-                categories: computed(() => chartLabels.value),
+                categories: chartLabels,
                 tickAmount: 16,
                 labels: {
                     rotate: 0,
@@ -170,7 +155,7 @@
 
 
     onBeforeMount(async () => {
-        if (typeof store.cache.transactions !== 'undefined') {
+        if (typeof store.cache.wealth_distribution !== 'undefined') {
             // Init chart
             initChart()
         } else {
@@ -211,11 +196,11 @@
             store.chartLoading = true
 
             // Request
-            await fetch(`https://rpc.bronbro.io/statistics/transactions?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
+            await fetch('https://rpc.bronbro.io/statistics/wealth_distribution')
                 .then(res => res.json())
                 .then(response => {
                     cacheEnable
-                        ? responseData.value = store.cache.transactions = response.data
+                        ? responseData.value = store.cache.wealth_distribution = response.data
                         : responseData.value = response.data
                 })
         } catch (error) {
@@ -230,19 +215,9 @@
     // Init chart
     function initChart() {
         // Set chart data
-        responseData.data.forEach(el => chartData.value.push(el.y))
+        responseData.value.forEach(el => chartData.value.push(el.total_value))
 
-        chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
-        chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
-
-        // Set labels
-        responseData.data.forEach(el => {
-            let parseDate = new Date(el.x),
-                month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
-                date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
-
-            chartLabels.value.push(month + '/' + date)
-        })
+        chartMax.value = Math.max(...chartData.value)
 
         // Hide loader
         loading.value = false

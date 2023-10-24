@@ -43,6 +43,7 @@ export default {
             'network_charts_delegations_statistics_title': 'Delegations Statistics',
             'network_charts_restake_statistics_title': 'Restake Statistics',
             'network_charts_transactions_statistics_title': 'Transactions',
+            'network_charts_governance_statistics_title': 'Governance',
 
             'network_parameters_blockchain_title': 'Blockchain Parameters',
             'network_parameters_governance_title': 'Governance Parameters',
@@ -93,7 +94,7 @@ export default {
             'network_charts_inactive_accounts_title': 'Inactive Accounts',
             'network_charts_delegations_title': 'Delegations',
             'network_charts_active_auto_restake_users_title': 'Active AutoRestake Users',
-            'network_charts_auto_restake_rnabled_count_title': 'AutoRestake Enabled Count',
+            'network_charts_auto_restake_executed_count_title': 'AutoRestake Executed Count',
             'network_charts_auto_restake_token_amount_title': 'AutoRestake Token Amount',
             'network_charts_rich_list_title': 'Rich List',
             'network_charts_whale_transactions_title': '🐳 Whale Transactions',
@@ -112,6 +113,7 @@ export default {
             'network_charts_voting_power_title': 'Voting Power',
             'network_charts_commission_title': 'Commission',
             'network_charts_uptime_title': 'Uptime',
+            'network_charts_total_accounts_title': 'Number of accounts',
 
             'network_charts_unit_sec': 'sec',
 

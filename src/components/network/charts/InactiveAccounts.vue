@@ -87,7 +87,7 @@
                 strokeDashArray: 2,
                 padding: {
                     left: 0,
-                    right: -17,
+                    right: 0,
                     bottom: -9,
                     top: -20,
                 },
@@ -180,16 +180,16 @@
 
     onBeforeMount(async () => {
         // Get chart data
-        if (!store.cache.inactive_accounts) {
-            try {
-                // Request
-                await fetch(`https://rpc.bronbro.io/statistics/666?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
-                    .then(res => res.json())
-                    .then(response => store.cache.inactive_accounts = response.data)
-            } catch (error) {
-                console.error(error)
-            }
-        }
+        // if (!store.cache.inactive_accounts) {
+        //     try {
+        //         // Request
+        //         await fetch(`https://rpc.bronbro.io/statistics/666?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
+        //             .then(res => res.json())
+        //             .then(response => store.cache.inactive_accounts = response.data)
+        //     } catch (error) {
+        //         console.error(error)
+        //     }
+        // }
 
 
         // Init chart
