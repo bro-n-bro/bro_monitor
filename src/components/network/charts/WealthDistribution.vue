@@ -118,8 +118,9 @@
             },
             yaxis: {
                 show: true,
-                logBase: 0,
+                logBase: 25,
                 tickAmount: 3,
+                logarithmic: true,
                 min: computed(() => chartMin.value),
                 max: computed(() => chartMax.value),
                 labels: {

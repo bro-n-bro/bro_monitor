@@ -25,6 +25,7 @@ export default {
             'network_tab_IBC_Relaying': 'IBC & Relaying',
             'network_tab_validators': 'Validators',
 
+            // Network types
             'network_type_blocks': 'Blocks',
             'network_type_table': 'Table',
             'network_type_charts': 'Charts',
@@ -32,6 +33,7 @@ export default {
             'network_type_IBC': 'IBC',
             'network_type_relaying': 'Relaying',
 
+            // Network page titles
             'network_network_page_title': 'Network page',
             'network_accounts_blocks_page_title': 'Accounts page',
             'network_accounts_charts_page_title': 'Accounts',
@@ -40,16 +42,19 @@ export default {
             'network_validators_blocks_page_title': 'Validators page',
             'network_validators_charts_page_title': 'Charts',
 
+            // Network charts sections
             'network_charts_delegations_statistics_title': 'Delegations Statistics',
             'network_charts_restake_statistics_title': 'Restake Statistics',
             'network_charts_transactions_statistics_title': 'Transactions',
             'network_charts_governance_statistics_title': 'Governance',
 
+            // Network parameters sections
             'network_parameters_blockchain_title': 'Blockchain Parameters',
             'network_parameters_governance_title': 'Governance Parameters',
             'network_parameters_distribution_title': 'Distribution Parameters',
             'network_parameters_slashing_title': 'Slashing Parameters',
 
+            // Network block titles
             'network_blocks_price_title': 'Price',
             'network_blocks_APR_title': 'APR',
             'network_blocks_inflation_title': 'Inflation',
@@ -76,6 +81,7 @@ export default {
             'network_blocks_fees_paid_title': 'Fees Paid',
             'network_blocks_total_amount_transactions_title': 'Total Amount of Transactions',
 
+            // Network charts titles
             'network_charts_price_title': 'Price',
             'network_charts_market_cap_title': 'Market Cap',
             'network_charts_APR_title': 'APR',
@@ -117,6 +123,7 @@ export default {
 
             'network_charts_unit_sec': 'sec',
 
+            // Network parameter titles
             'network_parameters_unbonding_time_title': 'Unbonding Time',
             'network_parameters_max_validators_title': 'Max Validators',
             'network_parameters_voting_period_title': 'Voting Period',
@@ -135,6 +142,7 @@ export default {
             'network_parameters_slash_downtime_unit': 'Mins',
             'network_parameters_days_unit': 'Days',
 
+            // Network IBC table titles
             'network_IBC_table_label_chain': 'Chain',
             'network_IBC_table_label_total_txs': 'Total Txs',
             'network_IBC_table_label_receive_txs': 'Receive Txs',
@@ -144,6 +152,7 @@ export default {
             'network_IBC_table_label_IBC_volume_out': 'IBC Volume Out',
             'network_IBC_table_label_channel': 'Authed Channel',
 
+            // Network relaying table titles
             'network_relaying_table_label_moniker': 'Moniker',
             'network_relaying_table_label_address': 'Relayer Address',
             'network_relaying_table_label_balance': 'Balance',
@@ -154,6 +163,7 @@ export default {
             'network_relaying_table_label_txs30D': 'Txs 30D',
             'network_relaying_table_label_spent30D': 'Spent 30D',
 
+            // Network validators table titles
             'network_validators_table_title': 'Validators ',
 
             'network_validators_table_label_number': '№',
@@ -168,6 +178,13 @@ export default {
             'network_validators_table_label_unique_delegators': 'Unique<br> Delegators',
             'network_validators_table_label_new_delegators': 'New<br> Delegators',
             'network_validators_table_label_voting_participation': 'Voting<br> Participation',
+
+            // Network Today TOP Transactions donut chart
+            'network_top_transactions_total_label': 'All Transactions',
+
+            // Network Today TOP Transactions table titles
+            'network_top_transactions_table_label_type': 'Transaction type',
+            'network_top_transactions_table_label_count': 'Count',
 
 
             // Validator page

@@ -109,7 +109,7 @@
                     enabled: true,
                     position: 'topLeft'
                 },
-                custom: function({series, seriesIndex, dataPointIndex, w}) {
+                custom: function({ dataPointIndex, w }) {
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
@@ -122,7 +122,6 @@
             },
             yaxis: {
                 show: true,
-                logBase: 0,
                 min: computed(() => chartMin.value),
                 max: computed(() => chartMax.value),
                 labels: {

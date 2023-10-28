@@ -415,6 +415,32 @@ button
 }
 
 
+.piechart .apexcharts-tooltip
+{
+    position: absolute !important;
+    top: 0;
+    left: 0;
+
+    overflow: visible !important;
+
+    border: none !important;
+    background: none !important;
+    box-shadow: none !important;
+}
+
+
+.piechart .apexcharts-tooltip .chart_tooltip
+{
+    color: #fff;
+
+    position: relative;
+
+    transform: none;
+
+    border-radius: 14px;
+}
+
+
 .chart_tooltip
 {
     color: var(--text_color);
@@ -487,6 +513,11 @@ button
 
     border-radius: 50%;
     background: currentColor;
+}
+
+.chart_tooltip .tooltip_val.pink:before
+{
+    background: #c983ff;
 }
 
 

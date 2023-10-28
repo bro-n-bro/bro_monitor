@@ -1,16 +1,27 @@
 <template>
     <Loader v-if="loading" />
 
-    <div class="row" v-else>
+    <div class="data" v-else>
         <div class="piechart">
+            <div class="total">
+                <div class="label">{{ $t('message.network_top_transactions_total_label') }}</div>
 
+                <div class="val">{{ chartTotal.toLocaleString('ru-RU') }}</div>
+            </div>
+
+            <apexchart width="291px" height="291px" :options="chartOptions" :series="series"></apexchart>
         </div>
 
 
         <div class="table">
             <div class="titles">
-                <div class="col_type">Transaction type</div>
-                <div class="col_count">Count</div>
+                <div class="col_type">
+                    {{ $t('message.network_top_transactions_table_label_type') }}
+                </div>
+
+                <div class="col_count">
+                    {{ $t('message.network_top_transactions_table_label_count') }}
+                </div>
             </div>
 
             <div class="scroll">
@@ -25,7 +36,7 @@
 
 
 <script setup>
-    import { onBeforeMount, ref } from 'vue'
+    import { ref, reactive, onBeforeMount, computed } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -33,7 +44,77 @@
 
 
     const store = useGlobalStore(),
-        loading = ref(true)
+        loading = ref(true),
+        chartData = ref([]),
+        chartColors = ref(['#C983FF', '#B75DFF', '#A636FF', '#800CDB', '#4B0582', '#550694', '#6B09B7']),
+        chartTotal = ref(0),
+        series = computed(() => chartData.value),
+        chartOptions = reactive({
+            chart: {
+                type: 'donut'
+            },
+            colors: computed(() => chartColors.value),
+            theme: {
+                monochrome: {
+                    enabled: true,
+                    color: '#C983FF',
+                    shadeTo: 'dark',
+                    shadeIntensity: 1
+                }
+            },
+            dataLabels: {
+              enabled: false
+            },
+            legend: {
+                show: false
+            },
+            plotOptions: {
+                pie: {
+                    expandOnClick: false,
+                    donut: {
+                        size: '84%',
+                    }
+                }
+            },
+            stroke: {
+                show: true,
+                curve: 'smooth',
+                lineCap: 'round',
+                colors: ['#000'],
+                width: 2,
+                dashArray: 0,
+            },
+            tooltip: {
+                custom: function({ seriesIndex, w }) {
+                    let html = '<div class="chart_tooltip">' +
+                                    '<div class="tooltip_val pink">'+ store.cache.today_TOP_transactions[seriesIndex].type +' &mdash; '+ store.cache.today_TOP_transactions[seriesIndex].amount.toLocaleString('ru-RU') +'</div>' +
+                                '</div>'
+
+                    return html
+                }
+            },
+            states: {
+                normal: {
+                    filter: {
+                        type: 'none',
+                        value: 0,
+                    }
+                },
+                hover: {
+                    filter: {
+                        type: 'none',
+                        value: 0,
+                    }
+                },
+                active: {
+                    allowMultipleDataPointsSelection: false,
+                    filter: {
+                        type: 'none',
+                        value: 0,
+                    }
+                },
+            }
+        })
 
 
     onBeforeMount(async () => {
@@ -56,6 +137,12 @@
             // Hide loading
             loading.value = false
         }
+
+        // Set chart data
+        store.cache.today_TOP_transactions.forEach(el => chartData.value.push(el.amount))
+
+        // Calc total
+        store.cache.today_TOP_transactions.forEach(el => chartTotal.value += el.amount)
     })
 </script>
 
@@ -85,6 +172,68 @@
     }
 
 
+    .block .data
+    {
+        display: flex;
+
+        justify-content: space-between;
+        align-items: flex-start;
+        align-content: flex-start;
+        flex-wrap: wrap;
+    }
+
+
+
+    .piechart
+    {
+        position: relative;
+
+        width: 291px;
+        max-width: 100%;
+    }
+
+
+    .piechart .total
+    {
+        position: absolute;
+        z-index: 3;
+        top: 0;
+        left: 0;
+
+        display: flex;
+
+        width: 100%;
+        height: 100%;
+
+        text-align: center;
+        pointer-events: none;
+
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        flex-wrap: wrap;
+    }
+
+    .piechart .total .label
+    {
+        color: #555;
+
+        width: 100%;
+        margin-bottom: 16px;
+    }
+
+
+    .piechart .total .val
+    {
+        font-size: 24px;
+        font-weight: 500;
+        line-height: 100%;
+
+        width: 100%;
+    }
+
+
+
     .table
     {
         width: calc(100% - 380px);
@@ -96,7 +245,7 @@
     {
         overflow: auto;
 
-        max-height: 325px;
+        max-height: 244px;
     }
 
     .table .scroll::-webkit-scrollbar
@@ -110,14 +259,14 @@
 
     .table .col_type
     {
-        width: calc(100% - 120px);
+        width: calc(100% - 148px);
 
         text-align: left;
     }
 
     .table .col_count
     {
-        width: 120px;
+        width: 148px;
 
         text-align: right;
     }

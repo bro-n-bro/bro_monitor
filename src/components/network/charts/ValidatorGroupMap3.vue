@@ -122,7 +122,7 @@
             },
             yaxis: {
                 show: true,
-                logBase: 0,
+
                 tickAmount: 8,
                 labels: {
                     align: 'left',
