@@ -404,6 +404,24 @@ button
 /*-----------
     Chart
 -----------*/
+.apexcharts-legend
+{
+    color: #fff;
+
+    top: -10px !important;
+    left: 0 !important;
+
+    margin: 0 -6px !important;
+    padding: 0 !important;
+}
+
+
+.apexcharts-legend-text
+{
+    color: var(--text_color) !important;
+}
+
+
 .apexcharts-tooltip
 {
     position: static !important;
@@ -496,6 +514,12 @@ button
     padding-left: 12px;
 }
 
+.chart_tooltip .tooltip_val + .tooltip_val
+{
+    margin-top: 4px;
+}
+
+
 .chart_tooltip .tooltip_val:before
 {
     position: absolute;
@@ -518,6 +542,16 @@ button
 .chart_tooltip .tooltip_val.pink:before
 {
     background: #c983ff;
+}
+
+.chart_tooltip .tooltip_val.green:before
+{
+    background: #1bc562;
+}
+
+.chart_tooltip .tooltip_val.violet:before
+{
+    background: #950fff;
 }
 
 

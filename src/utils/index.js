@@ -99,7 +99,6 @@ export const calcTimeRange = (type, dates) => {
         if (type == 'day') {
             currentDate.setDate(currentDate.getDate() - 1)
             detailing = 'hour'
-            console.log(currentDate)
         }
 
         if (type == 'week') {

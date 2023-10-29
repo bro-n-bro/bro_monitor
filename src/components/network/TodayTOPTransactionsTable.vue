@@ -9,7 +9,9 @@
                 <div class="val">{{ chartTotal.toLocaleString('ru-RU') }}</div>
             </div>
 
-            <apexchart width="291px" height="291px" :options="chartOptions" :series="series"></apexchart>
+            <apexchart v-if="props.size == 'big'" width="420px" height="420px" :options="chartOptions" :series="series"></apexchart>
+
+            <apexchart v-else width="291px" height="291px" :options="chartOptions" :series="series"></apexchart>
         </div>
 
 
@@ -44,6 +46,7 @@
 
 
     const store = useGlobalStore(),
+        props = defineProps(['size']),
         loading = ref(true),
         chartData = ref([]),
         chartColors = ref(['#C983FF', '#B75DFF', '#A636FF', '#800CDB', '#4B0582', '#550694', '#6B09B7']),
@@ -85,7 +88,7 @@
                 dashArray: 0,
             },
             tooltip: {
-                custom: function({ seriesIndex, w }) {
+                custom: function({ seriesIndex }) {
                     let html = '<div class="chart_tooltip">' +
                                     '<div class="tooltip_val pink">'+ store.cache.today_TOP_transactions[seriesIndex].type +' &mdash; '+ store.cache.today_TOP_transactions[seriesIndex].amount.toLocaleString('ru-RU') +'</div>' +
                                 '</div>'
@@ -176,6 +179,8 @@
     {
         display: flex;
 
+        margin-bottom: -13px;
+
         justify-content: space-between;
         align-items: flex-start;
         align-content: flex-start;
@@ -245,7 +250,7 @@
     {
         overflow: auto;
 
-        max-height: 244px;
+        max-height: 262px;
     }
 
     .table .scroll::-webkit-scrollbar
@@ -300,7 +305,7 @@
     {
         display: flex;
 
-        padding: 7px 12px;
+        padding: 8px 12px;
 
         justify-content: flex-end;
         align-items: center;
@@ -319,4 +324,64 @@
         justify-content: flex-start;
     }
 
+
+
+    .block.big .loader_wrap
+    {
+        padding: 48px 24px;
+    }
+
+
+    .block.big .data
+    {
+        margin-bottom: 0;
+
+        align-items: stretch;
+        align-content: stretch;
+    }
+
+
+    .block.big .piechart
+    {
+        display: flex;
+
+        width: 50%;
+
+        border-radius: 14px 0 0 14px;
+        background: #0a0a0a;
+
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        flex-wrap: wrap;
+    }
+
+
+
+    .block.big .table
+    {
+        overflow: hidden;
+
+        width: 50%;
+
+        border-radius: 0 14px 14px 0;
+    }
+
+
+    .block.big .titles
+    {
+        border-radius: 0;
+    }
+
+
+    .block.big .table .scroll
+    {
+        max-height: 684px;
+    }
+
+
+    .block.big .table .transaction > *
+    {
+        padding: 13px 12px;
+    }
 </style>

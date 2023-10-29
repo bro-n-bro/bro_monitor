@@ -98,6 +98,14 @@ const routes = [
 			layout: fullWidthLayout
 		}
 	},
+	{
+		path: '/:network/today_TOP_transactions',
+		name: 'TodayTOPTransactions',
+		component: () => import('../views/TodayTOPTransactions.vue'),
+		meta: {
+			layout: fullWidthLayout
+		}
+	},
 ]
 
 

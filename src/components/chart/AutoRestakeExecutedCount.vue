@@ -19,7 +19,7 @@
     const store = useGlobalStore(),
         i18n = inject('i18n'),
         emitter = inject('emitter'),
-        responseData = ref(store.cache.restake_token_amount),
+        responseData = ref(store.cache.restake_execution_count),
         from_date = ref(store.currentTimeRangeDates[0]),
         to_date = ref(store.currentTimeRangeDates[1]),
         detailing = ref(store.currentTimeRangeDetailing),

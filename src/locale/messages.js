@@ -75,7 +75,7 @@ export default {
             'network_blocks_new_users_title': 'New Users',
             'network_blocks_inactive_accounts_title': 'Inactive Accounts',
             'network_blocks_active_auto_restake_users_title': 'Active AutoRestake Users',
-            'network_blocks_auto_restake_enabled_count_title': 'AutoRestake Enabled Сount',
+            'network_blocks_auto_restake_executed_count_title': 'AutoRestake Executed Count',
             'network_blocks_auto_restake_token_amount_title': 'AutoRestake Token Amount',
             'network_blocks_gas_paid_title': 'Gas Paid',
             'network_blocks_fees_paid_title': 'Fees Paid',
@@ -87,6 +87,7 @@ export default {
             'network_charts_APR_title': 'APR',
             'network_charts_APY_title': 'APY',
             'network_charts_bonded_token_title': 'Total Amount of Bonded {token}',
+            'network_charts_bonded_token_title_short': 'Total AOB{token}:',
             'network_charts_bonded_ratio_title': 'Total Bonded Ratio',
             'network_charts_bonded_token_apr_title': 'Bonded {token} / APR',
             'network_charts_inflation_title': 'Inflation',
@@ -283,6 +284,10 @@ export default {
             'whale_transactions_action_IBC_transfer': 'IBC-Transfer',
 
             'whale_transactions_TX_link': 'TX Link',
+
+
+            // Today TOP Transactions page
+            'today_TOP_transactions_page_title': 'Accounts / Today TOP Transactions',
 
 
             // Governance participation page

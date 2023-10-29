@@ -16,8 +16,8 @@
             <!-- Active AutoRestake Users -->
             <ActiveAutoRestakeUsers />
 
-            <!-- AutoRestake Enabled Сount -->
-            <AutoRestakeEnabledСount />
+            <!-- AutoRestake Executed Сount -->
+            <AutoRestakeExecutedCount />
 
             <!-- AutoRestake Token Amount -->
             <AutoRestakeTokenAmount />
@@ -42,7 +42,7 @@
     import NewUsers from '@/components/network/blocks/NewUsers.vue'
     import InactiveAccounts from '@/components/network/blocks/InactiveAccounts.vue'
     import ActiveAutoRestakeUsers from '@/components/network/blocks/ActiveAutoRestakeUsers.vue'
-    import AutoRestakeEnabledСount from '@/components/network/blocks/AutoRestakeEnabledCount.vue'
+    import AutoRestakeExecutedCount from '@/components/network/blocks/AutoRestakeExecutedCount.vue'
     import AutoRestakeTokenAmount from '@/components/network/blocks/AutoRestakeTokenAmount.vue'
     import GasPaid from '@/components/network/blocks/GasPaid.vue'
     import FeesPaid from '@/components/network/blocks/FeesPaid.vue'

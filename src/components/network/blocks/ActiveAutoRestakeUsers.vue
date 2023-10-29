@@ -18,8 +18,6 @@
             <Loader v-if="!data" />
             <span v-else>{{ data.toLocaleString('ru-RU') }}</span>
         </div>
-
-        <div class="chart"></div>
     </div>
 </template>
 
