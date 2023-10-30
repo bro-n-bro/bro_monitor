@@ -123,7 +123,7 @@
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_date">' + store.cache.gas_paid[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_gas_paid_title')+ ': ' + Number((store.cache.gas_paid[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_gas_paid_title') + ': ' + Number((store.cache.gas_paid[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html

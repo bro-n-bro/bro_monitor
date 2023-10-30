@@ -87,7 +87,7 @@ export default {
             'network_charts_APR_title': 'APR',
             'network_charts_APY_title': 'APY',
             'network_charts_bonded_token_title': 'Total Amount of Bonded {token}',
-            'network_charts_bonded_token_title_short': 'Total AOB{token}:',
+            'network_charts_bonded_token_title_short': 'Total AOB{token}',
             'network_charts_bonded_ratio_title': 'Total Bonded Ratio',
             'network_charts_bonded_token_apr_title': 'Bonded {token} / APR',
             'network_charts_inflation_title': 'Inflation',

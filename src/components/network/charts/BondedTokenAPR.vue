@@ -64,6 +64,13 @@
                 },
                 zoom: {
                     enabled: false
+                },
+                animations: {
+                    enabled: true,
+                    easing: 'linear',
+                    dynamicAnimation: {
+                        speed: 1000
+                    }
                 }
             },
             colors: computed(() => chartColors.value),
@@ -139,15 +146,14 @@
                     position: 'topLeft'
                 },
                 custom: function({ dataPointIndex, w }) {
-                    console.log(dataPointIndex)
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_date">' + store.cache.apr[dataPointIndex].x + '</div>' +
 
-                                    '<div class="tooltip_val green">'+ i18n.global.t('message.network_charts_bonded_token_title_short', { token: store.networks[store.currentNetwork].token_name.charAt(0) })+ ': ' + Number((store.cache.bonded_tokens[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val green"><span style="width: 68px;">'+ i18n.global.t('message.network_charts_bonded_token_title_short', { token: store.networks[store.currentNetwork].token_name.charAt(0) })+ ':</span> ' + Number((store.cache.bonded_tokens[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
 
-                                    '<div class="tooltip_val violet">' + i18n.global.t('message.network_charts_APR_title') + ': ' + (store.cache.apr[dataPointIndex].y * 100).toFixed(2) + '%</div>' +
+                                    '<div class="tooltip_val violet"><span style="width: 68px;">' + i18n.global.t('message.network_charts_APR_title') + ':</span> ' + (store.cache.apr[dataPointIndex].y * 100).toFixed(2) + '%</div>' +
                                 '</div>'
 
                     return html

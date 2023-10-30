@@ -46,6 +46,10 @@
         <FeesPaidChart v-if="store.currentChart == 'fees_paid'" />
 
         <WealthDistributionChart v-if="store.currentChart == 'wealth_distribution'" />
+
+        <BondedTokenToAPRChart v-if="store.currentChart == 'bonded_token_to_APR'" />
+
+        <GasPaidTOFeesPaidChart v-if="store.currentChart == 'gas_paid_to_fees_paid'" />
     </div>
 </template>
 
@@ -73,6 +77,8 @@
     import AutoRestakeTokenAmountChart from  '@/components/chart/AutoRestakeTokenAmount.vue'
     import FeesPaidChart from  '@/components/chart/FeesPaid.vue'
     import WealthDistributionChart from  '@/components/chart/WealthDistribution.vue'
+    import BondedTokenToAPRChart from  '@/components/chart/BondedTokenToAPR.vue'
+    import GasPaidTOFeesPaidChart from  '@/components/chart/GasPaidTOFeesPaid.vue'
 
 
     const router = useRouter(),

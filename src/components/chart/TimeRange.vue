@@ -1,30 +1,30 @@
 <template>
     <div class="time_range" :class="{ disabled: store.chartLoading }">
-        <button class="btn" :class="{ active: store.currentTimeRange == 'day' }" @click.prevent="setTimeRangeDay()">
+        <button class="btn" :class="{ active: currentTimeRange == 'day' }" @click.prevent="setTimeRangeDay()">
             {{ $t('message.time_range_24h') }}
         </button>
 
-        <button class="btn" :class="{ active: store.currentTimeRange == 'week' }" @click.prevent="setTimeRangeWeek()">
+        <button class="btn" :class="{ active: currentTimeRange == 'week' }" @click.prevent="setTimeRangeWeek()">
             {{ $t('message.time_range_7D') }}
         </button>
 
-        <button class="btn" :class="{ active: store.currentTimeRange == 'month' }" @click.prevent="setTimeRangeMonth()">
+        <button class="btn" :class="{ active: currentTimeRange == 'month' }" @click.prevent="setTimeRangeMonth()">
             {{ $t('message.time_range_30D') }}
         </button>
 
-        <button class="btn" :class="{ active: store.currentTimeRange == 'quarter' }" @click.prevent="setTimeRangeQuarter()">
+        <button class="btn" :class="{ active: currentTimeRange == 'quarter' }" @click.prevent="setTimeRangeQuarter()">
             {{ $t('message.time_range_3M') }}
         </button>
 
-        <button class="btn" :class="{ active: store.currentTimeRange == 'half_year' }" @click.prevent="setTimeRangeHalfYear()">
+        <button class="btn" :class="{ active: currentTimeRange == 'half_year' }" @click.prevent="setTimeRangeHalfYear()">
             {{ $t('message.time_range_6M') }}
         </button>
 
-        <button class="btn" :class="{ active: store.currentTimeRange == 'year' }" @click.prevent="setTimeRangeYear()">
+        <button class="btn" :class="{ active: currentTimeRange == 'year' }" @click.prevent="setTimeRangeYear()">
             {{ $t('message.time_range_1Y') }}
         </button>
 
-        <button class="btn calendar_btn" :class="{ active: store.currentTimeRange == 'range' }" @click.prevent="showDropdown = !showDropdown">
+        <button class="btn calendar_btn" :class="{ active: currentTimeRange == 'range' }" @click.prevent="showDropdown = !showDropdown">
             <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_plus"></use></svg>
         </button>
 
@@ -91,6 +91,7 @@
         showCalendar = ref(false),
         date = ref([]),
         formattingDate = ref([]),
+        currentTimeRange = ref(store.currentTimeRange),
         months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 
@@ -115,6 +116,9 @@
 
     // Set time range - Day
     function setTimeRangeDay() {
+        // Update local current time range
+        currentTimeRange.value = 'day'
+
         // Event 'updateChartTimeRange'
         emitter.emit('updateChartTimeRange', { type: 'day', dates: date.value })
     }
@@ -122,6 +126,9 @@
 
     // Set time range - Week
     function setTimeRangeWeek() {
+        // Update local current time range
+        currentTimeRange.value = 'week'
+
         // Event 'updateChartTimeRange'
         emitter.emit('updateChartTimeRange', { type: 'week', dates: date.value })
     }
@@ -129,6 +136,9 @@
 
     // Set time range - Month
     function setTimeRangeMonth() {
+        // Update local current time range
+        currentTimeRange.value = 'month'
+
         // Event 'updateChartTimeRange'
         emitter.emit('updateChartTimeRange', { type: 'month', dates: date.value })
     }
@@ -136,6 +146,9 @@
 
     // Set time range - Quarter
     function setTimeRangeQuarter() {
+        // Update local current time range
+        currentTimeRange.value = 'quarter'
+
         // Event 'updateChartTimeRange'
         emitter.emit('updateChartTimeRange', { type: 'quarter', dates: date.value })
     }
@@ -143,6 +156,9 @@
 
     // Set time range - Day
     function setTimeRangeHalfYear() {
+        // Update local current time range
+        currentTimeRange.value = 'half_year'
+
         // Event 'updateChartTimeRange'
         emitter.emit('updateChartTimeRange', { type: 'half_year', dates: date.value })
     }
@@ -150,6 +166,9 @@
 
     // Set time range - Year
     function setTimeRangeYear() {
+        // Update local current time range
+        currentTimeRange.value = 'year'
+
         // Event 'updateChartTimeRange'
         emitter.emit('updateChartTimeRange', { type: 'year', dates: date.value })
     }
@@ -157,6 +176,9 @@
 
     // Apply custom period
     function applyCustomPeriod() {
+        // Update local current time range
+        currentTimeRange.value = 'range'
+
         // Event 'updateChartTimeRange'
         emitter.emit('updateChartTimeRange', { type: 'range', dates: date.value })
 

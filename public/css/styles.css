@@ -555,6 +555,14 @@ button
 }
 
 
+.chart_tooltip .tooltip_val span
+{
+    display: inline-block;
+
+    vertical-align: top;
+}
+
+
 
 /*----------------
     Datepicker

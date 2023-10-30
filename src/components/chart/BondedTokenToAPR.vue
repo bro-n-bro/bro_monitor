@@ -1,22 +1,8 @@
 <template>
-     <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.gasPaidTOFeesPaid'] }">
-        <div class="btns">
-            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.gasPaidTOFeesPaid')">
-                <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-            </button>
+    <div class="chart big">
+        <Loader v-if="loading" />
 
-            <router-link :to="`/${store.currentNetwork}/chart/gas_paid_to_fees_paid`" class="btn">
-                <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-            </router-link>
-        </div>
-
-        <div class="title">
-            {{ $t('message.network_charts_gas_paid_to_fees_paid_title') }}
-        </div>
-
-        <Loader v-if="!loading" />
-
-        <apexchart v-else class="chart" height="158px" :options="chartOptions" :series="series" />
+        <apexchart v-else height="710px" :options="chartOptions" :series="series" />
     </div>
 </template>
 
@@ -24,31 +10,37 @@
 <script setup>
     import { inject, ref, reactive, onBeforeMount, computed } from 'vue'
     import { useGlobalStore } from '@/stores'
+    import { calcTimeRange } from '@/utils'
 
     // Components
     import Loader from '@/components/Loader.vue'
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter'),
         i18n = inject('i18n'),
-        loading = ref(false),
-        chartDataGas = ref([]),
-        chartDataFees = ref([]),
+        emitter = inject('emitter'),
+        responseDataAPR = ref(store.cache.apr),
+        responseDataBondedTokens = ref(store.cache.bonded_tokens),
+        from_date = ref(store.currentTimeRangeDates[0]),
+        to_date = ref(store.currentTimeRangeDates[1]),
+        detailing = ref(store.currentTimeRangeDetailing),
+        loading = ref(true),
+        chartDataAPR = ref([]),
+        chartDataBondedTokens = ref([]),
         chartColors = ref(['#950FFF', '#1BC562']),
         chartLabels = ref([]),
-        chartMinGas = ref(0),
-        chartMaxGas = ref(0),
-        chartMinFees = ref(0),
-        chartMaxFees = ref(0),
+        chartMinAPR = ref(0),
+        chartMaxAPR = ref(0),
+        chartMinBondedTokens = ref(0),
+        chartMaxBondedTokens = ref(0),
         series = reactive([
             {
-                name: 'Gas',
-                data: computed(() => chartDataGas.value)
+                name: 'APR',
+                data: computed(() => chartDataAPR.value)
             },
             {
-                name: 'Fees',
-                data: computed(() => chartDataFees.value)
+                name: 'BondedTokens',
+                data: computed(() => chartDataBondedTokens.value)
             }
         ]),
         chartOptions = reactive({
@@ -100,8 +92,8 @@
                 padding: {
                     left: 0,
                     right: 0,
-                    bottom: -9,
-                    top: -20,
+                    bottom: 0,
+                    top: 0,
                 },
                 xaxis: {
                     lines: {
@@ -122,7 +114,7 @@
             },
             legend: {
                 show: true,
-                offsetX: -13,
+                offsetX: 0,
                 offsetY: 0,
                 position: 'top',
                 horizontalAlign: 'left',
@@ -149,11 +141,11 @@
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + store.cache.gas_paid[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_date">' + responseDataAPR.value[dataPointIndex].x + '</div>' +
 
-                                    '<div class="tooltip_val green"><span style="width: 60px;">'+ i18n.global.t('message.network_charts_fees_paid_title') + ':</span> ' + Number((store.cache.fees_paid[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val green"><span style="width: 68px;">'+ i18n.global.t('message.network_charts_bonded_token_title_short', { token: store.networks[store.currentNetwork].token_name.charAt(0) })+ ':</span> ' + Number((responseDataBondedTokens.value[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
 
-                                    '<div class="tooltip_val violet"><span style="width: 60px;">' + i18n.global.t('message.network_charts_gas_paid_title') + ':</span> ' + Number((store.cache.gas_paid[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val violet"><span style="width: 68px;">' + i18n.global.t('message.network_charts_APR_title') + ':</span> ' + (responseDataAPR.value[dataPointIndex].y * 100).toFixed(2) + '%</div>' +
                                 '</div>'
 
                     return html
@@ -161,10 +153,10 @@
             },
             yaxis: [
                 {
-                    tickAmount: 3,
+                    tickAmount: 10,
                     opposite: true,
-                    min: computed(() => chartMinGas.value),
-                    max: computed(() => chartMaxGas.value),
+                    min: computed(() => chartMinAPR.value),
+                    max: computed(() => chartMaxAPR.value),
                     labels: {
                         align: 'left',
                         style: {
@@ -173,7 +165,7 @@
                             fontFamily: 'var(--font_family)',
                         },
                         offsetX: -13,
-                        formatter: value => { return Number((value / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') },
+                        formatter: value => { return (value * 100).toFixed(2) + '%' },
                     },
                     axisBorder: {
                         show: false,
@@ -186,9 +178,9 @@
                     }
                 },
                 {
-                    tickAmount: 3,
-                    min: computed(() => chartMinFees.value),
-                    max: computed(() => chartMaxFees.value),
+                    tickAmount: 10,
+                    min: computed(() => chartMinBondedTokens.value),
+                    max: computed(() => chartMaxBondedTokens.value),
                     labels: {
                         align: 'left',
                         style: {
@@ -212,7 +204,7 @@
             ],
             xaxis: {
                 categories: computed(() => chartLabels.value),
-                tickAmount: 5,
+                tickAmount: 16,
                 labels: {
                     rotate: 0,
                     style: {
@@ -235,50 +227,99 @@
 
 
     onBeforeMount(async () => {
-        // Get chart data
-        if (!store.cache.gas_paid) {
-            try {
-                // Request
-                await fetch(`https://rpc.bronbro.io/statistics/gas_paid?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
-                    .then(res => res.json())
-                    .then(response => store.cache.gas_paid = response.data)
-            } catch (error) {
-                console.error(error)
-            }
+        if (typeof store.cache.apr !== 'undefined' && typeof store.cache.bonded_tokens !== 'undefined') {
+            // Init chart
+            initChart()
+        } else {
+            // Get chart data
+            await getChartData()
         }
+    })
 
-        if (!store.cache.fees_paid) {
+
+    // Event "updateChartTimeRange"
+    emitter.on('updateChartTimeRange', async ({ type, dates }) => {
+        // Show loader
+        loading.value = true
+
+        // Reset chart data
+        chartDataAPR.value = []
+        chartDataBondedTokens.value = []
+        chartLabels.value = []
+        chartMinAPR.value = 0
+        chartMaxAPR.value = 0
+        chartMinBondedTokens.value = 0
+        chartMaxBondedTokens.value = 0
+
+        // Get temp time range
+        let temp = calcTimeRange(type, dates)
+
+        from_date.value = temp.from_date
+        to_date.value = temp.to_date
+        detailing.value = temp.detailing
+
+        // Get chart data
+        await getChartData(false)
+    })
+
+
+    // Get chart data
+    async function getChartData(cacheEnable = true) {
+        try {
+            // Start loading
+            store.chartLoading = true
+
+            // Get chart data
             try {
                 // Request
-                await fetch(`https://rpc.bronbro.io/statistics/fees_paid?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
+                await fetch(`https://rpc.bronbro.io/statistics/apr?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
                     .then(res => res.json())
-                    .then(response => store.cache.fees_paid = response.data)
+                    .then(response => {
+                        cacheEnable
+                            ? responseDataAPR.value = store.cache.apr = response.data
+                            : responseDataAPR.value = response.data
+                    })
             } catch (error) {
                 console.error(error)
             }
+
+            try {
+                // Request
+                await fetch(`https://rpc.bronbro.io/statistics/bonded_tokens?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
+                    .then(res => res.json())
+                    .then(response => {
+                        cacheEnable
+                            ? responseDataBondedTokens.value = store.cache.bonded_tokens = response.data
+                            : responseDataBondedTokens.value = response.data
+                    })
+            } catch (error) {
+                console.error(error)
+            }
+        } catch (error) {
+            console.error(error)
         }
 
         // Init chart
         initChart()
-    })
+    }
 
 
     // Init chart
     function initChart() {
         // Set chart data APR
-        store.cache.gas_paid.forEach(el => chartDataGas.value.push(el.y))
+        responseDataAPR.value.forEach(el => chartDataAPR.value.push(el.y))
 
-        chartMinGas.value = Math.min(...chartDataGas.value) - Math.min(...chartDataGas.value) * 0.005
-        chartMaxGas.value = Math.max(...chartDataGas.value) + Math.max(...chartDataGas.value) * 0.005
+        chartMinAPR.value = Math.min(...chartDataAPR.value) - Math.min(...chartDataAPR.value) * 0.005
+        chartMaxAPR.value = Math.max(...chartDataAPR.value) + Math.max(...chartDataAPR.value) * 0.005
 
         // Set chart data Bonded Tokens
-        store.cache.fees_paid.forEach(el => chartDataFees.value.push(el.y))
+        responseDataBondedTokens.value.forEach(el => chartDataBondedTokens.value.push(el.y))
 
-        chartMinFees.value = Math.min(...chartDataFees.value) - Math.min(...chartDataFees.value) * 0.005
-        chartMaxFees.value = Math.max(...chartDataFees.value) + Math.max(...chartDataFees.value) * 0.005
+        chartMinBondedTokens.value = Math.min(...chartDataBondedTokens.value) - Math.min(...chartDataBondedTokens.value) * 0.005
+        chartMaxBondedTokens.value = Math.max(...chartDataBondedTokens.value) + Math.max(...chartDataBondedTokens.value) * 0.005
 
         // Set labels
-        store.cache.gas_paid.forEach(el => {
+        responseDataAPR.value.forEach(el => {
             let parseDate = new Date(el.x),
                 month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
                 date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
@@ -287,34 +328,19 @@
         })
 
         // Hide loader
-        loading.value = true
+        loading.value = false
+
+        // Finish loading
+        store.chartLoading = false
     }
 </script>
 
 
-<style scoped>
-    .block .title
+<style>
+    .chart.big .apexcharts-legend
     {
-        margin-bottom: 12px;
+        top: 0 !important;
+
+        margin: 0 !important;
     }
-
-
-    .block .chart
-    {
-        position: relative;
-    }
-
-
-    .loader_wrap
-    {
-        position: relative;
-
-        width: auto;
-        height: auto;
-        margin: 0;
-        padding: 20px 0 0;
-
-        background: none;
-    }
-
 </style>
