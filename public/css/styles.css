@@ -554,6 +554,16 @@ button
     background: #950fff;
 }
 
+.chart_tooltip .tooltip_val.yellow:before
+{
+    background: #C5811B;
+}
+
+.chart_tooltip .tooltip_val.blue:before
+{
+    background: #0343E8;
+}
+
 
 .chart_tooltip .tooltip_val span
 {

@@ -122,6 +122,10 @@ export default {
             'network_charts_uptime_title': 'Uptime',
             'network_charts_total_accounts_title': 'Number of accounts',
 
+            'network_charts_delegation_tooltip_label': 'Delegation',
+            'network_charts_undelegation_tooltip_label': 'Undelegation',
+            'network_charts_redelegation_tooltip_label': 'Redelegation',
+
             'network_charts_unit_sec': 'sec',
 
             // Network parameter titles

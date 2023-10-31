@@ -107,7 +107,6 @@
             },
             yaxis: {
                 show: true,
-
                 logarithmic: true,
                 max: computed(() => chartMin.value),
                 max: computed(() => chartMax.value),
