@@ -1,22 +1,8 @@
 <template>
-     <div class="block full_w" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.delegations'] }">
-        <div class="btns">
-            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.delegations')">
-                <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-            </button>
+    <div class="chart big">
+        <Loader v-if="loading" />
 
-            <router-link :to="`/${store.currentNetwork}/chart/delegations`" class="btn">
-                <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-            </router-link>
-        </div>
-
-        <div class="title">
-            {{ $t('message.network_charts_delegations_title') }}
-        </div>
-
-        <Loader v-if="!loading" />
-
-        <apexchart v-else class="chart" height="340px" :options="chartOptions" :series="series" />
+        <apexchart v-else height="710px" :options="chartOptions" :series="series" />
     </div>
 </template>
 
@@ -24,15 +10,22 @@
 <script setup>
     import { inject, ref, reactive, onBeforeMount, computed } from 'vue'
     import { useGlobalStore } from '@/stores'
+    import { calcTimeRange } from '@/utils'
 
     // Components
     import Loader from '@/components/Loader.vue'
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter'),
         i18n = inject('i18n'),
-        loading = ref(false),
+        emitter = inject('emitter'),
+        responseDataUndelegation = ref(store.cache.undelegation),
+        responseDataDelegation = ref(store.cache.delegation),
+        responseDataRedelegation = ref(store.cache.redelegation),
+        from_date = ref(store.currentTimeRangeDates[0]),
+        to_date = ref(store.currentTimeRangeDates[1]),
+        detailing = ref(store.currentTimeRangeDetailing),
+        loading = ref(true),
         chartDataUndelegation = ref([]),
         chartDataDelegation = ref([]),
         chartDataRedelegation = ref([]),
@@ -74,7 +67,7 @@
             },
             plotOptions: {
                 bar: {
-                    columnWidth: '10px'
+                    columnWidth: computed(() => detailing.value == 'hour' ? '5px' : '10px')
                 }
             },
             grid: {
@@ -84,8 +77,8 @@
                 padding: {
                     left: 0,
                     right: 0,
-                    bottom: -9,
-                    top: -20,
+                    bottom: 0,
+                    top: 0,
                 },
                 xaxis: {
                     lines: {
@@ -135,13 +128,13 @@
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + store.cache.undelegation[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_date">' + responseDataUndelegation.value[dataPointIndex].x + '</div>' +
 
-                                    '<div class="tooltip_val green"><span style="width: 80px;">' + i18n.global.t('message.network_charts_delegation_tooltip_label') + ':</span> ' + Number((store.cache.delegation[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + ` ${store.networks[store.currentNetwork].token_name}` + '</div>' +
+                                    '<div class="tooltip_val green"><span style="width: 80px;">' + i18n.global.t('message.network_charts_delegation_tooltip_label') + ':</span> ' + Number((responseDataDelegation.value[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + ` ${store.networks[store.currentNetwork].token_name}` + '</div>' +
 
-                                    '<div class="tooltip_val yellow"><span style="width: 80px;">'+ i18n.global.t('message.network_charts_undelegation_tooltip_label') + ':</span> ' + Number((store.cache.undelegation[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + ` ${store.networks[store.currentNetwork].token_name}` + '</div>' +
+                                    '<div class="tooltip_val yellow"><span style="width: 80px;">'+ i18n.global.t('message.network_charts_undelegation_tooltip_label') + ':</span> ' + Number((responseDataUndelegation.value[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + ` ${store.networks[store.currentNetwork].token_name}` + '</div>' +
 
-                                    '<div class="tooltip_val blue"><span style="width: 80px;">' + i18n.global.t('message.network_charts_redelegation_tooltip_label') + ':</span> ' + Number((store.cache.redelegation[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + ` ${store.networks[store.currentNetwork].token_name}` + '</div>' +
+                                    '<div class="tooltip_val blue"><span style="width: 80px;">' + i18n.global.t('message.network_charts_redelegation_tooltip_label') + ':</span> ' + Number((responseDataRedelegation.value[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + ` ${store.networks[store.currentNetwork].token_name}` + '</div>' +
                                 '</div>'
 
                     return html
@@ -149,7 +142,7 @@
             },
             yaxis: {
                 // logarithmic: true,
-                tickAmount: 7,
+                tickAmount: 10,
                 labels: {
                     align: 'left',
                     style: {
@@ -172,7 +165,7 @@
             },
             xaxis: {
                 categories: computed(() => chartLabels.value),
-                tickAmount: 12,
+                tickAmount: 16,
                 labels: {
                     rotate: 0,
                     style: {
@@ -195,69 +188,100 @@
 
 
     onBeforeMount(async () => {
+        if (typeof store.cache.undelegation !== 'undefined' && typeof store.cache.redelegation !== 'undefined' && typeof store.cache.delegation !== 'undefined') {
+            // Init chart
+            initChart()
+        } else {
+            // Get chart data
+            await getChartData()
+        }
+    })
+
+
+    // Event "updateChartTimeRange"
+    emitter.on('updateChartTimeRange', async ({ type, dates }) => {
+        // Show loader
+        loading.value = true
+
+        // Reset chart data
+        chartDataUndelegation.value = []
+        chartDataDelegation.value = []
+        chartDataRedelegation.value = []
+        chartLabels.value = []
+
+        // Get temp time range
+        let temp = calcTimeRange(type, dates)
+
+        from_date.value = temp.from_date
+        to_date.value = temp.to_date
+        detailing.value = temp.detailing
+
+        // Get chart data
+        await getChartData(false)
+    })
+
+
+    // Get chart data
+    async function getChartData(cacheEnable = true) {
+        // Start loading
+        store.chartLoading = true
+
         // Get chart data
         const undelegation = new Promise((resolve, reject) => {
-            if (!store.cache.undelegation) {
-                try {
-                    // Request
-                    fetch(`https://rpc.bronbro.io/statistics/unbonding_message?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
-                        .then(res => res.json())
-                        .then(response => {
-                            store.cache.undelegation = response.data
+            try {
+                // Request
+                fetch(`https://rpc.bronbro.io/statistics/unbonding_message?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
+                    .then(res => res.json())
+                    .then(response => {
+                        cacheEnable
+                            ? responseDataUndelegation.value = store.cache.undelegation = response.data
+                            : responseDataUndelegation.value = response.data
 
-                            resolve(response.data)
-                        })
-                } catch (error) {
-                    reject(error)
+                        resolve(response.data)
+                    })
+            } catch (error) {
+                reject(error)
 
-                    console.error(error)
-                }
-            } else {
-                resolve(store.cache.undelegation)
+                console.error(error)
             }
         })
 
 
         const delegation = new Promise((resolve, reject) => {
-            if (!store.cache.delegation) {
-                try {
-                    // Request
-                    fetch(`https://rpc.bronbro.io/statistics/delegation_message?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
-                        .then(res => res.json())
-                        .then(response => {
-                            store.cache.delegation = response.data
+            try {
+                // Request
+                fetch(`https://rpc.bronbro.io/statistics/delegation_message?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
+                    .then(res => res.json())
+                    .then(response => {
+                        cacheEnable
+                            ? responseDataDelegation.value = store.cache.delegation = response.data
+                            : responseDataDelegation.value = response.data
 
-                            resolve(response.data)
-                        })
-                } catch (error) {
-                    reject(error)
+                        resolve(response.data)
+                    })
+            } catch (error) {
+                reject(error)
 
-                    console.error(error)
-                }
-            } else {
-                resolve(store.cache.delegation)
+                console.error(error)
             }
         })
 
-
         const redelegation = new Promise((resolve, reject) => {
-            if (!store.cache.redelegation) {
-                try {
-                    // Request
-                    fetch(`https://rpc.bronbro.io/statistics/redelegation_message?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
-                        .then(res => res.json())
-                        .then(response => {
-                            store.cache.redelegation = response.data
+            try {
+                // Request
+                fetch(`https://rpc.bronbro.io/statistics/redelegation_message?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
+                    .then(res => res.json())
+                    .then(response => {
+                        cacheEnable
+                            ? responseDataRedelegation.value = store.cache.redelegation = response.data
+                            : responseDataRedelegation.value = response.data
 
-                            resolve(response.data)
-                        })
-                } catch (error) {
-                    reject(error)
+                        resolve(response.data)
+                    })
+            } catch (error) {
+                reject(error)
 
-                    console.error(error)
-                }
-            } else {
-                resolve(store.cache.redelegation)
+                console.error(error)
             }
         })
 
@@ -266,18 +290,18 @@
             // Init chart
             initChart()
         })
-    })
+    }
 
 
     // Init chart
     function initChart() {
-        // Set chart data
-        store.cache.undelegation.forEach(el => chartDataUndelegation.value.push(el.y * -1))
-        store.cache.delegation.forEach(el => chartDataDelegation.value.push(el.y))
-        store.cache.redelegation.forEach(el => chartDataRedelegation.value.push(el.y))
+        // Set chart data APR
+        responseDataUndelegation.value.forEach(el => chartDataUndelegation.value.push(el.y * -1))
+        responseDataDelegation.value.forEach(el => chartDataDelegation.value.push(el.y))
+        responseDataRedelegation.value.forEach(el => chartDataRedelegation.value.push(el.y))
 
         // Set labels
-        store.cache.undelegation.forEach(el => {
+        responseDataUndelegation.value.forEach(el => {
             let parseDate = new Date(el.x),
                 month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
                 date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
@@ -286,34 +310,19 @@
         })
 
         // Hide loader
-        loading.value = true
+        loading.value = false
+
+        // Finish loading
+        store.chartLoading = false
     }
 </script>
 
 
-<style scoped>
-    .block .title
+<style>
+    .chart.big .apexcharts-legend
     {
-        margin-bottom: 12px;
+        top: 0 !important;
+
+        margin: 0 !important;
     }
-
-
-    .block .chart
-    {
-        position: relative;
-    }
-
-
-    .loader_wrap
-    {
-        position: relative;
-
-        width: auto;
-        height: auto;
-        margin: 0;
-        padding: 20px 0 0;
-
-        background: none;
-    }
-
 </style>

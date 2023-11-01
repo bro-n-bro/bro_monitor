@@ -141,7 +141,7 @@
                         fontSize: '12px',
                         fontFamily: 'var(--font_family)',
                     },
-                    offsetX: -16,
+                    offsetX: -13,
                     formatter: value => { return (value * 100).toFixed(2) + '%' },
                 },
                 axisBorder: {

@@ -141,7 +141,7 @@
                         fontSize: '12px',
                         fontFamily: 'var(--font_family)',
                     },
-                    offsetX: -16,
+                    offsetX: -13,
                     formatter: value => { return Number((value / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') },
                 },
                 axisBorder: {

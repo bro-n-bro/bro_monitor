@@ -22,7 +22,7 @@
 
 
 <script setup>
-    import { inject, ref, reactive, onBeforeMount, computed } from 'vue'
+    import { inject, ref, reactive, watch, computed } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -234,32 +234,19 @@
         })
 
 
-    onBeforeMount(async () => {
-        // Get chart data
-        if (!store.cache.apr) {
-            try {
-                // Request
-                await fetch(`https://rpc.bronbro.io/statistics/apr?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
-                    .then(res => res.json())
-                    .then(response => store.cache.apr = response.data)
-            } catch (error) {
-                console.error(error)
-            }
+    watch(computed(() => store.cache.apr), () => {
+        if(store.cache.bonded_tokens) {
+            // Init chart
+            initChart()
         }
+    })
 
-        if (!store.cache.bonded_tokens) {
-            try {
-                // Request
-                await fetch(`https://rpc.bronbro.io/statistics/bonded_tokens?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
-                    .then(res => res.json())
-                    .then(response => store.cache.bonded_tokens = response.data)
-            } catch (error) {
-                console.error(error)
-            }
+
+    watch(computed(() => store.cache.bonded_tokens), () => {
+        if(store.cache.apr) {
+            // Init chart
+            initChart()
         }
-
-        // Init chart
-        initChart()
     })
 
 

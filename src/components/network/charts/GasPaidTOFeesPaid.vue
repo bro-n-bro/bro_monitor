@@ -22,7 +22,7 @@
 
 
 <script setup>
-    import { inject, ref, reactive, onBeforeMount, computed } from 'vue'
+    import { inject, ref, reactive, watch, computed } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -234,32 +234,19 @@
         })
 
 
-    onBeforeMount(async () => {
-        // Get chart data
-        if (!store.cache.gas_paid) {
-            try {
-                // Request
-                await fetch(`https://rpc.bronbro.io/statistics/gas_paid?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
-                    .then(res => res.json())
-                    .then(response => store.cache.gas_paid = response.data)
-            } catch (error) {
-                console.error(error)
-            }
+    watch(computed(() => store.cache.gas_paid), () => {
+        if(store.cache.fees_paid) {
+            // Init chart
+            initChart()
         }
+    })
 
-        if (!store.cache.fees_paid) {
-            try {
-                // Request
-                await fetch(`https://rpc.bronbro.io/statistics/fees_paid?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
-                    .then(res => res.json())
-                    .then(response => store.cache.fees_paid = response.data)
-            } catch (error) {
-                console.error(error)
-            }
+
+    watch(computed(() => store.cache.fees_paid), () => {
+        if(store.cache.gas_paid) {
+            // Init chart
+            initChart()
         }
-
-        // Init chart
-        initChart()
     })
 
 

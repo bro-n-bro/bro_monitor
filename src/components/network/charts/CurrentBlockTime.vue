@@ -141,7 +141,7 @@
                         fontSize: '12px',
                         fontFamily: 'var(--font_family)',
                     },
-                    offsetX: -16,
+                    offsetX: -13,
                     formatter: value => { return value.toFixed(2) + ' ' + i18n.global.t('message.network_charts_unit_sec') },
                 },
                 axisBorder: {
