@@ -22,7 +22,7 @@
 
 
 <script setup>
-    import { inject, ref, reactive, watch, computed } from 'vue'
+    import { inject, ref, reactive, watch, computed, onBeforeMount } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -232,6 +232,14 @@
                 }
             },
         })
+
+
+    onBeforeMount(() => {
+        if(store.cache.apr  && store.cache.bonded_tokens) {
+            // Init chart
+            initChart()
+        }
+    })
 
 
     watch(computed(() => store.cache.apr), () => {

@@ -99,9 +99,9 @@ const routes = [
 		}
 	},
 	{
-		path: '/:network/today_TOP_transactions',
-		name: 'TodayTOPTransactions',
-		component: () => import('../views/TodayTOPTransactions.vue'),
+		path: '/:network/TOP_transactions',
+		name: 'TOPTransactions',
+		component: () => import('../views/TOPTransactions.vue'),
 		meta: {
 			layout: fullWidthLayout
 		}

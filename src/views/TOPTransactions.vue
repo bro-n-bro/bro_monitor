@@ -7,14 +7,14 @@
         </div>
 
         <div class="title">
-            {{ $t('message.today_TOP_transactions_page_title') }}
+            {{ $t('message.TOP_transactions_page_title') }}
         </div>
     </div>
 
 
     <!-- Today TOP transactions table -->
     <div class="block big">
-        <TodayTOPTransactionsTable size="big" />
+        <TOPTransactionsTable size="big" />
     </div>
 </template>
 
@@ -23,7 +23,7 @@
     import { useRouter } from 'vue-router'
 
     // Components
-    import TodayTOPTransactionsTable from '@/components/network/TodayTOPTransactionsTable.vue'
+    import TOPTransactionsTable from '@/components/network/TOPTransactionsTable.vue'
 
 
     const router = useRouter()

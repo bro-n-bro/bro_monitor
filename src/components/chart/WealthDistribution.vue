@@ -85,7 +85,7 @@
             },
             plotOptions: {
                 bar: {
-                    columnWidth: '70%',
+                    columnWidth: '88px',
                     distributed: true
                 }
             },
@@ -96,7 +96,7 @@
                     position: 'topLeft'
                 },
                 custom: function( { dataPointIndex, w} ) {
-                    let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
+                    let left = dataPointIndex == 0 ? w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX : w.globals.seriesXvalues[0][dataPointIndex] - 60,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_total_accounts_title') + ': ' + Number(responseData.value[dataPointIndex].total_value.toFixed(0)).toLocaleString('ru-RU') + '</div>' +

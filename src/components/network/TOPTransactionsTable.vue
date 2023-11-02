@@ -9,9 +9,9 @@
                 <div class="val">{{ chartTotal.toLocaleString('ru-RU') }}</div>
             </div>
 
-            <apexchart v-if="props.size == 'big'" width="420px" height="420px" :options="chartOptions" :series="series"></apexchart>
+            <apexchart ref="chart" v-if="props.size == 'big'" width="420px" height="420px" :options="chartOptions" :series="series"></apexchart>
 
-            <apexchart v-else width="291px" height="291px" :options="chartOptions" :series="series"></apexchart>
+            <apexchart ref="chart" v-else width="291px" height="291px" :options="chartOptions" :series="series"></apexchart>
         </div>
 
 
@@ -27,7 +27,7 @@
             </div>
 
             <div class="scroll">
-                <div class="transaction" v-for="(transaction, index) in store.cache.today_TOP_transactions" :key="index">
+                <div class="transaction" v-for="(transaction, index) in store.cache.TOP_transactions" :key="index" @mouseover="chart.toggleDataPointSelection(index)">
                     <div class="col_type">{{ transaction.type }}</div>
                     <div class="col_count">{{ transaction.amount.toLocaleString('ru-RU') }}</div>
                 </div>
@@ -48,6 +48,7 @@
     const store = useGlobalStore(),
         props = defineProps(['size']),
         loading = ref(true),
+        chart = ref(null),
         chartData = ref([]),
         chartColors = ref(['#C983FF', '#B75DFF', '#A636FF', '#800CDB', '#4B0582', '#550694', '#6B09B7']),
         chartTotal = ref(0),
@@ -73,7 +74,6 @@
             },
             plotOptions: {
                 pie: {
-                    expandOnClick: false,
                     donut: {
                         size: '84%',
                     }
@@ -90,7 +90,7 @@
             tooltip: {
                 custom: function({ seriesIndex }) {
                     let html = '<div class="chart_tooltip">' +
-                                    '<div class="tooltip_val pink">'+ store.cache.today_TOP_transactions[seriesIndex].type +' &mdash; '+ store.cache.today_TOP_transactions[seriesIndex].amount.toLocaleString('ru-RU') +'</div>' +
+                                    '<div class="tooltip_val pink">'+ store.cache.TOP_transactions[seriesIndex].type +' &mdash; '+ store.cache.TOP_transactions[seriesIndex].amount.toLocaleString('ru-RU') +'</div>' +
                                 '</div>'
 
                     return html
@@ -122,13 +122,23 @@
 
     onBeforeMount(async () => {
         // Get data
-        if (!store.cache.today_TOP_transactions) {
+        if (!store.cache.TOP_transactions) {
             try {
                 await fetch('https://rpc.bronbro.io/statistics/popular_transactions')
                     .then(res => res.json())
                     .then(response => {
+                        let other = { type: 'Other', amount: 0 }
+
+                        store.cache.TOP_transactions = []
+
                         // Set data
-                        store.cache.today_TOP_transactions = response.data
+                        response.data.forEach(el => {
+                            el.amount > 9999
+                                ? store.cache.TOP_transactions.push(el)
+                                : other.amount += el.amount
+                        })
+
+                        store.cache.TOP_transactions.push(other)
 
                         // Hide loading
                         loading.value = false
@@ -142,10 +152,10 @@
         }
 
         // Set chart data
-        store.cache.today_TOP_transactions.forEach(el => chartData.value.push(el.amount))
+        store.cache.TOP_transactions.forEach(el => chartData.value.push(el.amount))
 
         // Calc total
-        store.cache.today_TOP_transactions.forEach(el => chartTotal.value += el.amount)
+        store.cache.TOP_transactions.forEach(el => chartTotal.value += el.amount)
     })
 </script>
 
@@ -195,6 +205,8 @@
 
         width: 291px;
         max-width: 100%;
+
+        pointer-events: none;
     }
 
 

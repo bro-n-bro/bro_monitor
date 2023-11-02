@@ -1,20 +1,20 @@
 <template>
-     <div class="block full_w" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.todayTOPTransactions'] }">
+     <div class="block full_w" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.TOPTransactions'] }">
         <div class="btns">
-            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.todayTOPTransactions')">
+            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.TOPTransactions')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
 
-            <router-link :to="`/${store.currentNetwork}/today_TOP_transactions`" class="btn">
+            <router-link :to="`/${store.currentNetwork}/TOP_transactions`" class="btn">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
             </router-link>
         </div>
 
         <div class="title">
-            {{ $t('message.network_charts_today_TOP_transactions_title') }}
+            {{ $t('message.network_charts_TOP_transactions_title') }}
         </div>
 
-        <TodayTOPTransactionsTable />
+        <TOPTransactionsTable />
     </div>
 </template>
 
@@ -24,7 +24,7 @@
     import { useGlobalStore } from '@/stores'
 
     // Components
-    import TodayTOPTransactionsTable from '@/components/network/TodayTOPTransactionsTable.vue'
+    import TOPTransactionsTable from '@/components/network/TOPTransactionsTable.vue'
 
 
     const store = useGlobalStore(),

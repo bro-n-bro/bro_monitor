@@ -76,8 +76,8 @@
             <!-- Whale Transactions -->
             <WhaleTransactions />
 
-            <!-- Today TOP Transactions -->
-            <TodayTOPTransactions />
+            <!-- TOP Transactions -->
+            <TOPTransactions />
 
             <!-- Total Amount of Transactions -->
             <TotalAmountTransactions />
@@ -131,7 +131,7 @@
     import AutoRestakeTokenAmount from '@/components/network/charts/AutoRestakeTokenAmount.vue'
     import RichList from '@/components/network/charts/RichList.vue'
     import WhaleTransactions from '@/components/network/charts/WhaleTransactions.vue'
-    import TodayTOPTransactions from '@/components/network/charts/TodayTOPTransactions.vue'
+    import TOPTransactions from '@/components/network/charts/TOPTransactions.vue'
     import TotalAmountTransactions from '@/components/network/charts/TotalAmountTransactions.vue'
     import GasPaid from '@/components/network/charts/GasPaid.vue'
     import FeesPaid from '@/components/network/charts/FeesPaid.vue'

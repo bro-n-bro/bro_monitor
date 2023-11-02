@@ -145,7 +145,7 @@
 
                                     '<div class="tooltip_val green"><span style="width: 60px;">'+ i18n.global.t('message.network_charts_fees_paid_title') + ':</span> ' + Number((responseDataFees.value[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
 
-                                    '<div class="tooltip_val violet"><span style="width: 60px;">' + i18n.global.t('message.network_charts_gas_paid_title') + ':</span> ' + Number((responseDataGas.value[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val violet"><span style="width: 60px;">' + i18n.global.t('message.network_charts_gas_paid_title') + ':</span> ' + Number(responseDataGas.value[dataPointIndex].y.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html
@@ -165,7 +165,7 @@
                             fontFamily: 'var(--font_family)',
                         },
                         offsetX: -13,
-                        formatter: value => { return Number((value / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') },
+                        formatter: value => { return Number(value.toFixed(0)).toLocaleString('ru-RU') },
                     },
                     axisBorder: {
                         show: false,

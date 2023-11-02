@@ -105,7 +105,7 @@ export default {
             'network_charts_auto_restake_token_amount_title': 'AutoRestake Token Amount',
             'network_charts_rich_list_title': 'Rich List',
             'network_charts_whale_transactions_title': '🐳 Whale Transactions',
-            'network_charts_today_TOP_transactions_title': 'Today TOP Transactions',
+            'network_charts_TOP_transactions_title': 'Month TOP Transactions',
             'network_charts_total_amount_transactions_title': 'Total Amount of Transactions',
             'network_charts_gas_paid_title': 'Gas Paid',
             'network_charts_fees_paid_title': 'Fees Paid',
@@ -184,10 +184,10 @@ export default {
             'network_validators_table_label_new_delegators': 'New<br> Delegators',
             'network_validators_table_label_voting_participation': 'Voting<br> Participation',
 
-            // Network Today TOP Transactions donut chart
+            // Network TOP Transactions donut chart
             'network_top_transactions_total_label': 'All Transactions',
 
-            // Network Today TOP Transactions table titles
+            // Network TOP Transactions table titles
             'network_top_transactions_table_label_type': 'Transaction type',
             'network_top_transactions_table_label_count': 'Count',
 
@@ -290,8 +290,8 @@ export default {
             'whale_transactions_TX_link': 'TX Link',
 
 
-            // Today TOP Transactions page
-            'today_TOP_transactions_page_title': 'Accounts / Today TOP Transactions',
+            // TOP Transactions page
+            'TOP_transactions_page_title': 'Accounts / Month TOP Transactions',
 
 
             // Governance participation page

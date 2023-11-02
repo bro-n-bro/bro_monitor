@@ -95,7 +95,7 @@
             },
             plotOptions: {
                 bar: {
-                    columnWidth: '70%',
+                    columnWidth: '30px',
                     distributed: true
                 }
             },
@@ -106,7 +106,7 @@
                     position: 'topLeft'
                 },
                 custom: function({ dataPointIndex, w }) {
-                    let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
+                    let left = dataPointIndex == 0 ? w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX : w.globals.seriesXvalues[0][dataPointIndex] + 27,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_date">' + w.globals.labels[dataPointIndex] + '</div>' +
