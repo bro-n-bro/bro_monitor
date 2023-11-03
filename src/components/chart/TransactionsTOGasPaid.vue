@@ -1,54 +1,48 @@
 <template>
-     <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.gasPaidTOFeesPaid'] }">
-        <div class="btns">
-            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.gasPaidTOFeesPaid')">
-                <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-            </button>
+    <div class="chart big">
+        <Loader v-if="loading" />
 
-            <router-link :to="`/${store.currentNetwork}/chart/gas_paid_to_fees_paid`" class="btn">
-                <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-            </router-link>
-        </div>
-
-        <div class="title">
-            {{ $t('message.network_charts_gas_paid_to_fees_paid_title') }}
-        </div>
-
-        <Loader v-if="!loading" />
-
-        <apexchart v-else class="chart" height="158px" :options="chartOptions" :series="series" />
+        <apexchart v-else height="710px" :options="chartOptions" :series="series" />
     </div>
 </template>
 
 
 <script setup>
-    import { inject, ref, reactive, watch, computed, onBeforeMount } from 'vue'
+    import { inject, ref, reactive, onBeforeMount, computed } from 'vue'
     import { useGlobalStore } from '@/stores'
+    import { calcTimeRange } from '@/utils'
 
     // Components
     import Loader from '@/components/Loader.vue'
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter'),
         i18n = inject('i18n'),
-        loading = ref(false),
+        emitter = inject('emitter'),
+        responseDataGas = ref(store.cache.gas_paid),
+        responseDataTransactions = ref(store.cache.transactions),
+        from_date = ref(store.currentTimeRangeDates[0]),
+        to_date = ref(store.currentTimeRangeDates[1]),
+        detailing = ref(store.currentTimeRangeDetailing),
+        loading = ref(true),
         chartDataGas = ref([]),
-        chartDataFees = ref([]),
+        chartDataTransactions = ref([]),
         chartColors = ref(['#950FFF', '#1BC562']),
         chartLabels = ref([]),
         chartMinGas = ref(0),
         chartMaxGas = ref(0),
-        chartMinFees = ref(0),
-        chartMaxFees = ref(0),
+        chartMinTransactions = ref(0),
+        chartMaxTransactions = ref(0),
         series = reactive([
             {
-                name: 'Gas',
-                data: computed(() => chartDataGas.value)
+                name: 'Transactions',
+                type: 'line',
+                data: computed(() => chartDataTransactions.value)
             },
             {
-                name: 'Fees',
-                data: computed(() => chartDataFees.value)
+                name: 'Gas Paid',
+                type: 'column',
+                data: computed(() => chartDataGas.value)
             }
         ]),
         chartOptions = reactive({
@@ -75,7 +69,7 @@
             },
             colors: computed(() => chartColors.value),
             stroke: {
-                width: 3,
+                width: [3, 0],
                 curve: 'smooth'
             },
             dataLabels: {
@@ -100,8 +94,8 @@
                 padding: {
                     left: 0,
                     right: 0,
-                    bottom: -9,
-                    top: -20,
+                    bottom: 0,
+                    top: 0,
                 },
                 xaxis: {
                     lines: {
@@ -122,7 +116,7 @@
             },
             legend: {
                 show: true,
-                offsetX: -13,
+                offsetX: 0,
                 offsetY: 0,
                 position: 'top',
                 horizontalAlign: 'left',
@@ -149,11 +143,11 @@
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + store.cache.gas_paid[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_date">' + responseDataGas.value[dataPointIndex].x + '</div>' +
 
-                                    '<div class="tooltip_val green"><span style="width: 60px;">'+ i18n.global.t('message.network_charts_fees_paid_title') + ':</span> ' + Number((store.cache.fees_paid[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val green"><span style="width: 130px;">'+ i18n.global.t('message.network_charts_transactions_amount_title') + ':</span> ' + Number(responseDataTransactions.value[dataPointIndex].y.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
 
-                                    '<div class="tooltip_val violet"><span style="width: 60px;">' + i18n.global.t('message.network_charts_gas_paid_title') + ':</span> ' + Number(store.cache.gas_paid[dataPointIndex].y.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val violet"><span style="width: 130px;">' + i18n.global.t('message.network_charts_gas_paid_title') + ':</span> ' + Number(responseDataGas.value[dataPointIndex].y.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html
@@ -161,7 +155,31 @@
             },
             yaxis: [
                 {
-                    tickAmount: 3,
+                    tickAmount: 10,
+                    min: computed(() => chartMinTransactions.value),
+                    max: computed(() => chartMaxTransactions.value),
+                    labels: {
+                        align: 'left',
+                        style: {
+                            colors: 'rgba(255, 255, 255, 0.50)',
+                            fontSize: '12px',
+                            fontFamily: 'var(--font_family)',
+                        },
+                        offsetX: -13,
+                        formatter: value => { return Number(value.toFixed(0)).toLocaleString('ru-RU') },
+                    },
+                    axisBorder: {
+                        show: false,
+                    },
+                    axisTicks: {
+                        show: false
+                    },
+                    tooltip: {
+                        enabled: false
+                    }
+                },
+                {
+                    tickAmount: 10,
                     opposite: true,
                     min: computed(() => chartMinGas.value),
                     max: computed(() => chartMaxGas.value),
@@ -184,35 +202,11 @@
                     tooltip: {
                         enabled: false
                     }
-                },
-                {
-                    tickAmount: 3,
-                    min: computed(() => chartMinFees.value),
-                    max: computed(() => chartMaxFees.value),
-                    labels: {
-                        align: 'left',
-                        style: {
-                            colors: 'rgba(255, 255, 255, 0.50)',
-                            fontSize: '12px',
-                            fontFamily: 'var(--font_family)',
-                        },
-                        offsetX: -13,
-                        formatter: value => { return Number((value / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') },
-                    },
-                    axisBorder: {
-                        show: false,
-                    },
-                    axisTicks: {
-                        show: false
-                    },
-                    tooltip: {
-                        enabled: false
-                    }
                 }
             ],
             xaxis: {
                 categories: computed(() => chartLabels.value),
-                tickAmount: 5,
+                tickAmount: 16,
                 labels: {
                     rotate: 0,
                     style: {
@@ -234,46 +228,100 @@
         })
 
 
-    onBeforeMount(() => {
-        if(store.cache.gas_paid && store.cache.fees_paid) {
+    onBeforeMount(async () => {
+        if (typeof store.cache.gas_paid !== 'undefined' && typeof store.cache.transactions !== 'undefined') {
             // Init chart
             initChart()
+        } else {
+            // Get chart data
+            await getChartData()
         }
     })
 
 
-    watch(computed(() => store.cache.gas_paid), () => {
-        if(store.cache.fees_paid) {
-            // Init chart
-            initChart()
-        }
+    // Event "updateChartTimeRange"
+    emitter.on('updateChartTimeRange', async ({ type, dates }) => {
+        // Show loader
+        loading.value = true
+
+        // Reset chart data
+        chartDataGas.value = []
+        chartDataTransactions.value = []
+        chartLabels.value = []
+        chartMinGas.value = 0
+        chartMaxGas.value = 0
+        chartMinTransactions.value = 0
+        chartMaxTransactions.value = 0
+
+        // Get temp time range
+        let temp = calcTimeRange(type, dates)
+
+        from_date.value = temp.from_date
+        to_date.value = temp.to_date
+        detailing.value = temp.detailing
+
+        // Get chart data
+        await getChartData(false)
     })
 
 
-    watch(computed(() => store.cache.fees_paid), () => {
-        if(store.cache.gas_paid) {
-            // Init chart
-            initChart()
+    // Get chart data
+    async function getChartData(cacheEnable = true) {
+        try {
+            // Start loading
+            store.chartLoading = true
+
+            // Get chart data
+            try {
+                // Request
+                await fetch(`https://rpc.bronbro.io/statistics/gas_paid?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
+                    .then(res => res.json())
+                    .then(response => {
+                        cacheEnable
+                            ? responseDataGas.value = store.cache.gas_paid = response.data
+                            : responseDataGas.value = response.data
+                    })
+            } catch (error) {
+                console.error(error)
+            }
+
+            try {
+                // Request
+                await fetch(`https://rpc.bronbro.io/statistics/transactions?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
+                    .then(res => res.json())
+                    .then(response => {
+                        cacheEnable
+                            ? responseDataTransactions.value = store.cache.transactions = response.data
+                            : responseDataTransactions.value = response.data
+                    })
+            } catch (error) {
+                console.error(error)
+            }
+        } catch (error) {
+            console.error(error)
         }
-    })
+
+        // Init chart
+        initChart()
+    }
 
 
     // Init chart
     function initChart() {
         // Set chart data APR
-        store.cache.gas_paid.forEach(el => chartDataGas.value.push(el.y))
+        responseDataGas.value.forEach(el => chartDataGas.value.push(el.y))
 
         chartMinGas.value = Math.min(...chartDataGas.value) - Math.min(...chartDataGas.value) * 0.005
-        chartMaxGas.value = Math.max(...chartDataGas.value) + Math.max(...chartDataGas.value) * 0.005
+        chartMaxGas.value = Math.max(...chartDataGas.value) + Math.max(...chartDataGas.value) * 0.01
 
         // Set chart data Bonded Tokens
-        store.cache.fees_paid.forEach(el => chartDataFees.value.push(el.y))
+        responseDataTransactions.value.forEach(el => chartDataTransactions.value.push(el.y))
 
-        chartMinFees.value = Math.min(...chartDataFees.value) - Math.min(...chartDataFees.value) * 0.005
-        chartMaxFees.value = Math.max(...chartDataFees.value) + Math.max(...chartDataFees.value) * 0.005
+        chartMinTransactions.value = Math.min(...chartDataTransactions.value) - Math.min(...chartDataTransactions.value) * 0.005
+        chartMaxTransactions.value = Math.max(...chartDataTransactions.value) + Math.max(...chartDataTransactions.value) * 0.01
 
         // Set labels
-        store.cache.gas_paid.forEach(el => {
+        responseDataGas.value.forEach(el => {
             let parseDate = new Date(el.x),
                 month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
                 date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
@@ -282,34 +330,19 @@
         })
 
         // Hide loader
-        loading.value = true
+        loading.value = false
+
+        // Finish loading
+        store.chartLoading = false
     }
 </script>
 
 
-<style scoped>
-    .block .title
+<style>
+    .chart.big .apexcharts-legend
     {
-        margin-bottom: 12px;
+        top: 0 !important;
+
+        margin: 0 !important;
     }
-
-
-    .block .chart
-    {
-        position: relative;
-    }
-
-
-    .loader_wrap
-    {
-        position: relative;
-
-        width: auto;
-        height: auto;
-        margin: 0;
-        padding: 20px 0 0;
-
-        background: none;
-    }
-
 </style>

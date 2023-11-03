@@ -52,6 +52,8 @@
         <GasPaidTOFeesPaidChart v-if="store.currentChart == 'gas_paid_to_fees_paid'" />
 
         <DelegationsChart v-if="store.currentChart == 'delegations'" />
+
+        <TransactionsTOGasPaidChart v-if="store.currentChart == 'transactions_to_gas_paid'" />
     </div>
 </template>
 
@@ -82,6 +84,7 @@
     import BondedTokenToAPRChart from  '@/components/chart/BondedTokenToAPR.vue'
     import GasPaidTOFeesPaidChart from  '@/components/chart/GasPaidTOFeesPaid.vue'
     import DelegationsChart from  '@/components/chart/Delegations.vue'
+    import TransactionsTOGasPaidChart from  '@/components/chart/TransactionsTOGasPaid.vue'
 
 
     const router = useRouter(),

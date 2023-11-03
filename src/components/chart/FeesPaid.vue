@@ -180,7 +180,7 @@
 
 
     // Event "updateChartTimeRange"
-    emitter.on('updateChartTimeRange', async () => {
+    emitter.on('updateChartTimeRange', async ({ type, dates }) => {
         // Show loader
         loading.value = true
 

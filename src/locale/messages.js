@@ -107,6 +107,7 @@ export default {
             'network_charts_whale_transactions_title': '🐳 Whale Transactions',
             'network_charts_TOP_transactions_title': 'Month TOP Transactions',
             'network_charts_total_amount_transactions_title': 'Total Amount of Transactions',
+            'network_charts_transactions_amount_title': 'Transactions amount',
             'network_charts_gas_paid_title': 'Gas Paid',
             'network_charts_fees_paid_title': 'Fees Paid',
             'network_charts_gas_paid_to_fees_paid_title': 'Gas Paid / Fees Paid',
