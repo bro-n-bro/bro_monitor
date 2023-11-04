@@ -506,6 +506,28 @@ button
     margin-bottom: 4px;
 }
 
+.chart_tooltip * + .tooltip_date
+{
+    margin-top: 12px;
+    margin-bottom: 0;
+}
+
+
+.chart_tooltip .tooltip_status
+{
+    margin-bottom: 10px;
+}
+
+.chart_tooltip .tooltip_status .green
+{
+    color: #1bc562;
+}
+
+.chart_tooltip .tooltip_status .red
+{
+    color: #eb5757;
+}
+
 
 .chart_tooltip .tooltip_val
 {
@@ -519,19 +541,22 @@ button
     margin-top: 4px;
 }
 
+.chart_tooltip .tooltip_status ~ .tooltip_val + .tooltip_val
+{
+    margin-top: 8px;
+}
+
 
 .chart_tooltip .tooltip_val:before
 {
     position: absolute;
-    top: 0;
-    bottom: 0;
+    top: 3px;
     left: 0;
 
     display: block;
 
     width: 8px;
     height: 8px;
-    margin: auto;
 
     content: '';
 
@@ -556,12 +581,22 @@ button
 
 .chart_tooltip .tooltip_val.yellow:before
 {
-    background: #C5811B;
+    background: #c5811b;
 }
 
 .chart_tooltip .tooltip_val.blue:before
 {
-    background: #0343E8;
+    background: #0343e8;
+}
+
+.chart_tooltip .tooltip_val.red:before
+{
+    background: #eb5757;
+}
+
+.chart_tooltip .tooltip_val.grey:before
+{
+    background: #353535;
 }
 
 
@@ -570,6 +605,19 @@ button
     display: inline-block;
 
     vertical-align: top;
+}
+
+.chart_tooltip .tooltip_status ~ .tooltip_val span
+{
+    opacity: .5;
+}
+
+
+.chart_tooltip .tooltip_val .type
+{
+    margin-top: 2px;
+
+    opacity: .5;
 }
 
 

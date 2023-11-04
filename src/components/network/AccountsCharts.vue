@@ -105,8 +105,8 @@
         </div>
 
         <div class="row" v-if="showGovernanceStatistics">
-            <!-- The number of those who received unique addresses in the voting -->
-            <UniqueAddressesInVoting />
+            <!-- Unique votes per proposal -->
+            <UniqueVotesPerProposal />
 
             <!-- Governance Participation -->
             <GovernanceParticipation />
@@ -137,7 +137,7 @@
     import FeesPaid from '@/components/network/charts/FeesPaid.vue'
     import GasPaidTOFeesPaid from '@/components/network/charts/GasPaidTOFeesPaid.vue'
     import TransactionsTOGasPaid from '@/components/network/charts/TransactionsTOGasPaid.vue'
-    import UniqueAddressesInVoting from '@/components/network/charts/UniqueAddressesInVoting.vue'
+    import UniqueVotesPerProposal from '@/components/network/charts/UniqueVotesPerProposal.vue'
     import GovernanceParticipation from '@/components/network/charts/GovernanceParticipation.vue'
 
 

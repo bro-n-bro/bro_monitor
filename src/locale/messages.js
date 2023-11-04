@@ -112,7 +112,7 @@ export default {
             'network_charts_fees_paid_title': 'Fees Paid',
             'network_charts_gas_paid_to_fees_paid_title': 'Gas Paid / Fees Paid',
             'network_charts_transactions_to_gas_paid_title': 'Transactions / Gas Paid',
-            'network_charts_unique_addresses_in_voting_title': 'The number of those who received unique addresses in the voting',
+            'network_charts_unique_votes_per_proposal_title': 'Unique votes per proposal',
             'network_charts_governance_participation_title': 'Governance Participation',
             'network_charts_validator_group_map_title': 'Validator Group Map',
             'network_charts_сommission_earned_title': 'Commission Earned',
@@ -126,6 +126,8 @@ export default {
             'network_charts_delegation_tooltip_label': 'Delegation',
             'network_charts_undelegation_tooltip_label': 'Undelegation',
             'network_charts_redelegation_tooltip_label': 'Redelegation',
+
+            'network_status_tooltip_label': 'Status',
 
             'network_charts_unit_sec': 'sec',
 
