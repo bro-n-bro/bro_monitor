@@ -265,42 +265,53 @@
 
     // Get chart data
     async function getChartData(cacheEnable = true) {
-        try {
-            // Start loading
-            store.chartLoading = true
+        // Start loading
+        store.chartLoading = true
 
-            // Get chart data
+        // Get chart data
+        const apr = new Promise((resolve, reject) => {
             try {
                 // Request
-                await fetch(`https://rpc.bronbro.io/statistics/apr?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
+                fetch(`https://rpc.bronbro.io/statistics/apr?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
                     .then(res => res.json())
                     .then(response => {
                         cacheEnable
                             ? responseDataAPR.value = store.cache.apr = response.data
                             : responseDataAPR.value = response.data
+
+                        resolve(response.data)
                     })
             } catch (error) {
+                reject(error)
+
                 console.error(error)
             }
+        })
 
+        const bonded_tokens = new Promise((resolve, reject) => {
             try {
                 // Request
-                await fetch(`https://rpc.bronbro.io/statistics/bonded_tokens?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
+                fetch(`https://rpc.bronbro.io/statistics/bonded_tokens?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
                     .then(res => res.json())
                     .then(response => {
                         cacheEnable
                             ? responseDataBondedTokens.value = store.cache.bonded_tokens = response.data
                             : responseDataBondedTokens.value = response.data
+
+                        resolve(response.data)
                     })
             } catch (error) {
+                reject(error)
+
                 console.error(error)
             }
-        } catch (error) {
-            console.error(error)
-        }
+        })
 
-        // Init chart
-        initChart()
+
+        Promise.all([apr, bonded_tokens]).then(() => {
+            // Init chart
+            initChart()
+        })
     }
 
 

@@ -54,6 +54,8 @@
         <DelegationsChart v-if="store.currentChart == 'delegations'" />
 
         <TransactionsTOGasPaidChart v-if="store.currentChart == 'transactions_to_gas_paid'" />
+
+        <UniqueVotesPerProposalChart v-if="store.currentChart == 'unique_votes_per_proposal'" />
     </div>
 </template>
 
@@ -85,6 +87,7 @@
     import GasPaidTOFeesPaidChart from  '@/components/chart/GasPaidTOFeesPaid.vue'
     import DelegationsChart from  '@/components/chart/Delegations.vue'
     import TransactionsTOGasPaidChart from  '@/components/chart/TransactionsTOGasPaid.vue'
+    import UniqueVotesPerProposalChart from  '@/components/chart/UniqueVotesPerProposal.vue'
 
 
     const router = useRouter(),

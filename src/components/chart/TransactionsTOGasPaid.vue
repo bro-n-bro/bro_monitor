@@ -267,42 +267,53 @@
 
     // Get chart data
     async function getChartData(cacheEnable = true) {
-        try {
-            // Start loading
-            store.chartLoading = true
+        // Start loading
+        store.chartLoading = true
 
-            // Get chart data
+        // Get chart data
+        const gas_paid = new Promise((resolve, reject) => {
             try {
                 // Request
-                await fetch(`https://rpc.bronbro.io/statistics/gas_paid?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
+                fetch(`https://rpc.bronbro.io/statistics/gas_paid?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
                     .then(res => res.json())
                     .then(response => {
                         cacheEnable
                             ? responseDataGas.value = store.cache.gas_paid = response.data
                             : responseDataGas.value = response.data
+
+                        resolve(response.data)
                     })
             } catch (error) {
+                reject(error)
+
                 console.error(error)
             }
+        })
 
+        const transactions = new Promise((resolve, reject) => {
             try {
                 // Request
-                await fetch(`https://rpc.bronbro.io/statistics/transactions?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
+                fetch(`https://rpc.bronbro.io/statistics/transactions?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
                     .then(res => res.json())
                     .then(response => {
                         cacheEnable
                             ? responseDataTransactions.value = store.cache.transactions = response.data
                             : responseDataTransactions.value = response.data
+
+                        resolve(response.data)
                     })
             } catch (error) {
+                reject(error)
+
                 console.error(error)
             }
-        } catch (error) {
-            console.error(error)
-        }
+        })
 
-        // Init chart
-        initChart()
+
+        Promise.all([gas_paid, transactions]).then(() => {
+            // Init chart
+            initChart()
+        })
     }
 
 
