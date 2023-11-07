@@ -53,7 +53,7 @@ export const getDefaultTimeRange = () => {
 }
 
 
-// Set chart params
+// Calc chart params
 export const calcTimeRange = (type, dates) => {
     let from_date = '',
         to_date = '',

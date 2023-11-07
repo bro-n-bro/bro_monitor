@@ -24,6 +24,7 @@
             {{ $t('message.time_range_1Y') }}
         </button>
 
+        <template v-if="!props.global">
         <button class="btn calendar_btn" :class="{ active: currentTimeRange == 'range' }" @click.prevent="showDropdown = !showDropdown">
             <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_plus"></use></svg>
         </button>
@@ -73,12 +74,13 @@
                 {{ $t('message.btn_apply_time') }}
             </button>
         </div>
+        </template>
     </div>
 </template>
 
 
 <script setup>
-    import { ref, inject } from 'vue'
+    import { ref, inject, computed } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     import VueDatePicker from '@vuepic/vue-datepicker'
@@ -87,16 +89,17 @@
 
     const store = useGlobalStore(),
         emitter = inject('emitter'),
+        props = defineProps(['global']),
         showDropdown = ref(false),
         showCalendar = ref(false),
         date = ref([]),
         formattingDate = ref([]),
-        currentTimeRange = ref(store.currentTimeRange),
+        currentTimeRange = ref(computed(() => store.currentTimeRange)),
         months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
 
 
     // Format dates
-    function format (date) {
+    function format(date) {
         // Clear dates
         formattingDate.value = []
 
@@ -116,8 +119,10 @@
 
     // Set time range - Day
     function setTimeRangeDay() {
-        // Update local current time range
-        currentTimeRange.value = 'day'
+        // Update current time range
+        !props.global
+            ? currentTimeRange.value = 'day'
+            : store.setTimeRange('day', date.value)
 
         // Event 'updateChartTimeRange'
         emitter.emit('updateChartTimeRange', { type: 'day', dates: date.value })
@@ -126,8 +131,10 @@
 
     // Set time range - Week
     function setTimeRangeWeek() {
-        // Update local current time range
-        currentTimeRange.value = 'week'
+        // Update current time range
+        !props.global
+            ? currentTimeRange.value = 'week'
+            : store.setTimeRange('week', date.value)
 
         // Event 'updateChartTimeRange'
         emitter.emit('updateChartTimeRange', { type: 'week', dates: date.value })
@@ -136,8 +143,10 @@
 
     // Set time range - Month
     function setTimeRangeMonth() {
-        // Update local current time range
-        currentTimeRange.value = 'month'
+        // Update current time range
+        !props.global
+            ? currentTimeRange.value = 'month'
+            : store.setTimeRange('month', date.value)
 
         // Event 'updateChartTimeRange'
         emitter.emit('updateChartTimeRange', { type: 'month', dates: date.value })
@@ -146,8 +155,10 @@
 
     // Set time range - Quarter
     function setTimeRangeQuarter() {
-        // Update local current time range
-        currentTimeRange.value = 'quarter'
+        // Update current time range
+        !props.global
+            ? currentTimeRange.value = 'quarter'
+            : store.setTimeRange('quarter', date.value)
 
         // Event 'updateChartTimeRange'
         emitter.emit('updateChartTimeRange', { type: 'quarter', dates: date.value })
@@ -156,8 +167,10 @@
 
     // Set time range - Day
     function setTimeRangeHalfYear() {
-        // Update local current time range
-        currentTimeRange.value = 'half_year'
+        // Update current time range
+        !props.global
+            ? currentTimeRange.value = 'half_year'
+            : store.setTimeRange('half_year', date.value)
 
         // Event 'updateChartTimeRange'
         emitter.emit('updateChartTimeRange', { type: 'half_year', dates: date.value })
@@ -166,8 +179,10 @@
 
     // Set time range - Year
     function setTimeRangeYear() {
-        // Update local current time range
-        currentTimeRange.value = 'year'
+        // Update current time range
+        !props.global
+            ? currentTimeRange.value = 'year'
+            : store.setTimeRange('year', date.value)
 
         // Event 'updateChartTimeRange'
         emitter.emit('updateChartTimeRange', { type: 'year', dates: date.value })
@@ -176,8 +191,10 @@
 
     // Apply custom period
     function applyCustomPeriod() {
-        // Update local current time range
-        currentTimeRange.value = 'range'
+        // Update current time range
+        !props.global
+            ? currentTimeRange.value = 'range'
+            : store.setTimeRange('range', date.value)
 
         // Event 'updateChartTimeRange'
         emitter.emit('updateChartTimeRange', { type: 'range', dates: date.value })
@@ -227,16 +244,22 @@
 
         width: 60px;
         height: 46px;
-        padding: 8px;
+        padding: 7px;
 
         transition: .2s linear;
 
+        border: 1px solid transparent;
         border-radius: 8px;
 
         justify-content: center;
         align-items: center;
         align-content: center;
         flex-wrap: wrap;
+    }
+
+    .time_range .btn + .btn
+    {
+        margin-left: 4px;
     }
 
 
@@ -252,9 +275,9 @@
     .time_range .btn:hover,
     .time_range .btn.active
     {
-        color: #fff;
+        color: #970fff;
 
-        background: #950fff;
+        border-color: #970fff;
     }
 
 
@@ -509,5 +532,4 @@
             height: 16px;
         }
     }
-
 </style>

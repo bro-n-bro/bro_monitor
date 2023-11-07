@@ -150,16 +150,22 @@
 
         display: flex;
 
-        padding: 14px 8px;
+        padding: 13px 7px;
 
         transition: .2s linear;
 
+        border: 1px solid transparent;
         border-radius: 8px;
 
         justify-content: center;
         align-items: center;
         align-content: center;
         flex-wrap: wrap;
+    }
+
+    .head .types .btn + .btn
+    {
+        margin-left: 4px;
     }
 
 
@@ -176,9 +182,9 @@
     .head .types .btn:hover,
     .head .types .btn.active
     {
-        color: #fff;
+        color: #970fff;
 
-        background: #212121;
+        border-color: #970fff;
     }
 
 

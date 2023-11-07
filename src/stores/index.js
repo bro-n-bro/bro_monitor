@@ -175,6 +175,9 @@ export const useGlobalStore = defineStore('global', {
 
         // Set default time range
         setTimeRange(type, dates) {
+            // Clear cache
+            this.cache.charts = {}
+
             // Clear dates
             this.currentTimeRangeDates = []
 

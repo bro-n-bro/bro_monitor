@@ -30,6 +30,9 @@
         </div>
 
 
+        <TimeRange :global="true" v-if="store.currentNetworkType != 3" />
+
+
         <div class="types">
             <button class="btn" :class="{'active': store.currentNetworkType == 1}" @click.prevent="setActiveType(1)">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_network_data_type_blocks"></use></svg>
@@ -70,6 +73,9 @@
         <div class="page_title" v-if="store.currentNetworkType == 2">
             {{ $t('message.network_accounts_charts_page_title') }}
         </div>
+
+
+        <TimeRange :global="true" />
 
 
         <div class="types">
@@ -170,7 +176,10 @@
     import { useGlobalStore } from '@/stores'
     import { useUrlSearchParams } from '@vueuse/core'
 
+
     // Components
+    import TimeRange from  '@/components/chart/TimeRange.vue'
+
     import NetworkBlocks from  '@/components/network/NetworkBlocks.vue'
     import NetworkCharts from  '@/components/network/NetworkCharts.vue'
     import NetworkParameters from  '@/components/network/NetworkParameters.vue'

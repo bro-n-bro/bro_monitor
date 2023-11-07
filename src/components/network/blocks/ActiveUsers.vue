@@ -19,7 +19,7 @@
             <span v-else>{{ store.cache.active_accounts_actual.toLocaleString('ru-RU') }}</span>
         </div>
 
-        <apexchart class="chart" height="47px" :options="chartOptions" :series="series" v-if="chartLoading" />
+        <apexchart class="chart" height="47px" :options="chartOptions" :series="series" v-if="!chartLoading" />
     </div>
 </template>
 
@@ -35,7 +35,7 @@
     const store = useGlobalStore(),
         emitter = inject('emitter'),
         i18n = inject('i18n'),
-        chartLoading = ref(false),
+        chartLoading = ref(true),
         chartData = ref([]),
         chartColors= ref([]),
         series = reactive([
@@ -156,20 +156,43 @@
 
         // Get chart data
         if (!store.cache.active_accounts) {
-            try {
-                // Request
-                await fetch(`https://rpc.bronbro.io/statistics/active_accounts?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
-                    .then(res => res.json())
-                    .then(response => store.cache.active_accounts = response.data)
-            } catch (error) {
-                console.error(error)
-            }
+            await getChartData()
         }
 
 
         // Init chart
         initChart()
     })
+
+
+    // Event "updateChartTimeRange"
+    emitter.on('updateChartTimeRange', async ({ type }) => {
+        // Show loader
+        chartLoading.value = true
+
+        // Reset chart data
+        chartData.value = []
+        chartColors.value = []
+
+        // Get chart data
+        await getChartData()
+
+        // Init chart
+        initChart()
+    })
+
+
+    // Get chart data
+    async function getChartData() {
+        try {
+            // Request
+            await fetch(`https://rpc.bronbro.io/statistics/active_accounts?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
+                .then(res => res.json())
+                .then(response => store.cache.active_accounts = response.data)
+        } catch (error) {
+            console.error(error)
+        }
+    }
 
 
     // Init chart
@@ -181,6 +204,6 @@
         chartColors.value.push(store.cache.active_accounts[store.cache.active_accounts.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
 
         // Show chart
-        chartLoading.value = true
+        chartLoading.value = false
     }
 </script>
