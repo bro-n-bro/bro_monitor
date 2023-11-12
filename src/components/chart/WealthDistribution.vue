@@ -19,7 +19,7 @@
     const store = useGlobalStore(),
         i18n = inject('i18n'),
         emitter = inject('emitter'),
-        responseData = ref(store.cache.wealth_distribution),
+        responseData = ref(store.cache.charts.wealth_distribution),
         from_date = ref(store.currentTimeRangeDates[0]),
         to_date = ref(store.currentTimeRangeDates[1]),
         detailing = ref(store.currentTimeRangeDetailing),
@@ -155,7 +155,7 @@
 
 
     onBeforeMount(async () => {
-        if (typeof store.cache.wealth_distribution !== 'undefined') {
+        if (typeof store.cache.charts.wealth_distribution !== 'undefined') {
             // Init chart
             initChart()
         } else {
@@ -192,15 +192,12 @@
     // Get chart data
     async function getChartData(cacheEnable = true) {
         try {
-            // Start loading
-            store.chartLoading = true
-
             // Request
             await fetch('https://rpc.bronbro.io/statistics/wealth_distribution')
                 .then(res => res.json())
                 .then(response => {
                     cacheEnable
-                        ? responseData.value = store.cache.wealth_distribution = response.data
+                        ? responseData.value = store.cache.charts.wealth_distribution = response.data
                         : responseData.value = response.data
                 })
         } catch (error) {

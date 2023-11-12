@@ -18,7 +18,7 @@
     const store = useGlobalStore(),
         i18n = inject('i18n'),
         emitter = inject('emitter'),
-        responseData = ref(store.cache.votes),
+        responseData = ref(store.cache.charts.votes),
         loading = ref(true),
         chartDataYes = ref([]),
         chartDataNo = ref([]),
@@ -207,7 +207,7 @@
 
 
     onBeforeMount(async () => {
-        if (typeof store.cache.new_accounts !== 'undefined') {
+        if (typeof store.cache.charts.votes !== 'undefined') {
             // Init chart
             initChart()
         } else {
@@ -237,15 +237,12 @@
     // Get chart data
     async function getChartData(cacheEnable = true) {
         try {
-            // Start loading
-            store.chartLoading = true
-
             // Request
             await fetch('https://rpc.bronbro.io/gov/votes')
                 .then(res => res.json())
                 .then(response => {
                     cacheEnable
-                        ? responseData.value = store.cache.votes = response.votes
+                        ? responseData.value = store.cache.charts.votes = response.votes
                         : responseData.value = response.votes
                 })
         } catch (error) {

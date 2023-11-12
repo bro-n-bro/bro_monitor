@@ -116,7 +116,9 @@
 
 
 <script setup>
-    import { ref } from 'vue'
+    import { ref, inject } from 'vue'
+    import { useGlobalStore } from '@/stores'
+
 
     // Components
     import AccountsStatistics from '@/components/network/charts/AccountsStatistics.vue'
@@ -141,11 +143,34 @@
     import GovernanceParticipation from '@/components/network/charts/GovernanceParticipation.vue'
 
 
-    const showAccountsStatistics = ref(true),
+    const store = useGlobalStore(),
+        emitter = inject('emitter'),
+        showAccountsStatistics = ref(true),
         showDelegationsStatistics = ref(true),
         showRestakeStatistics = ref(true),
         showTransactionsStatistics = ref(true),
         showGovernanceStatistics = ref(true)
+
+
+    // Event "chartLoaded"
+    emitter.on('chartLoaded', () => {
+        if(
+            store.cache.charts.new_accounts &&
+            store.cache.charts.active_accounts &&
+            store.cache.charts.total_accounts &&
+            store.cache.charts.undelegation &&
+            store.cache.charts.delegation &&
+            store.cache.charts.redelegation &&
+            store.cache.charts.restake_execution_count &&
+            store.cache.charts.restake_token_amount &&
+            store.cache.charts.transactions &&
+            store.cache.charts.gas_paid &&
+            store.cache.charts.fees_paid
+        ) {
+            // Enable time range
+            store.chartLoading = false
+        }
+    })
 </script>
 
 

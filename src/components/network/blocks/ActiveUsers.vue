@@ -15,8 +15,8 @@
         </div>
 
         <div class="val">
-            <Loader v-if="!store.cache.active_accounts_actual" />
-            <span v-else>{{ store.cache.active_accounts_actual.toLocaleString('ru-RU') }}</span>
+            <Loader v-if="!store.cache.charts.active_accounts_actual" />
+            <span v-else>{{ store.cache.charts.active_accounts_actual.toLocaleString('ru-RU') }}</span>
         </div>
 
         <apexchart class="chart" height="47px" :options="chartOptions" :series="series" v-if="!chartLoading" />
@@ -100,12 +100,12 @@
                     enabled: true,
                     position: 'topLeft'
                 },
-                custom: function({series, seriesIndex, dataPointIndex, w}) {
+                custom: function({ dataPointIndex, w }) {
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + store.cache.active_accounts[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_active_users_title') + ': ' + store.cache.active_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_date">' + store.cache.charts.active_accounts[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_active_users_title') + ': ' + store.cache.charts.active_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html
@@ -143,11 +143,11 @@
 
     onBeforeMount(async () => {
         // Get data
-        if (!store.cache.active_accounts_actual) {
+        if (!store.cache.charts.active_accounts_actual) {
             try {
                 fetch('https://rpc.bronbro.io/statistics/active_accounts/actual')
                     .then(res => res.json())
-                    .then(response => store.cache.active_accounts_actual = response.data)
+                    .then(response => store.cache.charts.active_accounts_actual = response.data)
             } catch (error) {
                 console.error(error)
             }
@@ -155,7 +155,7 @@
 
 
         // Get chart data
-        if (!store.cache.active_accounts) {
+        if (!store.cache.charts.active_accounts) {
             await getChartData()
         }
 
@@ -188,7 +188,7 @@
             // Request
             await fetch(`https://rpc.bronbro.io/statistics/active_accounts?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
                 .then(res => res.json())
-                .then(response => store.cache.active_accounts = response.data)
+                .then(response => store.cache.charts.active_accounts = response.data)
         } catch (error) {
             console.error(error)
         }
@@ -198,10 +198,10 @@
     // Init chart
     function initChart() {
         // Set chart data
-        store.cache.active_accounts.forEach(el => chartData.value.push(el.y))
+        store.cache.charts.active_accounts.forEach(el => chartData.value.push(el.y))
 
         // Set colors
-        chartColors.value.push(store.cache.active_accounts[store.cache.active_accounts.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
+        chartColors.value.push(store.cache.charts.active_accounts[store.cache.charts.active_accounts.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
 
         // Show chart
         chartLoading.value = false

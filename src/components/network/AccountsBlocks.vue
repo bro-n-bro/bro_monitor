@@ -36,6 +36,10 @@
 
 
 <script setup>
+    import { inject } from 'vue'
+    import { useGlobalStore } from '@/stores'
+
+
     // Components
     import TotalNumberAddresses from '@/components/network/blocks/TotalNumberAddresses.vue'
     import ActiveUsers from '@/components/network/blocks/ActiveUsers.vue'
@@ -47,4 +51,26 @@
     import GasPaid from '@/components/network/blocks/GasPaid.vue'
     import FeesPaid from '@/components/network/blocks/FeesPaid.vue'
     import TotalAmountTransactions from '@/components/network/blocks/TotalAmountTransactions.vue'
+
+
+    const store = useGlobalStore(),
+        emitter = inject('emitter')
+
+
+    // Event "chartLoaded"
+    emitter.on('chartLoaded', () => {
+        if(
+            store.cache.charts.total_accounts &&
+            store.cache.charts.active_accounts &&
+            store.cache.charts.new_accounts &&
+            store.cache.charts.restake_execution_count &&
+            store.cache.charts.restake_token_amount &&
+            store.cache.charts.gas_paid &&
+            store.cache.charts.fees_paid &&
+            store.cache.charts.transactions
+        ) {
+            // Enable time range
+            store.chartLoading = false
+        }
+    })
 </script>

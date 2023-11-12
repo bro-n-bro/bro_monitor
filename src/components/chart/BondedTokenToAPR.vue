@@ -19,8 +19,8 @@
     const store = useGlobalStore(),
         i18n = inject('i18n'),
         emitter = inject('emitter'),
-        responseDataAPR = ref(store.cache.apr),
-        responseDataBondedTokens = ref(store.cache.bonded_tokens),
+        responseDataAPR = ref(store.cache.charts.apr),
+        responseDataBondedTokens = ref(store.cache.charts.bonded_tokens),
         from_date = ref(store.currentTimeRangeDates[0]),
         to_date = ref(store.currentTimeRangeDates[1]),
         detailing = ref(store.currentTimeRangeDetailing),
@@ -227,7 +227,7 @@
 
 
     onBeforeMount(async () => {
-        if (typeof store.cache.apr !== 'undefined' && typeof store.cache.bonded_tokens !== 'undefined') {
+        if (typeof store.cache.charts.apr !== 'undefined' && typeof store.cache.charts.bonded_tokens !== 'undefined') {
             // Init chart
             initChart()
         } else {
@@ -265,9 +265,6 @@
 
     // Get chart data
     async function getChartData(cacheEnable = true) {
-        // Start loading
-        store.chartLoading = true
-
         // Get chart data
         const apr = new Promise((resolve, reject) => {
             try {
@@ -276,7 +273,7 @@
                     .then(res => res.json())
                     .then(response => {
                         cacheEnable
-                            ? responseDataAPR.value = store.cache.apr = response.data
+                            ? responseDataAPR.value = store.cache.charts.apr = response.data
                             : responseDataAPR.value = response.data
 
                         resolve(response.data)
@@ -295,7 +292,7 @@
                     .then(res => res.json())
                     .then(response => {
                         cacheEnable
-                            ? responseDataBondedTokens.value = store.cache.bonded_tokens = response.data
+                            ? responseDataBondedTokens.value = store.cache.charts.bonded_tokens = response.data
                             : responseDataBondedTokens.value = response.data
 
                         resolve(response.data)

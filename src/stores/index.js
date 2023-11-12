@@ -28,7 +28,7 @@ export const useGlobalStore = defineStore('global', {
         currentChart: null,
         currentValidatorAddress: null,
 
-        chartLoading: false,
+        chartLoading: true,
         currentTimeRange: '',
         currentTimeRangeDates: [],
         currentTimeRangeDetailing: '',
@@ -45,7 +45,9 @@ export const useGlobalStore = defineStore('global', {
         pinnedBlocks: useLocalStorage('pinnedBlocks', {}),
 
         Keplr: {},
-        cache: {},
+        cache: {
+            charts: {}
+        },
 
         user: {
             balance: null,

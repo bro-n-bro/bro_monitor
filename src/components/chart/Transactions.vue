@@ -19,7 +19,7 @@
     const store = useGlobalStore(),
         i18n = inject('i18n'),
         emitter = inject('emitter'),
-        responseData = ref(store.cache.transactions),
+        responseData = ref(store.cache.charts.transactions),
         from_date = ref(store.currentTimeRangeDates[0]),
         to_date = ref(store.currentTimeRangeDates[1]),
         detailing = ref(store.currentTimeRangeDetailing),
@@ -169,7 +169,7 @@
 
 
     onBeforeMount(async () => {
-        if (typeof store.cache.transactions !== 'undefined') {
+        if (typeof store.cache.charts.transactions !== 'undefined') {
             // Init chart
             initChart()
         } else {
@@ -206,15 +206,12 @@
     // Get chart data
     async function getChartData(cacheEnable = true) {
         try {
-            // Start loading
-            store.chartLoading = true
-
             // Request
             await fetch(`https://rpc.bronbro.io/statistics/transactions?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
                 .then(res => res.json())
                 .then(response => {
                     cacheEnable
-                        ? responseData.value = store.cache.transactions = response.data
+                        ? responseData.value = store.cache.charts.transactions = response.data
                         : responseData.value = response.data
                 })
         } catch (error) {

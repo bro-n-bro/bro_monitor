@@ -48,6 +48,10 @@
 
 
 <script setup>
+    import { inject } from 'vue'
+    import { useGlobalStore } from '@/stores'
+
+
     // Components
     import TokenPrice from '@/components/network/blocks/TokenPrice.vue'
     import APR from '@/components/network/blocks/APR.vue'
@@ -63,4 +67,24 @@
     import CirculatingSupply from '@/components/network/blocks/CirculatingSupply.vue'
     import CommunityPool from '@/components/network/blocks/CommunityPool.vue'
     import LastBlockHeight from '@/components/network/blocks/LastBlockHeight.vue'
+
+
+    const store = useGlobalStore(),
+        emitter = inject('emitter')
+
+
+    // Event "chartLoaded"
+    emitter.on('chartLoaded', () => {
+        if(
+            store.cache.charts.apr &&
+            store.cache.charts.apy &&
+            store.cache.charts.inflation &&
+            store.cache.charts.unbonded_tokens &&
+            store.cache.charts.bonded_ratio &&
+            store.cache.charts.bonded_tokens
+        ) {
+            // Enable time range
+            store.chartLoading = false
+        }
+    })
 </script>

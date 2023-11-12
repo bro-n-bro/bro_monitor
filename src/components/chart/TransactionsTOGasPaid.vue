@@ -19,8 +19,8 @@
     const store = useGlobalStore(),
         i18n = inject('i18n'),
         emitter = inject('emitter'),
-        responseDataGas = ref(store.cache.gas_paid),
-        responseDataTransactions = ref(store.cache.transactions),
+        responseDataGas = ref(store.cache.charts.gas_paid),
+        responseDataTransactions = ref(store.cache.charts.transactions),
         from_date = ref(store.currentTimeRangeDates[0]),
         to_date = ref(store.currentTimeRangeDates[1]),
         detailing = ref(store.currentTimeRangeDetailing),
@@ -229,7 +229,7 @@
 
 
     onBeforeMount(async () => {
-        if (typeof store.cache.gas_paid !== 'undefined' && typeof store.cache.transactions !== 'undefined') {
+        if (typeof store.cache.charts.gas_paid !== 'undefined' && typeof store.cache.charts.transactions !== 'undefined') {
             // Init chart
             initChart()
         } else {
@@ -267,9 +267,6 @@
 
     // Get chart data
     async function getChartData(cacheEnable = true) {
-        // Start loading
-        store.chartLoading = true
-
         // Get chart data
         const gas_paid = new Promise((resolve, reject) => {
             try {
@@ -278,7 +275,7 @@
                     .then(res => res.json())
                     .then(response => {
                         cacheEnable
-                            ? responseDataGas.value = store.cache.gas_paid = response.data
+                            ? responseDataGas.value = store.cache.charts.gas_paid = response.data
                             : responseDataGas.value = response.data
 
                         resolve(response.data)
@@ -297,7 +294,7 @@
                     .then(res => res.json())
                     .then(response => {
                         cacheEnable
-                            ? responseDataTransactions.value = store.cache.transactions = response.data
+                            ? responseDataTransactions.value = store.cache.charts.transactions = response.data
                             : responseDataTransactions.value = response.data
 
                         resolve(response.data)

@@ -14,7 +14,7 @@
             {{ $t('message.network_charts_unique_votes_per_proposal_title') }}
         </div>
 
-        <Loader v-if="!loading" />
+        <Loader v-if="loading" />
 
         <apexchart v-else class="chart" height="266px" :options="chartOptions" :series="series" />
     </div>
@@ -32,7 +32,7 @@
     const store = useGlobalStore(),
         emitter = inject('emitter'),
         i18n = inject('i18n'),
-        loading = ref(false),
+        loading = ref(true),
         chartDataYes = ref([]),
         chartDataNo = ref([]),
         chartDataNWV = ref([]),
@@ -141,33 +141,33 @@
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + 8,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_status">' + i18n.global.t('message.network_status_tooltip_label') + formatStatus(store.cache.votes[dataPointIndex].status) + '</div>' +
+                                    '<div class="tooltip_status">' + i18n.global.t('message.network_status_tooltip_label') + formatStatus(store.cache.charts.votes[dataPointIndex].status) + '</div>' +
 
                                     '<div class="tooltip_val green">' +
-                                        Number((store.cache.votes[dataPointIndex].shares_option_yes / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') +
-                                        ' <span>(' + store.cache.votes[dataPointIndex].amount_option_yes.toLocaleString('ru-RU') + ' users)</span>' +
+                                        Number((store.cache.charts.votes[dataPointIndex].shares_option_yes / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') +
+                                        ' <span>(' + store.cache.charts.votes[dataPointIndex].amount_option_yes.toLocaleString('ru-RU') + ' users)</span>' +
                                         '<div class="type">Yes</div>' +
                                     '</div>' +
 
                                     '<div class="tooltip_val yellow">' +
-                                        Number((store.cache.votes[dataPointIndex].shares_option_no / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') +
-                                        ' <span>(' + store.cache.votes[dataPointIndex].amount_option_no.toLocaleString('ru-RU') + ' users)</span>' +
+                                        Number((store.cache.charts.votes[dataPointIndex].shares_option_no / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') +
+                                        ' <span>(' + store.cache.charts.votes[dataPointIndex].amount_option_no.toLocaleString('ru-RU') + ' users)</span>' +
                                         '<div class="type">No</div>' +
                                     '</div>' +
 
                                     '<div class="tooltip_val red">' +
-                                        Number((store.cache.votes[dataPointIndex].shares_option_nvw / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') +
-                                        ' <span>(' + store.cache.votes[dataPointIndex].amount_option_nwv.toLocaleString('ru-RU') + ' users)</span>' +
+                                        Number((store.cache.charts.votes[dataPointIndex].shares_option_nvw / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') +
+                                        ' <span>(' + store.cache.charts.votes[dataPointIndex].amount_option_nwv.toLocaleString('ru-RU') + ' users)</span>' +
                                         '<div class="type">No with veto:</div>' +
                                     '</div>' +
 
                                     '<div class="tooltip_val grey">' +
-                                        Number((store.cache.votes[dataPointIndex].shares_option_abstain / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') +
-                                        ' <span>(' + store.cache.votes[dataPointIndex].amount_option_abstain.toLocaleString('ru-RU') + ' users)</span>' +
+                                        Number((store.cache.charts.votes[dataPointIndex].shares_option_abstain / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') +
+                                        ' <span>(' + store.cache.charts.votes[dataPointIndex].amount_option_abstain.toLocaleString('ru-RU') + ' users)</span>' +
                                         '<div class="type">Abstain:</div>' +
                                     '</div>' +
 
-                                    '<div class="tooltip_date">' + store.cache.votes[dataPointIndex].voting_end_time + '</div>' +
+                                    '<div class="tooltip_date">' + store.cache.charts.votes[dataPointIndex].voting_end_time + '</div>' +
                                 '</div>'
 
                     return html
@@ -221,15 +221,8 @@
 
     onBeforeMount(async () => {
         // Get chart data
-        if (!store.cache.votes) {
-            try {
-                // Request
-                await fetch('https://rpc.bronbro.io/gov/votes')
-                    .then(res => res.json())
-                    .then(response => store.cache.votes = response.votes)
-            } catch (error) {
-                console.error(error)
-            }
+        if (!store.cache.charts.votes) {
+            await getChartData()
         }
 
 
@@ -238,19 +231,55 @@
     })
 
 
+    // Event "updateChartTimeRange"
+    emitter.on('updateChartTimeRange', async ({ type }) => {
+        // Show loader
+        loading.value = true
+
+        // Reset chart data
+        chartDataYes.value = []
+        chartDataNo.value = []
+        chartDataNWV.value = []
+        chartDataAbstain.value = []
+        chartLabels.value = []
+
+        // Get chart data
+        await getChartData()
+
+        // Init chart
+        initChart()
+    })
+
+
+    // Get chart data
+    async function getChartData() {
+        try {
+            // Request
+            await fetch('https://rpc.bronbro.io/gov/votes')
+                .then(res => res.json())
+                .then(response => store.cache.charts.votes = response.votes)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+
     // Init chart
     function initChart() {
         // Set chart data
-        store.cache.votes.forEach(el => chartDataNo.value.push(el.amount_option_no))
-        store.cache.votes.forEach(el => chartDataAbstain.value.push(el.amount_option_abstain))
-        store.cache.votes.forEach(el => chartDataNWV.value.push(el.amount_option_nwv))
-        store.cache.votes.forEach(el => chartDataYes.value.push(el.amount_option_yes))
+        store.cache.charts.votes.forEach(el => chartDataNo.value.push(el.amount_option_no))
+        store.cache.charts.votes.forEach(el => chartDataAbstain.value.push(el.amount_option_abstain))
+        store.cache.charts.votes.forEach(el => chartDataNWV.value.push(el.amount_option_nwv))
+        store.cache.charts.votes.forEach(el => chartDataYes.value.push(el.amount_option_yes))
 
         // Set labels
-        store.cache.votes.forEach(el => chartLabels.value.push('#' + el.id))
+        store.cache.charts.votes.forEach(el => chartLabels.value.push('#' + el.id))
 
         // Hide loader
-        loading.value = true
+        loading.value = false
+
+        // Set chart loadded event
+        emitter.emit('chartLoaded')
     }
 
 

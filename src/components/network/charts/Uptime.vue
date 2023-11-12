@@ -14,7 +14,7 @@
             {{ $t('message.network_charts_uptime_title') }}
         </div>
 
-        <Loader v-if="!loading" />
+        <Loader v-if="loading" />
 
         <apexchart v-else class="chart" height="145px" :options="chartOptions" :series="series" />
     </div>
@@ -33,7 +33,7 @@
         emitter = inject('emitter'),
         props = defineProps(['validator']),
         i18n = inject('i18n'),
-        loading = ref(false),
+        loading = ref(true),
         chartData = ref([]),
         chartColors = ref([]),
         chartLabels = ref([]),
@@ -123,8 +123,8 @@
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + store.cache.uptime[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_uptime_title')+ ': ' + (store.cache.uptime[dataPointIndex].y * 100).toFixed(2) + '%</div>' +
+                                    '<div class="tooltip_date">' + store.cache.charts.uptime[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_uptime_title')+ ': ' + (store.cache.charts.uptime[dataPointIndex].y * 100).toFixed(2) + '%</div>' +
                                 '</div>'
 
                     return html
@@ -181,15 +181,8 @@
 
     onBeforeMount(async () => {
         // Get chart data
-        if (!store.cache.uptime) {
-            try {
-                // Request
-                await fetch(`https://rpc.bronbro.io/statistics/validators/${props.validator.operator_address}/uptime_stat?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
-                    .then(res => res.json())
-                    .then(response => store.cache.uptime = response.data)
-            } catch (error) {
-                console.error(error)
-            }
+        if (!store.cache.charts.uptime) {
+            await getChartData()
         }
 
 
@@ -198,19 +191,52 @@
     })
 
 
+    // Event "updateChartTimeRange"
+    emitter.on('updateChartTimeRange', async ({ type }) => {
+        // Show loader
+        loading.value = true
+
+        // Reset chart data
+        chartData.value = []
+        chartColors.value = []
+        chartLabels.value = []
+        chartMin.value = 0
+        chartMax.value = 0
+
+        // Get chart data
+        await getChartData()
+
+        // Init chart
+        initChart()
+    })
+
+
+    // Get chart data
+    async function getChartData() {
+        try {
+            // Request
+            await fetch(`https://rpc.bronbro.io/statistics/validators/${props.validator.operator_address}/uptime_stat?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
+                .then(res => res.json())
+                .then(response => store.cache.charts.uptime = response.data)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+
     // Init chart
     function initChart() {
         // Set chart data
-        store.cache.uptime.forEach(el => chartData.value.push(el.y))
+        store.cache.charts.uptime.forEach(el => chartData.value.push(el.y))
 
         chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
         chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
 
         // Set colors
-        chartColors.value.push(store.cache.uptime[store.cache.uptime.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
+        chartColors.value.push(store.cache.charts.uptime[store.cache.charts.uptime.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
 
         // Set labels
-        store.cache.uptime.forEach(el => {
+        store.cache.charts.uptime.forEach(el => {
             let parseDate = new Date(el.x),
                 month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
                 date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
@@ -219,7 +245,10 @@
         })
 
         // Hide loader
-        loading.value = true
+        loading.value = false
+
+        // Set chart loadded event
+        emitter.emit('chartLoaded')
     }
 </script>
 

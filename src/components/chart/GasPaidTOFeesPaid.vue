@@ -19,8 +19,8 @@
     const store = useGlobalStore(),
         i18n = inject('i18n'),
         emitter = inject('emitter'),
-        responseDataGas = ref(store.cache.gas_paid),
-        responseDataFees = ref(store.cache.fees_paid),
+        responseDataGas = ref(store.cache.charts.gas_paid),
+        responseDataFees = ref(store.cache.charts.fees_paid),
         from_date = ref(store.currentTimeRangeDates[0]),
         to_date = ref(store.currentTimeRangeDates[1]),
         detailing = ref(store.currentTimeRangeDetailing),
@@ -227,7 +227,7 @@
 
 
     onBeforeMount(async () => {
-        if (typeof store.cache.gas_paid !== 'undefined' && typeof store.cache.fees_paid !== 'undefined') {
+        if (typeof store.cache.charts.gas_paid !== 'undefined' && typeof store.cache.charts.fees_paid !== 'undefined') {
             // Init chart
             initChart()
         } else {
@@ -265,9 +265,6 @@
 
     // Get chart data
     async function getChartData(cacheEnable = true) {
-        // Start loading
-        store.chartLoading = true
-
         // Get chart data
         const gas_paid = new Promise((resolve, reject) => {
             try {
@@ -276,7 +273,7 @@
                     .then(res => res.json())
                     .then(response => {
                         cacheEnable
-                            ? responseDataGas.value = store.cache.gas_paid = response.data
+                            ? responseDataGas.value = store.cache.charts.gas_paid = response.data
                             : responseDataGas.value = response.data
 
                         resolve(response.data)
@@ -295,7 +292,7 @@
                     .then(res => res.json())
                     .then(response => {
                         cacheEnable
-                            ? responseDataFees.value = store.cache.fees_paid = response.data
+                            ? responseDataFees.value = store.cache.charts.fees_paid = response.data
                             : responseDataFees.value = response.data
 
                         resolve(response.data)

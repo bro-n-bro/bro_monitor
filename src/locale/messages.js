@@ -281,7 +281,6 @@ export default {
             'whale_transactions_table_label_address': 'Address',
             'whale_transactions_table_label_action': 'Action',
             'whale_transactions_table_label_amount': 'Amount',
-            'whale_transactions_table_label_details': 'Details',
             'whale_transactions_table_label_TX_link': 'TX Link',
 
             'whale_transactions_action_redelegate': 'Redelegate',
@@ -289,6 +288,8 @@ export default {
             'whale_transactions_action_undelegate': 'Undelegate',
             'whale_transactions_action_delegate': 'Delegate',
             'whale_transactions_action_IBC_transfer': 'IBC-Transfer',
+            'whale_transactions_action_multi_send': 'Multi Send',
+            'whale_transactions_action_update_client': 'Update Client',
 
             'whale_transactions_TX_link': 'TX Link',
 

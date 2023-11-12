@@ -19,9 +19,9 @@
     const store = useGlobalStore(),
         i18n = inject('i18n'),
         emitter = inject('emitter'),
-        responseDataUndelegation = ref(store.cache.undelegation),
-        responseDataDelegation = ref(store.cache.delegation),
-        responseDataRedelegation = ref(store.cache.redelegation),
+        responseDataUndelegation = ref(store.cache.charts.undelegation),
+        responseDataDelegation = ref(store.cache.charts.delegation),
+        responseDataRedelegation = ref(store.cache.charts.redelegation),
         from_date = ref(store.currentTimeRangeDates[0]),
         to_date = ref(store.currentTimeRangeDates[1]),
         detailing = ref(store.currentTimeRangeDetailing),
@@ -188,7 +188,7 @@
 
 
     onBeforeMount(async () => {
-        if (typeof store.cache.undelegation !== 'undefined' && typeof store.cache.redelegation !== 'undefined' && typeof store.cache.delegation !== 'undefined') {
+        if (typeof store.cache.charts.undelegation !== 'undefined' && typeof store.cache.charts.redelegation !== 'undefined' && typeof store.cache.charts.delegation !== 'undefined') {
             // Init chart
             initChart()
         } else {
@@ -223,9 +223,6 @@
 
     // Get chart data
     async function getChartData(cacheEnable = true) {
-        // Start loading
-        store.chartLoading = true
-
         // Get chart data
         const undelegation = new Promise((resolve, reject) => {
             try {
@@ -234,7 +231,7 @@
                     .then(res => res.json())
                     .then(response => {
                         cacheEnable
-                            ? responseDataUndelegation.value = store.cache.undelegation = response.data
+                            ? responseDataUndelegation.value = store.cache.charts.undelegation = response.data
                             : responseDataUndelegation.value = response.data
 
                         resolve(response.data)
@@ -254,7 +251,7 @@
                     .then(res => res.json())
                     .then(response => {
                         cacheEnable
-                            ? responseDataDelegation.value = store.cache.delegation = response.data
+                            ? responseDataDelegation.value = store.cache.charts.delegation = response.data
                             : responseDataDelegation.value = response.data
 
                         resolve(response.data)
@@ -273,7 +270,7 @@
                     .then(res => res.json())
                     .then(response => {
                         cacheEnable
-                            ? responseDataRedelegation.value = store.cache.redelegation = response.data
+                            ? responseDataRedelegation.value = store.cache.charts.redelegation = response.data
                             : responseDataRedelegation.value = response.data
 
                         resolve(response.data)

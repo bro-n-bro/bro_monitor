@@ -14,7 +14,7 @@
             {{ $t('message.network_charts_gas_paid_to_fees_paid_title') }}
         </div>
 
-        <Loader v-if="!loading" />
+        <Loader v-if="loading" />
 
         <apexchart v-else class="chart" height="158px" :options="chartOptions" :series="series" />
     </div>
@@ -32,7 +32,7 @@
     const store = useGlobalStore(),
         emitter = inject('emitter'),
         i18n = inject('i18n'),
-        loading = ref(false),
+        loading = ref(true),
         chartDataGas = ref([]),
         chartDataFees = ref([]),
         chartColors = ref(['#950FFF', '#1BC562']),
@@ -149,11 +149,11 @@
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + store.cache.gas_paid[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_date">' + store.cache.charts.gas_paid[dataPointIndex].x + '</div>' +
 
-                                    '<div class="tooltip_val green"><span style="width: 60px;">'+ i18n.global.t('message.network_charts_fees_paid_title') + ':</span> ' + Number((store.cache.fees_paid[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val green"><span style="width: 60px;">'+ i18n.global.t('message.network_charts_fees_paid_title') + ':</span> ' + Number((store.cache.charts.fees_paid[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
 
-                                    '<div class="tooltip_val violet"><span style="width: 60px;">' + i18n.global.t('message.network_charts_gas_paid_title') + ':</span> ' + Number(store.cache.gas_paid[dataPointIndex].y.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val violet"><span style="width: 60px;">' + i18n.global.t('message.network_charts_gas_paid_title') + ':</span> ' + Number(store.cache.charts.gas_paid[dataPointIndex].y.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html
@@ -235,45 +235,66 @@
 
 
     onBeforeMount(() => {
-        if(store.cache.gas_paid && store.cache.fees_paid) {
+        if(store.cache.charts.gas_paid && store.cache.charts.fees_paid) {
             // Init chart
             initChart()
         }
     })
 
 
-    watch(computed(() => store.cache.gas_paid), () => {
-        if(store.cache.fees_paid) {
+    watch(computed(() => store.cache.charts.gas_paid), () => {
+        // Reset chart data
+        resetData()
+
+        if(store.cache.charts.fees_paid) {
             // Init chart
             initChart()
         }
     })
 
 
-    watch(computed(() => store.cache.fees_paid), () => {
-        if(store.cache.gas_paid) {
+    watch(computed(() => store.cache.charts.fees_paid), () => {
+        // Reset chart data
+        resetData()
+
+        if(store.cache.charts.gas_paid) {
             // Init chart
             initChart()
         }
     })
+
+
+    // Reset chart data
+    function resetData() {
+        // Show loader
+        loading.value = true
+
+        chartDataGas.value = []
+        chartDataFees.value = []
+        chartLabels.value = []
+        chartMinGas.value = 0
+        chartMaxGas.value = 0
+        chartMinFees.value = 0
+        chartMaxFees.value = 0
+    }
 
 
     // Init chart
     function initChart() {
         // Set chart data APR
-        store.cache.gas_paid.forEach(el => chartDataGas.value.push(el.y))
+        store.cache.charts.gas_paid.forEach(el => chartDataGas.value.push(el.y))
 
         chartMinGas.value = Math.min(...chartDataGas.value) - Math.min(...chartDataGas.value) * 0.005
         chartMaxGas.value = Math.max(...chartDataGas.value) + Math.max(...chartDataGas.value) * 0.005
 
         // Set chart data Bonded Tokens
-        store.cache.fees_paid.forEach(el => chartDataFees.value.push(el.y))
+        store.cache.charts.fees_paid.forEach(el => chartDataFees.value.push(el.y))
 
         chartMinFees.value = Math.min(...chartDataFees.value) - Math.min(...chartDataFees.value) * 0.005
         chartMaxFees.value = Math.max(...chartDataFees.value) + Math.max(...chartDataFees.value) * 0.005
 
         // Set labels
-        store.cache.gas_paid.forEach(el => {
+        store.cache.charts.gas_paid.forEach(el => {
             let parseDate = new Date(el.x),
                 month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
                 date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
@@ -282,7 +303,7 @@
         })
 
         // Hide loader
-        loading.value = true
+        loading.value = false
     }
 </script>
 

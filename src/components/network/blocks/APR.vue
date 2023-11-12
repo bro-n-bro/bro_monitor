@@ -105,8 +105,8 @@
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + store.cache.apr[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_APR_title')+ ': ' + (store.cache.apr[dataPointIndex].y * 100).toFixed(2) + '%</div>' +
+                                    '<div class="tooltip_date">' + store.cache.charts.apr[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_APR_title')+ ': ' + (store.cache.charts.apr[dataPointIndex].y * 100).toFixed(2) + '%</div>' +
                                 '</div>'
                     return html
                 }
@@ -155,7 +155,7 @@
 
 
         // Get chart data
-        if (!store.cache.apr) {
+        if (!store.cache.charts.apr) {
             await getChartData()
         }
 
@@ -188,7 +188,7 @@
             // Request
             await fetch(`https://rpc.bronbro.io/statistics/apr?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
                 .then(res => res.json())
-                .then(response => store.cache.apr = response.data)
+                .then(response => store.cache.charts.apr = response.data)
         } catch (error) {
             console.error(error)
         }
@@ -198,12 +198,15 @@
     // Init chart
     function initChart() {
         // Set chart data
-        store.cache.apr.forEach(el => chartData.value.push(el.y))
+        store.cache.charts.apr.forEach(el => chartData.value.push(el.y))
 
         // Set colors
-        chartColors.value.push(store.cache.apr[store.cache.apr.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
+        chartColors.value.push(store.cache.charts.apr[store.cache.charts.apr.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
 
         // Show chart
         chartLoading.value = false
+
+        // Set chart loadded event
+        emitter.emit('chartLoaded')
     }
 </script>

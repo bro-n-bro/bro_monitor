@@ -14,7 +14,7 @@
             {{ $t('message.network_charts_bonded_token_title', { token: store.networks[store.currentNetwork].token_name }) }}
         </div>
 
-        <Loader v-if="!loading" />
+        <Loader v-if="loading" />
 
         <apexchart v-else class="chart" height="145px" :options="chartOptions" :series="series" />
     </div>
@@ -32,7 +32,7 @@
     const store = useGlobalStore(),
         emitter = inject('emitter'),
         i18n = inject('i18n'),
-        loading = ref(false),
+        loading = ref(true),
         chartData = ref([]),
         chartColors = ref([]),
         chartLabels = ref([]),
@@ -122,8 +122,8 @@
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + store.cache.bonded_tokens[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_bonded_token_title', { token: store.networks[store.currentNetwork].token_name })+ ': ' + Number((store.cache.bonded_tokens[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_date">' + store.cache.charts.bonded_tokens[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_bonded_token_title', { token: store.networks[store.currentNetwork].token_name })+ ': ' + Number((store.cache.charts.bonded_tokens[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html
@@ -180,15 +180,8 @@
 
     onBeforeMount(async () => {
         // Get chart data
-        if (!store.cache.bonded_tokens) {
-            try {
-                // Request
-                await fetch(`https://rpc.bronbro.io/statistics/bonded_tokens?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
-                    .then(res => res.json())
-                    .then(response => store.cache.bonded_tokens = response.data)
-            } catch (error) {
-                console.error(error)
-            }
+        if (!store.cache.charts.bonded_tokens) {
+            await getChartData()
         }
 
 
@@ -197,19 +190,52 @@
     })
 
 
+    // Event "updateChartTimeRange"
+    emitter.on('updateChartTimeRange', async ({ type }) => {
+        // Show loader
+        loading.value = true
+
+        // Reset chart data
+        chartData.value = []
+        chartColors.value = []
+        chartLabels.value = []
+        chartMin.value = 0
+        chartMax.value = 0
+
+        // Get chart data
+        await getChartData()
+
+        // Init chart
+        initChart()
+    })
+
+
+    // Get chart data
+    async function getChartData() {
+        try {
+            // Request
+            await fetch(`https://rpc.bronbro.io/statistics/bonded_tokens?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
+                .then(res => res.json())
+                .then(response => store.cache.charts.bonded_tokens = response.data)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+
     // Init chart
     function initChart() {
         // Set chart data
-        store.cache.bonded_tokens.forEach(el => chartData.value.push(el.y))
+        store.cache.charts.bonded_tokens.forEach(el => chartData.value.push(el.y))
 
         chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
         chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
 
         // Set colors
-        chartColors.value.push(store.cache.bonded_tokens[store.cache.bonded_tokens.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
+        chartColors.value.push(store.cache.charts.bonded_tokens[store.cache.charts.bonded_tokens.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
 
         // Set labels
-        store.cache.bonded_tokens.forEach(el => {
+        store.cache.charts.bonded_tokens.forEach(el => {
             let parseDate = new Date(el.x),
                 month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
                 date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
@@ -218,7 +244,10 @@
         })
 
         // Hide loader
-        loading.value = true
+        loading.value = false
+
+        // Set chart loadded event
+        emitter.emit('chartLoaded')
     }
 </script>
 

@@ -14,7 +14,7 @@
             {{ $t('message.network_charts_wealth_distribution_title') }}
         </div>
 
-        <Loader v-if="!loading" />
+        <Loader v-if="loading" />
 
         <apexchart v-else class="chart" height="145px" :options="chartOptions" :series="series" />
     </div>
@@ -33,7 +33,7 @@
         emitter = inject('emitter'),
         props = defineProps(['validator']),
         i18n = inject('i18n'),
-        loading = ref(false),
+        loading = ref(true),
         chartData = ref([]),
         chartColors = ['#0344E8'],
         chartLabels = ['0-100', '100-500', '500-2К', '2К-5К ', '5К-10К', '10К-20К','20К-50К', '50К-100К', '100К-500К', '500К+'],
@@ -110,7 +110,7 @@
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_date">' + w.globals.labels[dataPointIndex] + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_total_accounts_title') + ': ' + Number(store.cache.wealth_distribution[dataPointIndex].total_value.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_total_accounts_title') + ': ' + Number(store.cache.charts.wealth_distribution[dataPointIndex].total_value.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html
@@ -169,15 +169,8 @@
 
     onBeforeMount(async () => {
         // Get chart data
-        if (!store.cache.wealth_distribution) {
-            try {
-                // Request
-                await fetch('https://rpc.bronbro.io/statistics/wealth_distribution')
-                    .then(res => res.json())
-                    .then(response => store.cache.wealth_distribution = response.data)
-            } catch (error) {
-                console.error(error)
-            }
+        if (!store.cache.charts.wealth_distribution) {
+            await getChartData()
         }
 
 
@@ -186,15 +179,48 @@
     })
 
 
+    // Event "updateChartTimeRange"
+    emitter.on('updateChartTimeRange', async ({ type }) => {
+        // Show loader
+        loading.value = true
+
+        // Reset chart data
+        chartData.value = []
+        chartMax.value = 0
+
+        // Get chart data
+        await getChartData()
+
+        // Init chart
+        initChart()
+    })
+
+
+    // Get chart data
+    async function getChartData() {
+        try {
+            // Request
+            await fetch('https://rpc.bronbro.io/statistics/wealth_distribution')
+                .then(res => res.json())
+                .then(response => store.cache.charts.wealth_distribution = response.data)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+
     // Init chart
     function initChart() {
         // Set chart data
-        store.cache.wealth_distribution.forEach(el => chartData.value.push(el.total_value))
+        store.cache.charts.wealth_distribution.forEach(el => chartData.value.push(el.total_value))
 
         chartMax.value = Math.max(...chartData.value)
 
         // Hide loader
-        loading.value = true
+        loading.value = false
+
+        // Set chart loadded event
+        emitter.emit('chartLoaded')
     }
 </script>
 

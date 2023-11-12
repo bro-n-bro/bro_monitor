@@ -14,7 +14,7 @@
             {{ $t('message.network_charts_delegations_title') }}
         </div>
 
-        <Loader v-if="!loading" />
+        <Loader v-if="loading" />
 
         <apexchart v-else class="chart" height="340px" :options="chartOptions" :series="series" />
     </div>
@@ -32,7 +32,7 @@
     const store = useGlobalStore(),
         emitter = inject('emitter'),
         i18n = inject('i18n'),
-        loading = ref(false),
+        loading = ref(true),
         chartDataUndelegation = ref([]),
         chartDataDelegation = ref([]),
         chartDataRedelegation = ref([]),
@@ -135,13 +135,13 @@
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + store.cache.undelegation[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_date">' + store.cache.charts.undelegation[dataPointIndex].x + '</div>' +
 
-                                    '<div class="tooltip_val green"><span style="width: 80px;">' + i18n.global.t('message.network_charts_delegation_tooltip_label') + ':</span> ' + Number((store.cache.delegation[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + ` ${store.networks[store.currentNetwork].token_name}` + '</div>' +
+                                    '<div class="tooltip_val green"><span style="width: 80px;">' + i18n.global.t('message.network_charts_delegation_tooltip_label') + ':</span> ' + Number((store.cache.charts.delegation[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + ` ${store.networks[store.currentNetwork].token_name}` + '</div>' +
 
-                                    '<div class="tooltip_val yellow"><span style="width: 80px;">'+ i18n.global.t('message.network_charts_undelegation_tooltip_label') + ':</span> ' + Number((store.cache.undelegation[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + ` ${store.networks[store.currentNetwork].token_name}` + '</div>' +
+                                    '<div class="tooltip_val yellow"><span style="width: 80px;">'+ i18n.global.t('message.network_charts_undelegation_tooltip_label') + ':</span> ' + Number((store.cache.charts.undelegation[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + ` ${store.networks[store.currentNetwork].token_name}` + '</div>' +
 
-                                    '<div class="tooltip_val blue"><span style="width: 80px;">' + i18n.global.t('message.network_charts_redelegation_tooltip_label') + ':</span> ' + Number((store.cache.redelegation[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + ` ${store.networks[store.currentNetwork].token_name}` + '</div>' +
+                                    '<div class="tooltip_val blue"><span style="width: 80px;">' + i18n.global.t('message.network_charts_redelegation_tooltip_label') + ':</span> ' + Number((store.cache.charts.redelegation[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + ` ${store.networks[store.currentNetwork].token_name}` + '</div>' +
                                 '</div>'
 
                     return html
@@ -195,15 +195,38 @@
 
 
     onBeforeMount(async () => {
+        await getChartData()
+    })
+
+
+    // Event "updateChartTimeRange"
+    emitter.on('updateChartTimeRange', async ({ type }) => {
+        // Show loader
+        loading.value = true
+
+        // Reset chart data
+        chartDataUndelegation.value = []
+        chartDataDelegation.value = []
+        chartDataRedelegation.value = []
+        chartColors.value = []
+        chartLabels.value = []
+
+        // Get chart data
+        await getChartData()
+    })
+
+
+    // Get chart data
+    async function getChartData() {
         // Get chart data
         const undelegation = new Promise((resolve, reject) => {
-            if (!store.cache.undelegation) {
+            if (!store.cache.charts.undelegation) {
                 try {
                     // Request
                     fetch(`https://rpc.bronbro.io/statistics/unbonding_message?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
                         .then(res => res.json())
                         .then(response => {
-                            store.cache.undelegation = response.data
+                            store.cache.charts.undelegation = response.data
 
                             resolve(response.data)
                         })
@@ -213,19 +236,19 @@
                     console.error(error)
                 }
             } else {
-                resolve(store.cache.undelegation)
+                resolve(store.cache.charts.undelegation)
             }
         })
 
 
         const delegation = new Promise((resolve, reject) => {
-            if (!store.cache.delegation) {
+            if (!store.cache.charts.delegation) {
                 try {
                     // Request
                     fetch(`https://rpc.bronbro.io/statistics/delegation_message?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
                         .then(res => res.json())
                         .then(response => {
-                            store.cache.delegation = response.data
+                            store.cache.charts.delegation = response.data
 
                             resolve(response.data)
                         })
@@ -235,19 +258,19 @@
                     console.error(error)
                 }
             } else {
-                resolve(store.cache.delegation)
+                resolve(store.cache.charts.delegation)
             }
         })
 
 
         const redelegation = new Promise((resolve, reject) => {
-            if (!store.cache.redelegation) {
+            if (!store.cache.charts.redelegation) {
                 try {
                     // Request
                     fetch(`https://rpc.bronbro.io/statistics/redelegation_message?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
                         .then(res => res.json())
                         .then(response => {
-                            store.cache.redelegation = response.data
+                            store.cache.charts.redelegation = response.data
 
                             resolve(response.data)
                         })
@@ -257,7 +280,7 @@
                     console.error(error)
                 }
             } else {
-                resolve(store.cache.redelegation)
+                resolve(store.cache.charts.redelegation)
             }
         })
 
@@ -266,18 +289,18 @@
             // Init chart
             initChart()
         })
-    })
+    }
 
 
     // Init chart
     function initChart() {
         // Set chart data
-        store.cache.undelegation.forEach(el => chartDataUndelegation.value.push(el.y * -1))
-        store.cache.delegation.forEach(el => chartDataDelegation.value.push(el.y))
-        store.cache.redelegation.forEach(el => chartDataRedelegation.value.push(el.y))
+        store.cache.charts.undelegation.forEach(el => chartDataUndelegation.value.push(el.y * -1))
+        store.cache.charts.delegation.forEach(el => chartDataDelegation.value.push(el.y))
+        store.cache.charts.redelegation.forEach(el => chartDataRedelegation.value.push(el.y))
 
         // Set labels
-        store.cache.undelegation.forEach(el => {
+        store.cache.charts.undelegation.forEach(el => {
             let parseDate = new Date(el.x),
                 month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
                 date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
@@ -286,7 +309,10 @@
         })
 
         // Hide loader
-        loading.value = true
+        loading.value = false
+
+        // Set chart loadded event
+        emitter.emit('chartLoaded')
     }
 </script>
 

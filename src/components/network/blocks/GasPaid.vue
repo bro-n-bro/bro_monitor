@@ -19,7 +19,7 @@
             <span v-else>{{ $filters.toFixed(store.cache.gas_paid_actual, 0).toLocaleString('ru-RU') }}</span>
         </div>
 
-        <apexchart class="chart" height="47px" :options="chartOptions" :series="series" v-if="chartLoading" />
+        <apexchart class="chart" height="47px" :options="chartOptions" :series="series" v-if="!chartLoading" />
     </div>
 </template>
 
@@ -35,7 +35,7 @@
     const store = useGlobalStore(),
         emitter = inject('emitter'),
         i18n = inject('i18n'),
-        chartLoading = ref(false),
+        chartLoading = ref(true),
         chartData = ref([]),
         chartColors= ref([]),
         series = reactive([
@@ -104,8 +104,8 @@
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + store.cache.gas_paid[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_gas_paid_title') + ': ' + Number(store.cache.gas_paid[dataPointIndex].y.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_date">' + store.cache.charts.gas_paid[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_gas_paid_title') + ': ' + Number(store.cache.charts.gas_paid[dataPointIndex].y.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html
@@ -155,15 +155,8 @@
 
 
         // Get chart data
-        if (!store.cache.gas_paid) {
-            try {
-                // Request
-                await fetch(`https://rpc.bronbro.io/statistics/gas_paid?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
-                    .then(res => res.json())
-                    .then(response => store.cache.gas_paid = response.data)
-            } catch (error) {
-                console.error(error)
-            }
+        if (!store.cache.charts.gas_paid) {
+            await getChartData()
         }
 
 
@@ -172,15 +165,48 @@
     })
 
 
+    // Event "updateChartTimeRange"
+    emitter.on('updateChartTimeRange', async ({ type }) => {
+        // Show loader
+        chartLoading.value = true
+
+        // Reset chart data
+        chartData.value = []
+        chartColors.value = []
+
+        // Get chart data
+        await getChartData()
+
+        // Init chart
+        initChart()
+    })
+
+
+    // Get chart data
+    async function getChartData() {
+        try {
+            // Request
+            await fetch(`https://rpc.bronbro.io/statistics/gas_paid?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
+                .then(res => res.json())
+                .then(response => store.cache.charts.gas_paid = response.data)
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
+
     // Init chart
     function initChart() {
         // Set chart data
-        store.cache.gas_paid.forEach(el => chartData.value.push(el.y))
+        store.cache.charts.gas_paid.forEach(el => chartData.value.push(el.y))
 
         // Set colors
-        chartColors.value.push(store.cache.gas_paid[store.cache.gas_paid.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
+        chartColors.value.push(store.cache.charts.gas_paid[store.cache.charts.gas_paid.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
 
         // Show chart
-        chartLoading.value = true
+        chartLoading.value = false
+
+        // Set chart loadded event
+        emitter.emit('chartLoaded')
     }
 </script>

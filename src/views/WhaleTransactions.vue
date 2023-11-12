@@ -13,7 +13,7 @@
 
 
     <!-- Whale transactions table -->
-    <WhaleTransactionsTable />
+    <WhaleTransactionsTable class="big" />
 </template>
 
 

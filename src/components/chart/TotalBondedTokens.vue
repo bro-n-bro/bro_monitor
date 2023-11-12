@@ -19,7 +19,7 @@
     const store = useGlobalStore(),
         i18n = inject('i18n'),
         emitter = inject('emitter'),
-        responseData = ref(store.cache.bonded_tokens),
+        responseData = ref(store.cache.charts.bonded_tokens),
         from_date = ref(store.currentTimeRangeDates[0]),
         to_date = ref(store.currentTimeRangeDates[1]),
         detailing = ref(store.currentTimeRangeDetailing),
@@ -109,7 +109,7 @@
                     enabled: true,
                     position: 'topLeft'
                 },
-                custom: function({series, seriesIndex, dataPointIndex, w}) {
+                custom: function({ dataPointIndex, w }) {
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
@@ -169,7 +169,7 @@
 
 
     onBeforeMount(async () => {
-        if (typeof store.cache.bonded_tokens !== 'undefined') {
+        if (typeof store.cache.charts.bonded_tokens !== 'undefined') {
             // Init chart
             initChart()
         } else {
@@ -206,15 +206,12 @@
     // Get chart data
     async function getChartData(cacheEnable = true) {
         try {
-            // Start loading
-            store.chartLoading = true
-
             // Request
             await fetch(`https://rpc.bronbro.io/statistics/bonded_tokens?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
                 .then(res => res.json())
                 .then(response => {
                     cacheEnable
-                        ? responseData.value = store.cache.bonded_tokens = response.data
+                        ? responseData.value = store.cache.charts.bonded_tokens = response.data
                         : responseData.value = response.data
                 })
         } catch (error) {

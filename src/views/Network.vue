@@ -178,7 +178,7 @@
 
 
     // Components
-    import TimeRange from  '@/components/chart/TimeRange.vue'
+    import TimeRange from  '@/components/TimeRange.vue'
 
     import NetworkBlocks from  '@/components/network/NetworkBlocks.vue'
     import NetworkCharts from  '@/components/network/NetworkCharts.vue'

@@ -14,7 +14,7 @@
             {{ $t('message.network_charts_bonded_token_apr_title', { token: store.networks[store.currentNetwork].token_name }) }}
         </div>
 
-        <Loader v-if="!loading" />
+        <Loader v-if="loading" />
 
         <apexchart v-else class="chart" height="158px" :options="chartOptions" :series="series" />
     </div>
@@ -32,7 +32,7 @@
     const store = useGlobalStore(),
         emitter = inject('emitter'),
         i18n = inject('i18n'),
-        loading = ref(false),
+        loading = ref(true),
         chartDataAPR = ref([]),
         chartDataBondedTokens = ref([]),
         chartColors = ref(['#950FFF', '#1BC562']),
@@ -149,11 +149,11 @@
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + store.cache.apr[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_date">' + store.cache.charts.apr[dataPointIndex].x + '</div>' +
 
-                                    '<div class="tooltip_val green"><span style="width: 68px;">'+ i18n.global.t('message.network_charts_bonded_token_title_short', { token: store.networks[store.currentNetwork].token_name.charAt(0) })+ ':</span> ' + Number((store.cache.bonded_tokens[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val green"><span style="width: 68px;">'+ i18n.global.t('message.network_charts_bonded_token_title_short', { token: store.networks[store.currentNetwork].token_name.charAt(0) })+ ':</span> ' + Number((store.cache.charts.bonded_tokens[dataPointIndex].y / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') + '</div>' +
 
-                                    '<div class="tooltip_val violet"><span style="width: 68px;">' + i18n.global.t('message.network_charts_APR_title') + ':</span> ' + (store.cache.apr[dataPointIndex].y * 100).toFixed(2) + '%</div>' +
+                                    '<div class="tooltip_val violet"><span style="width: 68px;">' + i18n.global.t('message.network_charts_APR_title') + ':</span> ' + (store.cache.charts.apr[dataPointIndex].y * 100).toFixed(2) + '%</div>' +
                                 '</div>'
 
                     return html
@@ -235,45 +235,66 @@
 
 
     onBeforeMount(() => {
-        if(store.cache.apr  && store.cache.bonded_tokens) {
+        if(store.cache.charts.apr  && store.cache.charts.bonded_tokens) {
             // Init chart
             initChart()
         }
     })
 
 
-    watch(computed(() => store.cache.apr), () => {
-        if(store.cache.bonded_tokens) {
+    watch(computed(() => store.cache.charts.apr), () => {
+        if(store.cache.charts.bonded_tokens) {
+            // Reset chart data
+            resetData()
+
             // Init chart
             initChart()
         }
     })
 
 
-    watch(computed(() => store.cache.bonded_tokens), () => {
-        if(store.cache.apr) {
+    watch(computed(() => store.cache.charts.bonded_tokens), () => {
+        if(store.cache.charts.apr) {
+            // Reset chart data
+            resetData()
+
             // Init chart
             initChart()
         }
     })
+
+
+    // Reset chart data
+    function resetData() {
+        // Show loader
+        loading.value = true
+
+        chartDataAPR.value = []
+        chartDataBondedTokens.value = []
+        chartLabels.value = []
+        chartMinAPR.value = 0
+        chartMaxAPR.value = 0
+        chartMinBondedTokens.value = 0
+        chartMaxBondedTokens.value = 0
+    }
 
 
     // Init chart
     function initChart() {
         // Set chart data APR
-        store.cache.apr.forEach(el => chartDataAPR.value.push(el.y))
+        store.cache.charts.apr.forEach(el => chartDataAPR.value.push(el.y))
 
         chartMinAPR.value = Math.min(...chartDataAPR.value) - Math.min(...chartDataAPR.value) * 0.005
         chartMaxAPR.value = Math.max(...chartDataAPR.value) + Math.max(...chartDataAPR.value) * 0.005
 
         // Set chart data Bonded Tokens
-        store.cache.bonded_tokens.forEach(el => chartDataBondedTokens.value.push(el.y))
+        store.cache.charts.bonded_tokens.forEach(el => chartDataBondedTokens.value.push(el.y))
 
         chartMinBondedTokens.value = Math.min(...chartDataBondedTokens.value) - Math.min(...chartDataBondedTokens.value) * 0.005
         chartMaxBondedTokens.value = Math.max(...chartDataBondedTokens.value) + Math.max(...chartDataBondedTokens.value) * 0.005
 
         // Set labels
-        store.cache.apr.forEach(el => {
+        store.cache.charts.apr.forEach(el => {
             let parseDate = new Date(el.x),
                 month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
                 date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
@@ -282,7 +303,7 @@
         })
 
         // Hide loader
-        loading.value = true
+        loading.value = false
     }
 </script>
 

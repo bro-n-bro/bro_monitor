@@ -65,7 +65,7 @@
     import { useGlobalStore } from '@/stores'
 
     // Components
-    import TimeRange from  '@/components/chart/TimeRange.vue'
+    import TimeRange from  '@/components/TimeRange.vue'
 
     import APRChart from  '@/components/chart/APR.vue'
     import InflationChart from  '@/components/chart/Inflation.vue'

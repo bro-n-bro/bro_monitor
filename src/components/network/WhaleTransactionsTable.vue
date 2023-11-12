@@ -5,7 +5,6 @@
                 <div class="col_address">{{ $t('message.whale_transactions_table_label_address') }}</div>
                 <div class="col_action">{{ $t('message.whale_transactions_table_label_action') }}</div>
                 <div class="col_amount">{{ $t('message.whale_transactions_table_label_amount') }}</div>
-                <div class="col_details">{{ $t('message.whale_transactions_table_label_details') }}</div>
                 <div class="col_TX_link">{{ $t('message.whale_transactions_table_label_TX_link') }}</div>
             </div>
 
@@ -44,36 +43,20 @@
                             <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_action_ibc_transfer"></use></svg>
                             <span>{{ $t('message.whale_transactions_action_IBC_transfer') }}</span>
                         </div>
+
+                        <div class="white" v-if="transaction.type.includes('MsgMultiSend')">
+                            <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_action_multi_send"></use></svg>
+                            <span>{{ $t('message.whale_transactions_action_multi_send') }}</span>
+                        </div>
+
+                        <div class="white" v-if="transaction.type.includes('MsgUpdateClient')">
+                            <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_action_update_client"></use></svg>
+                            <span>{{ $t('message.whale_transactions_action_update_client') }}</span>
+                        </div>
                     </div>
 
                     <div class="col_amount">
                         <div>{{ Number((transaction.amount / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(2)).toLocaleString('ru-RU') }}</div>
-                    </div>
-
-                    <div class="col_details">
-                        <div class="from_to">
-                            <div class="moniker">
-                                <router-link to="/validator/cosmovaloper">
-                                    <div class="logo">
-                                        <!-- <img src="@/assets/osmosis_logo.png" alt=""> -->
-                                    </div>
-
-                                    <div class="name">Bro_n_Bro</div>
-                                </router-link>
-                            </div>
-
-                            <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_arrow_hor"></use></svg>
-
-                            <div class="moniker">
-                                <router-link to="/validator/cosmovaloper">
-                                    <div class="logo">
-                                        <!-- <img src="@/assets/osmosis_logo.png" alt=""> -->
-                                    </div>
-
-                                    <div class="name">Arlene McCoy</div>
-                                </router-link>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="col_TX_link">
@@ -84,162 +67,6 @@
                 </div>
             </div>
         </div>
-
-
-        <!-- <div class="table_wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="alignleft">{{ $t('message.whale_transactions_table_label_address') }}</th>
-                        <th>{{ $t('message.whale_transactions_table_label_action') }}</th>
-                        <th>{{ $t('message.whale_transactions_table_label_amount') }}</th>
-                        <th class="alignleft">{{ $t('message.whale_transactions_table_label_details') }}</th>
-                        <th class="alignleft">{{ $t('message.whale_transactions_table_label_TX_link') }}</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    <tr>
-                        <td class="col_address alignleft">bostrom23894...fgtyi</td>
-
-                        <td class="col_action">
-                            <div class="yellow">
-                                <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_action_redelegate"></use></svg>
-                                <span>{{ $t('message.whale_transactions_action_redelegate') }}</span>
-                            </div>
-                        </td>
-
-                        <td class="col_amount">
-                            <div>900 323.97</div>
-                        </td>
-
-                        <td class="col_details alignleft">
-                            <div class="from_to">
-                                <div class="moniker">
-                                    <router-link to="/validator/cosmovaloper">
-                                        <div class="logo">
-                                            <img src="@/assets/osmosis_logo.png" alt="">
-                                        </div>
-
-                                        <div class="name">Bro_n_Bro</div>
-                                    </router-link>
-                                </div>
-
-                                <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_arrow_hor"></use></svg>
-
-                                <div class="moniker">
-                                    <router-link to="/validator/cosmovaloper">
-                                        <div class="logo">
-                                            <img src="@/assets/osmosis_logo.png" alt="">
-                                        </div>
-
-                                        <div class="name">Arlene McCoy</div>
-                                    </router-link>
-                                </div>
-                            </div>
-                        </td>
-
-                        <td class="col_TX_link alignleft">
-                            <div><a href="/" target="_blank" rel="noopener nofollow">
-                                {{ $t('message.whale_transactions_TX_link') }}
-                            </a></div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="col_address alignleft">bostrom23894...fgtyi</td>
-
-                        <td class="col_action">
-                            <div class="violet">
-                                <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_action_redelegate"></use></svg>
-                                <span>{{ $t('message.whale_transactions_action_send') }}</span>
-                            </div>
-                        </td>
-
-                        <td class="col_amount">
-                            <div>900 323.97</div>
-                        </td>
-
-                        <td class="col_details alignleft">
-                            <div class="link"><a href="/" target="_blank" rel="noopener nofollow">
-                                bostrom23894...fgtyi
-                            </a></div>
-                        </td>
-
-                        <td class="col_TX_link alignleft">
-                            <div><a href="/" target="_blank" rel="noopener nofollow">
-                                {{ $t('message.whale_transactions_TX_link') }}
-                            </a></div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="col_address alignleft">bostrom23894...fgtyi</td>
-
-                        <td class="col_action">
-                            <div class="red">
-                                <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_action_redelegate"></use></svg>
-                                <span>{{ $t('message.whale_transactions_action_undelegate') }}</span>
-                            </div>
-                        </td>
-
-                        <td class="col_amount">
-                            <div>763 252.55</div>
-                        </td>
-
-                        <td class="col_details alignleft">
-                            <div class="moniker">
-                                <router-link to="/validator/cosmovaloper">
-                                    <div class="logo">
-                                        <img src="@/assets/osmosis_logo.png" alt="">
-                                    </div>
-
-                                    <div class="name">Kristin Watson</div>
-                                </router-link>
-                            </div>
-                        </td>
-
-                        <td class="col_TX_link alignleft">
-                            <div><a href="/" target="_blank" rel="noopener nofollow">
-                                {{ $t('message.whale_transactions_TX_link') }}
-                            </a></div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="col_address alignleft">bostrom23894...fgtyi</td>
-
-                        <td class="col_action">
-                            <div class="green">
-                                <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_action_redelegate"></use></svg>
-                                <span>{{ $t('message.whale_transactions_action_delegate') }}</span>
-                            </div>
-                        </td>
-
-                        <td class="col_amount">
-                            <div>763 252.55</div>
-                        </td>
-
-                        <td class="col_details alignleft">
-                            <div class="logos">
-                                <div class="count">+87</div>
-
-                                <img src="@/assets/osmosis_logo.png" alt="">
-                                <img src="@/assets/osmosis_logo.png" alt="">
-                                <img src="@/assets/osmosis_logo.png" alt="">
-                                <img src="@/assets/osmosis_logo.png" alt="">
-                            </div>
-                        </td>
-
-                        <td class="col_TX_link alignleft">
-                            <div><a href="/" target="_blank" rel="noopener nofollow">
-                                {{ $t('message.whale_transactions_TX_link') }}
-                            </a></div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div> -->
     </div>
 </template>
 
@@ -289,6 +116,11 @@
         min-height: 0;
     }
 
+    .block.big
+    {
+        margin: 0;
+    }
+
 
     .block .titles
     {
@@ -325,6 +157,11 @@
     {
         overflow: auto;
 
+        max-height: 252px;
+    }
+
+    .big .scroll
+    {
         max-height: 645px;
     }
 
@@ -338,28 +175,49 @@
     }
 
 
+    .block .block
+    {
+        margin: 0 -8px -12px;
+        padding: 0;
+
+        border: none;
+        border-radius: 0 0 16px 16px;
+    }
+
+    .block .block .titles
+    {
+        border-radius: 0;
+    }
+
+    .block .block .hor_scroll
+    {
+        width: 100%;
+        margin: 0;
+
+        border-radius: 0 0 16px 16px;
+    }
+
+    .block .block .scroll
+    {
+        border-radius: 0 0 16px 16px;
+    }
+
+
     .col_address,
     .col_action,
     .col_amount
-    {
-        width: 280px;
-        min-width: 280px;
-    }
-
-    .col_details
     {
         width: 100%;
     }
 
     .col_TX_link
     {
-        width: 192px;
-        min-width: 192px;
+        width: 272px;
+        min-width: 272px;
     }
 
     .col_address,
     .col_action,
-    .col_details,
     .col_TX_link
     {
         text-align: left;

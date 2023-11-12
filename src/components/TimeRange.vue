@@ -119,6 +119,9 @@
 
     // Set time range - Day
     function setTimeRangeDay() {
+        // Disable time range
+        store.chartLoading = true
+
         // Update current time range
         !props.global
             ? currentTimeRange.value = 'day'
@@ -131,6 +134,9 @@
 
     // Set time range - Week
     function setTimeRangeWeek() {
+        // Disable time range
+        store.chartLoading = true
+
         // Update current time range
         !props.global
             ? currentTimeRange.value = 'week'
@@ -143,6 +149,9 @@
 
     // Set time range - Month
     function setTimeRangeMonth() {
+        // Disable time range
+        store.chartLoading = true
+
         // Update current time range
         !props.global
             ? currentTimeRange.value = 'month'
@@ -155,6 +164,9 @@
 
     // Set time range - Quarter
     function setTimeRangeQuarter() {
+        // Disable time range
+        store.chartLoading = true
+
         // Update current time range
         !props.global
             ? currentTimeRange.value = 'quarter'
@@ -167,6 +179,9 @@
 
     // Set time range - Day
     function setTimeRangeHalfYear() {
+        // Disable time range
+        store.chartLoading = true
+
         // Update current time range
         !props.global
             ? currentTimeRange.value = 'half_year'
@@ -179,6 +194,9 @@
 
     // Set time range - Year
     function setTimeRangeYear() {
+        // Disable time range
+        store.chartLoading = true
+
         // Update current time range
         !props.global
             ? currentTimeRange.value = 'year'
@@ -191,6 +209,9 @@
 
     // Apply custom period
     function applyCustomPeriod() {
+        // Disable time range
+        store.chartLoading = true
+
         // Update current time range
         !props.global
             ? currentTimeRange.value = 'range'
