@@ -16,7 +16,7 @@
 
         <Loader v-if="loading" />
 
-        <apexchart v-else class="chart" height="145px" :options="chartOptions" :series="series" />
+        <apexchart v-else class="chart" height="200px" :options="chartOptions" :series="series" />
     </div>
 </template>
 

@@ -311,6 +311,10 @@ export default {
             'governance_participation_status_passed': 'Passed',
 
 
+            // Lock
+            'chart_lock_title': 'Delegate for<br> a premium analytics view',
+
+
             // Footer
             'footer_contact': 'Contact',
             'footer_support': 'Support',
@@ -340,6 +344,7 @@ export default {
             'btn_prices_label': 'Price',
             'btn_prices_exp': 'All Networks',
             'btn_apply_time': 'Apply time range',
+            'btn_delegate': 'Delegate to your Bro',
 
 
             'yes': 'Yes',

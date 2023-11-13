@@ -262,6 +262,11 @@
         background: #000;
     }
 
+    .block.locked
+    {
+        min-height: 260px;
+    }
+
 
     a.block
     {
@@ -371,7 +376,7 @@
         line-height: 120%;
 
         position: relative;
-        z-index: 3;
+        z-index: 9;
 
         width: calc(100% - 100px);
         margin-bottom: 24px;
