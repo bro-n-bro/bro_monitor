@@ -6,7 +6,7 @@
 
         <div class="title" v-html="$t('message.chart_lock_title')"></div>
 
-        <button class="btn">
+        <button class="btn" @click.prevent="emitter.emit('openManageModal')">
             {{ $t('message.btn_delegate') }}
         </button>
     </div>
@@ -15,11 +15,9 @@
 
 <script setup>
     import { inject } from 'vue'
-    import { useGlobalStore } from '@/stores'
 
 
-    const store = useGlobalStore(),
-        emitter = inject('emitter')
+    const emitter = inject('emitter')
 </script>
 
 

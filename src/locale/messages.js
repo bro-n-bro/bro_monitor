@@ -234,6 +234,26 @@ export default {
 
             // Chart page
             'chart_APR_page_title': 'Network / APR',
+            'chart_inflation_page_title': 'Network / Inflation',
+            'chart_APY_page_title': 'Network / APY',
+            'chart_total_unbonded_tokens_page_title': 'Network / Total amount of unbonded {token}',
+            'chart_total_bonded_tokens_page_title': 'Network / Total amount of bonded {token}',
+            'chart_total_bonded_ratio_page_title': 'Network / Total bonded ratio',
+            'chart_current_block_time_page_title': 'Network / Current Block Time',
+            'chart_new_users_page_title': 'Network / New Users',
+            'chart_active_users_page_title': 'Network / Active Users',
+            'chart_total_adresses_page_title': 'Network / Total Number of Addresses',
+            'chart_gas_paid_page_title': 'Network / Gas paid',
+            'chart_transactions_page_title': 'Network / Transactions',
+            'chart_auto_restake_executed_count_page_title': 'Accounts / AutoRestake Executed Count',
+            'chart_auto_restake_token_amount_page_title': 'Accounts / AutoRestake Token Amount',
+            'chart_fees_paid_page_title': 'Network / Fees paid',
+            'chart_wealth_distribution_page_title': 'Accounts / Wealth Distribution',
+            'chart_bonded_token_to_APR_page_title': 'Network / Bonded {token} / APR',
+            'chart_gas_paid_to_fees_paid_page_title': 'Accounts / Gas Paid/ Fees Paid',
+            'chart_delegations_page_title': 'Accounts / Delegations',
+            'chart_transactions_to_gas_paid_page_title': 'Accounts / Transactions / Gas Paid',
+            'chart_unique_votes_per_proposal_page_title': 'Accounts / Unique votes per proposal',
 
 
             // IBC network page
@@ -345,10 +365,75 @@ export default {
             'btn_prices_exp': 'All Networks',
             'btn_apply_time': 'Apply time range',
             'btn_delegate': 'Delegate to your Bro',
+            'btn_max': 'MAX',
+            'btn_delegate_short': 'Delegate',
 
 
             'yes': 'Yes',
             'no': 'No',
+
+
+            // Manage modal
+            'manage_modal_action_delegate': 'Delegate',
+
+            'manage_modal_validator_name': 'Bro_n_Bro',
+            'manage_modal_commission': 'Commission',
+            'manage_modal_commission_sep': '-',
+
+            'manage_modal_notice_title': 'Staking will lock up your funds for {unbonding_time} days',
+            'manage_modal_notice_desc': 'Once you undelegate your staked {currency}, you will need<br> to wait {unbonding_time} days for your tokens to be liquid',
+
+            'manage_modal_staked_mount': 'Staked Amount',
+            'manage_modal_available_balance': 'Available Balance',
+
+            'manage_modal_validator_delegate_label': 'Validator to Delegate',
+            'manage_modal_delegate_amount': 'Amount to Delegate',
+
+            'manage_modal_validator_exp': 'Delegating to Bro_n_Bro will open all application features',
+            'manage_modal_amount_exp': 'Min: {amount} {token}',
+
+            'manage_modal_error_2': "tx parse error",
+            'manage_modal_error_3': "invalid sequence",
+            'manage_modal_error_4': "unauthorized",
+            'manage_modal_error_5': "insufficient funds",
+            'manage_modal_error_6': "unknown request",
+            'manage_modal_error_7': "invalid address",
+            'manage_modal_error_8': "invalid pubkey",
+            'manage_modal_error_9': "unknown address",
+            'manage_modal_error_10': "invalid coins",
+            'manage_modal_error_11': "Broadcasting transaction failed: out of gas try again and increase gas amount",
+            'manage_modal_error_12': "memo too large",
+            'manage_modal_error_13': "insufficient fee",
+            'manage_modal_error_14': "maximum number of signatures exceeded",
+            'manage_modal_error_15': "no signatures supplied",
+            'manage_modal_error_16': "failed to marshal JSON bytes",
+            'manage_modal_error_17': "failed to unmarshal JSON bytes",
+            'manage_modal_error_18': "invalid request",
+            'manage_modal_error_19': "tx already in mempool",
+            'manage_modal_error_20': "mempool is full",
+            'manage_modal_error_21': "tx too large",
+            'manage_modal_error_22': "key not found",
+            'manage_modal_error_23': "invalid account password",
+            'manage_modal_error_24': "tx intended signer does not match the given signer",
+            'manage_modal_error_25': "invalid gas adjustment",
+            'manage_modal_error_26': "invalid height",
+            'manage_modal_error_27': "invalid version",
+            'manage_modal_error_28': "invalid chain-id",
+            'manage_modal_error_29': "invalid type",
+            'manage_modal_error_30': "tx timeout height",
+            'manage_modal_error_31': "unknown extension options",
+            'manage_modal_error_32': "incorrect account sequence",
+            'manage_modal_error_33': "failed packing protobuf message to Any",
+            'manage_modal_error_34': "failed unpacking protobuf message from Any",
+            'manage_modal_error_35': "internal logic error",
+            'manage_modal_error_36': "conflict",
+            'manage_modal_error_37': "feature not supported",
+            'manage_modal_error_38': "not found",
+            'manage_modal_error_39': "Internal IO error",
+            'manage_modal_error_40': "error in app.toml",
+            'manage_modal_error_41': "invalid gas limit",
+
+            'manage_modal_error_rejected': "The transaction has been rejected",
         }
     }
 }

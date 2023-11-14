@@ -10,6 +10,86 @@
             {{ $t('message.chart_APR_page_title') }}
         </div>
 
+        <div class="title" v-if="store.currentChart == 'inflation'">
+            {{ $t('message.chart_inflation_page_title') }}
+        </div>
+
+        <div class="title" v-if="store.currentChart == 'APY'">
+            {{ $t('message.chart_APY_page_title') }}
+        </div>
+
+        <div class="title" v-if="store.currentChart == 'total_unbonded_tokens'">
+            {{ $t('message.chart_total_unbonded_tokens_page_title', { token: store.networks[store.currentNetwork].token_name }) }}
+        </div>
+
+        <div class="title" v-if="store.currentChart == 'total_bonded_tokens'">
+            {{ $t('message.chart_total_bonded_tokens_page_title', { token: store.networks[store.currentNetwork].token_name }) }}
+        </div>
+
+        <div class="title" v-if="store.currentChart == 'total_bonded_ratio'">
+            {{ $t('message.chart_total_bonded_ratio_page_title') }}
+        </div>
+
+        <div class="title" v-if="store.currentChart == 'current_block_time'">
+            {{ $t('message.chart_current_block_time_page_title') }}
+        </div>
+
+        <div class="title" v-if="store.currentChart == 'new_users'">
+            {{ $t('message.chart_new_users_page_title') }}
+        </div>
+
+        <div class="title" v-if="store.currentChart == 'active_users'">
+            {{ $t('message.chart_active_users_page_title') }}
+        </div>
+
+        <div class="title" v-if="store.currentChart == 'total_adresses'">
+            {{ $t('message.chart_total_adresses_page_title') }}
+        </div>
+
+        <div class="title" v-if="store.currentChart == 'gas_paid'">
+            {{ $t('message.chart_gas_paid_page_title') }}
+        </div>
+
+        <div class="title" v-if="store.currentChart == 'transactions'">
+            {{ $t('message.chart_transactions_page_title') }}
+        </div>
+
+        <div class="title" v-if="store.currentChart == 'auto_restake_executed_count'">
+            {{ $t('message.chart_auto_restake_executed_count_page_title') }}
+        </div>
+
+        <div class="title" v-if="store.currentChart == 'auto_restake_token_amount'">
+            {{ $t('message.chart_auto_restake_token_amount_page_title') }}
+        </div>
+
+        <div class="title" v-if="store.currentChart == 'fees_paid'">
+            {{ $t('message.chart_fees_paid_page_title') }}
+        </div>
+
+        <div class="title" v-if="store.currentChart == 'wealth_distribution'">
+            {{ $t('message.chart_wealth_distribution_page_title') }}
+        </div>
+
+        <div class="title" v-if="store.currentChart == 'bonded_token_to_APR'">
+            {{ $t('message.chart_bonded_token_to_APR_page_title', { token: store.networks[store.currentNetwork].token_name }) }}
+        </div>
+
+        <div class="title" v-if="store.currentChart == 'gas_paid_to_fees_paid'">
+            {{ $t('message.chart_gas_paid_to_fees_paid_page_title') }}
+        </div>
+
+        <div class="title" v-if="store.currentChart == 'delegations'">
+            {{ $t('message.chart_delegations_page_title') }}
+        </div>
+
+        <div class="title" v-if="store.currentChart == 'transactions_to_gas_paid'">
+            {{ $t('message.chart_transactions_to_gas_paid_page_title') }}
+        </div>
+
+        <div class="title" v-if="store.currentChart == 'unique_votes_per_proposal'">
+            {{ $t('message.chart_unique_votes_per_proposal_page_title') }}
+        </div>
+
         <TimeRange />
     </div>
 
@@ -33,7 +113,7 @@
 
         <ActiveUsersChart v-if="store.currentChart == 'active_users'" />
 
-        <TotalNumberAddressesChart v-if="store.currentChart == 'total_ddresses'" />
+        <TotalNumberAddressesChart v-if="store.currentChart == 'total_adresses'" />
 
         <GasPaidChart v-if="store.currentChart == 'gas_paid'" />
 

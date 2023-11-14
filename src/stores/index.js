@@ -54,7 +54,12 @@ export const useGlobalStore = defineStore('global', {
             moonPassport: null,
             userName: null,
             avatar: null
-        }
+        },
+
+        showManageModal: false,
+        showManageSuccessModal: false,
+
+        validatorManageModal: {},
     }),
 
 
