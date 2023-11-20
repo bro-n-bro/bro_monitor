@@ -175,23 +175,23 @@
         chartColors.value = []
 
         // Get chart data
-        await getChartData()
+        try {
+            await getChartData()
 
-        // Init chart
-        initChart()
+            // Init chart
+            initChart()
+        } catch (error) {
+            console.error(error)
+        }
     })
 
 
     // Get chart data
     async function getChartData() {
-        try {
-            // Request
-            await fetch(`https://rpc.bronbro.io/statistics/apy?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
-                .then(res => res.json())
-                .then(response => store.cache.charts.apy = response.data)
-        } catch (error) {
-            console.error(error)
-        }
+        // Request
+        await fetch(`https://rpc.bronbro.io/statistics/apy?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
+            .then(res => res.json())
+            .then(response => store.cache.charts.apy = response.data)
     }
 
 

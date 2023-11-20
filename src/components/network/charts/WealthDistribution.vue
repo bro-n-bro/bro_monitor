@@ -189,23 +189,23 @@
         chartMax.value = 0
 
         // Get chart data
-        await getChartData()
+        try {
+            await getChartData()
 
-        // Init chart
-        initChart()
+            // Init chart
+            initChart()
+        } catch (error) {
+            console.error(error)
+        }
     })
 
 
     // Get chart data
     async function getChartData() {
-        try {
-            // Request
-            await fetch('https://rpc.bronbro.io/statistics/wealth_distribution')
-                .then(res => res.json())
-                .then(response => store.cache.charts.wealth_distribution = response.data)
-        } catch (error) {
-            console.error(error)
-        }
+        // Request
+        await fetch('https://rpc.bronbro.io/statistics/wealth_distribution')
+            .then(res => res.json())
+            .then(response => store.cache.charts.wealth_distribution = response.data)
     }
 
 

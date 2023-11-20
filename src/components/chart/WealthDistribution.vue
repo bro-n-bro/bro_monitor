@@ -200,12 +200,12 @@
                         ? responseData.value = store.cache.charts.wealth_distribution = response.data
                         : responseData.value = response.data
                 })
+
+            // Init chart
+            initChart()
         } catch (error) {
             console.error(error)
         }
-
-        // Init chart
-        initChart()
     }
 
 

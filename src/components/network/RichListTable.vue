@@ -105,6 +105,9 @@
 
     .block .table_wrap
     {
+        position: relative;
+        z-index: 3;
+
         width: 100%;
         margin: 0 0;
     }

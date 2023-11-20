@@ -244,23 +244,23 @@
         chartLabels.value = []
 
         // Get chart data
-        await getChartData()
+        try {
+            await getChartData()
 
-        // Init chart
-        initChart()
+            // Init chart
+            initChart()
+        } catch (error) {
+            console.error(error)
+        }
     })
 
 
     // Get chart data
     async function getChartData() {
-        try {
-            // Request
-            await fetch('https://rpc.bronbro.io/gov/votes')
-                .then(res => res.json())
-                .then(response => store.cache.charts.votes = response.votes)
-        } catch (error) {
-            console.error(error)
-        }
+        // Request
+        await fetch('https://rpc.bronbro.io/gov/votes')
+            .then(res => res.json())
+            .then(response => store.cache.charts.votes = response.votes)
     }
 
 

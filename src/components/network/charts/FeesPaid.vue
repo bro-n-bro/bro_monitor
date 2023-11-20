@@ -203,23 +203,23 @@
         chartMax.value = 0
 
         // Get chart data
-        await getChartData()
+        try {
+            await getChartData()
 
-        // Init chart
-        initChart()
+            // Init chart
+            initChart()
+        } catch (error) {
+            console.error(error)
+        }
     })
 
 
     // Get chart data
     async function getChartData() {
-        try {
-            // Request
-            await fetch(`https://rpc.bronbro.io/statistics/fees_paid?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
-                .then(res => res.json())
-                .then(response => store.cache.charts.fees_paid = response.data)
-        } catch (error) {
-            console.error(error)
-        }
+        // Request
+        await fetch(`https://rpc.bronbro.io/statistics/fees_paid?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
+            .then(res => res.json())
+            .then(response => store.cache.charts.fees_paid = response.data)
     }
 
 

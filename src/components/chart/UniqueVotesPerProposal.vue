@@ -245,12 +245,12 @@
                         ? responseData.value = store.cache.charts.votes = response.votes
                         : responseData.value = response.votes
                 })
+
+            // Init chart
+            initChart()
         } catch (error) {
             console.error(error)
         }
-
-        // Init chart
-        initChart()
     }
 
 

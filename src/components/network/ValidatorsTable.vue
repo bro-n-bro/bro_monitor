@@ -178,6 +178,9 @@
                 </div>
             </div>
         </div>
+
+
+        <img src="@/assets/watermark.svg" alt="" class="watermark" v-if="!loading">
     </div>
 </template>
 
@@ -274,6 +277,9 @@
 
     .scroll
     {
+        position: relative;
+        z-index: 3;
+
         overflow: auto;
 
         max-height: 645px;

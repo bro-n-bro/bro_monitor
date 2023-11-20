@@ -67,6 +67,9 @@
                 </div>
             </div>
         </div>
+
+
+        <img src="@/assets/watermark.svg" alt="" class="watermark" v-if="!loading">
     </div>
 </template>
 
@@ -148,6 +151,9 @@
 
     .hor_scroll
     {
+        position: relative;
+        z-index: 3;
+
         width: calc(100% + 16px);
         margin: -12px -8px;
     }

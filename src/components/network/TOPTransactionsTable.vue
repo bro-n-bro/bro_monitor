@@ -34,6 +34,9 @@
             </div>
         </div>
     </div>
+
+
+    <img src="@/assets/watermark.svg" alt="" class="watermark" v-if="!loading && props.size == 'big'">
 </template>
 
 
@@ -187,6 +190,9 @@
 
     .block .data
     {
+        position: relative;
+        z-index: 3;
+
         display: flex;
 
         margin-bottom: -13px;

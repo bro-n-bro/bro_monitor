@@ -214,12 +214,12 @@
                         ? responseData.value = store.cache.charts.restake_token_amount = response.data
                         : responseData.value = response.data
                 })
+
+            // Init chart
+            initChart()
         } catch (error) {
             console.error(error)
         }
-
-        // Init chart
-        initChart()
     }
 
 

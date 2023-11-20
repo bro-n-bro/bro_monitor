@@ -113,7 +113,7 @@
     import { ref, inject } from 'vue'
     import { useGlobalStore } from '@/stores'
     import { useNotification } from '@kyvg/vue3-notification'
-    import { prepareTx, sendTx, prepareEVMOSTx, sendEVMOSTx } from '@/utils'
+    // import { prepareTx, sendTx, prepareEVMOSTx, sendEVMOSTx } from '@/utils'
 
 
     const i18n = inject('i18n'),

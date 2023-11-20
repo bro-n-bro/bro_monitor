@@ -78,7 +78,7 @@
                 borderColor: '#282828',
                 strokeDashArray: 2,
                 padding: {
-                    left: 8,
+                    left: 30,
                     right: 0,
                     bottom: -8,
                     top: -20,
@@ -120,8 +120,36 @@
                     return html
                 }
             },
+            annotations: {
+                yaxis: [{
+                    y: 1393500000000,
+                    strokeDashArray: 0,
+                    borderColor: '#EB5757',
+                    label: {
+                        show: true,
+                        text: 'max gas',
+                        position: 'left',
+                        offsetX: 52,
+                        offsetY: 5,
+                        borderColor: '#EB5757',
+                        borderRadius: 4,
+                        style: {
+                            color: "#fff",
+                            fontSize: '12px',
+                            fontFamily: 'Inter',
+                            background: '#EB5757',
+                            padding: {
+                                left: 4,
+                                right: 4,
+                                top: 2,
+                                bottom: 2,
+                            }
+                        }
+                    }
+                }]
+            },
             yaxis: {
-                show: true,
+                // logarithmic: true,
                 min: computed(() => chartMin.value),
                 max: computed(() => chartMax.value),
                 labels: {
@@ -131,7 +159,7 @@
                         fontSize: '12px',
                         fontFamily: 'var(--font_family)',
                     },
-                    offsetX: -8,
+                    offsetX: 12,
                     formatter: value => { return Number(value.toFixed(0)).toLocaleString('ru-RU') },
                 },
                 axisBorder: {
@@ -214,12 +242,12 @@
                         ? responseData.value = store.cache.charts.gas_paid = response.data
                         : responseData.value = response.data
                 })
+
+            // Init chart
+            initChart()
         } catch (error) {
             console.error(error)
         }
-
-        // Init chart
-        initChart()
     }
 
 
@@ -229,7 +257,7 @@
         responseData.value.forEach(el => chartData.value.push(el.y))
 
         chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
-        chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
+        chartMax.value = 1393500000000
 
         // Set labels
         responseData.value.forEach(el => {
