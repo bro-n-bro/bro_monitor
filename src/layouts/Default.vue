@@ -189,6 +189,12 @@
 
 
 
+    .blocks
+    {
+        position: relative;
+    }
+
+
     .blocks + .blocks
     {
         margin-top: 50px;
@@ -206,6 +212,9 @@
 
     .blocks .row
     {
+        position: relative;
+        z-index: 3;
+
         margin-bottom: -20px;
         margin-left: -11px;
 
@@ -259,7 +268,6 @@
 
         border: 2px solid #212121;
         border-radius: 16px;
-        background: #000;
     }
 
     .block.locked
