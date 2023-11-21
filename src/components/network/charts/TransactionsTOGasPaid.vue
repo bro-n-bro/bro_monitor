@@ -17,6 +17,8 @@
         <Loader v-if="loading" />
 
         <apexchart v-else class="chart" height="316px" :options="chartOptions" :series="series" />
+
+        <img src="@/assets/watermark.svg" alt="" class="watermark" v-if="!loading">
     </div>
 </template>
 
@@ -266,19 +268,6 @@
     })
 
 
-    // // Event "updateChartTimeRange"
-    // emitter.on('updateChartTimeRange', async ({ type }) => {
-    //     // Show loader
-    //     loading.value = true
-
-    //     // Reset chart data
-    //     resetData()
-
-    //     // Init chart
-    //     initChart()
-    // })
-
-
     // Reset chart data
     function resetData() {
         // Show loader
@@ -333,6 +322,7 @@
     .block .chart
     {
         position: relative;
+        z-index: 3;
     }
 
 
@@ -347,5 +337,4 @@
 
         background: none;
     }
-
 </style>

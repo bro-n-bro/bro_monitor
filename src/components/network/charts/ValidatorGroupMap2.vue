@@ -19,6 +19,8 @@
             <div class="hor_legends_title">{{ $t('message.network_charts_commission_title') }}</div>
 
             <apexchart class="chart" height="400px" :options="chartOptions" :series="series" />
+
+            <img src="@/assets/watermark.svg" alt="" class="watermark">
         </div>
     </div>
 </template>
@@ -198,6 +200,7 @@
     .block .chart
     {
         position: relative;
+        z-index: 3;
     }
 
 

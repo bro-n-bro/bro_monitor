@@ -32,11 +32,10 @@
                     <div class="col_count">{{ transaction.amount.toLocaleString('ru-RU') }}</div>
                 </div>
             </div>
+
+            <img src="@/assets/watermark.svg" alt="" class="watermark" v-if="!loading">
         </div>
     </div>
-
-
-    <img src="@/assets/watermark.svg" alt="" class="watermark" v-if="!loading && props.size == 'big'">
 </template>
 
 
@@ -259,6 +258,9 @@
 
     .table
     {
+        position: relative;
+        z-index: 3;
+
         width: calc(100% - 380px);
         margin-left: auto;
     }
@@ -266,6 +268,9 @@
 
     .table .scroll
     {
+        position: relative;
+        z-index: 3;
+
         overflow: auto;
 
         max-height: 262px;

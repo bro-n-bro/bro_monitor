@@ -262,12 +262,21 @@
                     </tr>
                 </tbody>
             </table>
+
+            <img src="@/assets/watermark.svg" alt="" class="watermark">
         </div>
     </div>
 </template>
 
 
 <style scoped>
+    table
+    {
+        position: relative;
+        z-index: 3;
+    }
+
+
     table td.col_address
     {
         width: 190px;

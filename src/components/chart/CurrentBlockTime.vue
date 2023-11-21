@@ -4,6 +4,8 @@
 
         <apexchart v-else height="710px" :options="chartOptions" :series="series" />
     </div>
+
+    <img src="@/assets/watermark.svg" alt="" class="watermark" v-if="!loading">
 </template>
 
 
@@ -114,7 +116,7 @@
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_date">' + responseData.value[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">' + i18n.global.t('message.network_charts_current_block_time_title') + ': ' + responseData.value[dataPointIndex].н.toFixed(2) + ' ' + i18n.global.t('message.network_charts_unit_sec') + '</div>' +
+                                    '<div class="tooltip_val">' + i18n.global.t('message.network_charts_current_block_time_title') + ': ' + responseData.value[dataPointIndex].y.toFixed(2) + ' ' + i18n.global.t('message.network_charts_unit_sec') + '</div>' +
                                 '</div>'
 
                     return html

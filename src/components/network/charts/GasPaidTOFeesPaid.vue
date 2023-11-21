@@ -230,7 +230,7 @@
                 tooltip: {
                     enabled: false
                 }
-            },
+            }
         })
 
 

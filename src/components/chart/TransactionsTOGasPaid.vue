@@ -4,6 +4,8 @@
 
         <apexchart v-else height="710px" :options="chartOptions" :series="series" />
     </div>
+
+    <img src="@/assets/watermark.svg" alt="" class="watermark" v-if="!loading">
 </template>
 
 

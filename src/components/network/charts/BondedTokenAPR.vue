@@ -243,10 +243,10 @@
 
 
     watch(computed(() => store.cache.charts.apr), () => {
-        if(store.cache.charts.bonded_tokens) {
-            // Reset chart data
-            resetData()
+        // Reset chart data
+        resetData()
 
+        if(store.cache.charts.bonded_tokens) {
             // Init chart
             initChart()
         }
@@ -254,10 +254,10 @@
 
 
     watch(computed(() => store.cache.charts.bonded_tokens), () => {
-        if(store.cache.charts.apr) {
-            // Reset chart data
-            resetData()
+        // Reset chart data
+        resetData()
 
+        if(store.cache.charts.apr) {
             // Init chart
             initChart()
         }
