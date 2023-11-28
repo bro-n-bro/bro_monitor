@@ -59,6 +59,9 @@
 <style scoped>
     .networks
     {
+        position: sticky;
+        top: 132px;
+
         padding: 14px;
 
         border-radius: 20px;

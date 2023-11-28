@@ -82,7 +82,7 @@
     {
         display: flex;
 
-        margin-bottom: 29px;
+        margin-bottom: 19px;
 
         justify-content: flex-start;
         align-items: center;

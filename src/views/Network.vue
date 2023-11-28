@@ -1,5 +1,5 @@
 <template>
-    <div class="tabs">
+    <div class="tabs sticky">
         <button class="btn" :class="{'active': store.currentNetworkTab == 1}" @click.prevent="setActiveTab(1)">
             {{ $t('message.network_tab_network') }}
         </button>
@@ -20,7 +20,7 @@
 
     <!-- Network tab -->
     <template v-if="store.currentNetworkTab == 1">
-    <div class="head">
+    <div class="head sticky">
         <div class="page_title" v-if="store.currentNetworkType == 1 || store.currentNetworkType == 2">
             {{ $t('message.network_network_page_title') }}
         </div>
@@ -65,7 +65,7 @@
 
     <!-- Accounts -->
     <template v-if="store.currentNetworkTab == 2">
-    <div class="head">
+    <div class="head sticky">
         <div class="page_title" v-if="store.currentNetworkType == 1">
             {{ $t('message.network_accounts_blocks_page_title') }}
         </div>
@@ -102,7 +102,7 @@
 
     <!-- IBC & Relaying tab -->
     <template v-if="store.currentNetworkTab == 3">
-    <div class="head">
+    <div class="head sticky">
         <div class="page_title" v-if="store.currentNetworkType == 1">
             {{ $t('message.network_IBC_page_title') }}
         </div>
@@ -136,7 +136,7 @@
 
     <!-- Validators -->
     <template v-if="store.currentNetworkTab == 4">
-    <div class="head">
+    <div class="head sticky">
         <div class="page_title" v-if="store.currentNetworkType == 1">
             {{ $t('message.network_validators_blocks_page_title') }}
         </div>

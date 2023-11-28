@@ -1,7 +1,7 @@
 <template>
     <div class="head">
         <div class="back_btn">
-            <router-link :to="router.options.history.state.back ? router.options.history.state.back : '/network/cosmoshub'" class="btn">
+            <router-link :to="`/network/${store.currentNetwork}?tab=${store.currentNetworkTab}&type=${store.currentNetworkType}`" class="btn">
                 <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_arr_hor"></use></svg>
             </router-link>
         </div>
@@ -141,6 +141,7 @@
 
 
 <script setup>
+    import { onBeforeMount } from 'vue'
     import { useRouter } from 'vue-router'
     import { useGlobalStore } from '@/stores'
 
@@ -172,6 +173,9 @@
 
     const router = useRouter(),
         store = useGlobalStore()
+
+
+    onBeforeMount(() => store.chartLoading = true)
 </script>
 
 

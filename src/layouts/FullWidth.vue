@@ -28,20 +28,6 @@
 
 
 <style>
-    .head
-    {
-        display: flex;
-
-        margin-bottom: 20px;
-
-        justify-content: flex-start;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
-    }
-
-
-
     .head .back_btn .btn
     {
         color: currentColor;

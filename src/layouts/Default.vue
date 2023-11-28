@@ -42,6 +42,8 @@
     .grid
     {
         justify-content: space-between;
+        align-items: stretch;
+        align-content: stretch;
     }
 
 
@@ -64,12 +66,21 @@
         display: flex;
 
         width: 100%;
-        margin-bottom: 34px;
+        padding-bottom: 32px;
 
         justify-content: flex-start;
         align-items: stretch;
         align-content: stretch;
         flex-wrap: nowrap;
+    }
+
+    .tabs.sticky
+    {
+        position: sticky;
+        z-index: 9;
+        top: 132px;
+
+        background: var(--bg);
     }
 
 
@@ -109,12 +120,21 @@
     {
         display: flex;
 
-        margin-bottom: 20px;
+        padding-bottom: 20px;
 
         justify-content: space-between;
         align-items: center;
         align-content: center;
         flex-wrap: wrap;
+    }
+
+    .head.sticky
+    {
+        position: sticky;
+        z-index: 9;
+        top: 184px;
+
+        background: var(--bg);
     }
 
 
