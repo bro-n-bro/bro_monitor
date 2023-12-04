@@ -56,6 +56,10 @@ export const useGlobalStore = defineStore('global', {
             avatar: null
         },
 
+        stakeMin: 20000000,
+
+        scrollOffset: 0,
+
         showManageModal: false,
         showManageSuccessModal: false,
 

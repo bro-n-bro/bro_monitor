@@ -3,9 +3,9 @@
         <Loader v-if="loading" />
 
         <apexchart v-else height="710px" :options="chartOptions" :series="series" />
-    </div>
 
-    <img src="@/assets/watermark.svg" alt="" class="watermark" v-if="!loading">
+        <img src="@/assets/watermark.svg" alt="" class="watermark right_top" v-if="!loading">
+    </div>
 </template>
 
 
@@ -259,7 +259,7 @@
         responseData.value.forEach(el => chartData.value.push(el.y))
 
         chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
-        chartMax.value = 1393500000000
+        chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
 
         // Set labels
         responseData.value.forEach(el => {

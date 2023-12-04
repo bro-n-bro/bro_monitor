@@ -196,7 +196,7 @@ export default {
 
 
             // Validator page
-            'validator_page_title': 'Validators / {moniker} Statistics',
+            'validator_page_title': '{moniker} Statistics',
             'validator_operator_address_label': 'Operator Address',
             'validator_btn_website': 'Website',
             'validator_btn_mintscan': 'Mintscan',
@@ -280,11 +280,11 @@ export default {
 
 
             // Validators page
-            'validators_page_title': 'Validators / -',
+            'validators_page_title': 'Validators',
 
 
             // Rich list page
-            'rich_list_page_title': 'Accounts / Rich List',
+            'rich_list_page_title': 'Rich List',
 
             'rich_list_table_label_number': '№',
             'rich_list_table_label_address': 'Address',
@@ -296,7 +296,7 @@ export default {
 
 
             // Whale transactions page
-            'whale_transactions_page_title': 'Accounts / 🐳 Whale Transactions',
+            'whale_transactions_page_title': '🐳 Whale Transactions',
 
             'whale_transactions_table_label_address': 'Address',
             'whale_transactions_table_label_action': 'Action',
@@ -315,11 +315,11 @@ export default {
 
 
             // TOP Transactions page
-            'TOP_transactions_page_title': 'Accounts / Month TOP Transactions',
+            'TOP_transactions_page_title': 'Month TOP Transactions',
 
 
             // Governance participation page
-            'governance_participation_page_title': 'Accounts / Governance Participation',
+            'governance_participation_page_title': 'Governance Participation',
 
             'governance_participation_table_label_number': 'Number Of Proposal',
             'governance_participation_table_label_account_validator_amount': 'Account/ Validator Amount',

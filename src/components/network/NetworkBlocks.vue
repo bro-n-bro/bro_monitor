@@ -43,8 +43,6 @@
             <!-- Last block height -->
             <LastBlockHeight />
         </div>
-
-        <img src="@/assets/watermark.svg" alt="" class="watermark">
     </div>
 </template>
 

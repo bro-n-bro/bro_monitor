@@ -32,9 +32,9 @@
                     <div class="col_count">{{ transaction.amount.toLocaleString('ru-RU') }}</div>
                 </div>
             </div>
-
-            <img src="@/assets/watermark.svg" alt="" class="watermark" v-if="!loading">
         </div>
+
+        <img src="@/assets/watermark.svg" alt="" class="watermark" v-if="!loading">
     </div>
 </template>
 

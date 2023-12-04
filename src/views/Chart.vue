@@ -142,8 +142,8 @@
 
 <script setup>
     import { onBeforeMount } from 'vue'
-    import { useRouter } from 'vue-router'
     import { useGlobalStore } from '@/stores'
+    import { useWindowScroll } from '@vueuse/core'
 
     // Components
     import TimeRange from  '@/components/TimeRange.vue'
@@ -171,11 +171,15 @@
     import UniqueVotesPerProposalChart from  '@/components/chart/UniqueVotesPerProposal.vue'
 
 
-    const router = useRouter(),
-        store = useGlobalStore()
+    const store = useGlobalStore(),
+        { x, y } = useWindowScroll()
 
 
-    onBeforeMount(() => store.chartLoading = true)
+    onBeforeMount(() => {
+        y.value = 0
+
+        store.chartLoading = true
+    })
 </script>
 
 

@@ -17,6 +17,8 @@
         <Loader v-if="loading" />
 
         <apexchart v-else class="chart" height="200px" :options="chartOptions" :series="series" />
+
+        <img src="@/assets/watermark.svg" alt="" class="watermark small" v-if="!loading">
     </div>
 </template>
 

@@ -3,9 +3,9 @@
         <Loader v-if="loading" />
 
         <apexchart v-else height="710px" :options="chartOptions" :series="series" />
-    </div>
 
-    <img src="@/assets/watermark.svg" alt="" class="watermark" v-if="!loading">
+        <img src="@/assets/watermark.svg" alt="" class="watermark right_top" v-if="!loading">
+    </div>
 </template>
 
 

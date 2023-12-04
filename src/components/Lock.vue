@@ -30,45 +30,52 @@
         left: 0;
 
         display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
 
         width: 100%;
         height: 100%;
+        padding-top: 68px;
 
         text-align: center;
 
         border-radius: 16px;
         background: rgba(0, 0, 0, .92);
-
-        justify-content: center;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
     }
 
 
     .lock .icon
     {
+        position: absolute;
+
         display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
 
-        width: 34px;
-        height: 34px;
-        margin: 0 auto 14px;
+        width: 64px;
+        height: 64px;
+        margin: auto;
 
-        border-radius: 10px;
+        transition: .2s linear .2s;
+
+        border-radius: 20px;
         background: #191919;
 
-        justify-content: center;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
+        inset: 0;
     }
 
     .lock .icon svg
     {
         display: block;
 
-        width: 13px;
-        height: 16px;
+        width: 25px;
+        height: 31px;
+
+        transition: .2s linear .2s;
     }
 
 
@@ -78,9 +85,16 @@
         font-weight: 600;
         line-height: normal;
 
+        visibility: hidden;
+
         width: 100%;
         margin: 0;
         padding: 0;
+
+        transition: .2s linear .1s;
+        transform: translateY(100%);
+
+        opacity: 0;
     }
 
 
@@ -89,12 +103,15 @@
         font-size: 12px;
 
         display: block;
+        visibility: hidden;
 
         margin: 14px auto 0;
         padding: 10px 16px;
 
-        transition: background .2s linear;
+        transition: .2s linear;
+        transform: translateY(100%);
 
+        opacity: 0;
         border-radius: 16px;
         background: #970fff;
     }
@@ -102,5 +119,49 @@
     .lock .btn:hover
     {
         background: #7700e1;
+    }
+
+
+    .lock:hover .icon
+    {
+        top: -88px;
+
+        width: 34px;
+        height: 34px;
+
+        transition: .2s linear;
+
+        border-radius: 10px;
+    }
+
+
+    .lock:hover .icon svg
+    {
+        width: 13px;
+        height: 16px;
+
+        transition: .2s linear;
+    }
+
+
+    .lock:hover .title
+    {
+        visibility: visible;
+
+        transition: .2s linear .1s;
+        transform: translateY(0);
+
+        opacity: 1;
+    }
+
+
+    .lock:hover .btn
+    {
+        visibility: visible;
+
+        transition: .2s linear .2s;
+        transform: translateY(0);
+
+        opacity: 1;
     }
 </style>

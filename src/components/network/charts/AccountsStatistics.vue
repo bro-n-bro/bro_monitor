@@ -14,7 +14,7 @@
             {{ $t('message.network_charts_accounts_statistics_title') }}
         </div>
 
-        <Lock v-if="store.user.balance / Math.pow(10, store.networks[store.currentNetwork].exponent) < 50" />
+        <Lock v-if="store.user.balance < store.stakeMin" />
     </div>
 </template>
 

@@ -115,6 +115,15 @@ const router = createRouter({
 })
 
 
+router.beforeEach((to, from) => {
+	let store = useGlobalStore()
+
+	!store.scrollOffset
+		? store.scrollOffset = window.scrollY
+		: store.scrollOffset = 0
+})
+
+
 router.beforeResolve(async (to, from, next) => {
 	let store = useGlobalStore()
 

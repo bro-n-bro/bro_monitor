@@ -1,4 +1,6 @@
 <template>
+    <div style="position: fixed; left: 0; top: 0; z-index: 1000;">{{ store.scrollOffset }}</div>
+
     <component :is="layout" />
 
     <!-- Manage modal-->
