@@ -111,16 +111,28 @@ const routes = [
 
 const router = createRouter({
 	history: createWebHistory(),
-	routes
+	routes,
+	scrollBehavior (to, from, savedPosition) {
+		let store = useGlobalStore()
+
+		return { top: store.scrollOffset && store.scrollReturn ? store.scrollOffset : 0 }
+	}
 })
 
 
 router.beforeEach((to, from) => {
 	let store = useGlobalStore()
 
-	!store.scrollOffset
-		? store.scrollOffset = window.scrollY
-		: store.scrollOffset = 0
+	if(store.scrollOffset && !store.scrollReturn) {
+		store.scrollReturn = true
+	} else {
+		store.scrollOffset = 0
+		store.scrollReturn = false
+	}
+
+	if(!store.scrollOffset) {
+		store.scrollOffset = window.scrollY
+	}
 })
 
 

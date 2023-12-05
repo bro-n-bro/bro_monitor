@@ -163,7 +163,7 @@
     {
         overflow: auto;
 
-        max-height: 252px;
+        max-height: 248px;
     }
 
     .big .scroll
@@ -183,7 +183,7 @@
 
     .block .block
     {
-        margin: 0 -8px -12px;
+        margin: 0 -12px -12px;
         padding: 0;
 
         border: none;
@@ -197,6 +197,8 @@
 
     .block .block .hor_scroll
     {
+        overflow: hidden;
+
         width: 100%;
         margin: 0;
 
@@ -236,29 +238,27 @@
         line-height: 100%;
 
         display: flex;
+        align-content: stretch;
+        align-items: stretch;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
 
         text-align: right;
         white-space: nowrap;
 
         border-top: 1px solid #191919;
-
-        justify-content: flex-start;
-        align-items: stretch;
-        align-content: stretch;
-        flex-wrap: nowrap;
     }
 
 
     .transaction > *
     {
         display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: flex-start;
 
         padding: 7px 12px;
-
-        justify-content: flex-start;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
     }
 
     .transaction > * + *
@@ -270,11 +270,10 @@
     .transaction > * > div
     {
         display: flex;
-
-        justify-content: flex-start;
-        align-items: center;
         align-content: center;
+        align-items: center;
         flex-wrap: wrap;
+        justify-content: flex-start;
     }
 
 
@@ -317,9 +316,10 @@
 
     .transaction .col_TX_link a
     {
-        color: #950fff;
         font-size: 12px;
         line-height: 100%;
+
+        color: #950fff;
     }
 
 
@@ -327,11 +327,10 @@
     .from_to
     {
         display: flex;
-
-        justify-content: flex-start;
-        align-items: center;
         align-content: center;
+        align-items: center;
         flex-wrap: wrap;
+        justify-content: flex-start;
     }
 
 
@@ -347,18 +346,18 @@
 
     .moniker a
     {
-        color: currentColor;
         font-size: 12px;
         line-height: 100%;
 
         display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: flex-start;
 
         text-align: left;
 
-        justify-content: flex-start;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
+        color: currentColor;
     }
 
 
@@ -396,12 +395,11 @@
     .logos
     {
         display: flex;
-        flex-direction: row-reverse;
-
-        justify-content: flex-end;
-        align-items: center;
         align-content: center;
+        align-items: center;
+        flex-direction: row-reverse;
         flex-wrap: wrap;
+        justify-content: flex-end;
     }
 
 
@@ -434,11 +432,11 @@
 
     .link a
     {
-        color: currentColor;
-
         display: inline-block;
 
         vertical-align: top;
+
+        color: currentColor;
     }
 
 </style>

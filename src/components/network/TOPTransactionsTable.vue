@@ -27,12 +27,13 @@
             </div>
 
             <div class="scroll">
-                <div class="transaction" v-for="(transaction, index) in store.cache.TOP_transactions" :key="index" @mouseover="chart.toggleDataPointSelection(index)">
+                <div class="transaction" v-for="(transaction, index) in store.cache.TOP_transactions" :key="index" @mouseover="chart.toggleDataPointSelection(index)" @mouseleave="chart.toggleDataPointSelection(index)" :class="{ hover: transactionHover == index }">
                     <div class="col_type">{{ transaction.type }}</div>
                     <div class="col_count">{{ transaction.amount.toLocaleString('ru-RU') }}</div>
                 </div>
             </div>
         </div>
+
 
         <img src="@/assets/watermark.svg" alt="" class="watermark" v-if="!loading">
     </div>
@@ -50,6 +51,7 @@
     const store = useGlobalStore(),
         props = defineProps(['size']),
         loading = ref(true),
+        transactionHover = ref(null),
         chart = ref(null),
         chartData = ref([]),
         chartColors = ref(['#C983FF', '#B75DFF', '#A636FF', '#800CDB', '#4B0582', '#550694', '#6B09B7']),
@@ -57,7 +59,13 @@
         series = computed(() => chartData.value),
         chartOptions = reactive({
             chart: {
-                type: 'donut'
+                type: 'donut',
+                events: {
+                    dataPointSelection: function(event, chartContext, config) {
+                        console.log(config.w.config.labels[config.dataPointIndex]);
+                        console.log(config.w.config.series[config.dataPointIndex]);
+                    }
+                }
             },
             colors: computed(() => chartColors.value),
             theme: {
@@ -129,18 +137,22 @@
                 await fetch('https://rpc.bronbro.io/statistics/popular_transactions')
                     .then(res => res.json())
                     .then(response => {
-                        let other = { type: 'Other', amount: 0 }
-
                         store.cache.TOP_transactions = []
 
-                        // Set data
-                        response.data.forEach(el => {
-                            el.amount > 9999
-                                ? store.cache.TOP_transactions.push(el)
-                                : other.amount += el.amount
-                        })
+                        if(!props.size) {
+                            let other = { type: 'Other', amount: 0 }
 
-                        store.cache.TOP_transactions.push(other)
+                            // Set data
+                            response.data.forEach((el, i) => {
+                                i < 10
+                                    ? store.cache.TOP_transactions.push(el)
+                                    : other.amount += el.amount
+                            })
+
+                            store.cache.TOP_transactions.push(other)
+                        } else {
+                            store.cache.TOP_transactions = response.data
+                        }
 
                         // Hide loading
                         loading.value = false
@@ -158,6 +170,26 @@
 
         // Calc total
         store.cache.TOP_transactions.forEach(el => chartTotal.value += el.amount)
+
+        setTimeout(() => {
+            let series = document.querySelectorAll('.apexcharts-pie-series')
+
+            series.forEach(el => {
+                el.addEventListener('mouseover', e => {
+                    let index = e.target.closest('.apexcharts-pie-series').getAttribute('data:realIndex')
+
+                    transactionHover.value = index
+
+                    chart.value.toggleDataPointSelection(index)
+                })
+
+                el.addEventListener('mouseleave', e => {
+                    transactionHover.value = null
+
+                    chart.value.toggleDataPointSelection(e.target.getAttribute('data:realIndex'))
+                })
+            })
+        })
     })
 </script>
 
@@ -167,13 +199,15 @@
     {
         overflow: hidden;
 
-        border-radius: 13px 13px 0 0;
+        border-radius: 0;
     }
 
     .block .titles > *
     {
-        min-height: 46px;
-        padding: 8px 12px;
+        line-height: 15px;
+
+        min-height: 27px;
+        padding: 6px;
     }
 
 
@@ -193,13 +227,12 @@
         z-index: 3;
 
         display: flex;
-
-        margin-bottom: -13px;
-
-        justify-content: space-between;
-        align-items: flex-start;
         align-content: flex-start;
+        align-items: flex-start;
         flex-wrap: wrap;
+        justify-content: space-between;
+
+        padding-bottom: 16px;
     }
 
 
@@ -208,10 +241,11 @@
     {
         position: relative;
 
+        align-self: center;
+
         width: 291px;
         max-width: 100%;
-
-        pointer-events: none;
+        margin: 0 auto;
     }
 
 
@@ -223,25 +257,24 @@
         left: 0;
 
         display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
 
         width: 100%;
         height: 100%;
 
         text-align: center;
         pointer-events: none;
-
-        justify-content: center;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
     }
 
     .piechart .total .label
     {
-        color: #555;
-
         width: 100%;
         margin-bottom: 16px;
+
+        color: #555;
     }
 
 
@@ -261,7 +294,7 @@
         position: relative;
         z-index: 3;
 
-        width: calc(100% - 380px);
+        width: calc(100% - 470px);
         margin-left: auto;
     }
 
@@ -273,7 +306,7 @@
 
         overflow: auto;
 
-        max-height: 262px;
+        max-height: 308px;
     }
 
     .table .scroll::-webkit-scrollbar
@@ -303,19 +336,19 @@
     .table .transaction
     {
         font-size: 12px;
-        line-height: 100%;
+        line-height: 15px;
 
         display: flex;
+        align-content: stretch;
+        align-items: stretch;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
 
+        transition: background .2s linear;
         text-align: right;
         white-space: nowrap;
 
-        border: 1px solid #191919;
-
-        justify-content: flex-start;
-        align-items: stretch;
-        align-content: stretch;
-        flex-wrap: nowrap;
+        border-bottom: 1px solid #191919;
     }
 
     .table .transaction + .transaction
@@ -324,16 +357,22 @@
     }
 
 
+    .table .transaction:hover,
+    .table .transaction.hover
+    {
+        background: #1a1a1a;
+    }
+
+
     .table .transaction > *
     {
         display: flex;
-
-        padding: 8px 12px;
-
-        justify-content: flex-end;
-        align-items: center;
         align-content: center;
+        align-items: center;
         flex-wrap: wrap;
+        justify-content: flex-end;
+
+        padding: 6px;
     }
 
     .table .transaction > * + *
@@ -357,26 +396,27 @@
 
     .block.big .data
     {
-        margin-bottom: 0;
-
-        align-items: stretch;
         align-content: stretch;
+        align-items: stretch;
+
+        padding: 0;
     }
 
 
     .block.big .piechart
     {
         display: flex;
+        align-content: center;
+        align-items: center;
+        align-self: auto;
+        flex-wrap: wrap;
+        justify-content: center;
 
         width: 50%;
+        padding: 40px;
 
         border-radius: 14px 0 0 14px;
         background: #0a0a0a;
-
-        justify-content: center;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
     }
 
 
@@ -391,20 +431,9 @@
     }
 
 
-    .block.big .titles
+    .block.big .scroll
     {
-        border-radius: 0;
+        max-height: 608px;
     }
 
-
-    .block.big .table .scroll
-    {
-        max-height: 684px;
-    }
-
-
-    .block.big .table .transaction > *
-    {
-        padding: 13px 12px;
-    }
 </style>

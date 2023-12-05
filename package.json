@@ -14,7 +14,7 @@
         "@kyvg/vue3-notification": "^3.0.2",
         "@vuepic/vue-datepicker": "^6.1.0",
         "@vueuse/core": "^10.3.0",
-        "apexcharts": "^3.42.0",
+        "apexcharts": "^3.44.1",
         "core-js": "^3.8.3",
         "date-fns": "^2.30.0",
         "gh-pages": "^4.0.0",

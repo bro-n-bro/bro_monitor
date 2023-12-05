@@ -28,26 +28,29 @@
 
 
 <style>
+    .head .back_btn
+    {
+        margin-right: 16px;
+    }
+
+
     .head .back_btn .btn
     {
-        color: currentColor;
-
         display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
 
         width: 36px;
         height: 36px;
-        margin-right: 16px;
 
         transition: background .2s linear;
         text-decoration: none;
 
+        color: currentColor;
         border-radius: 50%;
         background: #141414;
-
-        justify-content: center;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
     }
 
 
@@ -71,6 +74,8 @@
     {
         font-size: 24px;
         font-weight: 600;
+
+        width: calc(100% - 52px);
     }
 
 

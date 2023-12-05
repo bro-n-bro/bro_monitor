@@ -11,6 +11,7 @@ const network = {
     address_prefix: 'cosmos',
     exponent: 6,
     unbonding_time: 0,
+    stakeMin: 20000000,
 }
 
 export default network

@@ -284,7 +284,7 @@
         position: relative;
 
         min-height: 146px;
-        padding: 12px 8px;
+        padding: 12px;
 
         border: 2px solid #212121;
         border-radius: 16px;
@@ -338,7 +338,7 @@
         position: absolute;
         z-index: 5;
         top: 8px;
-        right: 8px;
+        right: 12px;
 
         display: none;
 
@@ -406,7 +406,7 @@
         position: relative;
         z-index: 9;
 
-        width: calc(100% - 100px);
+        width: calc(100% - 92px);
         margin-bottom: 24px;
         padding-top: 2px;
     }
