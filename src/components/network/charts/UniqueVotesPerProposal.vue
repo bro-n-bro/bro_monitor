@@ -19,6 +19,8 @@
         <apexchart v-else class="chart" height="266px" :options="chartOptions" :series="series" />
 
         <img src="@/assets/watermark.svg" alt="" class="watermark small" v-if="!loading">
+
+        <Lock v-if="store.user.balance < store.networks[store.currentNetwork].stakeMin" />
     </div>
 </template>
 
@@ -29,6 +31,7 @@
 
     // Components
     import Loader from '@/components/Loader.vue'
+    import Lock from  '@/components/Lock.vue'
 
 
     const store = useGlobalStore(),

@@ -204,15 +204,20 @@
 
     // Set active tab
     function setActiveTab(value) {
+        // Change tab
         store.currentNetworkTab = value
 
         // Set params to URL
         urlParams.tab = value
+
+        // Scroll to top
+        window.scrollTo({ top: 0 })
     }
 
 
     // Set active type
     function setActiveType(value) {
+        // Change type
         store.currentNetworkType = value
 
         // Set params to URL

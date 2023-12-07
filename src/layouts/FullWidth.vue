@@ -74,8 +74,6 @@
     {
         font-size: 24px;
         font-weight: 600;
-
-        width: calc(100% - 52px);
     }
 
 

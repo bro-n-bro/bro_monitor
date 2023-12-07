@@ -112,7 +112,7 @@ const routes = [
 const router = createRouter({
 	history: createWebHistory(),
 	routes,
-	scrollBehavior (to, from, savedPosition) {
+	scrollBehavior() {
 		let store = useGlobalStore()
 
 		return { top: store.scrollOffset && store.scrollReturn ? store.scrollOffset : 0 }

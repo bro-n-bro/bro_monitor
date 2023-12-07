@@ -15,6 +15,8 @@
         </div>
 
         <WhaleTransactionsTable />
+
+        <Lock v-if="store.user.balance < store.networks[store.currentNetwork].stakeMin" />
     </div>
 </template>
 
@@ -25,6 +27,7 @@
 
     // Components
     import WhaleTransactionsTable from '@/components/network/WhaleTransactionsTable.vue'
+    import Lock from  '@/components/Lock.vue'
 
 
     const store = useGlobalStore(),

@@ -13,6 +13,8 @@
         <div class="title">
             {{ $t('message.network_charts_rich_list_title') }}
         </div>
+
+        <!-- <Lock v-if="store.user.balance < store.networks[store.currentNetwork].stakeMin" /> -->
     </div>
 </template>
 
@@ -20,6 +22,9 @@
 <script setup>
     import { inject } from 'vue'
     import { useGlobalStore } from '@/stores'
+
+    // Components
+    import Lock from  '@/components/Lock.vue'
 
 
     const store = useGlobalStore(),

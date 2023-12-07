@@ -27,7 +27,7 @@
             </div>
 
             <div class="scroll">
-                <div class="transaction" v-for="(transaction, index) in store.cache.TOP_transactions" :key="index" @mouseover="chart.toggleDataPointSelection(index)" @mouseleave="chart.toggleDataPointSelection(index)" :class="{ hover: transactionHover == index }">
+                <div class="transaction" v-for="(transaction, index) in transactions" :key="index" @mouseover="chart.toggleDataPointSelection(index)" @mouseleave="chart.toggleDataPointSelection(index)" :class="{ hover: transactionHover == index }">
                     <div class="col_type">{{ transaction.type }}</div>
                     <div class="col_count">{{ transaction.amount.toLocaleString('ru-RU') }}</div>
                 </div>
@@ -52,6 +52,7 @@
         props = defineProps(['size']),
         loading = ref(true),
         transactionHover = ref(null),
+        transactions = ref([]),
         chart = ref(null),
         chartData = ref([]),
         chartColors = ref(['#C983FF', '#B75DFF', '#A636FF', '#800CDB', '#4B0582', '#550694', '#6B09B7']),
@@ -131,28 +132,25 @@
 
 
     onBeforeMount(async () => {
+        // Clear array
+        transactions.value = []
+
         // Get data
         if (!store.cache.TOP_transactions) {
             try {
                 await fetch('https://rpc.bronbro.io/statistics/popular_transactions')
                     .then(res => res.json())
                     .then(response => {
+                        // Clear cache
                         store.cache.TOP_transactions = []
 
-                        if(!props.size) {
-                            let other = { type: 'Other', amount: 0 }
+                        // Set cache
+                        store.cache.TOP_transactions = response.data
 
-                            // Set data
-                            response.data.forEach((el, i) => {
-                                i < 10
-                                    ? store.cache.TOP_transactions.push(el)
-                                    : other.amount += el.amount
-                            })
-
-                            store.cache.TOP_transactions.push(other)
-                        } else {
-                            store.cache.TOP_transactions = response.data
-                        }
+                        // Formatter
+                        !props.size
+                            ? formatter(response.data)
+                            : transactions.value = store.cache.TOP_transactions
 
                         // Hide loading
                         loading.value = false
@@ -166,11 +164,16 @@
         }
 
         // Set chart data
-        store.cache.TOP_transactions.forEach(el => chartData.value.push(el.amount))
+        !props.size
+            ? formatter(store.cache.TOP_transactions)
+            : transactions.value = store.cache.TOP_transactions
+
+        transactions.value.forEach(el => chartData.value.push(el.amount))
 
         // Calc total
         store.cache.TOP_transactions.forEach(el => chartTotal.value += el.amount)
 
+        // Donut hover
         setTimeout(() => {
             let series = document.querySelectorAll('.apexcharts-pie-series')
 
@@ -191,6 +194,21 @@
             })
         })
     })
+
+
+    // Formatter
+    function formatter(data) {
+        let other = { type: 'Other', amount: 0 }
+
+        // Set data
+        data.forEach((el, i) => {
+            i < 10
+                ? transactions.value.push(el)
+                : other.amount += el.amount
+        })
+
+        transactions.value.push(other)
+    }
 </script>
 
 
@@ -435,5 +453,4 @@
     {
         max-height: 608px;
     }
-
 </style>

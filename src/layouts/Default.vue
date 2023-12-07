@@ -41,9 +41,9 @@
 <style>
     .grid
     {
-        justify-content: space-between;
-        align-items: stretch;
         align-content: stretch;
+        align-items: stretch;
+        justify-content: space-between;
     }
 
 
@@ -64,14 +64,13 @@
     .tabs
     {
         display: flex;
+        align-content: stretch;
+        align-items: stretch;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
 
         width: 100%;
         padding-bottom: 32px;
-
-        justify-content: flex-start;
-        align-items: stretch;
-        align-content: stretch;
-        flex-wrap: nowrap;
     }
 
     .tabs.sticky
@@ -86,7 +85,6 @@
 
     .tabs .btn
     {
-        color: #555;
         line-height: 100%;
 
         display: block;
@@ -97,6 +95,7 @@
         transition: .2s linear;
         text-align: left;
 
+        color: #555;
         border-bottom: 1px solid rgba(255, 255, 255, .1);
     }
 
@@ -108,9 +107,9 @@
     .tabs .btn:hover,
     .tabs .btn.active
     {
-        color: #950fff;
         font-weight: 500;
 
+        color: #950fff;
         border-color: #950fff;
     }
 
@@ -119,13 +118,12 @@
     .head
     {
         display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: flex-start;
 
         padding-bottom: 20px;
-
-        justify-content: space-between;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
     }
 
     .head.sticky
@@ -148,6 +146,10 @@
     .head .types
     {
         display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
 
         margin-left: auto;
         padding: 2px;
@@ -155,32 +157,26 @@
         border: 2px solid #212121;
         border-radius: 12px;
         background: #000;
-
-        justify-content: space-between;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
     }
 
 
     .head .types .btn
     {
-        color: rgba(255, 255, 255, .50);
         font-size: 16px;
 
         display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
 
         padding: 13px 7px;
 
         transition: .2s linear;
 
+        color: rgba(255, 255, 255, .50);
         border: 1px solid transparent;
         border-radius: 8px;
-
-        justify-content: center;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
     }
 
     .head .types .btn + .btn
@@ -203,7 +199,6 @@
     .head .types .btn.active
     {
         color: #970fff;
-
         border-color: #970fff;
     }
 
@@ -235,20 +230,20 @@
         position: relative;
         z-index: 3;
 
+        align-content: stretch;
+        align-items: stretch;
+
         margin-bottom: -20px;
         margin-left: -11px;
-
-        align-items: stretch;
-        align-content: stretch;
     }
 
     .blocks .row > *
     {
+        order: 100;
+
         width: calc(33.333% - 11px);
         margin-bottom: 20px;
         margin-left: 11px;
-
-        order: 100;
     }
 
     .blocks .row > *.pinned
@@ -298,12 +293,12 @@
 
     a.block
     {
-        color: currentColor;
-
         display: block;
 
         transition: border-color .2s linear;
         text-decoration: none;
+
+        color: currentColor;
     }
 
     a.block:hover
@@ -314,14 +309,14 @@
 
     .block .link
     {
-        color: #fff;
-
         position: absolute;
         z-index: 5;
         top: 8px;
         right: 8px;
 
         text-decoration: none;
+
+        color: #fff;
     }
 
     .block .link svg
@@ -341,11 +336,10 @@
         right: 12px;
 
         display: none;
-
-        justify-content: flex-start;
-        align-items: center;
         align-content: stretch;
+        align-items: center;
         flex-wrap: wrap;
+        justify-content: flex-start;
     }
 
     .col_main .block .btns
@@ -356,9 +350,11 @@
 
     .block .btns .btn
     {
-        color: currentColor;
-
         display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
 
         width: 34px;
         height: 34px;
@@ -367,13 +363,9 @@
         transition: background .2s linear;
         text-decoration: none;
 
+        color: currentColor;
         border-radius: 50%;
         background: #353535;
-
-        justify-content: center;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
     }
 
     .block .btns .btn + .btn
@@ -471,22 +463,21 @@
 
     .block .titles
     {
-        color: rgba(255, 255, 255, .70);
         font-size: 12px;
         line-height: 120%;
 
         display: flex;
+        align-content: stretch;
+        align-items: stretch;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
 
         padding-right: 6px;
 
         text-align: right;
 
+        color: rgba(255, 255, 255, .70);
         background: #141414;
-
-        justify-content: flex-start;
-        align-items: stretch;
-        align-content: stretch;
-        flex-wrap: nowrap;
     }
 
 
@@ -530,15 +521,14 @@
 
     .block .titles .icon
     {
-        color: #fff;
-
         display: none;
+        order: 2;
 
         width: 16px;
         height: 16px;
         margin-left: 4px;
 
-        order: 2;
+        color: #fff;
     }
 
 
@@ -572,7 +562,6 @@
 
     .block table th
     {
-        color: rgba(255, 255, 255, .70);
         font-size: 12px;
         font-weight: 400;
         line-height: 120%;
@@ -583,6 +572,7 @@
         text-align: right;
         vertical-align: top;
 
+        color: rgba(255, 255, 255, .70);
         border-bottom: 1px solid #191919;
         background: #141414;
     }
@@ -595,7 +585,6 @@
 
     .block table td
     {
-        color: #fff;
         font-size: 12px;
         line-height: 100%;
 
@@ -605,6 +594,7 @@
         text-align: right;
         vertical-align: middle;
 
+        color: #fff;
         border-top: 1px solid #191919;
     }
 
@@ -791,11 +781,11 @@
 
         .head .types
         {
+            flex-wrap: nowrap;
+
             width: 100%;
             margin-top: 20px;
             margin-left: 0;
-
-            flex-wrap: nowrap;
         }
 
 

@@ -143,7 +143,6 @@
 <script setup>
     import { onBeforeMount } from 'vue'
     import { useGlobalStore } from '@/stores'
-    import { useWindowScroll } from '@vueuse/core'
 
     // Components
     import TimeRange from  '@/components/TimeRange.vue'
@@ -171,13 +170,14 @@
     import UniqueVotesPerProposalChart from  '@/components/chart/UniqueVotesPerProposal.vue'
 
 
-    const store = useGlobalStore(),
-        { x, y } = useWindowScroll()
+    const store = useGlobalStore()
 
 
     onBeforeMount(() => {
-        y.value = 0
+        // Scroll to top
+        window.scrollTo({ top: 0 })
 
+        // Hide loader
         store.chartLoading = true
     })
 </script>
