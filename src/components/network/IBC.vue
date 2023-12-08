@@ -183,7 +183,7 @@
                         <td class="col_chain">
                             <div class="chain">
                                 <div class="logo">
-                                    <img src="@/assets/crescent_logo.png" alt="">
+                                    <img src="@/assets/crescenthub_logo.png" alt="">
                                 </div>
 
                                 <div>
@@ -285,7 +285,7 @@
                         <td class="col_chain">
                             <div class="chain">
                                 <div class="logo">
-                                    <img src="@/assets/omniflix_logo.png" alt="">
+                                    <img src="@/assets/omniflixhub_logo.png" alt="">
                                 </div>
 
                                 <div>
@@ -387,7 +387,7 @@
                         <td class="col_chain">
                             <div class="chain">
                                 <div class="logo">
-                                    <img src="@/assets/emoney_logo.png" alt="">
+                                    <!-- <img src="@/assets/emoney_logo.png" alt=""> -->
                                 </div>
 
                                 <div>
