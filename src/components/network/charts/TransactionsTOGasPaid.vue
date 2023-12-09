@@ -20,7 +20,7 @@
 
         <img src="@/assets/watermark.svg" alt="" class="watermark" v-if="!loading">
 
-        <Lock v-if="store.user.balance < store.networks[store.currentNetwork].stakeMin" />
+        <Lock v-if="store.isLocked()" />
     </div>
 </template>
 

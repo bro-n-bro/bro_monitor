@@ -367,6 +367,7 @@ export default {
             'btn_delegate': 'Delegate to your Bro',
             'btn_max': 'MAX',
             'btn_delegate_short': 'Delegate',
+            'btn_redelegate_short': 'Redelegate',
 
 
             'yes': 'Yes',
@@ -375,6 +376,7 @@ export default {
 
             // Manage modal
             'manage_modal_action_delegate': 'Delegate',
+            'manage_modal_action_redelegate': 'Redelegate',
 
             'manage_modal_validator_name': 'Bro_n_Bro',
             'manage_modal_commission': 'Commission',
@@ -386,11 +388,13 @@ export default {
             'manage_modal_staked_mount': 'Staked Amount',
             'manage_modal_available_balance': 'Available Balance',
 
-            'manage_modal_validator_delegate_label': 'Validator to Delegate',
             'manage_modal_delegate_amount': 'Amount to Delegate',
+            'manage_modal_redelegate_amount': 'Amount to Redelegate',
+            'manage_modal_validator_redelegate': 'Validator from Redelegate',
 
-            'manage_modal_validator_exp': 'Delegating to Bro_n_Bro will open all application features',
-            'manage_modal_amount_exp': 'Min: {amount} {token}',
+            'manage_modal_validator_placeholder': 'Name Validator',
+
+            'manage_modal_amount_exp': 'To have full experience using our stats dashboards, you will require to stake {percents}% with Bro_n_Bro Validator',
 
             'manage_modal_error_2': "tx parse error",
             'manage_modal_error_3': "invalid sequence",

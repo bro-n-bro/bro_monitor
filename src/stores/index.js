@@ -81,6 +81,8 @@ export const useGlobalStore = defineStore('global', {
 
         user: {
             balance: null,
+            available_balance: null,
+            min_delegation: null,
             moonPassport: null,
             userName: null,
             avatar: null
@@ -231,5 +233,31 @@ export const useGlobalStore = defineStore('global', {
             this.currentTimeRangeDates.push(from_date)
             this.currentTimeRangeDates.push(to_date)
         },
+
+
+        // Get user available balance
+        async getUserAvailableBalance() {
+            await fetch(`${this.networks[this.currentNetwork].lcd_api}/cosmos/bank/v1beta1/balances/${this.Keplr.account.address}`)
+                .then(response => response.json())
+                .then(data => {
+                    let availabel = data.balances.find(e => e.denom == this.networks[this.currentNetwork].denom)
+
+                    if (data.balances && data.balances.length && typeof availabel !== 'undefined') {
+                        this.user.available_balance = parseFloat(availabel.amount)
+                    }
+                })
+        },
+
+
+        // Calc min. delegation
+        calcMinDelegation() {
+            this.user.min_delegation = (this.user.available_balance + this.user.balance) / this.networks[this.currentNetwork].min_delegation
+        },
+
+
+        // Check min. delegation
+        isLocked() {
+            return this.user.min_delegation > this.user.balance ? true : false
+        }
     }
 })

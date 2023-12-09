@@ -14,7 +14,7 @@
             {{ $t('message.network_charts_rich_list_title') }}
         </div>
 
-        <!-- <Lock v-if="store.user.balance < store.networks[store.currentNetwork].stakeMin" /> -->
+        <!-- <Lock v-if="store.isLocked()" /> -->
     </div>
 </template>
 

@@ -1,24 +1,6 @@
 <template>
     <form class="form" @submit.prevent="onSubmit">
-        <div class="validator">
-            <div class="logo">
-                <img src="@/assets/logo_mini.svg" alt="">
-            </div>
-
-            <div>
-                <div class="name">
-                   {{ $t('message.manage_modal_validator_name') }}
-                </div>
-
-                <div class="commission">
-                    {{ $t('message.manage_modal_commission') }}
-
-                    <span class="sep">{{ $t('message.manage_modal_commission_sep') }}</span>
-
-                    <span class="val">5%</span>
-                </div>
-            </div>
-        </div>
+        <ManageModalValidator />
 
 
         <div class="notice">
@@ -53,7 +35,7 @@
                 </div>
 
                 <div class="val">
-                    <!-- {{ $filters.toFixed(store.user.balance / Math.pow(10, store.networks[store.currentNetwork].exponent), 2) }} -->
+                    {{ $filters.toFixed(store.user.available_balance / Math.pow(10, store.networks[store.currentNetwork].exponent), 5) }}
                     {{ store.networks[store.currentNetwork].token_name }}
                 </div>
             </div>
@@ -61,21 +43,6 @@
 
 
         <div class="fields">
-            <div class="line">
-                <div class="label">
-                    {{ $t('message.manage_modal_validator_delegate_label') }}
-                </div>
-
-                <div class="field">
-                    <input type="text" class="input" readonly :value="$t('message.manage_modal_validator_name')">
-                </div>
-
-                <div class="exp">
-                    {{ $t('message.manage_modal_validator_exp') }}
-                </div>
-            </div>
-
-
             <div class="line amount">
                 <div class="label">
                     {{ $t('message.manage_modal_delegate_amount') }}
@@ -94,7 +61,7 @@
                 </div>
 
                 <div class="exp">
-                    {{ $t('message.manage_modal_amount_exp', { amount: 50, token: store.networks[store.currentNetwork].token_name }) }}
+                    {{ $t('message.manage_modal_amount_exp', { percents: store.networks[store.currentNetwork].min_delegation }) }}
                 </div>
             </div>
 
@@ -110,10 +77,14 @@
 
 
 <script setup>
-    import { ref, inject } from 'vue'
+    import { ref, inject, onBeforeMount } from 'vue'
     import { useGlobalStore } from '@/stores'
     import { useNotification } from '@kyvg/vue3-notification'
-    // import { prepareTx, sendTx, prepareEVMOSTx, sendEVMOSTx } from '@/utils'
+    // import { prepareTx, sendTx } from '@/utils'
+
+
+    // Components
+    import ManageModalValidator from '@/components/modal/ManageModalValidator.vue'
 
 
     const i18n = inject('i18n'),
@@ -122,11 +93,29 @@
         amount = ref('')
 
 
+    onBeforeMount(async () => {
+        // Get user available balance
+        await store.getUserAvailableBalance()
+
+        // Calc min. delegation
+        store.calcMinDelegation()
+
+        // Set min. amount
+        setMinAmount()
+    })
+
+
     // Set amount
     function setAmount(e) {
         if(parseFloat(e.target.value.replace(',', '.')) > store.user.balance / Math.pow(10, store.networks[store.currentNetwork].exponent) - 0.01) {
             amount.value = (50).toString()
         }
+    }
+
+
+    // Set min. amount
+    function setMinAmount() {
+        amount.value = ((store.user.min_delegation - store.user.balance) / Math.pow(10, store.networks[store.currentNetwork].exponent)).toString()
     }
 
 
