@@ -6,6 +6,7 @@ import router from './router'
 import i18n from './locale'
 import mitt from 'mitt'
 import VueApexCharts from 'vue3-apexcharts'
+import Notifications from '@kyvg/vue3-notification'
 
 
 // Create App
@@ -25,6 +26,7 @@ app.use(pinia)
 app.use(router)
 app.use(i18n)
 app.use(VueApexCharts)
+app.use(Notifications)
 
 
 // Vue provide

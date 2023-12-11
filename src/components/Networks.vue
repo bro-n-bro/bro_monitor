@@ -24,7 +24,7 @@
 
             <router-link to="/network/cosmoshub" class="link" :class="{'active': store.currentNetwork == 'cosmoshub'}">
                 <div class="logo">
-                    <img src="/cosmoshub_logo.png" alt="">
+                    <img src="@/assets/cosmoshub_logo.png" alt="">
                 </div>
 
                 <div>

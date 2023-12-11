@@ -374,6 +374,13 @@ export default {
             'no': 'No',
 
 
+            // Notification
+            'notification_progress_title': 'Transaction is in progress',
+            'notification_successful_title': 'Transaction successful',
+            'notification_failed_title': 'Transaction failed',
+            'notification_explorer_link': 'Explorer',
+
+
             // Manage modal
             'manage_modal_action_delegate': 'Delegate',
             'manage_modal_action_redelegate': 'Redelegate',
@@ -394,7 +401,7 @@ export default {
 
             'manage_modal_validator_placeholder': 'Name Validator',
 
-            'manage_modal_amount_exp': 'To have full experience using our stats dashboards, you will require to stake {percents}% with Bro_n_Bro Validator',
+            'manage_modal_amount_exp': 'To have full experience using our stats dashboards, you will require to stake {amount} {token} with Bro_n_Bro Validator',
 
             'manage_modal_error_2': "tx parse error",
             'manage_modal_error_3': "invalid sequence",

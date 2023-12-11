@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="field">
-                    <input type="number" class="input" v-model="amount" @input="setAmount" placeholder="0">
+                    <input type="text" class="input" v-model="amount" @input="setAmount" placeholder="0">
 
                     <div class="unit">
                         {{ store.networks[store.currentNetwork].token_name }}
@@ -61,7 +61,10 @@
                 </div>
 
                 <div class="exp">
-                    {{ $t('message.manage_modal_amount_exp', { percents: store.networks[store.currentNetwork].min_delegation }) }}
+                    {{ $t('message.manage_modal_amount_exp', {
+                        amount: store.networks[store.currentNetwork].min_delegation / Math.pow(10, store.networks[store.currentNetwork].exponent),
+                        token: store.networks[store.currentNetwork].token_name
+                    }) }}
                 </div>
             </div>
 
@@ -80,7 +83,7 @@
     import { ref, inject, onBeforeMount } from 'vue'
     import { useGlobalStore } from '@/stores'
     import { useNotification } from '@kyvg/vue3-notification'
-    // import { prepareTx, sendTx } from '@/utils'
+    import { prepareTx, sendTx } from '@/utils'
 
 
     // Components
@@ -97,9 +100,6 @@
         // Get user available balance
         await store.getUserAvailableBalance()
 
-        // Calc min. delegation
-        store.calcMinDelegation()
-
         // Set min. amount
         setMinAmount()
     })
@@ -107,33 +107,136 @@
 
     // Set amount
     function setAmount(e) {
-        if(parseFloat(e.target.value.replace(',', '.')) > store.user.balance / Math.pow(10, store.networks[store.currentNetwork].exponent) - 0.01) {
-            amount.value = (50).toString()
+        if(parseFloat(e.target.value.replace(',', '.')) > store.user.available_balance / Math.pow(10, store.networks[store.currentNetwork].exponent) - 0.01) {
+            setMaxAmount()
         }
     }
 
 
     // Set min. amount
     function setMinAmount() {
-        amount.value = ((store.user.min_delegation - store.user.balance) / Math.pow(10, store.networks[store.currentNetwork].exponent)).toString()
+        ((store.networks[store.currentNetwork].min_delegation - store.user.available_balance) / Math.pow(10, store.networks[store.currentNetwork].exponent)) > (store.user.available_balance / Math.pow(10, store.networks[store.currentNetwork].exponent) - 0.01)
+            ? setMaxAmount()
+            : amount.value = ((store.networks[store.currentNetwork].min_delegation - store.user.available_balance) / Math.pow(10, store.networks[store.currentNetwork].exponent)).toString()
     }
 
 
     // Set max. amount
     function setMaxAmount() {
-        amount.value = (store.user.balance / Math.pow(10, store.networks[store.currentNetwork].exponent) - 0.01).toString()
+        amount.value = (store.user.available_balance / Math.pow(10, store.networks[store.currentNetwork].exponent) - 0.01).toString()
     }
 
 
     // Submit form
     function onSubmit() {
-        let amount = parseFloat(amount.value.replace(',', '.'))
+        let formatAmount = parseFloat(amount.value.replace(',', '.'))
 
-        if(amount > 0) {
+        if(formatAmount > 0) {
             // Other processing for EVMOS
-            // store.currentNetwork == 'evmos'
-            //     ? delegateEVMOS()
-            //     : delegateDEFAULT()
+            store.currentNetwork == 'evmos'
+                ? delegateEVMOS()
+                : delegateDEFAULT()
         }
+    }
+
+
+    // Delegate DEFAULT
+    async function delegateDEFAULT() {
+        try {
+            // Message
+            let msgAny = {
+                typeUrl: '/cosmos.staking.v1beta1.MsgDelegate',
+                value: {
+                    delegatorAddress: store.Keplr.account.address,
+                    validatorAddress: store.networks[store.currentNetwork].validator,
+                    amount: {
+                        denom: store.networks[store.currentNetwork].denom,
+                        amount: `${parseFloat(amount.value.replace(',', '.')) * Math.pow(10, store.networks[store.currentNetwork].exponent)}`
+                    }
+                }
+            }
+
+            // Prepare Tx
+            let prepareResult = await prepareTx([msgAny])
+
+            // Show notification
+            notification.notify({
+                group: 'default',
+                duration: -100,
+                title: i18n.global.t('message.notification_progress_title'),
+                data: {
+                    chain: store.currentNetwork,
+                    tx_type: i18n.global.t('message.manage_modal_action_delegate')
+                }
+            })
+
+            // Send Tx
+            let result = await sendTx(prepareResult)
+
+            // Show success
+            showSuccess(result)
+
+            // Update balancies
+            store.getUserBalance([store.Keplr.account.address])
+            store.getUserAvailableBalance()
+        } catch (error) {
+            console.log(error)
+
+            // Show error
+            showError(error)
+        }
+    }
+
+
+    // Show success modal
+    function showSuccess(result) {
+        // Set TXS
+        store.lastTXS = result.transactionHash
+
+        // Show notification
+        notification.notify({
+            group: 'default',
+            clean: true
+        })
+
+        notification.notify({
+            group: 'default',
+            title: i18n.global.t('message.notification_successful_title'),
+            type: 'success',
+            data: {
+                chain: store.currentNetwork,
+                tx_type: i18n.global.t('message.manage_modal_action_delegate'),
+                tx_hash: store.currentNetwork != 'bostrom' ? store.lastTXS : ''
+            }
+        })
+    }
+
+
+    // Show error modal
+    function showError(error) {
+        // Get error code
+        let errorCode = error.message.match(/code (\d+(\.\d)*)/i)
+
+        // Get error title
+        errorCode
+            ? store.manageError = i18n.global.t(`message.manage_modal_error_${errorCode[1]}`)
+            : store.manageError = i18n.global.t('message.manage_modal_error_rejected')
+
+        // Show notification
+        notification.notify({
+            group: 'default',
+            clean: true
+        })
+
+        notification.notify({
+            group: 'default',
+            title: i18n.global.t('message.notification_failed_title'),
+            text: store.manageError,
+            type: 'error',
+            data: {
+                chain: store.currentNetwork,
+                tx_type: i18n.global.t('message.manage_modal_action_delegate')
+            }
+        })
     }
 </script>

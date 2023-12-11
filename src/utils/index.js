@@ -1,6 +1,8 @@
 import { useGlobalStore } from '@/stores'
 import { fromBech32, toBech32 } from '@cosmjs/encoding'
 import { differenceInDays, differenceInMonths, differenceInYears } from 'date-fns'
+import { SigningStargateClient } from '@cosmjs/stargate'
+import { TxRaw } from "cosmjs-types/cosmos/tx/v1beta1/tx"
 
 
 // Generate address
@@ -134,4 +136,59 @@ export const calcTimeRange = (type, dates) => {
     }
 
     return { from_date, to_date, detailing, type }
+}
+
+
+// Prepare Tx
+export const prepareTx = async (msg, gasSimulate = true, chain) => {
+    let store = useGlobalStore(),
+        gasUsed = 0
+
+    if(!chain) {
+        chain = store.currentNetwork
+    }
+
+    // Create request
+    Object.assign(store.Keplr.offlineSinger, {
+        signAmino: store.Keplr.offlineSinger.signAmino ?? store.Keplr.offlineSinger.sign
+    })
+
+    // RPC endpoint
+    let rpcEndpoint = store.networks[chain].rpc_api
+
+    // Client
+    let client = await SigningStargateClient.connectWithSigner(rpcEndpoint, store.Keplr.offlineSinger)
+
+    // Simulate gas
+    if (gasSimulate) {
+        gasUsed = await client.simulate(store.Keplr.account.address, msg)
+    }
+
+    let fee = {
+        amount: [{
+            denom: store.networks[chain].denom,
+            amount: '0'
+        }],
+        gas: gasSimulate ? Math.round(gasUsed * 1.3).toString() : '1000000'
+    }
+
+    // MENO
+    let memo = store.ref ? `bro.${store.ref}` : 'bro.app'
+
+    // Sign transaction
+    let txRaw = await client.sign(store.Keplr.account.address, msg, fee, memo)
+
+    return { txRaw, client }
+}
+
+
+// Send Tx
+export const sendTx = async ({ txRaw, client }) => {
+    // Encode TxRaw
+    let txBytes = TxRaw.encode(txRaw).finish()
+
+    // Broadcast Tx
+    let result = await client.broadcastTx(txBytes, client.broadcastTimeoutMs, client.broadcastPollIntervalMs)
+
+    return result
 }

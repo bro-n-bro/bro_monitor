@@ -25,7 +25,7 @@
     .lock
     {
         position: absolute;
-        z-index: 7;
+        z-index: 20;
         top: 0;
         left: 0;
 

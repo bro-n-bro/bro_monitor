@@ -87,6 +87,8 @@
 
         width: 100%;
         padding: 20px 0;
+
+        background: var(--bg);
     }
 
     .lock header
@@ -106,22 +108,21 @@
         position: relative;
         z-index: 5;
 
-        margin-right: 20px;
-
         align-self: center;
+
+        margin-right: 20px;
     }
 
 
     header .logo .btn
     {
         display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: flex-start;
 
         cursor: pointer;
-
-        justify-content: flex-start;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
     }
 
 
@@ -166,8 +167,6 @@
 
     header .logo .mini_modal a
     {
-        color: currentColor;
-
         display: block;
 
         padding: 6px 10px 6px 4px;
@@ -175,6 +174,7 @@
         transition: background .2s linear;
         text-decoration: none;
 
+        color: currentColor;
         border-radius: 8px;
     }
 
@@ -190,13 +190,6 @@
     header .logo .mini_modal a:hover
     {
         background: #191919;
-    }
-
-
-
-    header.stuck
-    {
-        background: var(--bg);
     }
 
 

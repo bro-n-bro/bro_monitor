@@ -95,6 +95,8 @@ export const useGlobalStore = defineStore('global', {
         showManageSuccessModal: false,
 
         validatorManageModal: {},
+
+        manageError: ''
     }),
 
 
@@ -237,27 +239,25 @@ export const useGlobalStore = defineStore('global', {
 
         // Get user available balance
         async getUserAvailableBalance() {
-            await fetch(`${this.networks[this.currentNetwork].lcd_api}/cosmos/bank/v1beta1/balances/${this.Keplr.account.address}`)
-                .then(response => response.json())
-                .then(data => {
-                    let availabel = data.balances.find(e => e.denom == this.networks[this.currentNetwork].denom)
+            try {
+                await fetch(`${this.networks[this.currentNetwork].lcd_api}/cosmos/bank/v1beta1/balances/${this.Keplr.account.address}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        let availabel = data.balances.find(e => e.denom == this.networks[this.currentNetwork].denom)
 
-                    if (data.balances && data.balances.length && typeof availabel !== 'undefined') {
-                        this.user.available_balance = parseFloat(availabel.amount)
-                    }
-                })
-        },
-
-
-        // Calc min. delegation
-        calcMinDelegation() {
-            this.user.min_delegation = (this.user.available_balance + this.user.balance) / this.networks[this.currentNetwork].min_delegation
+                        if (data.balances && data.balances.length && typeof availabel !== 'undefined') {
+                            this.user.available_balance = parseFloat(availabel.amount)
+                        }
+                    })
+            } catch (error) {
+                console.error(error)
+            }
         },
 
 
         // Check min. delegation
         isLocked() {
-            return this.user.min_delegation > this.user.balance ? true : false
+            return this.user.balance < this.networks[this.currentNetwork].min_delegation ? true : false
         }
     }
 })
