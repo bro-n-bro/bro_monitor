@@ -63,8 +63,8 @@
                     }
                 })
 
-                if(result.length) {
-                    validators.val = result
+                if (result.length) {
+                    validators.value = result
                 }
             })
     }
@@ -72,470 +72,467 @@
 
 
 <style>
-#manage_modal .data
-{
-    display: flex;
-    flex-direction: column;
+    #manage_modal .data
+    {
+        display: flex;
+        flex-direction: column;
+    }
 
-    height: 729px;
-}
 
+    #manage_modal .form
+    {
+        display: flex;
+        flex: 1 0 auto;
+        flex-direction: column;
+    }
 
-#manage_modal .form
-{
-    display: flex;
-    flex: 1 0 auto;
-    flex-direction: column;
-}
 
+    #manage_modal .type
+    {
+        display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: flex-start;
 
-#manage_modal .type
-{
-    display: flex;
-    align-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: flex-start;
+        margin-bottom: 22px;
+        margin-left: -8px;
+        padding-right: 60px;
+    }
 
-    margin-bottom: 22px;
-    margin-left: -8px;
-    padding-right: 60px;
-}
+    #manage_modal .type > *
+    {
+        margin-bottom: 8px;
+        margin-left: 8px;
+    }
 
-#manage_modal .type > *
-{
-    margin-bottom: 8px;
-    margin-left: 8px;
-}
 
+    #manage_modal .type .btn
+    {
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 17px;
 
-#manage_modal .type .btn
-{
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 17px;
+        display: block;
 
-    display: block;
+        padding: 13px;
 
-    padding: 13px;
+        transition: .2s linear;
 
-    transition: .2s linear;
+        border: 2px solid;
+        border-radius: 14px;
+        background: #191919;
+    }
 
-    border: 2px solid;
-    border-radius: 14px;
-    background: #191919;
-}
+    #manage_modal .type .btn:hover,
+    #manage_modal .type .btn.active
+    {
+        color: #000;
+        border-color: #fff;
+        background: #fff;
+    }
 
-#manage_modal .type .btn:hover,
-#manage_modal .type .btn.active
-{
-    color: #000;
-    border-color: #fff;
-    background: #fff;
-}
 
 
+    #manage_modal .notice
+    {
+        margin-top: 20px;
+        padding: 14px;
 
-#manage_modal .notice
-{
-    margin-top: 20px;
-    padding: 14px;
+        text-align: center;
 
-    text-align: center;
+        border-radius: 17px;
+        background: #191919;
+    }
 
-    border-radius: 17px;
-    background: #191919;
-}
 
+    #manage_modal .notice .title
+    {
+        font-weight: 600;
+        line-height: 19px;
 
-#manage_modal .notice .title
-{
-    font-weight: 600;
-    line-height: 19px;
+        margin-bottom: 6px;
+    }
 
-    margin-bottom: 6px;
-}
 
+    #manage_modal .notice .desc
+    {
+        font-size: 12px;
+        line-height: 130%;
 
-#manage_modal .notice .desc
-{
-    font-size: 12px;
-    line-height: 130%;
+        width: 324px;
+        max-width: 100%;
+        margin: 0 auto;
 
-    width: 324px;
-    max-width: 100%;
-    margin: 0 auto;
+        color: #8e8e8e;
+    }
 
-    color: #8e8e8e;
-}
 
+    #manage_modal .tokens
+    {
+        margin-top: 26px;
+    }
 
-#manage_modal .tokens
-{
-    margin-top: 26px;
-}
 
+    #manage_modal .tokens > *
+    {
+        display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
 
-#manage_modal .tokens > *
-{
-    display: flex;
-    align-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: space-between;
-}
+    #manage_modal .tokens > * + *
+    {
+        margin-top: 10px;
+        padding-top: 10px;
 
-#manage_modal .tokens > * + *
-{
-    margin-top: 10px;
-    padding-top: 10px;
+        border-top: 1px solid rgba(255, 255, 255, .05);
+    }
 
-    border-top: 1px solid rgba(255, 255, 255, .05);
-}
 
+    #manage_modal .tokens .label
+    {
+        font-size: 14px;
+        line-height: 17px;
 
-#manage_modal .tokens .label
-{
-    font-size: 14px;
-    line-height: 17px;
+        color: #8e8e8e;
+    }
 
-    color: #8e8e8e;
-}
 
+    #manage_modal .tokens .val
+    {
+        font-weight: 600;
+        line-height: 19px;
 
-#manage_modal .tokens .val
-{
-    font-weight: 600;
-    line-height: 19px;
+        white-space: nowrap;
 
-    white-space: nowrap;
+        font-feature-settings: 'pnum' on, 'lnum' on;
+    }
 
-    font-feature-settings: 'pnum' on, 'lnum' on;
-}
 
+    #manage_modal .fields
+    {
+        display: flex;
+        flex: 1 0 auto;
+        flex-direction: column;
 
-#manage_modal .fields
-{
-    display: flex;
-    flex: 1 0 auto;
-    flex-direction: column;
+        margin-top: 30px;
+    }
 
-    margin-top: 30px;
-}
 
+    #manage_modal .fields .line
+    {
+        margin-bottom: 30px;
+    }
 
-#manage_modal .fields .line
-{
-    margin-bottom: 30px;
-}
 
+    #manage_modal .fields .label
+    {
+        font-size: 14px;
+        line-height: 17px;
 
-#manage_modal .fields .label
-{
-    font-size: 14px;
-    line-height: 17px;
+        margin-bottom: 16px;
 
-    margin-bottom: 16px;
+        color: #8e8e8e;
+    }
 
-    color: #8e8e8e;
-}
 
+    #manage_modal .fields .field
+    {
+        position: relative;
+    }
 
-#manage_modal .fields .field
-{
-    position: relative;
-}
 
+    #manage_modal .fields .input
+    {
+        font-family: var(--font_family);
+        font-size: var(--font_size);
+        font-weight: 500;
 
-#manage_modal .fields .input
-{
-    font-family: var(--font_family);
-    font-size: var(--font_size);
-    font-weight: 500;
+        display: block;
 
-    display: block;
+        width: 100%;
+        height: 55px;
+        padding: 0 9px 2px;
 
-    width: 100%;
-    height: 55px;
-    padding: 0 9px 2px;
+        transition: border-color .2s linear;
 
-    transition: border-color .2s linear;
+        color: currentColor;
+        border: 1px solid transparent;
+        border-radius: 17px;
+        background: #191919;
+    }
 
-    color: currentColor;
-    border: 1px solid transparent;
-    border-radius: 17px;
-    background: #191919;
-}
+    #manage_modal .fields .validator .input
+    {
+        padding-right: 77px;
+    }
 
-#manage_modal .fields .validator .input
-{
-    padding-right: 77px;
-}
+    #manage_modal .fields .amount .input
+    {
+        padding-right: 154px;
+    }
 
-#manage_modal .fields .amount .input
-{
-    padding-right: 154px;
-}
+    #manage_modal .fields .input:read-only
+    {
+        pointer-events: none;
+    }
 
-#manage_modal .fields .input:read-only
-{
-    pointer-events: none;
-}
+    #manage_modal .fields .input:focus
+    {
+        border-color: #950fff;
+    }
 
-#manage_modal .fields .input:focus
-{
-    border-color: #950fff;
-}
 
+    #manage_modal .fields .unit
+    {
+        line-height: 19px;
 
-#manage_modal .fields .unit
-{
-    line-height: 19px;
+        position: absolute;
+        z-index: 3;
+        top: 0;
+        right: 80px;
+        bottom: 0;
 
-    position: absolute;
-    z-index: 3;
-    top: 0;
-    right: 80px;
-    bottom: 0;
+        height: 19px;
+        margin: auto;
 
-    height: 19px;
-    margin: auto;
+        white-space: nowrap;
+        text-transform: uppercase;
 
-    white-space: nowrap;
-    text-transform: uppercase;
+        color: #8e8e8e;
+    }
 
-    color: #8e8e8e;
-}
 
+    #manage_modal .fields .max_btn
+    {
+        line-height: 19px;
 
-#manage_modal .fields .max_btn
-{
-    line-height: 19px;
+        position: absolute;
+        z-index: 3;
+        top: 0;
+        right: 10px;
+        bottom: 0;
 
-    position: absolute;
-    z-index: 3;
-    top: 0;
-    right: 10px;
-    bottom: 0;
+        display: block;
 
-    display: block;
+        width: 60px;
+        height: 39px;
+        margin: auto;
 
-    width: 60px;
-    height: 39px;
-    margin: auto;
+        transition: .2s linear;
+        text-transform: uppercase;
 
-    transition: .2s linear;
-    text-transform: uppercase;
+        border: 2px solid;
+        border-radius: 14px;
+    }
 
-    border: 2px solid;
-    border-radius: 14px;
-}
+    #manage_modal .fields .max_btn:hover
+    {
+        color: #000;
+        border-color: #fff;
+        background: #fff;
+    }
 
-#manage_modal .fields .max_btn:hover
-{
-    color: #000;
-    border-color: #fff;
-    background: #fff;
-}
+    #manage_modal .fields .max_btn:disabled
+    {
+        pointer-events: none;
 
-#manage_modal .fields .max_btn:disabled
-{
-    pointer-events: none;
+        opacity: .5;
+    }
 
-    opacity: .5;
-}
 
+    #manage_modal .fields .arr
+    {
+        position: absolute;
+        z-index: 3;
+        top: 0;
+        right: 19px;
+        bottom: 0;
 
-#manage_modal .fields .arr
-{
-    position: absolute;
-    z-index: 3;
-    top: 0;
-    right: 19px;
-    bottom: 0;
+        display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
 
-    display: flex;
-    align-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: center;
+        width: 24px;
+        height: 24px;
+        margin: auto;
 
-    width: 24px;
-    height: 24px;
-    margin: auto;
+        pointer-events: none;
+    }
 
-    pointer-events: none;
-}
+    #manage_modal .fields .clear_btn + .arr
+    {
+        right: 44px;
+    }
 
-#manage_modal .fields .clear_btn + .arr
-{
-    right: 44px;
-}
+    #manage_modal .fields .arr svg
+    {
+        display: block;
 
-#manage_modal .fields .arr svg
-{
-    display: block;
+        width: 20px;
+        height: 20px;
+    }
 
-    width: 20px;
-    height: 20px;
-}
 
+    #manage_modal .fields .clear_btn
+    {
+        position: absolute;
+        z-index: 3;
+        top: 0;
+        right: 10px;
+        bottom: 0;
 
-#manage_modal .fields .clear_btn
-{
-    position: absolute;
-    z-index: 3;
-    top: 0;
-    right: 10px;
-    bottom: 0;
+        display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
 
-    display: flex;
-    align-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: center;
+        width: 24px;
+        height: 24px;
+        margin: auto;
+    }
 
-    width: 24px;
-    height: 24px;
-    margin: auto;
-}
+    #manage_modal .fields .clear_btn svg
+    {
+        display: block;
 
-#manage_modal .fields .clear_btn svg
-{
-    display: block;
+        width: 24px;
+        height: 24px;
+    }
 
-    width: 24px;
-    height: 24px;
-}
 
+    #manage_modal .fields .dropdown
+    {
+        position: absolute;
+        z-index: 5;
+        top: 100%;
+        left: 0;
 
-#manage_modal .fields .dropdown
-{
-    position: absolute;
-    z-index: 5;
-    top: 100%;
-    left: 0;
+        display: none;
 
-    display: none;
+        width: 100%;
+        margin-top: 10px;
+        padding: 6px 4px;
 
-    width: 100%;
-    margin-top: 10px;
-    padding: 6px 4px;
+        border-radius: 10px;
+        background: #101010;
+    }
 
-    border-radius: 10px;
-    background: #101010;
-}
+    #manage_modal .fields .input.active ~ .dropdown
+    {
+        display: block;
+    }
 
-#manage_modal .fields .input.active ~ .dropdown
-{
-    display: block;
-}
 
+    #manage_modal .fields .dropdown .scroll
+    {
+        overflow: auto;
 
-#manage_modal .fields .dropdown .scroll
-{
-    overflow: auto;
+        max-height: 128px;
+        padding-right: 4px;
+    }
 
-    max-height: 128px;
-    padding-right: 4px;
-}
+    #manage_modal .fields .dropdown .scroll::-webkit-scrollbar
+    {
+        width: 4px;
+        height: 4px;
 
-#manage_modal .fields .dropdown .scroll::-webkit-scrollbar
-{
-    width: 4px;
-    height: 4px;
+        border-radius: 5px;
+    }
 
-    border-radius: 5px;
-}
+    #manage_modal .fields .dropdown .scroll > * + *
+    {
+        margin-top: 4px;
+    }
 
-#manage_modal .fields .dropdown .scroll > * + *
-{
-    margin-top: 4px;
-}
 
+    #manage_modal .fields .dropdown .btn
+    {
+        font-size: 14px;
+        line-height: 17px;
 
-#manage_modal .fields .dropdown .btn
-{
-    font-size: 14px;
-    line-height: 17px;
+        display: block;
 
-    display: block;
+        width: 100%;
+        padding: 6px;
 
-    width: 100%;
-    padding: 6px;
+        transition: background .2s linear;
+        text-align: left;
+        pointer-events: auto;
 
-    transition: background .2s linear;
-    text-align: left;
-    pointer-events: auto;
+        border-radius: 8px;
+    }
 
-    border-radius: 8px;
-}
+    #manage_modal .fields .dropdown .btn:hover,
+    #manage_modal .fields .dropdown .btn.active
+    {
+        background: #191919;
+    }
 
-#manage_modal .fields .dropdown .btn:hover,
-#manage_modal .fields .dropdown .btn.active
-{
-    background: #191919;
-}
 
+    #manage_modal .fields .exp
+    {
+        font-size: 14px;
+        line-height: 17px;
 
-#manage_modal .fields .exp
-{
-    font-size: 14px;
-    line-height: 17px;
+        margin-top: 10px;
 
-    margin-top: 10px;
+        color: #555;
 
-    color: #555;
+        font-feature-settings: 'pnum' on, 'lnum' on;
+    }
 
-    font-feature-settings: 'pnum' on, 'lnum' on;
-}
 
+    #manage_modal .btns
+    {
+        display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
 
-#manage_modal .btns
-{
-    display: flex;
-    align-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    justify-content: space-between;
+        margin-top: auto;
+    }
 
-    margin-top: auto;
-}
 
+    #manage_modal .btns .btn
+    {
+        font-weight: 500;
+        line-height: 19px;
 
-#manage_modal .btns .btn
-{
-    font-weight: 500;
-    line-height: 19px;
+        display: block;
 
-    display: block;
+        width: 100%;
+        padding: 13px;
 
-    width: 100%;
-    padding: 13px;
+        transition: .2s linear;
 
-    transition: .2s linear;
+        color: #fff;
+        border: 1px solid #950fff;
+        border-radius: 14px;
+    }
 
-    color: #fff;
-    border: 1px solid #950fff;
-    border-radius: 14px;
-}
+    #manage_modal .btns .btn:disabled
+    {
+        cursor: default;
+        pointer-events: none;
+    }
 
-#manage_modal .btns .btn:disabled
-{
-    cursor: default;
-    pointer-events: none;
-}
 
+    #manage_modal .btns .btn:hover
+    {
+        background: #950fff;
+    }
 
-#manage_modal .btns .btn:hover
-{
-    background: #950fff;
-}
-
-#manage_modal .btns .btn:active
-{
-    border-color: #7700e1;
-    background: #7700e1;
-}
-
+    #manage_modal .btns .btn:active
+    {
+        border-color: #7700e1;
+        background: #7700e1;
+    }
 </style>

@@ -14,7 +14,8 @@ const network = {
     unbonding_time: 0,
     stakeMin: 20000000,
     commision: 7.5,
-    min_delegation: 20000000
+    min_delegation: 20000000,
+    delegations: []
 }
 
 export default network

@@ -1,7 +1,7 @@
 <template>
     <div class="main">
         <!-- Header -->
-        <Header />
+        <Header class="bg" />
 
         <section>
             <div class="cont middle">

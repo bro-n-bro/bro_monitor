@@ -62,17 +62,17 @@
                     {{ $t('message.manage_modal_validator_redelegate') }}
                 </div>
 
-                <div class="field" v-click-out="hideDropdown">
+                <div class="field" ref="target">
                     <input type="text" class="input validator_input" v-model="name"
                         :placeholder="$t('message.manage_modal_validator_placeholder')"
                         @focus.self="$event.target.classList.add('active')">
 
                     <button type="button" class="clear_btn" v-if="name.length" @click.prevent="clearValidator">
-                        <svg><use xlink:href="/sprite.svg#ic_close"></use></svg>
+                        <svg><use xlink:href="@/assets/sprite.svg#ic_close"></use></svg>
                     </button>
 
                     <div class="arr">
-                        <svg><use xlink:href="/sprite.svg#ic_arr_down"></use></svg>
+                        <svg><use xlink:href="@/assets/sprite.svg#ic_arr_down"></use></svg>
                     </div>
 
                     <div class="dropdown">
@@ -84,6 +84,10 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+                <div class="exp">
+                    {{ $t('message.manage_modal_validator_exp') }}
                 </div>
             </div>
 
@@ -106,7 +110,10 @@
                 </div>
 
                 <div class="exp">
-                    {{ $t('message.manage_modal_amount_exp', { percents: store.networks[store.currentNetwork].min_delegation }) }}
+                    {{ $t('message.manage_modal_amount_exp', {
+                        amount: store.networks[store.currentNetwork].min_delegation / Math.pow(10, store.networks[store.currentNetwork].exponent),
+                        token: store.networks[store.currentNetwork].token_name
+                    }) }}
                 </div>
             </div>
 
@@ -122,10 +129,11 @@
 
 
 <script setup>
-    import { ref, reactive, inject, onBeforeMount } from 'vue'
+    import { ref, reactive, inject } from 'vue'
     import { useGlobalStore } from '@/stores'
+    import { onClickOutside } from '@vueuse/core'
     import { useNotification } from '@kyvg/vue3-notification'
-    // import { prepareTx, sendTx } from '@/utils'
+    import { prepareTx, sendTx } from '@/utils'
 
     // Components
     import ManageModalValidator from '@/components/modal/ManageModalValidator.vue'
@@ -139,20 +147,15 @@
         operator_address = ref(''),
         availabel_tokens = ref(null),
         name = ref(''),
-        validators = reactive(props.validators)
-
-
-    onBeforeMount(async () => {
-        // Set min. amount
-        setMinAmount()
-    })
+        validators = reactive(props.validators),
+        target = ref(null)
 
 
     // Hide dropdown
     function hideDropdown() {
         let validateInput = document.querySelector('.validator_input')
 
-        if(validateInput.classList.contains('active')){
+        if(validateInput.classList.contains('active')) {
             setTimeout(() => validateInput.classList.remove('active'), 150)
         }
     }
@@ -168,10 +171,13 @@
 
 
     // Set data
-    function setValidator(newValidator) {
-        operator_address.value = newValidator.operator_address
-        name.value = newValidator.description.moniker
-        availabel_tokens.value = store.networks[store.networkManageModal].delegations.find(el => el.operator_address == newValidator.operator_address).amount
+    function setValidator(validator) {
+        operator_address.value = validator.operator_address
+
+        name.value = validator.description.moniker
+
+        availabel_tokens.value = store.networks[store.currentNetwork].delegations.find(el => el.operator_address == validator.operator_address).amount / Math.pow(10, store.networks[store.currentNetwork].exponent)
+
         amount.value = (availabel_tokens.value - 0.01).toString()
 
         // Hide dropdown
@@ -189,7 +195,9 @@
 
     // Set min. amount
     function setMinAmount() {
-        amount.value = ((store.user.min_delegation - store.user.balance) / Math.pow(10, store.networks[store.currentNetwork].exponent)).toString()
+        ((store.networks[store.currentNetwork].min_delegation - store.user.available_balance) / Math.pow(10, store.networks[store.currentNetwork].exponent)) > (store.user.available_balance / Math.pow(10, store.networks[store.currentNetwork].exponent) - 0.01)
+            ? setMaxAmount()
+            : amount.value = ((store.networks[store.currentNetwork].min_delegation - store.user.available_balance) / Math.pow(10, store.networks[store.currentNetwork].exponent)).toString()
     }
 
 
@@ -201,13 +209,13 @@
 
     // Submit form
     function onSubmit() {
-        let amount = parseFloat(amount.value.replace(',', '.'))
+        let formatAmount = parseFloat(amount.value.replace(',', '.'))
 
-        if(amount > 0) {
+        if(formatAmount > 0) {
             // Other processing for EVMOS
-            // store.networkManageModal == 'evmos'
-            //     ? redelegateEVMOS()
-            //     : redelegateDEFAULT()
+            store.currentNetwork == 'evmos'
+                ? redelegateEVMOS()
+                : redelegateDEFAULT()
         }
     }
 
@@ -219,12 +227,12 @@
             let msgAny = {
                 typeUrl: '/cosmos.staking.v1beta1.MsgBeginRedelegate',
                 value: {
-                    delegatorAddress: store.wallets[store.networkManageModal],
-                    validatorSrcAddress: data.operator_address,
-                    validatorDstAddress: store.networks[store.networkManageModal].validator,
+                    delegatorAddress: store.Keplr.account.address,
+                    validatorSrcAddress: operator_address.value,
+                    validatorDstAddress: store.networks[store.currentNetwork].validator,
                     amount: {
-                        denom: store.networks[store.networkManageModal].denom,
-                        amount: `${parseFloat(data.amount.replace(',', '.')).toFixed(store.networks[store.networkManageModal].exponent.toString().length - 1) * store.networks[store.networkManageModal].exponent}`
+                        denom: store.networks[store.currentNetwork].denom,
+                        amount: `${parseFloat(amount.value.replace(',', '.')) * Math.pow(10, store.networks[store.currentNetwork].exponent)}`
                     }
                 }
             }
@@ -234,11 +242,11 @@
 
             // Show notification
             notification.notify({
-                group: store.networks[store.networkManageModal].denom,
+                group: 'default',
                 duration: -100,
                 title: i18n.global.t('message.notification_progress_title'),
                 data: {
-                    chain: store.networkManageModal,
+                    chain: store.currentNetwork,
                     tx_type: i18n.global.t('message.manage_modal_action_redelegate')
                 }
             })
@@ -252,12 +260,12 @@
 
                 // Show notification
                 notification.notify({
-                    group: store.networks[store.networkManageModal].denom,
+                    group: 'default',
                     title: i18n.global.t('message.notification_failed_title'),
                     text: store.manageError,
                     type: 'error',
                     data: {
-                        chain: store.networkManageModal,
+                        chain: store.currentNetwork,
                         tx_type: i18n.global.t('message.manage_modal_action_redelegate')
                     }
                 })
@@ -267,104 +275,11 @@
 
             // Show success modal
             showSuccess(result)
-        } catch (error) {
-            console.log(error)
 
-            // Show error modal
-            showError(error)
-        }
-    }
-
-
-    // Rredelegate EVMOS
-    function redelegateEVMOS() {
-        try {
-            // Create request
-            fetch(`${store.networks.evmos.lcd_api}/cosmos/auth/v1beta1/accounts/${store.wallets.evmos}`)
-                .then(res => res.json())
-                .then(async response => {
-                    try {
-                        // Params
-                        let params = {
-                            validatorSrcAddress: data.operator_address,
-                            validatorDstAddress: store.networks.evmos.validator,
-                            amount: `${parseFloat(data.amount.replace(',', '.')).toFixed(store.networks[store.networkManageModal].exponent.toString().length - 1) * store.networks.evmos.exponent}`,
-                            denom: store.networks.evmos.denom,
-                        }
-
-                        // Prepare EVMOS Tx
-                        let prepareResult = await prepareEVMOSTx(params, response.account.base_account, 'redelegate')
-
-                        // Show notification
-                        notification.notify({
-                            group: store.networks[store.networkManageModal].denom,
-                            duration: -100,
-                            title: i18n.global.t('message.notification_progress_title'),
-                            data: {
-                                chain: store.networkManageModal,
-                                tx_type: i18n.global.t('message.manage_modal_action_redelegate')
-                            }
-                        })
-
-                        // Send EVMOS Tx
-                        let result = await sendEVMOSTx(prepareResult)
-
-                        // if(result.tx_response.code != 0){
-                        //     // Get error title
-                        //     store.manageError = i18n.global.t(`message.manage_modal_error_${result.tx_response.code}`)
-
-                        //     // Show notification
-                        //     notification.notify({
-                        //         group: store.networks[store.networkManageModal].denom,
-                        //         clean: true
-                        //     })
-
-                        //     notification.notify({
-                        //         group: store.networks[store.networkManageModal].denom,
-                        //         title: i18n.global.t('message.notification_failed_title'),
-                        //         text: store.manageError,
-                        //         type: 'error',
-                        //         data: {
-                        //             chain: store.networkManageModal,
-                        //             tx_type: i18n.global.t('message.manage_modal_action_redelegate')
-                        //         }
-                        //     })
-
-                        //     return false
-                        // }
-
-                        // Set TXS
-                        store.lastTXS = result.tx_response.txhash
-
-                        // Show notification
-                        notification.notify({
-                            group: store.networks[store.networkManageModal].denom,
-                            clean: true
-                        })
-
-                        notification.notify({
-                            group: store.networks[store.networkManageModal].denom,
-                            title: i18n.global.t('message.notification_successful_title'),
-                            type: 'success',
-                            data: {
-                                chain: store.networkManageModal,
-                                tx_type: i18n.global.t('message.manage_modal_action_redelegate'),
-                                tx_hash: store.lastTXS
-                            }
-                        })
-
-                        // Update network
-                        store.updateNetwork(store.networkManageModal)
-
-                        // Clear validator data
-                        clearValidator()
-                    } catch (error) {
-                        console.log(error)
-
-                        // Show error modal
-                        showError(error)
-                    }
-                })
+            // Update balancies
+            store.getUserBalance([store.Keplr.account.address])
+            store.getUserAvailableBalance()
+            store.getUserDelegations()
         } catch (error) {
             console.log(error)
 
@@ -381,23 +296,20 @@
 
         // Show notification
         notification.notify({
-            group: store.networks[store.networkManageModal].denom,
+            group: 'default',
             clean: true
         })
 
         notification.notify({
-            group: store.networks[store.networkManageModal].denom,
+            group: 'default',
             title: i18n.global.t('message.notification_successful_title'),
             type: 'success',
             data: {
-                chain: store.networkManageModal,
+                chain: store.currentNetwork,
                 tx_type: i18n.global.t('message.manage_modal_action_redelegate'),
-                tx_hash: store.networkManageModal != 'bostrom' ? store.lastTXS : ''
+                tx_hash: store.currentNetwork != 'bostrom' ? store.lastTXS : ''
             }
         })
-
-        // Update network
-        store.updateNetwork(store.networkManageModal)
 
         // Clear validator data
         clearValidator()
@@ -416,19 +328,23 @@
 
         // Show notification
         notification.notify({
-            group: store.networks[store.networkManageModal].denom,
+            group: 'default',
             clean: true
         })
 
         notification.notify({
-            group: store.networks[store.networkManageModal].denom,
+            group: 'default',
             title: i18n.global.t('message.notification_failed_title'),
             text: store.manageError,
             type: 'error',
             data: {
-                chain: store.networkManageModal,
+                chain: store.currentNetwork,
                 tx_type: i18n.global.t('message.manage_modal_action_redelegate')
             }
         })
     }
+
+
+    // Сlick element outside
+    onClickOutside(target, () => hideDropdown())
 </script>

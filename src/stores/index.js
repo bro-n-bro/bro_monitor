@@ -255,6 +255,29 @@ export const useGlobalStore = defineStore('global', {
         },
 
 
+        // Get user delegations
+        async getUserDelegations() {
+            await fetch(`${this.networks[this.currentNetwork].lcd_api}/cosmos/staking/v1beta1/delegations/${this.Keplr.account.address}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.delegation_responses) {
+                        let sum = 0
+
+                        data.delegation_responses.forEach(el => {
+                            sum += parseFloat(el.balance.amount)
+
+                            this.networks[this.currentNetwork].delegations.push({
+                                'operator_address': el.delegation.validator_address,
+                                'amount': parseFloat(el.delegation.shares)
+                            })
+                        })
+
+                        this.networks[this.currentNetwork].delegations_sum = sum
+                    }
+                })
+        },
+
+
         // Check min. delegation
         isLocked() {
             return this.user.balance < this.networks[this.currentNetwork].min_delegation ? true : false

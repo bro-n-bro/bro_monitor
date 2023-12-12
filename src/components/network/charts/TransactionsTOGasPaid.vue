@@ -107,7 +107,7 @@
                 padding: {
                     left: 0,
                     right: 0,
-                    bottom: -9,
+                    bottom: -8,
                     top: -20,
                 },
                 xaxis: {

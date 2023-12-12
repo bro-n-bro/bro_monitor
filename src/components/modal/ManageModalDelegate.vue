@@ -96,10 +96,7 @@
         amount = ref('')
 
 
-    onBeforeMount(async () => {
-        // Get user available balance
-        await store.getUserAvailableBalance()
-
+    onBeforeMount(() => {
         // Set min. amount
         setMinAmount()
     })
