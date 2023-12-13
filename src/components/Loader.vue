@@ -9,7 +9,7 @@
     .loader_wrap
     {
         position: absolute;
-        z-index: 11;
+        z-index: 7;
         top: 0;
         left: 0;
 

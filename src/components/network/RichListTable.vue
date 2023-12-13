@@ -84,6 +84,9 @@
                 </tbody>
             </table>
         </div>
+
+
+        <img src="@/assets/watermark.svg" alt="" class="watermark" v-if="!loading">
     </div>
 </template>
 

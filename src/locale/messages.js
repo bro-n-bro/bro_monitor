@@ -402,7 +402,7 @@ export default {
             'manage_modal_validator_placeholder': 'Name Validator',
 
             'manage_modal_validator_exp': 'Delegating to Bro_n_Bro will open all application features',
-            'manage_modal_amount_exp': 'To have full experience using our stats dashboards, you will require to stake {amount} {token} with Bro_n_Bro Validator',
+            'manage_modal_amount_exp': 'To have full experience using our stats dashboards, you will require to stake {amount} {token} from your Keplr account or from <a href="{link}" target="_blank" rel="noopener nofollow">passport</a> with Bro_n_Bro Validator',
 
             'manage_modal_error_2': "tx parse error",
             'manage_modal_error_3': "invalid sequence",

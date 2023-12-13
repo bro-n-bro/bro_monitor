@@ -49,7 +49,7 @@
                 </div>
 
                 <div class="field">
-                    <input type="text" class="input" v-model="amount" @input="setAmount" placeholder="0">
+                    <input type="text" class="input" v-model="amount" @input="setAmount" placeholder="0" :disabled="store.user.available_balance < 0.01">
 
                     <div class="unit">
                         {{ store.networks[store.currentNetwork].token_name }}
@@ -60,12 +60,11 @@
                     </button>
                 </div>
 
-                <div class="exp">
-                    {{ $t('message.manage_modal_amount_exp', {
-                        amount: store.networks[store.currentNetwork].min_delegation / Math.pow(10, store.networks[store.currentNetwork].exponent),
-                        token: store.networks[store.currentNetwork].token_name
-                    }) }}
-                </div>
+                <div class="exp" v-html="$t('message.manage_modal_amount_exp', {
+                    amount: store.networks[store.currentNetwork].min_delegation / Math.pow(10, store.networks[store.currentNetwork].exponent),
+                    token: store.networks[store.currentNetwork].token_name,
+                    link: 'https://beta.bronbro.io/account/passport/'
+                })"></div>
             </div>
 
 
@@ -120,7 +119,7 @@
 
     // Set max. amount
     function setMaxAmount() {
-        amount.value = (store.user.available_balance / Math.pow(10, store.networks[store.currentNetwork].exponent) - 0.01).toString()
+        amount.value = store.user.available_balance < 0.01 ? 0 :(store.user.available_balance / Math.pow(10, store.networks[store.currentNetwork].exponent) - 0.01).toString()
     }
 
 

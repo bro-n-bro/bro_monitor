@@ -484,8 +484,18 @@
         margin-top: 10px;
 
         color: #555;
+    }
 
-        font-feature-settings: 'pnum' on, 'lnum' on;
+    #manage_modal .fields .exp a
+    {
+        text-decoration: none;
+
+        color: #950fff;
+    }
+
+    #manage_modal .fields .exp a:hover
+    {
+        text-decoration: underline;
     }
 
 
