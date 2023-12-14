@@ -393,6 +393,7 @@ export default {
             'manage_modal_notice_desc': 'Once you undelegate your staked {currency}, you will need<br> to wait {unbonding_time} days for your tokens to be liquid',
 
             'manage_modal_staked_mount': 'Staked Amount',
+            'manage_modal_staked_passport_mount': 'Staked Passport Amount ',
             'manage_modal_available_balance': 'Available Balance',
 
             'manage_modal_delegate_amount': 'Amount to Delegate',

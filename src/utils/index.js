@@ -30,12 +30,6 @@ export const createKeplrOfflineSinger = async chainId => {
 
     // Set username
     store.user.userName = store.Keplr.key.name
-
-    // Get user delegations
-    store.getUserDelegations()
-
-    // Get user available balance
-    store.getUserAvailableBalance()
 }
 
 

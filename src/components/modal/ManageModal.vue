@@ -12,7 +12,7 @@
                         {{ $t('message.manage_modal_action_delegate') }}
                     </button>
 
-                    <button class="btn" :class="{ active: type == 'redelegate' }" @click="type = 'redelegate'" v-if="validators.length">
+                    <button class="btn" :class="{ active: type == 'redelegate' }" @click="type = 'redelegate'" v-if="store.networks[store.currentNetwork].userValidators.length">
                         {{ $t('message.manage_modal_action_redelegate') }}
                     </button>
                 </div>
@@ -22,7 +22,7 @@
                 <ManageModalDelegate v-if="type == 'delegate'" />
 
                 <!-- Redelegate -->
-                <ManageModalRedelegate v-if="type == 'redelegate'" :validators="validators" />
+                <ManageModalRedelegate v-if="type == 'redelegate'" />
             </div>
         </div>
 
@@ -32,7 +32,7 @@
 
 
 <script setup>
-    import { inject, ref, onBeforeMount } from 'vue'
+    import { inject, ref } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -42,32 +42,7 @@
 
     const store = useGlobalStore(),
         emitter = inject('emitter'),
-        type = ref('delegate'),
-        validators = ref([])
-
-
-    onBeforeMount(async () => {
-        // Get validators
-        await getValidators()
-    })
-
-
-    // Get validators
-    async function getValidators() {
-        await fetch(`${store.networks[store.currentNetwork].lcd_api}/cosmos/staking/v1beta1/delegators/${store.Keplr.account.address}/validators`)
-            .then(res => res.json())
-            .then(response => {
-                let result = response.validators.filter(el => {
-                    if(el.operator_address != store.networks[store.currentNetwork].validator) {
-                        return el
-                    }
-                })
-
-                if (result.length) {
-                    validators.value = result
-                }
-            })
-    }
+        type = ref('delegate')
 </script>
 
 
@@ -179,7 +154,7 @@
         display: flex;
         align-content: center;
         align-items: center;
-        flex-wrap: wrap;
+        flex-wrap: nowrap;
         justify-content: space-between;
     }
 
@@ -197,7 +172,53 @@
         font-size: 14px;
         line-height: 17px;
 
+        display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+
+        width: 100%;
+
+        white-space: nowrap;
+
         color: #8e8e8e;
+    }
+
+
+    #manage_modal .tokens .label .current_account
+    {
+        font-weight: 500;
+
+        display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        width: 100%;
+        margin-left: 8px;
+
+        color: #fff;
+    }
+
+
+    #manage_modal .tokens .label .current_account img
+    {
+        display: block;
+
+        width: 16px;
+        height: 16px;
+    }
+
+
+    #manage_modal .tokens .label .current_account span
+    {
+        overflow: hidden;
+
+        width: calc(100% - 22px);
+
+        text-overflow: ellipsis;
     }
 
 
@@ -205,6 +226,8 @@
     {
         font-weight: 600;
         line-height: 19px;
+
+        margin-left: 24px;
 
         white-space: nowrap;
 

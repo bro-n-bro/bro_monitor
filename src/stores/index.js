@@ -115,6 +115,9 @@ export const useGlobalStore = defineStore('global', {
 
         // Connect wallet
         async connectWallet() {
+            // Set Keplr status
+            this.isKeplrConnected = false
+
             if (window.keplr) {
                 // Keplr connect
                 await createKeplrOfflineSinger('cosmoshub-4')
@@ -153,6 +156,15 @@ export const useGlobalStore = defineStore('global', {
 
                     await this.getUserBalance(addresses)
                 }
+
+                // Get user delegations
+                this.getUserDelegations()
+
+                // Get user available balance
+                this.getUserAvailableBalance()
+
+                // Get user validators
+                this.getUserValidators()
 
                 // Set Keplr status
                 this.isKeplrConnected = true
@@ -245,9 +257,9 @@ export const useGlobalStore = defineStore('global', {
                     .then(data => {
                         let availabel = data.balances.find(e => e.denom == this.networks[this.currentNetwork].denom)
 
-                        if (data.balances && data.balances.length && typeof availabel !== 'undefined') {
-                            this.user.available_balance = parseFloat(availabel.amount)
-                        }
+                        data.balances && data.balances.length && typeof availabel !== 'undefined'
+                            ? this.user.available_balance = parseFloat(availabel.amount)
+                            : this.user.available_balance = 0
                     })
             } catch (error) {
                 console.error(error)
@@ -274,6 +286,24 @@ export const useGlobalStore = defineStore('global', {
 
                         this.networks[this.currentNetwork].delegations_sum = sum
                     }
+                })
+        },
+
+
+        // Get user validators
+        async getUserValidators() {
+            await fetch(`${this.networks[this.currentNetwork].lcd_api}/cosmos/staking/v1beta1/delegators/${this.Keplr.account.address}/validators`)
+                .then(res => res.json())
+                .then(response => {
+                    let result = response.validators.filter(el => {
+                        if(el.operator_address != this.networks[this.currentNetwork].validator) {
+                            return el
+                        }
+                    })
+
+                    result.length
+                        ? this.networks[this.currentNetwork].userValidators = result
+                        : this.networks[this.currentNetwork].userValidators = []
                 })
         },
 

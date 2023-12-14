@@ -20,7 +20,13 @@
         <div class="tokens">
             <div>
                 <div class="label">
+                    <template v-if="!store.user.moonPassport">
                     {{ $t('message.manage_modal_staked_mount') }}
+                    </template>
+
+                    <template v-else>
+                    {{ $t('message.manage_modal_staked_passport_mount') }}
+                    </template>
                 </div>
 
                 <div class="val">
@@ -39,6 +45,13 @@
             <div>
                 <div class="label">
                     {{ $t('message.manage_modal_available_balance') }}
+
+                    <template v-if="store.user.moonPassport">
+                    <div class="current_account">
+                        <img src="@/assets/keplr_logo.svg" alt="">
+                        <span>{{ store.Keplr.key.name }}</span>
+                    </div>
+                    </template>
                 </div>
 
                 <div class="val">
@@ -77,7 +90,7 @@
 
                     <div class="dropdown">
                         <div class="scroll">
-                            <div v-for="(validator, index) in validators" :key="index">
+                            <div v-for="(validator, index) in store.networks[store.currentNetwork].userValidators" :key="index">
                                 <button type="button" class="btn" @click.stop.prevent="setValidator(validator)">
                                     {{ validator.description.moniker }}
                                 </button>
@@ -128,7 +141,7 @@
 
 
 <script setup>
-    import { ref, reactive, inject } from 'vue'
+    import { ref, inject } from 'vue'
     import { useGlobalStore } from '@/stores'
     import { onClickOutside } from '@vueuse/core'
     import { useNotification } from '@kyvg/vue3-notification'
@@ -138,15 +151,13 @@
     import ManageModalValidator from '@/components/modal/ManageModalValidator.vue'
 
 
-    const props = defineProps(['validators']),
-        i18n = inject('i18n'),
+    const i18n = inject('i18n'),
         store = useGlobalStore(),
         notification = useNotification(),
         amount = ref(''),
         operator_address = ref(''),
         availabel_tokens = ref(null),
         name = ref(''),
-        validators = reactive(props.validators),
         target = ref(null)
 
 
@@ -177,7 +188,8 @@
 
         availabel_tokens.value = store.networks[store.currentNetwork].delegations.find(el => el.operator_address == validator.operator_address).amount / Math.pow(10, store.networks[store.currentNetwork].exponent)
 
-        amount.value = (availabel_tokens.value - 0.01).toString()
+        // Set min. amount
+        setMinAmount()
 
         // Hide dropdown
         hideDropdown()

@@ -20,7 +20,13 @@
         <div class="tokens">
             <div>
                 <div class="label">
+                    <template v-if="!store.user.moonPassport">
                     {{ $t('message.manage_modal_staked_mount') }}
+                    </template>
+
+                    <template v-else>
+                    {{ $t('message.manage_modal_staked_passport_mount') }}
+                    </template>
                 </div>
 
                 <div class="val">
@@ -32,6 +38,13 @@
             <div>
                 <div class="label">
                     {{ $t('message.manage_modal_available_balance') }}
+
+                    <template v-if="store.user.moonPassport">
+                    <div class="current_account">
+                        <img src="@/assets/keplr_logo.svg" alt="">
+                        <span>{{ store.Keplr.key.name }}</span>
+                    </div>
+                    </template>
                 </div>
 
                 <div class="val">

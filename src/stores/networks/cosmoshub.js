@@ -15,7 +15,8 @@ const network = {
     stakeMin: 20000000,
     commision: 7.5,
     min_delegation: 20000000,
-    delegations: []
+    delegations: [],
+    userValidators: []
 }
 
 export default network

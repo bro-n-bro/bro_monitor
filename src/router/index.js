@@ -170,7 +170,7 @@ router.beforeResolve(async (to, from, next) => {
 	}
 
 	// Connect wallet
-	if (!store.isKeplrConnected && window.keplr) {
+	if (!store.isKeplrConnected && window.keplr && store.currentNetwork) {
 		store.connectWallet()
 	}
 
