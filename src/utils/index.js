@@ -15,21 +15,25 @@ export const generateAddress = (prefix, address) => {
 export const createKeplrOfflineSinger = async chainId => {
     let store = useGlobalStore()
 
-    // Get Keplr network enable
-    await window.keplr.enable(chainId)
+    try {
+        // Get Keplr network enable
+        await window.keplr.enable(chainId)
 
-    // Set Offline Singer
-    store.Keplr.offlineSinger = await window.getOfflineSignerAuto(chainId)
+        // Set Offline Singer
+        store.Keplr.offlineSinger = await window.getOfflineSignerAuto(chainId)
 
-    // Set Keplr account
-    let accounts = await store.Keplr.offlineSinger.getAccounts()
-    store.Keplr.account = accounts[0]
+        // Set Keplr account
+        let accounts = await store.Keplr.offlineSinger.getAccounts()
+        store.Keplr.account = accounts[0]
 
-    // Set Keplr key
-    store.Keplr.key = await window.keplr.getKey(chainId)
+        // Set Keplr key
+        store.Keplr.key = await window.keplr.getKey(chainId)
 
-    // Set username
-    store.user.userName = store.Keplr.key.name
+        // Set username
+        store.user.userName = store.Keplr.key.name
+    } catch (error) {
+        console.log(error)
+    }
 }
 
 

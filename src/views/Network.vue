@@ -75,7 +75,7 @@
         </div>
 
 
-        <TimeRange :global="true" />
+        <TimeRange :global="true" v-if="store.currentNetworkType != 3 && store.currentNetworkType != 4" />
 
 
         <div class="types">
@@ -88,6 +88,16 @@
                 <svg><use xlink:href="@/assets/sprite.svg#ic_network_data_type_charts"></use></svg>
                 <span>{{ $t('message.network_type_charts') }}</span>
             </button>
+
+            <button class="btn" :class="{'active': store.currentNetworkType == 3}" @click.prevent="setActiveType(3)">
+                <svg><use xlink:href="@/assets/sprite.svg#ic_network_data_type_tx"></use></svg>
+                <span>{{ $t('message.network_type_tx') }}</span>
+            </button>
+
+            <button class="btn" :class="{'active': store.currentNetworkType == 4}" @click.prevent="setActiveType(4)">
+                <svg><use xlink:href="@/assets/sprite.svg#ic_network_data_type_gov"></use></svg>
+                <span>{{ $t('message.network_type_gov') }}</span>
+            </button>
         </div>
     </div>
 
@@ -97,6 +107,12 @@
 
     <!-- Accounts charts -->
     <AccountsCharts v-if="store.currentNetworkType == 2" />
+
+    <!-- Accounts TX -->
+    <AccountsTX v-if="store.currentNetworkType == 3" />
+
+    <!-- Accounts GOV -->
+    <AccountsGOV v-if="store.currentNetworkType == 4" />
     </template>
 
 
@@ -186,6 +202,8 @@
     import NetworkIBC from  '@/components/network/IBC.vue'
     import NetworkRelaying from  '@/components/network/Relaying.vue'
     import AccountsBlocks from  '@/components/network/AccountsBlocks.vue'
+    import AccountsTX from  '@/components/network/AccountsTX.vue'
+    import AccountsGOV from  '@/components/network/AccountsGOV.vue'
     import AccountsCharts from  '@/components/network/AccountsCharts.vue'
     import ValidatorsTable from  '@/components/network/ValidatorsTable.vue'
     import ValidatorsCharts from  '@/components/network/ValidatorsCharts.vue'
@@ -234,7 +252,7 @@
             urlParams.type = 1
         }
 
-        if (store.currentNetworkTab == 2 && store.currentNetworkType > 2 || store.currentNetworkTab == 2 && store.currentNetworkType < 1) {
+        if (store.currentNetworkTab == 2 && store.currentNetworkType > 4 || store.currentNetworkTab == 2 && store.currentNetworkType < 1) {
             store.currentNetworkType = 1
 
             // Set params to URL

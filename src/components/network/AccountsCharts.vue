@@ -70,15 +70,6 @@
         </div>
 
         <div class="row" v-if="showTransactionsStatistics">
-            <!-- Rich List -->
-            <RichList />
-
-            <!-- Whale Transactions -->
-            <WhaleTransactions />
-
-            <!-- TOP Transactions -->
-            <TOPTransactions />
-
             <!-- Total Amount of Transactions -->
             <TotalAmountTransactions />
 
@@ -93,23 +84,6 @@
 
             <!-- Transactions / Gas Paid -->
             <TransactionsTOGasPaid />
-        </div>
-    </div>
-
-
-    <div class="blocks charts">
-        <div class="title" @click.prevent="showGovernanceStatistics = !showGovernanceStatistics" :class="{ active: showGovernanceStatistics }">
-            <span>{{ $t('message.network_charts_governance_statistics_title') }}</span>
-
-            <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_arr_down"></use></svg>
-        </div>
-
-        <div class="row" v-if="showGovernanceStatistics">
-            <!-- Unique votes per proposal -->
-            <UniqueVotesPerProposal />
-
-            <!-- Governance Participation -->
-            <GovernanceParticipation />
         </div>
     </div>
 </template>
@@ -131,16 +105,11 @@
     import ActiveAutoRestakeUsers from '@/components/network/charts/ActiveAutoRestakeUsers.vue'
     import AutoRestakeExecutedCount from '@/components/network/charts/AutoRestakeExecutedCount.vue'
     import AutoRestakeTokenAmount from '@/components/network/charts/AutoRestakeTokenAmount.vue'
-    import RichList from '@/components/network/charts/RichList.vue'
-    import WhaleTransactions from '@/components/network/charts/WhaleTransactions.vue'
-    import TOPTransactions from '@/components/network/charts/TOPTransactions.vue'
     import TotalAmountTransactions from '@/components/network/charts/TotalAmountTransactions.vue'
     import GasPaid from '@/components/network/charts/GasPaid.vue'
     import FeesPaid from '@/components/network/charts/FeesPaid.vue'
     import GasPaidTOFeesPaid from '@/components/network/charts/GasPaidTOFeesPaid.vue'
     import TransactionsTOGasPaid from '@/components/network/charts/TransactionsTOGasPaid.vue'
-    import UniqueVotesPerProposal from '@/components/network/charts/UniqueVotesPerProposal.vue'
-    import GovernanceParticipation from '@/components/network/charts/GovernanceParticipation.vue'
 
 
     const store = useGlobalStore(),
@@ -148,8 +117,7 @@
         showAccountsStatistics = ref(true),
         showDelegationsStatistics = ref(true),
         showRestakeStatistics = ref(true),
-        showTransactionsStatistics = ref(true),
-        showGovernanceStatistics = ref(true)
+        showTransactionsStatistics = ref(true)
 
 
     // Event "chartLoaded"

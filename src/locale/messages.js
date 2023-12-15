@@ -32,6 +32,8 @@ export default {
             'network_type_parameters': 'Parameters',
             'network_type_IBC': 'IBC',
             'network_type_relaying': 'Relaying',
+            'network_type_tx': 'TX',
+            'network_type_gov': 'GOV',
 
             // Network page titles
             'network_network_page_title': 'Network page',

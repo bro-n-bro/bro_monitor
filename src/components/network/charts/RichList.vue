@@ -14,7 +14,7 @@
             {{ $t('message.network_charts_rich_list_title') }}
         </div>
 
-        <!-- <Lock v-if="store.isLocked()" /> -->
+        <Lock v-if="store.isLocked()" />
     </div>
 </template>
 
@@ -30,3 +30,11 @@
     const store = useGlobalStore(),
         emitter = inject('emitter')
 </script>
+
+
+<style scoped>
+    .block
+    {
+        min-height: 240px;
+    }
+</style>
