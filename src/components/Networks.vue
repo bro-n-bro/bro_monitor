@@ -1,5 +1,10 @@
 <template>
     <section class="networks">
+        <button class="toggle_btn" @click.prevent="store.colShow = !store.colShow">
+            <svg><use xlink:href="@/assets/sprite.svg#ic_toggle"></use></svg>
+        </button>
+
+
         <div class="title" @click.prevent="toggleActiveClass">
             <span>{{ $t('message.networks_title') }}</span>
 
@@ -62,6 +67,8 @@
         position: sticky;
         top: 132px;
 
+        overflow: hidden;
+
         padding: 14px;
 
         border-radius: 20px;
@@ -73,18 +80,22 @@
     {
         font-size: 30px;
         font-weight: 600;
-        line-height: 36px;
+        line-height: 40px;
 
         display: flex;
+        visibility: hidden;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
 
         margin-bottom: 20px;
 
+        transition: .2s linear;
+        white-space: nowrap;
         pointer-events: none;
 
-        justify-content: flex-start;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
+        opacity: 0;
     }
 
     .networks .title > *
@@ -110,6 +121,45 @@
     }
 
 
+    .networks .toggle_btn
+    {
+        position: absolute;
+        top: 14px;
+        right: 30px;
+
+        display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        width: 40px;
+        height: 40px;
+        padding: 10px;
+
+        transition: .2s linear;
+
+        border-radius: 50%;
+        background: #282828;
+    }
+
+    .networks .toggle_btn:hover
+    {
+        background: #970fff;
+    }
+
+
+    .networks .toggle_btn svg
+    {
+        display: block;
+
+        width: 20px;
+        height: 20px;
+
+        transition: transform .2s linear;
+    }
+
+
     .networks .list > * + *
     {
         margin-top: 4px;
@@ -118,25 +168,23 @@
 
     .networks .link
     {
-        color: currentColor;
-
         position: relative;
 
         display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
 
         width: 100%;
-        padding: 10px 48px 10px 10px;
+        padding: 10px 16px;
 
-        transition: background .2s linear;
+        transition: .2s linear;
         text-align: left;
         text-decoration: none;
 
+        color: currentColor;
         border-radius: 14px;
-
-        justify-content: space-between;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
     }
 
 
@@ -147,17 +195,16 @@
 
         display: flex;
         overflow: hidden;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
 
         width: 40px;
         height: 40px;
 
         border-radius: 50%;
         background: #282828;
-
-        justify-content: center;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
     }
 
 
@@ -190,8 +237,14 @@
     .networks .logo + *,
     .networks .icon + *
     {
+        visibility: hidden;
+
         width: calc(100% - 54px);
         margin-left: auto;
+
+        transition: .2s linear;
+
+        opacity: 0;
     }
 
 
@@ -200,17 +253,22 @@
         font-size: 18px;
         font-weight: 500;
         line-height: 100%;
+
+        white-space: nowrap;
     }
 
 
     .networks .token,
     .networks .exp
     {
-        color: #555;
         font-size: 12px;
         line-height: 15px;
 
         margin-top: 6px;
+
+        white-space: nowrap;
+
+        color: #555;
     }
 
 
@@ -221,9 +279,16 @@
         right: 10px;
         bottom: 0;
 
+        visibility: hidden;
+
         width: 24px;
         height: 24px;
         margin: auto;
+
+        transition: .2s linear;
+        pointer-events: none;
+
+        opacity: 0;
     }
 
 
@@ -231,6 +296,34 @@
     .networks .link.active
     {
         background: #141414;
+    }
+
+
+
+    .big .networks
+    {
+        width: 100%;
+    }
+
+
+    .big .networks .toggle_btn
+    {
+        right: 14px;
+    }
+
+    .big .networks .toggle_btn svg
+    {
+        transform: rotate(180deg);
+    }
+
+
+    .big .networks .title,
+    .big .networks .logo + *,
+    .big .networks .icon + *
+    {
+        visibility: visible;
+
+        opacity: 1;
     }
 
 

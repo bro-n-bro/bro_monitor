@@ -43,7 +43,7 @@
                 background: 'transparent',
                 parentHeightOffset: 0,
                 offsetX: 0,
-                offsetY: 0,
+                offsetY: 1,
                 toolbar: {
                     show: false
                 },

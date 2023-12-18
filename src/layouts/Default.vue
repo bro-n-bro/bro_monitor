@@ -6,7 +6,7 @@
         <section>
             <div class="cont middle">
                 <div class="grid row">
-                    <section class="col">
+                    <section class="col" :class="{ big: store.colShow }">
                         <!-- Networks -->
                         <Networks />
                     </section>
@@ -30,11 +30,17 @@
 
 
 <script setup>
+    import { useGlobalStore } from '@/stores'
+
+
     // Components
     import Header from '../components/Header.vue'
     import Networks from '@/components/Networks.vue'
     import Feedback from '../components/Feedback.vue'
     import Footer from '../components/Footer.vue'
+
+
+    const store = useGlobalStore()
 </script>
 
 
@@ -49,12 +55,26 @@
 
     .col
     {
-        width: 353px;
+        width: 101px;
         max-width: 100%;
+
+        transition: width .2s linear;
+    }
+
+    .col.big
+    {
+        width: 353px;
     }
 
 
     .col_main
+    {
+        width: calc(100% - 121px);
+
+        transition: width .2s linear;
+    }
+
+    .col.big ~ .col_main
     {
         width: calc(100% - 373px);
     }

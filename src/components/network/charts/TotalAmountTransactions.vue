@@ -16,7 +16,7 @@
 
         <Loader v-if="loading" />
 
-        <apexchart v-else class="chart" height="145px" :options="chartOptions" :series="series" />
+        <apexchart v-else class="chart" :height="height" :width="width" :options="chartOptions" :series="series" />
 
         <img src="@/assets/watermark.svg" alt="" class="watermark small" v-if="!loading">
     </div>
@@ -40,6 +40,8 @@
         chartLabels = ref([]),
         chartMin = ref(0),
         chartMax = ref(0),
+        width = ref('100%'),
+        height = ref('71.9%'),
         series = reactive([
             {
                 data: computed(() => chartData.value)
@@ -52,7 +54,7 @@
                 background: 'transparent',
                 parentHeightOffset: 0,
                 offsetX: 0,
-                offsetY: 0,
+                offsetY: 1,
                 toolbar: {
                     show: false
                 },

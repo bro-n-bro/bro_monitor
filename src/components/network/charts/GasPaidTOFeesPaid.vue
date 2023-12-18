@@ -46,6 +46,8 @@
         chartMaxGas = ref(0),
         chartMinFees = ref(0),
         chartMaxFees = ref(0),
+        width = ref('100%'),
+        height = ref('71.9%'),
         series = reactive([
             {
                 name: 'Gas',

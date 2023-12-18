@@ -44,6 +44,8 @@
         chartLabels = ['0-100', '100-500', '500-2К', '2К-5К ', '5К-10К', '10К-20К','20К-50К', '50К-100К', '100К-500К', '500К+'],
         chartMin = ref(0),
         chartMax = ref(0),
+        width = ref('100%'),
+        height = ref('71.9%'),
         series = reactive([
             {
                 data: computed(() => chartData.value)

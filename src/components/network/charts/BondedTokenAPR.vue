@@ -43,6 +43,8 @@
         chartMaxAPR = ref(0),
         chartMinBondedTokens = ref(0),
         chartMaxBondedTokens = ref(0),
+        width = ref('100%'),
+        height = ref('71.9%'),
         series = reactive([
             {
                 name: 'APR',

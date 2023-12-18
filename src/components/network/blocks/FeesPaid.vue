@@ -19,7 +19,7 @@
             <span v-else>{{ $filters.toFixed(store.cache.fees_paid_actual / Math.pow(10, store.networks[store.currentNetwork].exponent), 0).toLocaleString('ru-RU') }}</span>
         </div>
 
-        <apexchart class="chart" height="47px" :options="chartOptions" :series="series" v-if="!chartLoading" />
+        <apexchart class="chart small" :class="store.currentTimeRange" :height="height"  :options="chartOptions" :series="series" v-if="!chartLoading" />
     </div>
 </template>
 
@@ -38,6 +38,7 @@
         chartLoading = ref(true),
         chartData = ref([]),
         chartColors= ref([]),
+        height = '57',
         series = reactive([
             {
                 data: computed(() => chartData.value)
@@ -46,11 +47,14 @@
         chartOptions = reactive({
             chart: {
                 type: 'area',
+                sparkline: {
+                    enabled: true
+                },
                 fontFamily: 'var(--font_family)',
                 background: 'transparent',
                 parentHeightOffset: 0,
                 offsetX: 0,
-                offsetY: 0,
+                offsetY: 1,
                 toolbar: {
                     show: false
                 },
@@ -87,8 +91,8 @@
                 padding: {
                     left: 0,
                     right: 0,
-                    bottom: -32,
-                    top: -30,
+                    bottom: 0,
+                    top: 8
                 }
             },
             legend: {
