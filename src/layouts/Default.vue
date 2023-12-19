@@ -648,12 +648,12 @@
 
     @media print, (max-width: 1599px)
     {
-        .col
+        .col.big
         {
             width: 324px;
         }
 
-        .col_main
+        .col.big ~ .col_main
         {
             width: calc(100% - 344px);
         }
@@ -663,12 +663,12 @@
 
     @media print, (max-width: 1439px)
     {
-        .col
+        .col.big
         {
             width: 300px;
         }
 
-        .col_main
+        .col.big ~ .col_main
         {
             width: calc(100% - 320px);
         }
@@ -678,12 +678,12 @@
 
     @media print, (max-width: 1359px)
     {
-        .col
+        .col.big
         {
             width: 280px;
         }
 
-        .col_main
+        .col.big ~ .col_main
         {
             width: calc(100% - 300px);
         }
@@ -701,7 +701,9 @@
     @media print, (max-width: 1279px)
     {
         .col,
-        .col_main
+        .col.big,
+        .col_main,
+        .col.big ~ .col_main
         {
             width: 100%;
         }
