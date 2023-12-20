@@ -118,7 +118,6 @@ export default {
             'network_charts_governance_participation_title': 'Governance Participation',
             'network_charts_validator_group_map_title': 'Validator Group Map',
             'network_charts_сommission_earned_title': 'Commission Earned',
-            'network_charts_unique_delegators_title': 'Unique Delegators',
             'network_charts_delegators_title': 'Delegators',
             'network_charts_voting_power_title': 'Voting Power',
             'network_charts_commission_title': 'Commission',

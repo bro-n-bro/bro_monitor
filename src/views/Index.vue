@@ -483,7 +483,6 @@
         height: 40px;
 
         border-radius: 50%;
-        background: #282828;
     }
 
 

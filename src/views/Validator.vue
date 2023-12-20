@@ -27,9 +27,6 @@
             <!-- Commission Earned -->
             <CommissionEarned :validator="validator" />
 
-            <!-- Unique Delegators -->
-            <UniqueDelegators :validator="validator" />
-
             <!-- Voting Power -->
             <VotingPower :validator="validator" />
 
@@ -50,7 +47,6 @@
     import MainData from '@/components/validator/MainData.vue'
     import Features from '@/components/validator/Features.vue'
     import CommissionEarned from '@/components/network/charts/CommissionEarned.vue'
-    import UniqueDelegators from '@/components/network/charts/UniqueDelegators.vue'
     import VotingPower from '@/components/network/charts/VotingPower.vue'
     import Uptime from '@/components/network/charts/Uptime.vue'
     import Loader from '@/components/Loader.vue'
@@ -61,7 +57,7 @@
         validator = ref(null)
 
 
-    onBeforeMount(async () => {
+    onBeforeMount(() => {
         // Get data
         try {
             fetch(`https://rpc.bronbro.io/statistics/validators/${store.currentValidatorAddress}`)
@@ -100,7 +96,6 @@
 
         width: 36px;
         height: 36px;
-        margin-right: 16px;
 
         transition: background .2s linear;
         text-decoration: none;

@@ -70,7 +70,8 @@
                </div>
 
                 <div class="val">
-                    <div></div>
+                    <div v-if="props.validator.restake_enabled">{{ $t('message.yes') }}</div>
+                    <div v-else>{{ $t('message.no') }}</div>
                 </div>
             </div>
 
