@@ -236,6 +236,9 @@ export default {
             'prices_PICA_title': 'PICA',
             'prices_QWOYN_title': 'QWOYN',
             'prices_STRD_title': 'STRD',
+            'prices_TIA_title': 'TIA',
+            'prices_BLD_title': 'BLD',
+            'prices_NTRN_title': 'NTRN',
 
 
             // Chart page

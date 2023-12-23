@@ -48,6 +48,15 @@
 
             <!-- STRD -->
             <STRD />
+
+            <!-- TIA -->
+            <TIA />
+
+            <!-- BLD -->
+            <BLD />
+
+            <!-- NTRN -->
+            <NTRN />
         </div>
     </div>
 </template>
@@ -72,6 +81,9 @@
     import PICA from  '@/components/prices/PICA.vue'
     import QWOYN from  '@/components/prices/QWOYN.vue'
     import STRD from  '@/components/prices/STRD.vue'
+    import TIA from  '@/components/prices/TIA.vue'
+    import BLD from  '@/components/prices/BLD.vue'
+    import NTRN from  '@/components/prices/NTRN.vue'
 
 
     const store = useGlobalStore()
