@@ -12,7 +12,7 @@ export default {
 
             // Home page
             'home_title': 'Analytics.',
-            'home_desc': "Validator's rating created by Bro_n_Bro.Bro rating is aimed at community needs with regard to an appropriate funds decentralization in different Cosmos networks.",
+            'home_desc': 'Our service provides real-time blockchain statistics across diverse networks, ensuring you stay informed in the dynamic world of decentralized technologies.',
 
 
             // Networks block
