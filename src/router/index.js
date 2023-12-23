@@ -15,7 +15,26 @@ const routes = [
         name: 'Error',
         component: () => import('../views/Error404.vue'),
         meta: {
-            layout: errorLayout
+            layout: errorLayout,
+			accessDenied: []
+        }
+    },
+	{
+        path: '/keplr_error',
+        name: 'KeplrError',
+        component: () => import('../views/KeplrError.vue'),
+        meta: {
+            layout: errorLayout,
+            accessDenied: ['with_keplr']
+        }
+    },
+    {
+        path: '/keplr_reload',
+        name: 'KeplrReload',
+        component: () => import('../views/KeplrReload.vue'),
+        meta: {
+            layout: errorLayout,
+            accessDenied: ['with_keplr']
         }
     },
     {
@@ -23,7 +42,8 @@ const routes = [
         name: 'Main',
 		component: () => import('../views/Index.vue'),
 		meta: {
-			layout: mainLayout
+			layout: mainLayout,
+			accessDenied: []
 		}
     },
     {
@@ -31,7 +51,8 @@ const routes = [
 		name: 'Network',
 		component: () => import('../views/Network.vue'),
 		meta: {
-			layout: defaultLayout
+			layout: defaultLayout,
+			accessDenied: []
 		}
 	},
     {
@@ -39,7 +60,8 @@ const routes = [
 		name: 'Prices',
 		component: () => import('../views/Prices.vue'),
 		meta: {
-			layout: defaultLayout
+			layout: defaultLayout,
+			accessDenied: []
 		}
 	},
 	{
@@ -47,7 +69,8 @@ const routes = [
 		name: 'Validator',
 		component: () => import('../views/Validator.vue'),
 		meta: {
-			layout: defaultLayout
+			layout: defaultLayout,
+			accessDenied: []
 		}
 	},
 	{
@@ -55,7 +78,8 @@ const routes = [
 		name: 'Chart',
 		component: () => import('../views/Chart.vue'),
 		meta: {
-			layout: fullWidthLayout
+			layout: fullWidthLayout,
+			accessDenied: []
 		}
 	},
 	{
@@ -63,7 +87,8 @@ const routes = [
 		name: 'IBC',
 		component: () => import('../views/IBCNetwork.vue'),
 		meta: {
-			layout: defaultLayout
+			layout: defaultLayout,
+			accessDenied: []
 		}
 	},
 	{
@@ -71,7 +96,8 @@ const routes = [
 		name: 'Validators',
 		component: () => import('../views/Validators.vue'),
 		meta: {
-			layout: fullWidthLayout
+			layout: fullWidthLayout,
+			accessDenied: []
 		}
 	},
 	{
@@ -79,7 +105,8 @@ const routes = [
 		name: 'RichList',
 		component: () => import('../views/RichList.vue'),
 		meta: {
-			layout: fullWidthLayout
+			layout: fullWidthLayout,
+			accessDenied: []
 		}
 	},
 	{
@@ -87,7 +114,8 @@ const routes = [
 		name: 'WhaleTransactions',
 		component: () => import('../views/WhaleTransactions.vue'),
 		meta: {
-			layout: fullWidthLayout
+			layout: fullWidthLayout,
+			accessDenied: []
 		}
 	},
 	{
@@ -95,7 +123,8 @@ const routes = [
 		name: 'GovernanceParticipation',
 		component: () => import('../views/GovernanceParticipation.vue'),
 		meta: {
-			layout: fullWidthLayout
+			layout: fullWidthLayout,
+			accessDenied: []
 		}
 	},
 	{
@@ -103,7 +132,8 @@ const routes = [
 		name: 'TOPTransactions',
 		component: () => import('../views/TOPTransactions.vue'),
 		meta: {
-			layout: fullWidthLayout
+			layout: fullWidthLayout,
+			accessDenied: []
 		}
 	},
 ]
@@ -120,7 +150,7 @@ const router = createRouter({
 })
 
 
-router.beforeEach((to, from) => {
+router.beforeEach((to, from, next) => {
 	let store = useGlobalStore()
 
 	if(store.scrollOffset && !store.scrollReturn) {
@@ -133,6 +163,23 @@ router.beforeEach((to, from) => {
 	if(!store.scrollOffset) {
 		store.scrollOffset = window.scrollY
 	}
+
+	// Check page access
+	to.matched.some(record => {
+		// Array with prohibitions
+		let access = record.meta.accessDenied
+
+		if(access.length) {
+			// Forbidden with keplr
+			if(access.includes('with_keplr') && window.keplr) {
+				next('/')
+
+				return false
+			}
+		}
+	})
+
+	next()
 })
 
 

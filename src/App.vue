@@ -43,7 +43,7 @@
 
 <script setup>
     import { computed, onBeforeMount, inject } from 'vue'
-    import { useRoute } from 'vue-router'
+    import { useRouter, useRoute } from 'vue-router'
     import { useGlobalStore } from '@/stores'
     import { useTitle } from '@vueuse/core'
 
@@ -53,6 +53,7 @@
 
     const i18n = inject('i18n'),
         route = useRoute(),
+        router = useRouter(),
         store = useGlobalStore(),
         title = useTitle(),
         emitter = inject('emitter'),
@@ -94,13 +95,16 @@
 
     // Event "connect wallet"
     emitter.on('connectWallet', () => {
-        store.connectWallet()
+        window.keplr
+            ? store.connectWallet()
+            : router.push('/keplr_error')
     })
 
 
     // Event "open manage modal"
     emitter.on('openManageModal', async function(modalData = { network: store.currentNetwork }) {
-        await fetch(`${store.networks[store.currentNetwork].lcd_api}/cosmos/staking/v1beta1/params`)
+        if (window.keplr) {
+            await fetch(`${store.networks[store.currentNetwork].lcd_api}/cosmos/staking/v1beta1/params`)
             .then(response => response.json())
             .then(data => {
                 store.showManageModal = true,
@@ -108,6 +112,9 @@
 
                 document.body.classList.add('lock')
             })
+        } else {
+            router.push('/keplr_error')
+        }
     })
 
 

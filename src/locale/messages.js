@@ -10,6 +10,11 @@ export default {
             'error_title_404': 'Page was lost in space....<br> Are you sure that it exist?',
 
 
+            // Keplr Error page
+            'keplr_error_title': "Oooops, it seems you don't have<br> a Keplr extension",
+            'keplr_reload_title': 'Please reload the page',
+
+
             // Home page
             'home_title': 'Analytics.',
             'home_desc': 'Our service provides real-time blockchain statistics across diverse networks, ensuring you stay informed in the dynamic world of decentralized technologies.',
@@ -369,6 +374,8 @@ export default {
             'btn_max': 'MAX',
             'btn_delegate_short': 'Delegate',
             'btn_redelegate_short': 'Redelegate',
+            'btn_reload': 'Reload',
+            'btn_keplr_install': 'Install Keplr',
 
 
             'yes': 'Yes',
