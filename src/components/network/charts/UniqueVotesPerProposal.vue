@@ -16,7 +16,7 @@
 
         <Loader v-if="loading" />
 
-        <apexchart v-else class="chart" :height="316" :options="chartOptions" :series="series" />
+        <apexchart v-else-if="!store.isLocked()" class="chart" :height="316" :options="chartOptions" :series="series" />
 
         <img src="@/assets/watermark.svg" alt="" class="watermark small" v-if="!loading">
 
@@ -26,7 +26,7 @@
 
 
 <script setup>
-    import { inject, ref, reactive, onBeforeMount, computed } from 'vue'
+    import { inject, ref, reactive, onBeforeMount, computed, watch } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -225,37 +225,53 @@
 
 
     onBeforeMount(async () => {
-        // Get chart data
-        if (!store.cache.charts.votes) {
-            await getChartData()
+        if (!store.isLocked()) {
+            // Get chart data
+            if (!store.cache.charts.votes) {
+                await getChartData()
+            }
+
+            // Init chart
+            initChart()
         }
+    })
 
 
-        // Init chart
-        initChart()
+    watch(computed(() => store.isLocked()), async () => {
+        if (!store.isLocked()) {
+            // Get chart data
+            if (!store.cache.charts.votes) {
+                await getChartData()
+            }
+
+            // Init chart
+            initChart()
+        }
     })
 
 
     // Event "updateChartTimeRange"
     emitter.on('updateChartTimeRange', async ({ type }) => {
-        // Show loader
-        loading.value = true
+        if (!store.isLocked()) {
+            // Show loader
+            loading.value = true
 
-        // Reset chart data
-        chartDataYes.value = []
-        chartDataNo.value = []
-        chartDataNWV.value = []
-        chartDataAbstain.value = []
-        chartLabels.value = []
+            // Reset chart data
+            chartDataYes.value = []
+            chartDataNo.value = []
+            chartDataNWV.value = []
+            chartDataAbstain.value = []
+            chartLabels.value = []
 
-        // Get chart data
-        try {
-            await getChartData()
+            // Get chart data
+            try {
+                await getChartData()
 
-            // Init chart
-            initChart()
-        } catch (error) {
-            console.error(error)
+                // Init chart
+                initChart()
+            } catch (error) {
+                console.error(error)
+            }
         }
     })
 
@@ -306,6 +322,11 @@
 
 
 <style scoped>
+    .block
+    {
+        min-height: 240px;
+    }
+
     .block .title
     {
         margin-bottom: 12px;

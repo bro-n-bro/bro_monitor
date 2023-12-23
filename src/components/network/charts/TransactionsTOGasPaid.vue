@@ -16,7 +16,7 @@
 
         <Loader v-if="loading" />
 
-        <apexchart v-else class="chart" height="316" :options="chartOptions" :series="series" />
+        <apexchart v-else-if="!store.isLocked()" class="chart" height="316" :options="chartOptions" :series="series" />
 
         <img src="@/assets/watermark.svg" alt="" class="watermark" v-if="!loading">
 
@@ -242,7 +242,18 @@
 
 
     onBeforeMount(() => {
-        if(store.cache.charts.gas_paid && store.cache.charts.transactions) {
+        if(store.cache.charts.gas_paid && store.cache.charts.transactions && !store.isLocked()) {
+            // Init chart
+            initChart()
+        }
+    })
+
+
+    watch(computed(() => store.isLocked()), async () => {
+        if (!store.isLocked() && store.cache.charts.transactions && store.cache.charts.gas_paid) {
+            // Reset chart data
+            resetData()
+
             // Init chart
             initChart()
         }
@@ -250,23 +261,27 @@
 
 
     watch(computed(() => store.cache.charts.gas_paid), () => {
-        // Reset chart data
-        resetData()
+        if (!store.isLocked()) {
+            // Reset chart data
+            resetData()
 
-        if(store.cache.charts.transactions) {
-            // Init chart
-            initChart()
+            if(store.cache.charts.transactions) {
+                // Init chart
+                initChart()
+            }
         }
     })
 
 
     watch(computed(() => store.cache.charts.transactions), () => {
-        // Reset chart data
-        resetData()
+        if (!store.isLocked()) {
+            // Reset chart data
+            resetData()
 
-        if(store.cache.charts.gas_paid) {
-            // Init chart
-            initChart()
+            if(store.cache.charts.gas_paid) {
+                // Init chart
+                initChart()
+            }
         }
     })
 
@@ -316,6 +331,12 @@
 
 
 <style scoped>
+    .block
+    {
+        min-height: 240px;
+    }
+
+
     .block .title
     {
         margin-bottom: 12px;

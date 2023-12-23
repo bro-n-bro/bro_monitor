@@ -16,7 +16,7 @@
 
         <Loader v-if="loading" />
 
-        <apexchart v-else class="chart" height="158px" :options="chartOptions" :series="series" />
+        <apexchart v-else-if="!store.isLocked()" class="chart" height="158px" :options="chartOptions" :series="series" />
 
         <img src="@/assets/watermark.svg" alt="" class="watermark small" v-if="!loading">
 
@@ -26,7 +26,7 @@
 
 
 <script setup>
-    import { inject, ref, reactive, watch, computed, onBeforeMount } from 'vue'
+    import { inject, ref, reactive, onBeforeMount, computed, watch } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -46,8 +46,6 @@
         chartMaxGas = ref(0),
         chartMinFees = ref(0),
         chartMaxFees = ref(0),
-        width = ref('100%'),
-        height = ref('71.9%'),
         series = reactive([
             {
                 name: 'Gas',
@@ -242,7 +240,18 @@
 
 
     onBeforeMount(() => {
-        if(store.cache.charts.gas_paid && store.cache.charts.fees_paid) {
+        if(store.cache.charts.gas_paid && store.cache.charts.fees_paid && !store.isLocked()) {
+            // Init chart
+            initChart()
+        }
+    })
+
+
+    watch(computed(() => store.isLocked()), async () => {
+        if (!store.isLocked() && store.cache.charts.fees_paid && store.cache.charts.gas_paid) {
+            // Reset chart data
+            resetData()
+
             // Init chart
             initChart()
         }
@@ -250,23 +259,27 @@
 
 
     watch(computed(() => store.cache.charts.gas_paid), () => {
-        // Reset chart data
-        resetData()
+        if (!store.isLocked()) {
+            // Reset chart data
+            resetData()
 
-        if(store.cache.charts.fees_paid) {
-            // Init chart
-            initChart()
+            if(store.cache.charts.fees_paid) {
+                // Init chart
+                initChart()
+            }
         }
     })
 
 
     watch(computed(() => store.cache.charts.fees_paid), () => {
-        // Reset chart data
-        resetData()
+        if (!store.isLocked()) {
+            // Reset chart data
+            resetData()
 
-        if(store.cache.charts.gas_paid) {
-            // Init chart
-            initChart()
+            if(store.cache.charts.gas_paid) {
+                // Init chart
+                initChart()
+            }
         }
     })
 

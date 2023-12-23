@@ -16,7 +16,7 @@
 
         <Loader v-if="loading" />
 
-        <apexchart v-else class="chart" height="200px" :options="chartOptions" :series="series" />
+        <apexchart v-else-if="!store.isLocked()" class="chart" height="200px" :options="chartOptions" :series="series" />
 
         <img src="@/assets/watermark.svg" alt="" class="watermark small" v-if="!loading">
 
@@ -26,7 +26,7 @@
 
 
 <script setup>
-    import { inject, ref, reactive, onBeforeMount, computed } from 'vue'
+    import { inject, ref, reactive, onBeforeMount, computed, watch } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -44,8 +44,6 @@
         chartLabels = ['0-100', '100-500', '500-2К', '2К-5К ', '5К-10К', '10К-20К','20К-50К', '50К-100К', '100К-500К', '500К+'],
         chartMin = ref(0),
         chartMax = ref(0),
-        width = ref('100%'),
-        height = ref('71.9%'),
         series = reactive([
             {
                 data: computed(() => chartData.value)
@@ -175,34 +173,50 @@
 
 
     onBeforeMount(async () => {
-        // Get chart data
-        if (!store.cache.charts.wealth_distribution) {
-            await getChartData()
+        if (!store.isLocked()) {
+            // Get chart data
+            if (!store.cache.charts.wealth_distribution) {
+                await getChartData()
+            }
+
+            // Init chart
+            initChart()
         }
+    })
 
 
-        // Init chart
-        initChart()
+    watch(computed(() => store.isLocked()), async () => {
+        if (!store.isLocked()) {
+            // Get chart data
+            if (!store.cache.charts.wealth_distribution) {
+                await getChartData()
+            }
+
+            // Init chart
+            initChart()
+        }
     })
 
 
     // Event "updateChartTimeRange"
     emitter.on('updateChartTimeRange', async ({ type }) => {
-        // Show loader
-        loading.value = true
+        if (!store.isLocked()) {
+            // Show loader
+            loading.value = true
 
-        // Reset chart data
-        chartData.value = []
-        chartMax.value = 0
+            // Reset chart data
+            chartData.value = []
+            chartMax.value = 0
 
-        // Get chart data
-        try {
-            await getChartData()
+            // Get chart data
+            try {
+                await getChartData()
 
-            // Init chart
-            initChart()
-        } catch (error) {
-            console.error(error)
+                // Init chart
+                initChart()
+            } catch (error) {
+                console.error(error)
+            }
         }
     })
 

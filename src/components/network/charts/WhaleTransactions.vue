@@ -14,7 +14,7 @@
             {{ $t('message.network_charts_whale_transactions_title') }}
         </div>
 
-        <WhaleTransactionsTable />
+        <WhaleTransactionsTable v-if="!store.isLocked()" />
 
         <Lock v-if="store.isLocked()" />
     </div>
@@ -33,3 +33,11 @@
     const store = useGlobalStore(),
         emitter = inject('emitter')
 </script>
+
+
+<style scoped>
+    .block
+    {
+        min-height: 240px;
+    }
+</style>
