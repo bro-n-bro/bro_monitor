@@ -1,6 +1,6 @@
 <template>
     <section class="networks">
-        <button class="toggle_btn" @click.prevent="store.colShow = !store.colShow">
+        <button class="toggle_btn" @click.prevent="toggleSidebar()">
             <svg><use xlink:href="@/assets/sprite.svg#ic_toggle"></use></svg>
         </button>
 
@@ -51,6 +51,15 @@
 
     const route = useRoute(),
         store = useGlobalStore()
+
+
+    // Toggle sidebar
+    function toggleSidebar() {
+        store.colAnimating = true
+        store.colShow = !store.colShow
+
+        setTimeout(() => store.colAnimating = false, 400)
+    }
 
 
     // Toggle active class

@@ -3,7 +3,7 @@
         <!-- Header -->
         <Header class="bg" />
 
-        <section>
+        <section :class="{ animating: store.colAnimating }">
             <div class="cont middle">
                 <div class="grid row">
                     <section class="col" :class="{ big: store.colShow }">
@@ -471,6 +471,15 @@
         left: 0;
 
         width: 100%;
+    }
+
+    .animating .block .chart
+    {
+        visibility: hidden;
+
+        pointer-events: none;
+
+        opacity: 0;
     }
 
 

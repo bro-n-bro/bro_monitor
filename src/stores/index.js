@@ -69,6 +69,8 @@ export const useGlobalStore = defineStore('global', {
         searchValidators: null,
         validators: [],
         whaleTransactions: [],
+
+        colAnimating: false,
         colShow: false,
 
         networks,
