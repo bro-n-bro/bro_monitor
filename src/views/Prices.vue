@@ -10,6 +10,9 @@
             <!-- ATOM -->
             <ATOM />
 
+            <!-- BLD -->
+            <BLD />
+
             <!-- BOOT -->
             <BOOT />
 
@@ -34,6 +37,9 @@
             <!-- MPWR -->
             <MPWR />
 
+            <!-- NTRN -->
+            <NTRN />
+
             <!-- OSMO -->
             <OSMO />
 
@@ -51,12 +57,6 @@
 
             <!-- TIA -->
             <TIA />
-
-            <!-- BLD -->
-            <BLD />
-
-            <!-- NTRN -->
-            <NTRN />
         </div>
     </div>
 </template>

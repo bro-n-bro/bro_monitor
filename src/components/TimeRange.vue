@@ -247,6 +247,10 @@
         z-index: 90;
 
         display: flex;
+        align-content: flex-start;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        justify-content: flex-start;
 
         margin-left: auto;
         padding: 2px;
@@ -255,11 +259,6 @@
 
         border: 2px solid #212121;
         border-radius: 12px;
-
-        justify-content: flex-start;
-        align-items: flex-start;
-        align-content: flex-start;
-        flex-wrap: wrap;
     }
 
     .time_range.disabled
@@ -272,10 +271,13 @@
 
     .time_range .btn
     {
-        color: rgba(255, 255, 255, .50);
         line-height: 100%;
 
         display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
 
         width: 60px;
         height: 46px;
@@ -283,18 +285,22 @@
 
         transition: .2s linear;
 
+        color: rgba(255, 255, 255, .50);
         border: 1px solid transparent;
         border-radius: 8px;
-
-        justify-content: center;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
     }
 
     .time_range .btn + .btn
     {
         margin-left: 4px;
+    }
+
+
+    .time_range .btn.disabled
+    {
+        pointer-events: none;
+
+        opacity: .5;
     }
 
 
@@ -311,7 +317,6 @@
     .time_range .btn.active
     {
         color: #970fff;
-
         border-color: #970fff;
     }
 
@@ -357,7 +362,6 @@
 
     .input
     {
-        color: var(--text_color);
         font-family: var(--font_family);
         font-size: 14px;
 
@@ -367,6 +371,7 @@
         height: 44px;
         padding: 0 7px;
 
+        color: var(--text_color);
         border: 2px solid rgba(255, 255, 255, .10);
         border-radius: 9px;
         background: none;
@@ -380,8 +385,6 @@
 
     .field .icon
     {
-        color: rgba(255, 255, 255, .5);
-
         position: absolute;
         z-index: 3;
         top: 0;
@@ -389,6 +392,10 @@
         bottom: 0;
 
         display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
 
         width: 24px;
         height: 24px;
@@ -396,13 +403,9 @@
 
         pointer-events: none;
 
+        color: rgba(255, 255, 255, .5);
         border-radius: 4px;
         background: #353535;
-
-        justify-content: center;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
     }
 
     .field .icon svg
@@ -473,24 +476,23 @@
 
     .calendar .close_btn
     {
-        color: rgba(255, 255, 255, .50);
-
         position: absolute;
         z-index: 3;
         top: 8px;
         right: 10px;
 
         display: flex;
+        align-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
 
         width: 16px;
         height: 16px;
 
         transition: color .2s linear;
 
-        justify-content: center;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
+        color: rgba(255, 255, 255, .50);
     }
 
     .calendar .close_btn .icon
@@ -534,11 +536,11 @@
     {
         .time_range
         {
+            justify-content: space-between;
+
             width: 100%;
             margin-top: 12px;
             margin-left: 0;
-
-            justify-content: space-between;
         }
 
 

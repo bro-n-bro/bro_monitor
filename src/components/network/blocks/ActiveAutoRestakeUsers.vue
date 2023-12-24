@@ -14,10 +14,10 @@
             {{ $t('message.network_blocks_active_auto_restake_users_title') }}
         </div>
 
-        <div class="val">
+        <!-- <div class="val">
             <Loader v-if="!data" />
             <span v-else>{{ data.toLocaleString('ru-RU') }}</span>
-        </div>
+        </div> -->
     </div>
 </template>
 
