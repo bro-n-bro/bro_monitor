@@ -47,7 +47,7 @@
             <PICA />
 
             <!-- QWOYN -->
-            <QWOYN />
+            <!-- <QWOYN /> -->
 
             <!-- STARS -->
             <STARS />
@@ -79,7 +79,7 @@
     import FLIX from  '@/components/prices/FLIX.vue'
     import MPWR from  '@/components/prices/MPWR.vue'
     import PICA from  '@/components/prices/PICA.vue'
-    import QWOYN from  '@/components/prices/QWOYN.vue'
+    // import QWOYN from  '@/components/prices/QWOYN.vue'
     import STRD from  '@/components/prices/STRD.vue'
     import TIA from  '@/components/prices/TIA.vue'
     import BLD from  '@/components/prices/BLD.vue'
