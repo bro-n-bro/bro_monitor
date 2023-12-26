@@ -7,13 +7,15 @@
         </div>
 
         <div class="title">
-            {{ $t('message.rich_list_page_title') }}
+            {{ $t('message.network_rich_list_page_title') }}
         </div>
     </div>
 
 
-    <!-- Validators table -->
-    <RichListTable />
+    <!-- Rich list table -->
+    <div class="block big">
+        <RichListTable size="big" />
+    </div>
 </template>
 
 
@@ -21,8 +23,17 @@
     import { useRouter } from 'vue-router'
 
     // Components
-    import RichListTable from  '@/components/network/RichListTable.vue'
+    import RichListTable from '@/components/network/RichListTable.vue'
 
 
     const router = useRouter()
 </script>
+
+
+<style scoped>
+    .block
+    {
+        min-height: 0;
+        padding: 0;
+    }
+</style>

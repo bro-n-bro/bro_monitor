@@ -1,249 +1,258 @@
 <template>
-    <div class="block">
-        <div class="table_wrap">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="alignleft">{{ $t('message.rich_list_table_label_number') }}</th>
-                        <th class="alignleft">{{ $t('message.rich_list_table_label_address') }}</th>
-                        <th>{{ $t('message.rich_list_table_label_token_amount') }}</th>
-                        <th>{{ $t('message.rich_list_table_label_liquid_tokens') }}</th>
-                        <th>{{ $t('message.rich_list_table_label_staked_tokens') }}</th>
-                        <th class="alignleft">{{ $t('message.rich_list_table_label_validator') }}</th>
-                        <th>{{ $t('message.rich_list_table_label_unbound_tokens') }}</th>
-                    </tr>
-                </thead>
+    <Loader v-if="loading" />
 
-                <tbody>
-                    <tr>
-                        <td class="col_number alignleft">№ 1</td>
+    <div class="hor_scroll" v-else>
+        <div class="titles">
+            <div class="col_number alignleft">
+                <span>{{ $t('message.network_richlist_label_number') }}</span>
+            </div>
 
-                        <td class="col_address alignleft">bostrom24635...iuoyr</td>
+            <div class="col_address alignleft">
+                <span>{{ $t('message.network_richlist_label_address') }}</span>
+            </div>
 
-                        <td class="col_token_amount">
-                            <div>353 584 656</div>
-                        </td>
+            <div class="col_account_type alignleft">
+                <span>{{ $t('message.network_richlist_label_account_type') }}</span>
+            </div>
 
-                        <td class="col_liquid_tokens">
-                            <div>123 456 651</div>
-                        </td>
+            <div class="col_amount">
+                <span>{{ $t('message.network_richlist_label_amount') }}</span>
+            </div>
 
-                        <td class="col_staked_tokens">
-                            <div>491 930 399</div>
-                        </td>
+            <div class="col_liquid_tokens">
+                <span>{{ $t('message.network_richlist_label_liquid_tokens') }}</span>
+            </div>
 
-                        <td class="col_validator alignleft">
-                            <div class="logos">
-                                <div class="count">+99</div>
+            <div class="col_stacked_tokens">
+                <span>{{ $t('message.network_richlist_label_stacked_tokens') }}</span>
+            </div>
 
-                                <img src="@/assets/osmosis_logo.png" alt="">
-                                <img src="@/assets/osmosis_logo.png" alt="">
-                                <img src="@/assets/osmosis_logo.png" alt="">
-                                <img src="@/assets/osmosis_logo.png" alt="">
-                            </div>
-                        </td>
-
-                        <td class="col_unbound_tokens alignleft">
-                            <div>—</div>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td class="col_number alignleft">№ 1</td>
-
-                        <td class="col_address alignleft">bostrom24635...iuoyr</td>
-
-                        <td class="col_token_amount">
-                            <div>353 584 656</div>
-                        </td>
-
-                        <td class="col_liquid_tokens">
-                            <div>123 456 651</div>
-                        </td>
-
-                        <td class="col_staked_tokens">
-                            <div>491 930 399</div>
-                        </td>
-
-                        <td class="col_validator alignleft">
-                            <router-link to="/validator/cosmovaloper" class="moniker">
-                                <div class="logo">
-                                    <!-- <img src="@/assets/osmosis_logo.png" alt=""> -->
-                                </div>
-
-                                <div>
-                                    <div class="name">Coinbase</div>
-                                </div>
-                            </router-link>
-                        </td>
-
-                        <td class="col_unbound_tokens alignleft">
-                            <div>893 764,02</div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="col_unbound_token">
+                <span>{{ $t('message.network_richlist_label_unbound_token') }}</span>
+            </div>
         </div>
 
 
-        <img src="@/assets/watermark.svg" alt="" class="watermark" v-if="!loading">
+        <div class="scroll">
+            <div class="account" v-for="(account, index) in accounts" :key="index">
+                <div class="col_number alignleft">
+                    {{ $t('message.network_richlist_label_number') }}
+                    <span></span>
+                </div>
+
+                <div class="col_address alignleft">
+                    <div>{{ account.address.slice(0, 13) + '...' + account.address.slice(-6) }}</div>
+                </div>
+
+                <div class="col_account_type alignleft">
+                    <span v-if="account.type == '/cosmos.auth.v1beta1.BaseAccount'">
+                        {{ $t('message.network_richlist_account_type_base') }}
+                    </span>
+
+                    <span v-if="account.type == '/ibc.applications.interchain_accounts.v1.InterchainAccount'">
+                        {{ $t('message.network_richlist_account_type_interchain') }}
+                    </span>
+                </div>
+
+                <div class="col_amount">
+                    <span>{{ Number((account.sum / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') }}</span>
+                </div>
+
+                <div class="col_liquid_tokens">
+                    <span>{{ Number((account.liquid / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') }}</span>
+                </div>
+
+                <div class="col_stacked_tokens">
+                    <span>{{ Number((account.delegated / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') }}</span>
+                </div>
+
+                <div class="col_unbound_token">
+                    <span>{{ Number((account.unbonding / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') }}</span>
+                </div>
+            </div>
+        </div>
     </div>
+
+
+    <img src="@/assets/watermark.svg" alt="" class="watermark" v-if="!loading">
 </template>
 
 
 <script setup>
+    import { onBeforeMount, ref } from 'vue'
+    import { useGlobalStore } from '@/stores'
 
+    // Components
+    import Loader from '@/components/Loader.vue'
+
+
+    const store = useGlobalStore(),
+        props = defineProps(['size']),
+        loading = ref(true),
+        accounts = ref([]),
+        limit = 100
+
+
+    onBeforeMount(async () => {
+        if (!store.isLocked()) {
+            // Get data
+            if (!store.cache.richList) {
+                try {
+                    await fetch(`https://rpc.bronbro.io/statistics/rich_list?limit=${limit}`)
+                        .then(res => res.json())
+                        .then(response => store.cache.richList = response.data)
+                } catch (error) {
+                    console.error(error)
+                }
+            }
+
+            // Set data
+            !props.size
+                    ? accounts.value = store.cache.richList.slice(0, 6)
+                    : accounts.value = store.cache.richList
+
+            // Hide loading
+            loading.value = false
+        }
+    })
 </script>
 
 
 <style scoped>
-    .block
+    .loader_wrap
     {
-        overflow: hidden;
+        position: relative;
 
-        min-height: 0;
-        padding: 0;
+        padding: 24px;
+
+        background: none;
     }
 
 
-    .block .table_wrap
+    .titles
+    {
+        overflow: hidden;
+
+        border-radius: 0;
+    }
+
+    .block.bg .titles
+    {
+        padding-right: 6px;
+    }
+
+    .titles > *
+    {
+        min-height: 42px;
+        padding: 8px;
+    }
+
+
+    .hor_scroll
     {
         position: relative;
         z-index: 3;
 
-        width: 100%;
-        margin: 0 0;
+        width: calc(100% + 24px);
+        margin: -8px -12px -12px;
+
+        counter-reset: number;
     }
 
 
-    table th
+    .block.big .hor_scroll
+    {
+        width: 100%;
+        margin: 0;
+    }
+
+
+    .block.big .titles
+    {
+        border-radius: 13px 13px 0 0;
+    }
+
+
+    .block.big .scroll
     {
         position: relative;
+        z-index: 3;
 
-        padding: 7px 12px;
+        overflow: auto;
 
-        white-space: nowrap;
+        max-height: 650px;
+    }
+
+    .block.big .scroll::-webkit-scrollbar
+    {
+        width: 6px;
+        height: 6px;
+
+        background-color: rgba(255, 255, 255, .10);
     }
 
 
-    table .col_number
+    .col_account_type
+    {
+        width: 100%;
+    }
+
+
+    .col_number
     {
         width: 60px;
         min-width: 60px;
-
-        table-layout: fixed;
     }
 
-    table .col_token_amount,
-    table .col_liquid_tokens,
-    table .col_staked_tokens,
-    table .col_unbound_tokens
+    .col_address
     {
-        width: 240px;
-        min-width: 240px;
-
-        table-layout: fixed;
+        width: 190px;
+        min-width: 190px;
     }
 
-    table .col_restake_enabled
+    .col_amount,
+    .col_liquid_tokens,
+    .col_stacked_tokens,
+    .col_unbound_token
     {
-        width: 222px;
-        min-width: 222px;
-
-        table-layout: fixed;
+        width: 150px;
+        min-width: 150px;
     }
 
 
-    table td
+    .account
     {
-        padding: 7px 12px;
-
-        white-space: nowrap;
-    }
-
-
-
-    .moniker
-    {
-        color: currentColor;
         font-size: 12px;
         line-height: 100%;
 
         display: flex;
+        align-content: stretch;
+        align-items: stretch;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
 
-        text-align: left;
+        text-align: right;
+        white-space: nowrap;
 
-        justify-content: space-between;
-        align-items: flex-start;
-        align-content: flex-start;
-        flex-wrap: wrap;
+        border-top: 1px solid #191919;
     }
 
 
-    .moniker .logo
+    .account > *
     {
-        position: relative;
-
-        overflow: hidden;
-
-        width: 24px;
-        height: 24px;
-
-        border-radius: 50%;
-        background: #333;
+        padding: 14px 8px;
     }
 
-    .moniker .logo img
+    .account > * + *
     {
-        position: absolute;
-        top: 0;
-        left: 0;
-
-        display: block;
-
-        width: 100%;
-        height: 100%;
-
-        border-radius: 50%;
-
-        object-fit: cover;
-    }
-
-    .moniker .logo + *
-    {
-        width: calc(100% - 28px);
-
-        align-self: center;
+        border-left: 1px solid #191919;
     }
 
 
-    .logos
+    .account .col_number span:before
     {
-        display: flex;
-        flex-direction: row-reverse;
-
-        justify-content: flex-end;
-        align-items: center;
-        align-content: center;
-        flex-wrap: wrap;
-    }
-
-
-    .logos img
-    {
-        position: relative;
-
-        width: 24px;
-        height: 24px;
-
-        border: 1px solid #0d0d0d;
-        border-radius: 50%;
-        background: #000;
-    }
-
-    .logos img + img
-    {
-        margin-right: -6px;
+        content: counter(number);
+        counter-increment: number;
     }
 
 </style>

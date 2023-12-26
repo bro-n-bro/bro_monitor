@@ -101,7 +101,7 @@ const routes = [
 		}
 	},
 	{
-		path: '/rich_list',
+		path: '/:network/rich_list',
 		name: 'RichList',
 		component: () => import('../views/RichList.vue'),
 		meta: {

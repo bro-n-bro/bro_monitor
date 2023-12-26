@@ -294,15 +294,18 @@ export default {
 
 
             // Rich list page
-            'rich_list_page_title': 'Rich List',
+            'network_rich_list_page_title': 'Rich List',
 
-            'rich_list_table_label_number': '№',
-            'rich_list_table_label_address': 'Address',
-            'rich_list_table_label_token_amount': 'Token Amount',
-            'rich_list_table_label_liquid_tokens': 'Liquid Tokens',
-            'rich_list_table_label_staked_tokens': 'Staked Tokens',
-            'rich_list_table_label_validator': 'Validator',
-            'rich_list_table_label_unbound_tokens': 'Unbound Tokens',
+            'network_richlist_label_number': '№',
+            'network_richlist_label_address': 'Address',
+            'network_richlist_label_account_type': 'Account Type',
+            'network_richlist_label_amount': 'Token Amount',
+            'network_richlist_label_liquid_tokens': 'Liquid Tokens',
+            'network_richlist_label_stacked_tokens': 'Staked Tokens',
+            'network_richlist_label_unbound_token': 'Unbound Tokens',
+
+            'network_richlist_account_type_base': 'Base',
+            'network_richlist_account_type_interchain': 'Interchain',
 
 
             // Whale transactions page

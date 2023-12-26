@@ -268,7 +268,7 @@
     }
 
 
-    .col_main .hor_scroll
+    .hor_scroll
     {
         width: calc(100% + 16px);
         margin: 0 -8px -12px;

@@ -14,6 +14,7 @@
             {{ $t('message.network_charts_TOP_transactions_title') }}
         </div>
 
+        <!-- TOP transactions table -->
         <TOPTransactionsTable />
     </div>
 </template>
