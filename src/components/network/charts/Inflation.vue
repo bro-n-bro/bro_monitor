@@ -230,7 +230,7 @@
     // Init chart
     function initChart() {
         // Set chart data
-        store.cache.charts.inflation.forEach(el => chartData.value.push(el.y))
+        store.cache.charts.inflation.forEach(el => chartData.value.push(el.y.toFixed(2)))
 
         chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
         chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005

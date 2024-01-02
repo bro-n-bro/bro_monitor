@@ -127,7 +127,7 @@
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_date">' + store.cache.charts.new_accounts[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_new_users_title')+ ': ' + store.cache.charts.new_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_new_users_title') + ': ' + store.cache.charts.new_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html
@@ -136,8 +136,8 @@
             yaxis: {
                 show: true,
                 tickAmount: 3,
-                min: computed(() => chartMin.value),
-                max: computed(() => chartMax.value),
+                min: computed(() => Number(chartMin.value)),
+                max: computed(() => Number(chartMax.value)),
                 labels: {
                     align: 'left',
                     style: {
@@ -232,8 +232,8 @@
         // Set chart data
         store.cache.charts.new_accounts.forEach(el => chartData.value.push(el.y))
 
-        chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
-        chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
+        chartMin.value = (Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005).toFixed(0)
+        chartMax.value = (Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005).toFixed(0)
 
         // Set colors
         chartColors.value.push(store.cache.charts.new_accounts[store.cache.charts.new_accounts.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')

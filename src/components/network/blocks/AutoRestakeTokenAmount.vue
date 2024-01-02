@@ -161,7 +161,6 @@
             await getChartData()
         }
 
-
         // Init chart
         initChart()
     })

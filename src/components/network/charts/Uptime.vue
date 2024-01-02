@@ -128,7 +128,7 @@
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_date">' + store.cache.charts.uptime[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_uptime_title')+ ': ' + (store.cache.charts.uptime[dataPointIndex].y * 100).toFixed(2) + '%</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_uptime_title') + ': ' + (store.cache.charts.uptime[dataPointIndex].y * 100).toFixed(2) + '%</div>' +
                                 '</div>'
 
                     return html

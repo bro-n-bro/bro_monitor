@@ -136,8 +136,8 @@
             yaxis: {
                 show: true,
                 tickAmount: 3,
-                min: computed(() => chartMin.value),
-                max: computed(() => chartMax.value),
+                min: computed(() => Number(chartMin.value)),
+                max: computed(() => Number(chartMax.value)),
                 labels: {
                     align: 'left',
                     style: {
@@ -232,8 +232,8 @@
         // Set chart data
         store.cache.charts.inactive_accounts.forEach(el => chartData.value.push(el.y))
 
-        chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
-        chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
+        chartMin.value = (Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005).toFixed(0)
+        chartMax.value = (Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005).toFixed(0)
 
         // Set colors
         chartColors.value.push(store.cache.charts.inactive_accounts[store.cache.charts.inactive_accounts.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')

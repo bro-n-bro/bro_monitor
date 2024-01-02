@@ -115,8 +115,8 @@
                         top = w.globals.seriesYvalues[seriesIndex][dataPointIndex] + 20,
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_date">' + store.cache.validatorsMap[seriesIndex].moniker + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_voting_power_title')+ ': ' + (store.cache.validatorsMap[seriesIndex].voting_power * 100).toFixed(2) + '%</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_delegators_title')+ ': ' + store.cache.validatorsMap[seriesIndex].delegators.toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_voting_power_title') + ': ' + (store.cache.validatorsMap[seriesIndex].voting_power * 100).toFixed(2) + '%</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_delegators_title') + ': ' + store.cache.validatorsMap[seriesIndex].delegators.toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html

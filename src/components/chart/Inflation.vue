@@ -228,7 +228,7 @@
     // Init chart
     function initChart() {
         // Set chart data
-        responseData.value.forEach(el => chartData.value.push(el.y))
+        responseData.value.forEach(el => chartData.value.push(el.y.toFixed(2)))
 
         chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
         chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005

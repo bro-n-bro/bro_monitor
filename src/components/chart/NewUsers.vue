@@ -124,8 +124,8 @@
             },
             yaxis: {
                 show: true,
-                min: computed(() => chartMin.value),
-                max: computed(() => chartMax.value),
+                min: computed(() => Number(chartMin.value)),
+                max: computed(() => Number(chartMax.value)),
                 labels: {
                     align: 'left',
                     style: {
@@ -134,7 +134,7 @@
                         fontFamily: 'var(--font_family)',
                     },
                     offsetX: -8,
-                    formatter: value => { return value.toLocaleString('ru-RU') },
+                    formatter: value => { return Number(value.toFixed(0)).toLocaleString('ru-RU') },
                 },
                 axisBorder: {
                     show: false,
@@ -230,8 +230,8 @@
         // Set chart data
         responseData.value.forEach(el => chartData.value.push(el.y))
 
-        chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
-        chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
+        chartMin.value = (Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005).toFixed(0)
+        chartMax.value = (Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005).toFixed(0)
 
         // Set labels
         responseData.value.forEach(el => {

@@ -264,6 +264,7 @@ export default {
             'chart_transactions_to_gas_paid_page_title': 'Transactions / Gas Paid',
             'chart_unique_votes_per_proposal_page_title': 'Unique votes per proposal',
             'chart_inactive_accounts_page_title': 'Inactive accounts',
+            'chart_active_auto_restake_users_page_title': 'Active AutoRestake Users',
 
 
             // IBC network page

@@ -41,7 +41,9 @@
                 </div>
 
                 <div class="col_address alignleft">
-                    <div>{{ account.address.slice(0, 13) + '...' + account.address.slice(-6) }}</div>
+                    <div><a :href="`https://www.mintscan.io/${store.networks[store.currentNetwork].mintscanAlias}/address/${account.address}`" target="_blank" rel="noopener nofollow">
+                        {{ account.address.slice(0, 13) + '...' + account.address.slice(-6) }}
+                    </a></div>
                 </div>
 
                 <div class="col_account_type alignleft">
@@ -253,6 +255,20 @@
     {
         content: counter(number);
         counter-increment: number;
+    }
+
+
+    .account .col_address a
+    {
+        transition: color .2s linear;
+        text-decoration: none;
+
+        color: currentColor;
+    }
+
+    .account .col_address a:hover
+    {
+        color: #950fff;
     }
 
 </style>

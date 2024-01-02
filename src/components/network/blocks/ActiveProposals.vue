@@ -9,7 +9,7 @@
         </div>
 
         <div class="val">
-            <Loader v-if="!store.cache.active_proposals_actual" />
+            <Loader v-if="store.cache.active_proposals_actual === void 0" />
             <span v-else>{{ store.cache.active_proposals_actual }}</span>
         </div>
     </a>

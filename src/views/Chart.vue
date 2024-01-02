@@ -94,6 +94,10 @@
             {{ $t('message.chart_inactive_accounts_page_title') }}
         </div>
 
+        <div class="title" v-if="store.currentChart == 'active_restake_users'">
+            {{ $t('message.chart_active_auto_restake_users_page_title') }}
+        </div>
+
         <TimeRange />
     </div>
 
@@ -142,6 +146,8 @@
         <UniqueVotesPerProposalChart v-if="store.currentChart == 'unique_votes_per_proposal'" />
 
         <InactiveAccounts v-if="store.currentChart == 'inactive_accounts'" />
+
+        <ActiveAutoRestakeUsers v-if="store.currentChart == 'active_restake_users'" />
     </div>
 </template>
 
@@ -175,6 +181,7 @@
     import TransactionsTOGasPaidChart from  '@/components/chart/TransactionsTOGasPaid.vue'
     import UniqueVotesPerProposalChart from  '@/components/chart/UniqueVotesPerProposal.vue'
     import InactiveAccounts from  '@/components/chart/InactiveAccounts.vue'
+    import ActiveAutoRestakeUsers from  '@/components/chart/ActiveAutoRestakeUsers.vue'
 
 
     const store = useGlobalStore()

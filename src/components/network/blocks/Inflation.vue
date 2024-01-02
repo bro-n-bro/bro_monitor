@@ -110,7 +110,7 @@
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_date">' + store.cache.charts.inflation[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_inflation_title')+ ': ' + (store.cache.charts.inflation[dataPointIndex].y * 100).toFixed(2) + '%</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_inflation_title') + ': ' + (store.cache.charts.inflation[dataPointIndex].y * 100).toFixed(2) + '%</div>' +
                                 '</div>'
                     return html
                 }
@@ -202,7 +202,7 @@
     // Init chart
     function initChart() {
         // Set chart data
-        store.cache.charts.inflation.forEach(el => chartData.value.push(el.y))
+        store.cache.charts.inflation.forEach(el => chartData.value.push(el.y.toFixed(2)))
 
         // Set colors
         chartColors.value.push(store.cache.charts.inflation[store.cache.charts.inflation.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
