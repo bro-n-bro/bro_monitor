@@ -4,7 +4,7 @@
     <template v-else>
     <div class="head">
         <div class="back_btn">
-            <router-link :to="router.options.history.state.back ? router.options.history.state.back : '/network/cosmoshub'" class="btn">
+            <router-link to="/network/cosmoshub?tab=4" class="btn">
                 <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_arr_hor"></use></svg>
             </router-link>
         </div>
@@ -25,13 +25,13 @@
     <div class="blocks charts">
         <div class="row">
             <!-- Commission Earned -->
-            <CommissionEarned :validator="validator" />
+            <CommissionEarned />
 
             <!-- Voting Power -->
-            <VotingPower :validator="validator" />
+            <VotingPower />
 
             <!-- Uptime -->
-            <Uptime :validator="validator" />
+            <Uptime />
         </div>
     </div>
     </template>
@@ -41,7 +41,6 @@
 <script setup>
     import { onBeforeMount, ref } from 'vue'
     import { useGlobalStore } from '@/stores'
-    import { useRouter } from 'vue-router'
 
     // Components
     import MainData from '@/components/validator/MainData.vue'
@@ -53,7 +52,6 @@
 
 
     const store = useGlobalStore(),
-        router = useRouter(),
         validator = ref(null)
 
 
@@ -131,7 +129,7 @@
         position: relative;
 
         height: 24px;
-        margin: 48px auto;
+        margin: 120px auto;
 
         background: none;
     }

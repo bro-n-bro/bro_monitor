@@ -5,7 +5,7 @@
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
 
-            <router-link to="/" class="btn">
+            <router-link :to="`/${store.currentNetwork}/${store.currentValidatorAddress}/chart/voting_power`" class="btn">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
             </router-link>
         </div>
@@ -33,7 +33,6 @@
 
     const store = useGlobalStore(),
         emitter = inject('emitter'),
-        props = defineProps(['validator']),
         i18n = inject('i18n'),
         loading = ref(true),
         chartData = ref([]),
@@ -185,44 +184,17 @@
 
     onBeforeMount(async () => {
         // Get chart data
-        if (!store.cache.charts.voting_power) {
-            await getChartData()
-        }
-
+        await getChartData()
 
         // Init chart
         initChart()
     })
 
 
-    // Event "updateChartTimeRange"
-    emitter.on('updateChartTimeRange', async ({ type }) => {
-        // Show loader
-        loading.value = true
-
-        // Reset chart data
-        chartData.value = []
-        chartColors.value = []
-        chartLabels.value = []
-        chartMin.value = 0
-        chartMax.value = 0
-
-        // Get chart data
-        try {
-            await getChartData()
-
-            // Init chart
-            initChart()
-        } catch (error) {
-            console.error(error)
-        }
-    })
-
-
     // Get chart data
     async function getChartData() {
         // Request
-        await fetch(`https://rpc.bronbro.io/statistics/validators/${props.validator.operator_address}/voting_power?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
+        await fetch(`https://rpc.bronbro.io/statistics/validators/${store.currentValidatorAddress}/voting_power?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
             .then(res => res.json())
             .then(response => store.cache.charts.voting_power = response.data)
     }

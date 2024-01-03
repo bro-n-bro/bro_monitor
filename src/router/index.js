@@ -101,6 +101,15 @@ const routes = [
 		}
 	},
 	{
+		path: '/:network/:operator_address/chart/:chart_name',
+		name: 'Chart',
+		component: () => import('../views/ValidatorChart.vue'),
+		meta: {
+			layout: fullWidthLayout,
+			accessDenied: []
+		}
+	},
+	{
 		path: '/:network/rich_list',
 		name: 'RichList',
 		component: () => import('../views/RichList.vue'),

@@ -122,7 +122,7 @@ export default {
             'network_charts_unique_votes_per_proposal_title': 'Unique votes per proposal',
             'network_charts_governance_participation_title': 'Governance Participation',
             'network_charts_validator_group_map_title': 'Validator Group Map',
-            'network_charts_сommission_earned_title': 'Commission Earned',
+            'network_charts_commission_earned_title': 'Commission Earned',
             'network_charts_delegators_title': 'Delegators',
             'network_charts_voting_power_title': 'Voting Power',
             'network_charts_commission_title': 'Commission',
@@ -265,6 +265,10 @@ export default {
             'chart_unique_votes_per_proposal_page_title': 'Unique votes per proposal',
             'chart_inactive_accounts_page_title': 'Inactive accounts',
             'chart_active_auto_restake_users_page_title': 'Active AutoRestake Users',
+
+            'chart_commission_earned_page_title': 'Commission earned',
+            'chart_voting_power_page_title': 'Voting power',
+            'chart_uptime_page_title': 'Uptime',
 
 
             // IBC network page

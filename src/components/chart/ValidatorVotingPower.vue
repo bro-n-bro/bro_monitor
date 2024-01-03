@@ -1,24 +1,10 @@
 <template>
-     <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.uptime'] }">
-        <div class="btns">
-            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.uptime')">
-                <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-            </button>
-
-            <router-link :to="`/${store.currentNetwork}/${store.currentValidatorAddress}/chart/uptime`" class="btn">
-                <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-            </router-link>
-        </div>
-
-        <div class="title">
-            {{ $t('message.network_charts_uptime_title') }}
-        </div>
-
+    <div class="chart">
         <Loader v-if="loading" />
 
-        <apexchart v-else class="chart" :height="height" :width="width" :options="chartOptions" :series="series" />
+        <apexchart v-else height="710px" :options="chartOptions" :series="series" />
 
-        <img src="@/assets/watermark.svg" alt="" class="watermark small" v-if="!loading">
+        <img src="@/assets/watermark.svg" alt="" class="watermark right_top" v-if="!loading">
     </div>
 </template>
 
@@ -26,22 +12,25 @@
 <script setup>
     import { inject, ref, reactive, onBeforeMount, computed } from 'vue'
     import { useGlobalStore } from '@/stores'
+    import { calcTimeRange } from '@/utils'
 
     // Components
     import Loader from '@/components/Loader.vue'
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter'),
         i18n = inject('i18n'),
+        emitter = inject('emitter'),
+        responseData = ref(store.cache.charts.voting_power),
+        from_date = ref(store.currentTimeRangeDates[0]),
+        to_date = ref(store.currentTimeRangeDates[1]),
+        detailing = ref(store.currentTimeRangeDetailing),
         loading = ref(true),
         chartData = ref([]),
-        chartColors = ref([]),
+        chartColors = ['#0344E8'],
         chartLabels = ref([]),
         chartMin = ref(0),
         chartMax = ref(0),
-        width = ref('100%'),
-        height = ref('71.9%'),
         series = reactive([
             {
                 data: computed(() => chartData.value)
@@ -62,7 +51,7 @@
                     enabled: false
                 }
             },
-            colors: computed(() => chartColors.value),
+            colors: chartColors,
             fill: {
                 colors: computed(() => chartColors.value),
                 opacity: 0.2
@@ -91,7 +80,7 @@
                 borderColor: '#282828',
                 strokeDashArray: 2,
                 padding: {
-                    left: 0,
+                    left: 8,
                     right: 0,
                     bottom: -8,
                     top: -20,
@@ -126,8 +115,8 @@
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + store.cache.charts.uptime[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_uptime_title') + ': ' + (store.cache.charts.uptime[dataPointIndex].y * 100).toFixed(2) + '%</div>' +
+                                    '<div class="tooltip_date">' + responseData.value[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_voting_power_title') + ': ' + Number(responseData.value[dataPointIndex].y.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html
@@ -135,7 +124,6 @@
             },
             yaxis: {
                 show: true,
-                tickAmount: 3,
                 min: computed(() => chartMin.value),
                 max: computed(() => chartMax.value),
                 labels: {
@@ -145,8 +133,8 @@
                         fontSize: '12px',
                         fontFamily: 'var(--font_family)',
                     },
-                    offsetX: -10,
-                    formatter: value => { return (value * 100).toFixed(2) + '%' },
+                    offsetX: -8,
+                    formatter: value => { return Number(value.toFixed(0)).toLocaleString('ru-RU') },
                 },
                 axisBorder: {
                     show: false,
@@ -160,7 +148,7 @@
             },
             xaxis: {
                 categories: computed(() => chartLabels.value),
-                tickAmount: 8,
+                tickAmount: 16,
                 labels: {
                     rotate: 0,
                     style: {
@@ -183,36 +171,70 @@
 
 
     onBeforeMount(async () => {
-        // Get chart data
-        await getChartData()
+        if (typeof store.cache.charts.voting_power !== 'undefined') {
+            // Init chart
+            initChart()
+        } else {
+            // Get chart data
+            await getChartData()
+        }
+    })
 
-        // Init chart
-        initChart()
+
+    // Event "updateChartTimeRange"
+    emitter.on('updateChartTimeRange', async ({ type, dates }) => {
+        // Show loader
+        loading.value = true
+
+        // Reset chart data
+        chartData.value = []
+        chartColors.value = []
+        chartLabels.value = []
+        chartMin.value = 0
+        chartMax.value = 0
+
+        // Get temp time range
+        let temp = calcTimeRange(type, dates)
+
+        from_date.value = temp.from_date
+        to_date.value = temp.to_date
+        detailing.value = temp.detailing
+
+        // Get chart data
+        await getChartData(false)
     })
 
 
     // Get chart data
-    async function getChartData() {
-        // Request
-        await fetch(`https://rpc.bronbro.io/statistics/validators/${store.currentValidatorAddress}/uptime_stat?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
-            .then(res => res.json())
-            .then(response => store.cache.charts.uptime = response.data)
+    async function getChartData(cacheEnable = true) {
+        try {
+            // Request
+            await fetch(`https://rpc.bronbro.io/statistics/validators/${store.currentValidatorAddress}/voting_power?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
+                .then(res => res.json())
+                .then(response => {
+                    cacheEnable
+                        ? responseData.value = store.cache.charts.voting_power = response.data
+                        : responseData.value = response.data
+                })
+
+            // Init chart
+            initChart()
+        } catch (error) {
+            console.error(error)
+        }
     }
 
 
     // Init chart
     function initChart() {
         // Set chart data
-        store.cache.charts.uptime.forEach(el => chartData.value.push(el.y))
+        responseData.value.forEach(el => chartData.value.push(el.y))
 
         chartMin.value = Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005
-        chartMax.value = 1
-
-        // Set colors
-        chartColors.value.push(store.cache.charts.uptime[store.cache.charts.uptime.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
+        chartMax.value = Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005
 
         // Set labels
-        store.cache.charts.uptime.forEach(el => {
+        responseData.value.forEach(el => {
             let parseDate = new Date(el.x),
                 month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
                 date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
@@ -223,28 +245,7 @@
         // Hide loader
         loading.value = false
 
-        // Set chart loadded event
-        emitter.emit('chartLoaded')
+        // Finish loading
+        store.chartLoading = false
     }
 </script>
-
-
-<style scoped>
-    .block .chart
-    {
-        position: relative;
-    }
-
-
-    .loader_wrap
-    {
-        position: relative;
-
-        width: auto;
-        height: auto;
-        margin: 0;
-        padding: 20px 0 0;
-
-        background: none;
-    }
-</style>
