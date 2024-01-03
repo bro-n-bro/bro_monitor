@@ -33,7 +33,7 @@
 <style scoped>
     .block
     {
-        min-height: 0;
+        min-height: 240px;
         padding: 0;
     }
 </style>

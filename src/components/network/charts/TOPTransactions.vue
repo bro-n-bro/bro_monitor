@@ -36,6 +36,6 @@
 <style scoped>
     .block
     {
-        min-height: 0;
+        min-height: 240px;
     }
 </style>

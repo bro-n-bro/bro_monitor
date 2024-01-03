@@ -147,11 +147,6 @@
                         // Set cache
                         store.cache.TOP_transactions = response.data
 
-                        // Formatter
-                        !props.size
-                            ? formatter(response.data)
-                            : transactions.value = store.cache.TOP_transactions
-
                         // Hide loading
                         loading.value = false
                     })
@@ -165,7 +160,7 @@
 
         // Set chart data
         !props.size
-            ? formatter(store.cache.TOP_transactions)
+            ? formatter()
             : transactions.value = store.cache.TOP_transactions
 
         transactions.value.forEach(el => chartData.value.push(el.amount))
@@ -197,11 +192,11 @@
 
 
     // Formatter
-    function formatter(data) {
+    function formatter() {
         let other = { type: 'Other', amount: 0 }
 
         // Set data
-        data.forEach((el, i) => {
+        store.cache.TOP_transactions.forEach((el, i) => {
             i < 10
                 ? transactions.value.push(el)
                 : other.amount += el.amount
@@ -233,7 +228,7 @@
     {
         position: relative;
 
-        padding: 0 24px 48px;
+        padding: 0 24px 80px;
 
         background: none;
     }
@@ -408,7 +403,7 @@
 
     .block.big .loader_wrap
     {
-        padding: 48px 24px;
+        padding: 100px 24px;
     }
 
 
