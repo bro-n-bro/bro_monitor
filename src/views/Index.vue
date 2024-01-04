@@ -282,6 +282,23 @@
                             </div>
                         </a>
                     </div>
+
+                    <div :class="{ pinned: store.pinnedBlocks['networks.prices'] }">
+                        <router-link to="/prices" class="link">
+                            <button class="pin_btn" @click.prevent="emitter.emit('togglePinBlock', 'networks.prices')">
+                                <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
+                            </button>
+
+                            <div class="icon">
+                                <svg><use xlink:href="@/assets/sprite.svg#ic_prices"></use></svg>
+                            </div>
+
+                            <div>
+                                <div class="name">{{ $t('message.btn_prices_label') }}</div>
+                                <div class="exp">{{ $t('message.btn_prices_exp') }}</div>
+                            </div>
+                        </router-link>
+                    </div>
                 </div>
             </div>
         </div>
@@ -485,6 +502,11 @@
         border-radius: 50%;
     }
 
+    .networks .icon
+    {
+        background: #282828;
+    }
+
 
     .networks .logo img
     {
@@ -500,6 +522,15 @@
         border-radius: 50%;
 
         object-fit: cover;
+    }
+
+
+    .networks .icon svg
+    {
+        display: block;
+
+        width: 20px;
+        height: 20px;
     }
 
 
