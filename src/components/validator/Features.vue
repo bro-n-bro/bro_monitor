@@ -32,13 +32,11 @@
 
                         <span class="sep">|</span>
 
-                        {{ $filters.toFixed(props.validator.max_change_rate * 100, 1) }}%
+                        <span :class="{ red: props.validator.commission > 0.25 || props.validator.max_change_rate > 0.25 || props.validator.max_rate > 0.25}">&nbsp;{{ $filters.toFixed(props.validator.max_rate * 100, 1) }}%&nbsp;</span>
 
                         <span class="sep">|</span>
 
-                        <span :class="{ red: props.validator.commission > 0.25 || props.validator.max_change_rate > 0.25 || props.validator.max_rate > 0.25}">
-                            {{ $filters.toFixed(props.validator.max_rate * 100, 1) }}%
-                        </span>
+                        {{ $filters.toFixed(props.validator.max_change_rate * 100, 1) }}%
                     </div>
                 </div>
             </div>

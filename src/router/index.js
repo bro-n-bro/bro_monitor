@@ -102,7 +102,7 @@ const routes = [
 	},
 	{
 		path: '/:network/:operator_address/chart/:chart_name',
-		name: 'Chart',
+		name: 'ValidatorChart',
 		component: () => import('../views/ValidatorChart.vue'),
 		meta: {
 			layout: fullWidthLayout,

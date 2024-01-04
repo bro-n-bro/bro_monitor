@@ -13,16 +13,31 @@
 
 
     <!-- Whale transactions table -->
-    <WhaleTransactionsTable class="big" />
+    <div class="block big">
+        <WhaleTransactionsTable v-if="!store.isLocked()" class="big" />
+
+        <Lock v-if="store.isLocked()" />
+    </div>
 </template>
 
 
 <script setup>
+    import { useGlobalStore } from '@/stores'
     import { useRouter } from 'vue-router'
 
     // Components
     import WhaleTransactionsTable from  '@/components/network/WhaleTransactionsTable.vue'
+    import Lock from '@/components/Lock.vue'
 
 
-    const router = useRouter()
+    const store = useGlobalStore(),
+        router = useRouter()
 </script>
+
+
+<style scoped>
+    .block
+    {
+        min-height: 280px;
+    }
+</style>

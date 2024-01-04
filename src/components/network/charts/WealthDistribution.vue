@@ -31,7 +31,7 @@
 
     // Components
     import Loader from '@/components/Loader.vue'
-    import Lock from  '@/components/Lock.vue'
+    import Lock from '@/components/Lock.vue'
 
 
     const store = useGlobalStore(),

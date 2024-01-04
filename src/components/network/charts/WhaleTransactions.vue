@@ -27,7 +27,7 @@
 
     // Components
     import WhaleTransactionsTable from '@/components/network/WhaleTransactionsTable.vue'
-    import Lock from  '@/components/Lock.vue'
+    import Lock from '@/components/Lock.vue'
 
 
     const store = useGlobalStore(),
@@ -37,6 +37,11 @@
 
 <style scoped>
     .block
+    {
+        min-height: 0;
+    }
+
+    .block.full_w
     {
         min-height: 240px;
     }

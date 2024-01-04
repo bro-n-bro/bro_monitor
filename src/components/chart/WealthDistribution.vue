@@ -1,10 +1,12 @@
 <template>
-    <div class="chart">
+    <div class="chart big">
         <Loader v-if="loading" />
 
-        <apexchart v-else height="710px" :options="chartOptions" :series="series" />
+        <apexchart v-else-if="!store.isLocked()" height="710px" :options="chartOptions" :series="series" />
 
         <img src="@/assets/watermark.svg" alt="" class="watermark right_top" v-if="!loading">
+
+        <Lock v-if="store.isLocked()" />
     </div>
 </template>
 
@@ -16,6 +18,7 @@
 
     // Components
     import Loader from '@/components/Loader.vue'
+    import Lock from '@/components/Lock.vue'
 
 
     const store = useGlobalStore(),
@@ -157,12 +160,14 @@
 
 
     onBeforeMount(async () => {
-        if (typeof store.cache.charts.wealth_distribution !== 'undefined') {
-            // Init chart
-            initChart()
-        } else {
-            // Get chart data
-            await getChartData()
+        if (!store.isLocked()) {
+            if (typeof store.cache.charts.wealth_distribution !== 'undefined') {
+                // Init chart
+                initChart()
+            } else {
+                // Get chart data
+                await getChartData()
+            }
         }
     })
 

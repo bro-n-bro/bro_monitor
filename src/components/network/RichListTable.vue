@@ -92,7 +92,7 @@
         props = defineProps(['size']),
         loading = ref(true),
         accounts = ref([]),
-        limit = 100
+        limit = 1000
 
 
     onBeforeMount(async () => {
@@ -125,7 +125,7 @@
     {
         position: relative;
 
-        padding: 24px;
+        padding: 0 24px 80px;
 
         background: none;
     }

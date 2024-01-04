@@ -1,6 +1,8 @@
 <template>
     <div class="block">
-        <div class="hor_scroll">
+        <Loader v-if="loading" />
+
+        <div class="hor_scroll" v-else>
             <div class="titles">
                 <div class="col_address">{{ $t('message.whale_transactions_table_label_address') }}</div>
                 <div class="col_action">{{ $t('message.whale_transactions_table_label_action') }}</div>
@@ -9,10 +11,7 @@
             </div>
 
 
-            <Loader v-if="loading" />
-
-
-            <div class="scroll" v-else>
+            <div class="scroll">
                 <div class="transaction" v-for="(transaction, index) in transactions" :key="index">
                     <div class="col_address">
                         <div>{{ transaction.address.slice(0, 13) + '...' + transaction.address.slice(-6) }}</div>
@@ -114,11 +113,6 @@
 
 
 <style scoped>
-    .block
-    {
-        min-height: 240px;
-    }
-
     .block.big
     {
         margin: 0;
@@ -143,9 +137,14 @@
     {
         position: relative;
 
-        padding: 24px;
+        padding: 40px 24px 0;
 
         background: none;
+    }
+
+    .block.big .loader_wrap
+    {
+        padding-top: 80px;
     }
 
 
@@ -183,16 +182,23 @@
 
     .block .block
     {
-        margin: 0 -12px -12px;
+        margin: -12px;
         padding: 0;
 
         border: none;
-        border-radius: 0 0 16px 16px;
+        border-radius: 0;
     }
 
-    .block .block .titles
+
+    .block .titles
     {
         border-radius: 0;
+    }
+
+
+    .block.big .block .titles
+    {
+        border-radius: 14px 14px 0 0;
     }
 
     .block .block .hor_scroll
@@ -202,12 +208,12 @@
         width: 100%;
         margin: 0;
 
-        border-radius: 0 0 16px 16px;
+        border-radius: 0 0 14px 14px;
     }
 
     .block .block .scroll
     {
-        border-radius: 0 0 16px 16px;
+        border-radius: 0 0 14px 14px;
     }
 
 

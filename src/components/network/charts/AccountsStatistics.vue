@@ -24,7 +24,7 @@
     import { useGlobalStore } from '@/stores'
 
     // Components
-    import Lock from  '@/components/Lock.vue'
+    import Lock from '@/components/Lock.vue'
 
 
     const store = useGlobalStore(),

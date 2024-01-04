@@ -14,26 +14,31 @@
 
     <!-- Rich list table -->
     <div class="block big">
-        <RichListTable size="big" />
+        <RichListTable v-if="!store.isLocked()" size="big" />
+
+        <Lock v-if="store.isLocked()" />
     </div>
 </template>
 
 
 <script setup>
+    import { useGlobalStore } from '@/stores'
     import { useRouter } from 'vue-router'
 
     // Components
     import RichListTable from '@/components/network/RichListTable.vue'
+    import Lock from '@/components/Lock.vue'
 
 
-    const router = useRouter()
+    const store = useGlobalStore(),
+        router = useRouter()
 </script>
 
 
 <style scoped>
     .block
     {
-        min-height: 0;
+        min-height: 280px;
         padding: 0;
     }
 </style>

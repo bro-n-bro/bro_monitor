@@ -28,7 +28,7 @@
 
     // Components
     import RichListTable from '@/components/network/RichListTable.vue'
-    import Lock from  '@/components/Lock.vue'
+    import Lock from '@/components/Lock.vue'
 
 
     const store = useGlobalStore(),

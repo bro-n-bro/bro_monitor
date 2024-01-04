@@ -1,5 +1,5 @@
 <template>
-    <div class="chart">
+    <div class="chart big">
         <Loader v-if="loading" />
 
         <apexchart v-else height="710px" :options="chartOptions" :series="series" />
