@@ -40,8 +40,6 @@
         chartDataRedelegation = ref([]),
         chartColors = ref(['#C5811B', '#1BC562', '#0343E8']),
         chartLabels = ref([]),
-        width = ref('100%'),
-        height = ref('71.9%'),
         series = reactive([
             {
                 name: 'Undelegation',

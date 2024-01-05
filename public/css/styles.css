@@ -699,7 +699,7 @@ button
 .chart_tooltip .tooltip_val:before
 {
     position: absolute;
-    top: 3px;
+    top: 4px;
     left: 0;
 
     display: block;
@@ -767,6 +767,17 @@ button
     margin-top: 2px;
 
     opacity: .5;
+}
+
+
+.chart_tooltip .tooltip_val .label
+{
+    width: 92px;
+}
+
+.chart_tooltip .tooltip_val .label + *
+{
+    text-align: right;
 }
 
 

@@ -467,6 +467,7 @@
     .block .chart
     {
         position: absolute;
+        z-index: 10;
         bottom: 0;
         left: 0;
 

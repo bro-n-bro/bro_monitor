@@ -179,7 +179,6 @@
                 }
             },
             yaxis: {
-                // logarithmic: true,
                 tickAmount: 7,
                 labels: {
                     align: 'left',

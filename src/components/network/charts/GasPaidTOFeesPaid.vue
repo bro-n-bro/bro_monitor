@@ -240,7 +240,7 @@
 
 
     onBeforeMount(() => {
-        if(store.cache.charts.gas_paid && store.cache.charts.fees_paid && !store.isLocked()) {
+        if (!store.isLocked() && store.cache.charts.fees_paid && store.cache.charts.gas_paid) {
             // Init chart
             initChart()
         }

@@ -146,7 +146,7 @@
                         fontFamily: 'var(--font_family)',
                     },
                     offsetX: -13,
-                    formatter: value => { return value.toLocaleString('ru-RU') },
+                    formatter: value => { return Number(value.toFixed(0)).toLocaleString('ru-RU') },
                 },
                 axisBorder: {
                     show: false,

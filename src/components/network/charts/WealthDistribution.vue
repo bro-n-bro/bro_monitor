@@ -260,7 +260,7 @@
         width: auto;
         height: auto;
         margin: 0;
-        padding: 20px 0 0;
+        padding: 68px 0;
 
         background: none;
     }
