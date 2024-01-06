@@ -1,24 +1,10 @@
 <template>
-     <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.accountsStatistics'], locked : store.isLocked() }">
-        <div class="btns">
-            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.accountsStatistics')">
-                <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-            </button>
-
-            <router-link :to="`/${store.currentNetwork}/chart/accounts_statistics`" class="btn">
-                <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
-            </router-link>
-        </div>
-
-        <div class="title">
-            {{ $t('message.network_charts_accounts_statistics_title') }}
-        </div>
-
+    <div class="chart big">
         <Loader v-if="loading" />
 
-        <apexchart v-else-if="!store.isLocked()" class="chart" height="200px" :options="chartOptions" :series="series" />
+        <apexchart v-else-if="!store.isLocked()" height="710px" :options="chartOptions" :series="series" />
 
-        <img src="@/assets/watermark.svg" alt="" class="watermark small" v-if="!loading">
+        <img src="@/assets/watermark.svg" alt="" class="watermark right_top" v-if="!loading">
 
         <Lock v-if="store.isLocked()" />
     </div>
@@ -26,7 +12,7 @@
 
 
 <script setup>
-    import { inject, ref, reactive, onBeforeMount, computed, watch } from 'vue'
+    import { ref, reactive, onBeforeMount, computed } from 'vue'
     import { useGlobalStore } from '@/stores'
 
     // Components
@@ -35,9 +21,15 @@
 
 
     const store = useGlobalStore(),
-        emitter = inject('emitter'),
+        limit = ref(20),
+        responseDataUsers = ref(store.cache.charts.total_accounts),
+        responseDataActive = ref(store.cache.charts.active_accounts),
+        responseDataNew = ref(store.cache.charts.new_accounts),
+        responseDataInactive = ref(store.cache.charts.inactive_accounts),
+        from_date = ref(store.currentTimeRangeDates[0]),
+        to_date = ref(store.currentTimeRangeDates[1]),
+        detailing = ref(store.currentTimeRangeDetailing),
         loading = ref(true),
-        limit = ref(6),
         chartDataUsers = ref([]),
         chartDataActive = ref([]),
         chartDataNew = ref([]),
@@ -146,7 +138,7 @@
                     position: 'topLeft'
                 },
                 custom: function({ seriesIndex, dataPointIndex, w }) {
-                    let offsetX = seriesIndex == 0 || seriesIndex == 1 ? -6 : 12,
+                    let offsetX = seriesIndex == 0 || seriesIndex == 1 ? 46 : 64,
                         left = w.globals.seriesXvalues[seriesIndex][dataPointIndex] + offsetX,
                         top = w.globals.seriesYvalues[seriesIndex][dataPointIndex] + 28,
                         html = ''
@@ -187,7 +179,7 @@
                 }
             },
             yaxis: {
-                tickAmount: 4,
+                tickAmount: 10,
                 labels: {
                     align: 'left',
                     style: {
@@ -235,95 +227,109 @@
         if(store.cache.charts.active_accounts && store.cache.charts.new_accounts && store.cache.charts.inactive_accounts && store.cache.charts.total_accounts && !store.isLocked()) {
             // Init chart
             initChart()
+        } else {
+            // Get chart data
+            await getChartData()
         }
     })
 
 
-    watch(computed(() => store.isLocked()), async () => {
-        if(store.cache.charts.active_accounts && store.cache.charts.new_accounts && store.cache.charts.inactive_accounts && store.cache.charts.total_accounts && !store.isLocked()) {
-            // Reset chart data
-            resetData()
+    // Get chart data
+    async function getChartData(cacheEnable = true) {
+        const total_accounts = new Promise((resolve, reject) => {
+            try {
+                // Request
+                fetch(`https://rpc.bronbro.io/statistics/total_accounts?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
+                    .then(res => res.json())
+                    .then(response => {
+                        cacheEnable
+                            ? responseDataUsers.value = store.cache.charts.total_accounts = response.data
+                            : responseDataUsers.value = response.data
 
+                        resolve(response.data)
+                    })
+            } catch (error) {
+                reject(error)
+
+                console.error(error)
+            }
+        })
+
+        const active_accounts = new Promise((resolve, reject) => {
+            try {
+                // Request
+                fetch(`https://rpc.bronbro.io/statistics/active_accounts?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
+                    .then(res => res.json())
+                    .then(response => {
+                        cacheEnable
+                            ? responseDataActive.value = store.cache.charts.active_accounts = response.data
+                            : responseDataActive.value = response.data
+
+                        resolve(response.data)
+                    })
+            } catch (error) {
+                reject(error)
+
+                console.error(error)
+            }
+        })
+
+        const new_accounts = new Promise((resolve, reject) => {
+            try {
+                // Request
+                fetch(`https://rpc.bronbro.io/statistics/new_accounts?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
+                    .then(res => res.json())
+                    .then(response => {
+                        cacheEnable
+                            ? responseDataNew.value = store.cache.charts.new_accounts = response.data
+                            : responseDataNew.value = response.data
+
+                            resolve(response.data)
+                        })
+            } catch (error) {
+                reject(error)
+
+                console.error(error)
+            }
+        })
+
+        const inactive_accounts = new Promise((resolve, reject) => {
+            try {
+                // Request
+                fetch(`https://rpc.bronbro.io/statistics/inactive_accounts_historical?from_date=${from_date.value}&to_date=${to_date.value}&detailing=${detailing.value}`)
+                    .then(res => res.json())
+                    .then(response => {
+                        cacheEnable
+                            ? responseDataInactive.value = store.cache.charts.inactive_accounts = response.data
+                            : responseDataInactive.value = response.data
+
+                        resolve(response.data)
+                    })
+            } catch (error) {
+                reject(error)
+
+                console.error(error)
+            }
+        })
+
+
+        Promise.all([total_accounts, active_accounts, new_accounts, inactive_accounts]).then(() => {
             // Init chart
             initChart()
-        }
-    })
-
-
-    watch(computed(() => store.cache.charts.active_accounts), () => {
-        if (!store.isLocked()) {
-            // Reset chart data
-            resetData()
-
-            if(store.cache.charts.new_accounts && store.cache.charts.inactive_accounts && store.cache.charts.total_accounts) {
-                // Init chart
-                initChart()
-            }
-        }
-    })
-
-
-    watch(computed(() => store.cache.charts.new_accounts), () => {
-        if (!store.isLocked()) {
-            // Reset chart data
-            resetData()
-
-            if(store.cache.charts.active_accounts && store.cache.charts.inactive_accounts && store.cache.charts.total_accounts) {
-                // Init chart
-                initChart()
-            }
-        }
-    })
-
-
-    watch(computed(() => store.cache.charts.inactive_accounts), () => {
-        if (!store.isLocked()) {
-            // Reset chart data
-            resetData()
-
-            if(store.cache.charts.active_accounts && store.cache.charts.new_accounts && store.cache.charts.total_accounts) {
-                // Init chart
-                initChart()
-            }
-        }
-    })
-
-
-    watch(computed(() => store.cache.charts.total_accounts), () => {
-        if (!store.isLocked()) {
-            // Reset chart data
-            resetData()
-
-            if(store.cache.charts.active_accounts && store.cache.charts.new_accounts && store.cache.charts.inactive_accounts) {
-                // Init chart
-                initChart()
-            }
-        }
-    })
-
-
-    // Reset chart data
-    function resetData() {
-        // Show loader
-        loading.value = true
-
-        chartDataActive.value = []
-        chartDataNew.value = []
-        chartDataInactive.value = []
-        chartLabels.value = []
+        })
     }
 
 
     // Init chart
     function initChart() {
-        // Set chart data APR
-        store.cache.charts.total_accounts.forEach(el => chartDataUsers.value.push(el.y))
-        store.cache.charts.active_accounts.forEach(el => chartDataActive.value.push(el.y))
-        store.cache.charts.new_accounts.forEach(el => chartDataNew.value.push(el.y))
-        store.cache.charts.inactive_accounts.forEach(el => chartDataInactive.value.push(el.y))
+        // Set chart data
+        responseDataUsers.value.forEach(el => chartDataUsers.value.push(el.y))
+        responseDataActive.value.forEach(el => chartDataActive.value.push(el.y))
+        responseDataNew.value.forEach(el => chartDataNew.value.push(el.y))
+        responseDataInactive.value.forEach(el => chartDataInactive.value.push(el.y))
 
         // Set labels
-        store.cache.charts.active_accounts.slice(0, limit.value).forEach(el => {
+        responseDataUsers.value.slice(0, limit.value).forEach(el => {
             let parseDate = new Date(el.x),
                 month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
                 date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()
@@ -333,26 +339,18 @@
 
         // Hide loader
         loading.value = false
+
+        // Finish loading
+        store.chartLoading = false
     }
 </script>
 
 
-<style scoped>
-    .block .chart
+<style>
+    .chart.big .apexcharts-legend
     {
-        position: relative;
-    }
+        top: 0 !important;
 
-
-    .loader_wrap
-    {
-        position: relative;
-
-        width: auto;
-        height: auto;
-        margin: 0;
-        padding: 68px 0;
-
-        background: none;
+        margin: 0 !important;
     }
 </style>

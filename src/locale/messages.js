@@ -265,6 +265,7 @@ export default {
             'chart_unique_votes_per_proposal_page_title': 'Unique votes per proposal',
             'chart_inactive_accounts_page_title': 'Inactive accounts',
             'chart_active_auto_restake_users_page_title': 'Active AutoRestake Users',
+            'chart_accounts_statistics_title': 'Accounts statistics',
 
             'chart_commission_earned_page_title': 'Commission earned',
             'chart_voting_power_page_title': 'Voting power',

@@ -102,6 +102,10 @@
             {{ $t('message.chart_uptime_page_title') }}
         </div>
 
+        <div class="title" v-if="store.currentChart == 'accounts_statistics'">
+            {{ $t('message.chart_accounts_statistics_title') }}
+        </div>
+
         <TimeRange />
     </div>
 
@@ -154,6 +158,8 @@
         <ActiveAutoRestakeUsers v-if="store.currentChart == 'active_restake_users'" />
 
         <ValidatorUptime v-if="store.currentChart == 'uptime'" />
+
+        <AccountsStatistics v-if="store.currentChart == 'accounts_statistics'" />
     </div>
 </template>
 
@@ -189,6 +195,7 @@
     import InactiveAccounts from  '@/components/chart/InactiveAccounts.vue'
     import ActiveAutoRestakeUsers from  '@/components/chart/ActiveAutoRestakeUsers.vue'
     import ValidatorUptime from  '@/components/chart/ValidatorUptime.vue'
+    import AccountsStatistics from  '@/components/chart/AccountsStatistics.vue'
 
 
     const store = useGlobalStore()

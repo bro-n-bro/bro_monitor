@@ -272,7 +272,6 @@
 
     // Get chart data
     async function getChartData(cacheEnable = true) {
-        // Get chart data
         const gas_paid = new Promise((resolve, reject) => {
             try {
                 // Request

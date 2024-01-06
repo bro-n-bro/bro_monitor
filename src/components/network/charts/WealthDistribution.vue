@@ -1,5 +1,5 @@
 <template>
-     <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.wealthDistribution'] }">
+     <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.wealthDistribution'], locked : store.isLocked() }">
         <div class="btns">
             <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.wealthDistribution')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>

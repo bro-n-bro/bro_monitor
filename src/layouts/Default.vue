@@ -307,7 +307,7 @@
 
     .block.locked
     {
-        min-height: 260px;
+        min-height: 240px;
     }
 
 
