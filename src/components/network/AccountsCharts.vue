@@ -122,7 +122,7 @@
 
     // Event "chartLoaded"
     emitter.on('chartLoaded', () => {
-        if(
+        if (
             store.cache.charts.new_accounts &&
             store.cache.charts.active_accounts &&
             store.cache.charts.total_accounts &&

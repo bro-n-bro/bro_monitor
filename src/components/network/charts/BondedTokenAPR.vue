@@ -239,7 +239,7 @@
 
 
     onBeforeMount(() => {
-        if(store.cache.charts.apr  && store.cache.charts.bonded_tokens) {
+        if (store.cache.charts.apr  && store.cache.charts.bonded_tokens) {
             // Init chart
             initChart()
         }
@@ -250,7 +250,7 @@
         // Reset chart data
         resetData()
 
-        if(store.cache.charts.bonded_tokens) {
+        if (store.cache.charts.bonded_tokens) {
             // Init chart
             initChart()
         }
@@ -261,7 +261,7 @@
         // Reset chart data
         resetData()
 
-        if(store.cache.charts.apr) {
+        if (store.cache.charts.apr) {
             // Init chart
             initChart()
         }

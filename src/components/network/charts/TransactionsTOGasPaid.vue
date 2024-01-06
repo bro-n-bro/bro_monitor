@@ -1,5 +1,5 @@
 <template>
-     <div class="block full_w" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.transactionsTOGasPaid'] }">
+     <div class="block full_w" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.transactionsTOGasPaid'], locked : store.isLocked() }">
         <div class="btns">
             <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.transactionsTOGasPaid')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
@@ -14,7 +14,7 @@
             {{ $t('message.network_charts_transactions_to_gas_paid_title') }}
         </div>
 
-        <Loader v-if="loading" />
+        <Loader v-if="loading && !store.isLocked()" />
 
         <apexchart v-else-if="!store.isLocked()" class="chart" height="316" :options="chartOptions" :series="series" />
 
@@ -242,7 +242,7 @@
 
 
     onBeforeMount(() => {
-        if(store.cache.charts.gas_paid && store.cache.charts.transactions && !store.isLocked()) {
+        if (store.cache.charts.gas_paid && store.cache.charts.transactions && !store.isLocked()) {
             // Init chart
             initChart()
         }
@@ -265,7 +265,7 @@
             // Reset chart data
             resetData()
 
-            if(store.cache.charts.transactions) {
+            if (store.cache.charts.transactions) {
                 // Init chart
                 initChart()
             }
@@ -278,7 +278,7 @@
             // Reset chart data
             resetData()
 
-            if(store.cache.charts.gas_paid) {
+            if (store.cache.charts.gas_paid) {
                 // Init chart
                 initChart()
             }
@@ -331,12 +331,6 @@
 
 
 <style scoped>
-    .block
-    {
-        min-height: 240px;
-    }
-
-
     .block .title
     {
         margin-bottom: 12px;
@@ -357,7 +351,7 @@
         width: auto;
         height: auto;
         margin: 0;
-        padding: 20px 0 0;
+        padding: 68px 0;
 
         background: none;
     }

@@ -281,11 +281,11 @@
     function formatStatus(status) {
         let html = ''
 
-        if(status == 'PROPOSAL_STATUS_PASSED') {
+        if (status == 'PROPOSAL_STATUS_PASSED') {
             html = ': <span class="green">Passed</span>'
         }
 
-        if(status == 'PROPOSAL_STATUS_REJECTED') {
+        if (status == 'PROPOSAL_STATUS_REJECTED') {
             html = ': <span class="red">Rejected</span>'
         }
 

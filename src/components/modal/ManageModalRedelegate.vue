@@ -165,7 +165,7 @@
     function hideDropdown() {
         let validateInput = document.querySelector('.validator_input')
 
-        if(validateInput.classList.contains('active')) {
+        if (validateInput.classList.contains('active')) {
             setTimeout(() => validateInput.classList.remove('active'), 150)
         }
     }
@@ -198,7 +198,7 @@
 
     // Set amount
     function setAmount(event) {
-        if(parseFloat(event.target.value.replace(',', '.')) > availabel_tokens.value - 0.01) {
+        if (parseFloat(event.target.value.replace(',', '.')) > availabel_tokens.value - 0.01) {
             amount.value = (availabel_tokens.value - 0.01).toString()
         }
     }
@@ -222,7 +222,7 @@
     function onSubmit() {
         let formatAmount = parseFloat(amount.value.replace(',', '.'))
 
-        if(formatAmount > 0) {
+        if (formatAmount > 0) {
             // Other processing for EVMOS
             store.currentNetwork == 'evmos'
                 ? redelegateEVMOS()
@@ -265,7 +265,7 @@
             // Send Tx
             let result = await sendTx(prepareResult)
 
-            if(result.code != 0){
+            if (result.code != 0){
                 // Get error title
                 store.manageError = i18n.global.t(`message.manage_modal_error_${result.code}`)
 

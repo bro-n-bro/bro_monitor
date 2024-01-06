@@ -126,7 +126,7 @@ export const useGlobalStore = defineStore('global', {
                 await createKeplrOfflineSinger('cosmoshub-4')
 
                 // Set jsCyber
-                if(!this.jsCyber) {
+                if (!this.jsCyber) {
                     let tendermintClient = await Tendermint34Client.connect('https://rpc.bostrom.bronbro.io')
 
                     this.jsCyber = new CyberClient(tendermintClient)
@@ -147,7 +147,7 @@ export const useGlobalStore = defineStore('global', {
                     // Create uniq wallets array
                     this.user.moonPassport.extension.addresses.forEach(address => {
                         // Drop eth and terra addresses
-                        if(address.address.substring(0, 2) != '0x' && address.address.substring(0, 5) != 'terra') {
+                        if (address.address.substring(0, 2) != '0x' && address.address.substring(0, 5) != 'terra') {
                             let tempAddress = generateAddress('cosmos', address.address)
 
                             if (!uniqWallets[tempAddress]) {
@@ -299,7 +299,7 @@ export const useGlobalStore = defineStore('global', {
                 .then(res => res.json())
                 .then(response => {
                     let result = response.validators.filter(el => {
-                        if(el.operator_address != this.networks[this.currentNetwork].validator) {
+                        if (el.operator_address != this.networks[this.currentNetwork].validator) {
                             return el
                         }
                     })

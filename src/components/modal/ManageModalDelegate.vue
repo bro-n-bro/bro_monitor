@@ -116,7 +116,7 @@
 
     // Set amount
     function setAmount(e) {
-        if(parseFloat(e.target.value.replace(',', '.')) > store.user.available_balance / Math.pow(10, store.networks[store.currentNetwork].exponent) - 0.01) {
+        if (parseFloat(e.target.value.replace(',', '.')) > store.user.available_balance / Math.pow(10, store.networks[store.currentNetwork].exponent) - 0.01) {
             setMaxAmount()
         }
     }
@@ -140,7 +140,7 @@
     function onSubmit() {
         let formatAmount = parseFloat(amount.value.replace(',', '.'))
 
-        if(formatAmount > 0) {
+        if (formatAmount > 0) {
             // Other processing for EVMOS
             store.currentNetwork == 'evmos'
                 ? delegateEVMOS()

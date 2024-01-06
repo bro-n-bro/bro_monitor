@@ -125,7 +125,7 @@
         // Update current time range
         currentTimeRange.value = 'day'
 
-        if(props.global) {
+        if (props.global) {
             store.setTimeRange('day', date.value)
         }
 
@@ -142,7 +142,7 @@
         // Update current time range
         currentTimeRange.value = 'week'
 
-        if(props.global) {
+        if (props.global) {
             store.setTimeRange('week', date.value)
         }
 
@@ -159,7 +159,7 @@
         // Update current time range
         currentTimeRange.value = 'month'
 
-        if(props.global) {
+        if (props.global) {
             store.setTimeRange('month', date.value)
         }
 
@@ -176,7 +176,7 @@
         // Update current time range
         currentTimeRange.value = 'quarter'
 
-        if(props.global) {
+        if (props.global) {
             store.setTimeRange('quarter', date.value)
         }
 
@@ -193,7 +193,7 @@
         // Update current time range
         currentTimeRange.value = 'half_year'
 
-        if(props.global) {
+        if (props.global) {
             store.setTimeRange('half_year', date.value)
         }
 
@@ -210,7 +210,7 @@
         // Update current time range
         currentTimeRange.value = 'year'
 
-        if(props.global) {
+        if (props.global) {
             store.setTimeRange('year', date.value)
         }
 
@@ -227,7 +227,7 @@
         // Update current time range
         currentTimeRange.value = 'range'
 
-        if(props.global) {
+        if (props.global) {
             store.setTimeRange('range', date.value)
         }
 

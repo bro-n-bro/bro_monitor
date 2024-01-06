@@ -1,5 +1,5 @@
 <template>
-     <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.governanceParticipation'] }">
+     <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.governanceParticipation'], locked : store.isLocked() }">
         <div class="btns">
             <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.governanceParticipation')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
@@ -30,3 +30,25 @@
     const store = useGlobalStore(),
         emitter = inject('emitter')
 </script>
+
+
+<style scoped>
+    .block .chart
+    {
+        position: relative;
+    }
+
+
+    .loader_wrap
+    {
+        position: relative;
+
+        width: auto;
+        height: auto;
+        margin: 0;
+
+        padding: 68px 0;
+
+        background: none;
+    }
+</style>

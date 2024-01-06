@@ -14,7 +14,7 @@
             {{ $t('message.network_charts_gas_paid_to_fees_paid_title') }}
         </div>
 
-        <Loader v-if="loading" />
+        <Loader v-if="loading && !store.isLocked()" />
 
         <apexchart v-else-if="!store.isLocked()" class="chart" height="158px" :options="chartOptions" :series="series" />
 
@@ -263,7 +263,7 @@
             // Reset chart data
             resetData()
 
-            if(store.cache.charts.fees_paid) {
+            if (store.cache.charts.fees_paid) {
                 // Init chart
                 initChart()
             }
@@ -276,7 +276,7 @@
             // Reset chart data
             resetData()
 
-            if(store.cache.charts.gas_paid) {
+            if (store.cache.charts.gas_paid) {
                 // Init chart
                 initChart()
             }

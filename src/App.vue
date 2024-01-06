@@ -68,7 +68,7 @@
         window.addEventListener('keplr_keystorechange', () => store.connectWallet())
 
         // Set default time range
-        if(!store.currentTimeRangeDates.length) {
+        if (!store.currentTimeRangeDates.length) {
             store.setDefaultTimeRange()
         }
     })

@@ -1,5 +1,5 @@
 <template>
-     <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.uniqueAddressesInVoting'] }">
+     <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.uniqueAddressesInVoting'], locked : store.isLocked() }">
         <div class="btns">
             <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.uniqueAddressesInVoting')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
@@ -14,7 +14,7 @@
             {{ $t('message.network_charts_unique_votes_per_proposal_title') }}
         </div>
 
-        <Loader v-if="loading" />
+        <Loader v-if="loading && !store.isLocked()" />
 
         <apexchart v-else-if="!store.isLocked()" class="chart" :height="316" :options="chartOptions" :series="series" />
 
@@ -249,36 +249,10 @@
     })
 
 
-    // Event "updateChartTimeRange"
-    emitter.on('updateChartTimeRange', async ({ type }) => {
-        if (!store.isLocked()) {
-            // Show loader
-            loading.value = true
-
-            // Reset chart data
-            chartDataYes.value = []
-            chartDataNo.value = []
-            chartDataNWV.value = []
-            chartDataAbstain.value = []
-            chartLabels.value = []
-
-            // Get chart data
-            try {
-                await getChartData()
-
-                // Init chart
-                initChart()
-            } catch (error) {
-                console.error(error)
-            }
-        }
-    })
-
-
     // Get chart data
     async function getChartData() {
         // Request
-        await fetch('https://rpc.bronbro.io/gov/votes')
+        await fetch('https://rpc.bronbro.io/gov/votes?order_by=DESC')
             .then(res => res.json())
             .then(response => store.cache.charts.votes = response.votes)
     }
@@ -307,11 +281,11 @@
     function formatStatus(status) {
         let html = ''
 
-        if(status == 'PROPOSAL_STATUS_PASSED') {
+        if (status == 'PROPOSAL_STATUS_PASSED') {
             html = ': <span class="green">Passed</span>'
         }
 
-        if(status == 'PROPOSAL_STATUS_REJECTED') {
+        if (status == 'PROPOSAL_STATUS_REJECTED') {
             html = ': <span class="red">Rejected</span>'
         }
 
@@ -321,11 +295,6 @@
 
 
 <style scoped>
-    .block
-    {
-        min-height: 240px;
-    }
-
     .block .title
     {
         margin-bottom: 12px;
@@ -345,7 +314,8 @@
         width: auto;
         height: auto;
         margin: 0;
-        padding: 20px 0 0;
+
+        padding: 68px 0;
 
         background: none;
     }

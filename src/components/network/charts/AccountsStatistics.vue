@@ -14,7 +14,7 @@
             {{ $t('message.network_charts_accounts_statistics_title') }}
         </div>
 
-        <Loader v-if="loading" />
+        <Loader v-if="loading && !store.isLocked()" />
 
         <apexchart v-else-if="!store.isLocked()" class="chart" height="200px" :options="chartOptions" :series="series" />
 
@@ -151,7 +151,7 @@
                         top = w.globals.seriesYvalues[seriesIndex][dataPointIndex] + 28,
                         html = ''
 
-                        if(seriesIndex == 0 || seriesIndex == 1) {
+                        if (seriesIndex == 0 || seriesIndex == 1) {
                             html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_val green">' +
                                         '<span class="label">Users:</span>' +
@@ -167,7 +167,7 @@
                                 '</div>'
                         }
 
-                        if(seriesIndex == 2 || seriesIndex == 3) {
+                        if (seriesIndex == 2 || seriesIndex == 3) {
                             html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_val yellow">' +
                                         '<span class="label">Active Users:</span>' +
@@ -232,7 +232,7 @@
 
 
     onBeforeMount(async () => {
-        if(store.cache.charts.active_accounts && store.cache.charts.new_accounts && store.cache.charts.inactive_accounts && store.cache.charts.total_accounts && !store.isLocked()) {
+        if (store.cache.charts.active_accounts && store.cache.charts.new_accounts && store.cache.charts.inactive_accounts && store.cache.charts.total_accounts && !store.isLocked()) {
             // Init chart
             initChart()
         }
@@ -240,7 +240,7 @@
 
 
     watch(computed(() => store.isLocked()), async () => {
-        if(store.cache.charts.active_accounts && store.cache.charts.new_accounts && store.cache.charts.inactive_accounts && store.cache.charts.total_accounts && !store.isLocked()) {
+        if (store.cache.charts.active_accounts && store.cache.charts.new_accounts && store.cache.charts.inactive_accounts && store.cache.charts.total_accounts && !store.isLocked()) {
             // Reset chart data
             resetData()
 
@@ -255,7 +255,7 @@
             // Reset chart data
             resetData()
 
-            if(store.cache.charts.new_accounts && store.cache.charts.inactive_accounts && store.cache.charts.total_accounts) {
+            if (store.cache.charts.new_accounts && store.cache.charts.inactive_accounts && store.cache.charts.total_accounts) {
                 // Init chart
                 initChart()
             }
@@ -268,7 +268,7 @@
             // Reset chart data
             resetData()
 
-            if(store.cache.charts.active_accounts && store.cache.charts.inactive_accounts && store.cache.charts.total_accounts) {
+            if (store.cache.charts.active_accounts && store.cache.charts.inactive_accounts && store.cache.charts.total_accounts) {
                 // Init chart
                 initChart()
             }
@@ -281,7 +281,7 @@
             // Reset chart data
             resetData()
 
-            if(store.cache.charts.active_accounts && store.cache.charts.new_accounts && store.cache.charts.total_accounts) {
+            if (store.cache.charts.active_accounts && store.cache.charts.new_accounts && store.cache.charts.total_accounts) {
                 // Init chart
                 initChart()
             }
@@ -294,7 +294,7 @@
             // Reset chart data
             resetData()
 
-            if(store.cache.charts.active_accounts && store.cache.charts.new_accounts && store.cache.charts.inactive_accounts) {
+            if (store.cache.charts.active_accounts && store.cache.charts.new_accounts && store.cache.charts.inactive_accounts) {
                 // Init chart
                 initChart()
             }

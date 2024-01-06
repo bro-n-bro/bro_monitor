@@ -14,7 +14,7 @@
             {{ $t('message.network_charts_wealth_distribution_title') }}
         </div>
 
-        <Loader v-if="loading" />
+        <Loader v-if="loading && !store.isLocked()" />
 
         <apexchart v-else-if="!store.isLocked()" class="chart" height="200px" :options="chartOptions" :series="series" />
 

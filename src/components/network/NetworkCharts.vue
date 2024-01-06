@@ -51,7 +51,7 @@
 
     // Event "chartLoaded"
     emitter.on('chartLoaded', () => {
-        if(
+        if (
             store.cache.charts.apr &&
             store.cache.charts.apy &&
             store.cache.charts.inflation &&

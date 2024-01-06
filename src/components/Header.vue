@@ -60,7 +60,7 @@
         // Sticky header
         const header = document.querySelector('header')
 
-        if(header) {
+        if (header) {
             header.stickyEvent = () => setTimeout(() => {
                 window.scrollY > 0
                     ? header.classList.add('stuck')

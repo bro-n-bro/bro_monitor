@@ -148,7 +148,7 @@ export const prepareTx = async (msg, gasSimulate = true, chain) => {
     let store = useGlobalStore(),
         gasUsed = 0
 
-    if(!chain) {
+    if (!chain) {
         chain = store.currentNetwork
     }
 

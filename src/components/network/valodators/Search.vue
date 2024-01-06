@@ -46,7 +46,7 @@
         setTimeout(() => {
             // Filtering validators by moniker
             store.validators.forEach(el => {
-                if(el.moniker.toLowerCase().includes(value)) {
+                if (el.moniker.toLowerCase().includes(value)) {
                     searchValidators.value.push(el)
                 }
             })

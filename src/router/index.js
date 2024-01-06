@@ -162,14 +162,14 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
 	let store = useGlobalStore()
 
-	if(store.scrollOffset && !store.scrollReturn) {
+	if (store.scrollOffset && !store.scrollReturn) {
 		store.scrollReturn = true
 	} else {
 		store.scrollOffset = 0
 		store.scrollReturn = false
 	}
 
-	if(!store.scrollOffset) {
+	if (!store.scrollOffset) {
 		store.scrollOffset = window.scrollY
 	}
 
@@ -178,9 +178,9 @@ router.beforeEach((to, from, next) => {
 		// Array with prohibitions
 		let access = record.meta.accessDenied
 
-		if(access.length) {
+		if (access.length) {
 			// Forbidden with keplr
-			if(access.includes('with_keplr') && window.keplr) {
+			if (access.includes('with_keplr') && window.keplr) {
 				next('/')
 
 				return false
