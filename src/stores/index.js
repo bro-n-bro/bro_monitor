@@ -49,7 +49,7 @@ export const useGlobalStore = defineStore('global', {
 
         prices: null,
 
-        tooltip: 'Bro_n_Bro foundation has come to light at early 2021 as a Validator for Cosmos Ecosystem. Some time after we started relaying and expanding other services to networks and projects.',
+        tooltip: '',
         tooltipAnimate: false,
 
         currentNetworkTab: 1,

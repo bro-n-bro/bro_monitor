@@ -368,8 +368,43 @@ export default {
 
 
             // Notofications
+            'notice_default': 'Unlock the full potential! Dive into our tool offering insightful perspectives across various levels and networks. Support our mission by delegating to us and become a valued member of our thriving community!',
             'notice_username': 'Chosen keplr account',
             'notice_avatar': 'Your Moon passport avatar',
+
+            'notice_APR': 'APR represents the annualized interest rate for staking in the network, providing a clear measure of the potential return on staked assets.',
+            'notice_APY': 'APY is the effective annual rate of return, accounting for compounding. It gives a more accurate reflection of the overall growth of staked assets over time.',
+            'notice_bonded_tokens': 'This chart displays the cumulative quantity of {token} tokens currently staked, reflecting the total amount of tokens securing the network through staking.',
+            'notice_bonded_ratio': 'The Total Bonded Ratio illustrates the proportion of the total {token} supply that is currently staked, providing insights into the overall security and health of the network.',
+            'notice_bonded_token_APR': 'This chart correlates the amount of staked {token} with the associated APR, helping users understand the relationship between staking rewards and the quantity of bonded tokens.',
+            'notice_inflation': "The Inflation chart visualizes the rate at which the total supply of {token} tokens is increasing or decreasing, providing an overview of the network's economic dynamics.",
+            'notice_current_block_time': "Current Block Time represents the time it takes to generate a new block in the blockchain. Monitoring this metric helps users understand the network's efficiency and responsiveness.",
+            'notice_undonded_token': 'This chart depicts the cumulative quantity of {token} tokens that are currently in the unbonded state, indicating the amount available for withdrawal or transfer.',
+            'notice_addresses': 'This chart provides a count of all unique addresses within the network, offering an overview of the total user base and potential network activity.',
+            'notice_active_users': 'Active Users represent the number of participants engaging with the network at least once within a 24-hour period, reflecting the vitality and ongoing interest in the platform.',
+            'notice_new_users': 'New Users measures the influx of recently onboarded participants, providing insights into the growth and adoption of the network.',
+            'notice_inactive_accounts': 'This chart displays the number of accounts that have shown no activity for a period exceeding 180 days, helping to identify dormant or unused accounts.',
+            'notice_active_auto_restake_users': 'This chart displays the number of participants utilizing automatic restaking features, showcasing engagement with strategies to optimize staking rewards.',
+            'notice_auto_restake_executed_count': 'This chart indicates the number of times automatic restaking has been triggered, showcasing the frequency of users employing this feature.',
+            'notice_auto_restake_token_amount': 'This chart illustrates the quantity of tokens subject to automatic restaking, providing insights into the overall impact of this strategy on the network.',
+            'notice_gas_paid': 'This chart represents the total transaction fees paid by users for executing transactions on the network, reflecting the cost associated with network usage.',
+            'notice_fees_paid': 'This chart summarizes the total fees paid by users for various network services, offering an overview of the economic activity and value generated within the network.',
+            'notice_total_amount_transactions': 'This chart displays the cumulative count of transactions processed on the network, showcasing the overall transactional activity and throughput.',
+            'notice_accounts_statistics': 'This chart provides an overview of the distribution and characteristics of accounts within the network, including metrics such as account types, balances, and activities.',
+            'notice_wealth_distribution': 'This chart visualizes the spread of assets among participants, offering insights into the concentration or dispersion of wealth within the network.',
+            'notice_delegations': 'This chart displays the distribution and quantity of delegated tokens, showcasing the level of participation and support from token holders toward validators or other network participants.',
+            'notice_gas_paid_to_fees_paid': 'This chart compares the transaction fees paid in terms of gas usage, providing a ratio that reflects the efficiency of fee utilization for transactions on the network.',
+            'notice_transactions_to_gas_paid': 'This chart correlates the total number of transactions with the associated gas fees paid, offering insights into the cost-effectiveness of transactions in terms of gas expenditure.',
+            'notice_rich_list': "The Rich List provides a snapshot of the network's top holders, showcasing the accounts with the highest token balances. It offers insights into the concentration of wealth within the ecosystem.",
+            'notice_whale_transactions': 'Whale Transactions highlight significant transactions conducted by large holders or "whales." This chart identifies and analyzes transactions that have a notable impact on the network due to their size.',
+            'notice_TOP_transactions': 'Month TOP Transactions showcase the most significant transactions within a month, shedding light on noteworthy activities or movements of tokens during that period. It helps track notable events and trends within the network.',
+            'notice_unique_votes_per_proposal': 'This chart tracks the number of distinct votes cast for each governance proposal. It highlights the diversity of support or dissent within the community for different proposals, providing insights into the democratic process of decision-making.',
+            'notice_governance_participation': "This chart measures the overall involvement of token holders in the decision-making process. It encompasses the number of participants engaging in voting or other governance activities, reflecting the level of community engagement in shaping the protocol's future.",
+            'notice_validator_group_map_voting_power': 'This chart illustrates the distribution and composition of validator groups based on the relationship between the number of delegators and their corresponding voting power. It provides insights into the balance and diversity of support each validator group receives.',
+            'notice_validator_group_map_commission': 'This chart visualizes the correlation between the number of delegators and the commission rates set by validator groups. It helps assess the attractiveness of validator groups to delegators based on their fee structures.',
+            'notice_validator_group_map_voting_power_commission': "This chart displays the relationship between the voting power of validator groups and their commission rates. It offers a perspective on the trade-off between a validator group's influence in the network and the fees they charge for their services.",
+            'notice_IBC': 'This chart displays the quantity of Inter-Blockchain Communication (IBC) transactions for each network. It provides insights into the cross-chain activities and interactions between different blockchain networks.',
+            'notice_relaying': 'This chart showcase the most significant or impactful transactions involved in the relaying process. It identifies and analyzes transactions that play a crucial role in connecting and communicating information between different blockchains.',
 
 
             // Search

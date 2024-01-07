@@ -1,7 +1,7 @@
 <template>
-     <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.uniqueAddressesInVoting'], locked : store.isLocked() }">
+     <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.uniqueVotesPerProposal'], locked : store.isLocked() }" @mouseover="emitter.emit('setNotification', $t('message.notice_unique_votes_per_proposal'))">
         <div class="btns">
-            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.uniqueAddressesInVoting')">
+            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.uniqueVotesPerProposal')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
 

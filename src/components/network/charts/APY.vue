@@ -1,5 +1,5 @@
 <template>
-    <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.APY'] }">
+    <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.APY'] }" @mouseover="emitter.emit('setNotification', $t('message.notice_APY'))">
         <div class="btns">
             <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.APY')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>

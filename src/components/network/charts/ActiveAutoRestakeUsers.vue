@@ -1,5 +1,5 @@
 <template>
-     <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.activeAutoRestakeUsers'] }">
+     <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.activeAutoRestakeUsers'] }" @mouseover="emitter.emit('setNotification', $t('message.notice_active_auto_restake_users'))">
         <div class="btns">
             <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.activeAutoRestakeUsers')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>

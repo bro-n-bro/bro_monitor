@@ -1,5 +1,5 @@
 <template>
-    <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.bondedTokenAPR'] }">
+    <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.bondedTokenAPR'] }" @mouseover="emitter.emit('setNotification', $t('message.notice_bonded_token_APR', { token: store.networks[store.currentNetwork].token_name }))">
         <div class="btns">
             <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.bondedTokenAPR')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>

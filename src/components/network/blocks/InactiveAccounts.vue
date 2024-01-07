@@ -1,5 +1,5 @@
 <template>
-    <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.blocks.inactiveAccounts'] }">
+    <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.blocks.inactiveAccounts'] }" @mouseover="emitter.emit('setNotification', $t('message.notice_inactive_accounts'))">
         <div class="btns">
             <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.blocks.inactiveAccounts')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>

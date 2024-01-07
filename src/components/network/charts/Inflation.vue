@@ -1,5 +1,5 @@
 <template>
-    <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.inflation'] }">
+    <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.inflation'] }" @mouseover="emitter.emit('setNotification', $t('message.notice_inflation', { token: store.networks[store.currentNetwork].token_name }))">
         <div class="btns">
             <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.inflation')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>

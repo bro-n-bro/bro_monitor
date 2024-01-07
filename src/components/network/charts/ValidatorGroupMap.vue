@@ -1,5 +1,5 @@
 <template>
-     <div class="block full_w" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.validatorGroupMap'] }">
+     <div class="block full_w" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.validatorGroupMap'] }" @mouseover="emitter.emit('setNotification', $t('message.notice_validator_group_map_voting_power'))">
         <div class="btns">
             <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.validatorGroupMap')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>

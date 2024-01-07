@@ -1,5 +1,5 @@
 <template>
-     <div class="block full_w" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.transactionsTOGasPaid'], locked : store.isLocked() }">
+     <div class="block full_w" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.transactionsTOGasPaid'], locked : store.isLocked() }" @mouseover="emitter.emit('setNotification', $t('message.notice_transactions_to_gas_paid'))">
         <div class="btns">
             <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.transactionsTOGasPaid')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>

@@ -64,6 +64,9 @@
         // Set title
         title.value = i18n.global.t('message.page_title')
 
+        // Set default notification
+        emitter.emit('setNotification', i18n.global.t('message.notice_default'))
+
         // Change Keplr account
         window.addEventListener('keplr_keystorechange', () => store.connectWallet())
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="block">
+    <div class="block" @mouseover="emitter.emit('setNotification', $t('message.notice_IBC'))">
         <div class="btns">
             <router-link to="/" class="btn">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
@@ -595,7 +595,10 @@
 
 
 <script setup>
+    import { inject } from 'vue'
 
+
+    const emitter = inject('emitter')
 </script>
 
 
