@@ -1,5 +1,5 @@
 <template>
-    <div class="chart big">
+    <div class="chart big" @mouseover="emitter.emit('setNotification', $t('message.notice_wealth_distribution'))">
         <Loader v-if="loading" />
 
         <apexchart v-else-if="!store.isLocked()" height="710px" :options="chartOptions" :series="series" />

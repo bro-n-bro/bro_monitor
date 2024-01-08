@@ -1,5 +1,5 @@
 <template>
-    <div class="chart big">
+    <div class="chart big" @mouseover="emitter.emit('setNotification', $t('message.notice_auto_restake_token_amount'))">
         <Loader v-if="loading" />
 
         <apexchart v-else height="710px" :options="chartOptions" :series="series" />
