@@ -13,11 +13,11 @@
             <!-- Wealth Distribution -->
             <WealthDistribution />
 
-            <!-- New Users -->
-            <NewUsers />
+            <!-- New Accounts -->
+            <NewAccounts />
 
-            <!-- Active Users -->
-            <ActiveUsers />
+            <!-- Active Accounts -->
+            <ActiveAccounts />
 
             <!-- Total Number of Addresses -->
             <TotalNumberAddresses />
@@ -50,8 +50,8 @@
         </div>
 
         <div class="row" v-if="showRestakeStatistics">
-            <!-- Active AutoRestake Users -->
-            <ActiveAutoRestakeUsers />
+            <!-- Active AutoRestake Accounts -->
+            <ActiveAutoRestakeAccounts />
 
             <!-- AutoRestake Executed Count -->
             <AutoRestakeExecutedCount />
@@ -97,12 +97,12 @@
     // Components
     import AccountsStatistics from '@/components/network/charts/AccountsStatistics.vue'
     import WealthDistribution from '@/components/network/charts/WealthDistribution.vue'
-    import NewUsers from '@/components/network/charts/NewUsers.vue'
-    import ActiveUsers from '@/components/network/charts/ActiveUsers.vue'
+    import NewAccounts from '@/components/network/charts/NewAccounts.vue'
+    import ActiveAccounts from '@/components/network/charts/ActiveAccounts.vue'
     import TotalNumberAddresses from '@/components/network/charts/TotalNumberAddresses.vue'
     import InactiveAccounts from '@/components/network/charts/InactiveAccounts.vue'
     import Delegations from '@/components/network/charts/Delegations.vue'
-    import ActiveAutoRestakeUsers from '@/components/network/charts/ActiveAutoRestakeUsers.vue'
+    import ActiveAutoRestakeAccounts from '@/components/network/charts/ActiveAutoRestakeAccounts.vue'
     import AutoRestakeExecutedCount from '@/components/network/charts/AutoRestakeExecutedCount.vue'
     import AutoRestakeTokenAmount from '@/components/network/charts/AutoRestakeTokenAmount.vue'
     import TotalAmountTransactions from '@/components/network/charts/TotalAmountTransactions.vue'

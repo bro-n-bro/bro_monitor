@@ -4,17 +4,17 @@
             <!-- Total Number of Addresses -->
             <TotalNumberAddresses />
 
-            <!-- Active users -->
-            <ActiveUsers />
+            <!-- Active accounts -->
+            <ActiveAccounts />
 
-            <!-- New users -->
-            <NewUsers />
+            <!-- New accounts -->
+            <NewAccounts />
 
             <!-- Inactive accounts -->
             <InactiveAccounts />
 
-            <!-- Active AutoRestake Users -->
-            <ActiveAutoRestakeUsers />
+            <!-- Active AutoRestake Accounts -->
+            <ActiveAutoRestakeAccounts />
 
             <!-- AutoRestake Executed Сount -->
             <AutoRestakeExecutedCount />
@@ -42,10 +42,10 @@
 
     // Components
     import TotalNumberAddresses from '@/components/network/blocks/TotalNumberAddresses.vue'
-    import ActiveUsers from '@/components/network/blocks/ActiveUsers.vue'
-    import NewUsers from '@/components/network/blocks/NewUsers.vue'
+    import ActiveAccounts from '@/components/network/blocks/ActiveAccounts.vue'
+    import NewAccounts from '@/components/network/blocks/NewAccounts.vue'
     import InactiveAccounts from '@/components/network/blocks/InactiveAccounts.vue'
-    import ActiveAutoRestakeUsers from '@/components/network/blocks/ActiveAutoRestakeUsers.vue'
+    import ActiveAutoRestakeAccounts from '@/components/network/blocks/ActiveAutoRestakeAccounts.vue'
     import AutoRestakeExecutedCount from '@/components/network/blocks/AutoRestakeExecutedCount.vue'
     import AutoRestakeTokenAmount from '@/components/network/blocks/AutoRestakeTokenAmount.vue'
     import GasPaid from '@/components/network/blocks/GasPaid.vue'

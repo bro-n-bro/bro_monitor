@@ -1,17 +1,17 @@
 <template>
-     <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.newUsers'] }" @mouseover="emitter.emit('setNotification', $t('message.notice_new_users'))">
+     <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.charts.activeAccounts'] }" @mouseover="emitter.emit('setNotification', $t('message.notice_active_accounts'))">
         <div class="btns">
-            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.newUsers')">
+            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.charts.activeAccounts')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
 
-            <router-link :to="`/${store.currentNetwork}/chart/new_users`" class="btn">
+            <router-link :to="`/${store.currentNetwork}/chart/active_accounts`" class="btn">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
             </router-link>
         </div>
 
         <div class="title">
-            {{ $t('message.network_charts_new_users_title') }}
+            {{ $t('message.network_charts_active_accounts_title') }}
         </div>
 
         <Loader v-if="loading" />
@@ -126,8 +126,8 @@
                     let left = w.globals.seriesXvalues[0][dataPointIndex] + w.globals.translateX,
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_date">' + store.cache.charts.new_accounts[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_new_users_title') + ': ' + store.cache.charts.new_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_date">' + store.cache.charts.active_accounts[dataPointIndex].x + '</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_active_accounts_title') + ': ' + store.cache.charts.active_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html
@@ -184,7 +184,7 @@
 
     onBeforeMount(async () => {
         // Get chart data
-        if (!store.cache.charts.new_accounts) {
+        if (!store.cache.charts.active_accounts) {
             await getChartData()
         }
 
@@ -221,25 +221,25 @@
     // Get chart data
     async function getChartData() {
         // Request
-        await fetch(`https://rpc.bronbro.io/statistics/new_accounts?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
+        await fetch(`https://rpc.bronbro.io/statistics/active_accounts?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
             .then(res => res.json())
-            .then(response => store.cache.charts.new_accounts = response.data)
+            .then(response => store.cache.charts.active_accounts = response.data)
     }
 
 
     // Init chart
     function initChart() {
         // Set chart data
-        store.cache.charts.new_accounts.forEach(el => chartData.value.push(el.y))
+        store.cache.charts.active_accounts.forEach(el => chartData.value.push(el.y))
 
         chartMin.value = (Math.min(...chartData.value) - Math.min(...chartData.value) * 0.005).toFixed(0)
         chartMax.value = (Math.max(...chartData.value) + Math.max(...chartData.value) * 0.005).toFixed(0)
 
         // Set colors
-        chartColors.value.push(store.cache.charts.new_accounts[store.cache.charts.new_accounts.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
+        chartColors.value.push(store.cache.charts.active_accounts[store.cache.charts.active_accounts.length - 1].y >= Math.max(...chartData.value) ? '#1BC562' : '#EB5757')
 
         // Set labels
-        store.cache.charts.new_accounts.forEach(el => {
+        store.cache.charts.active_accounts.forEach(el => {
             let parseDate = new Date(el.x),
                 month = parseDate.getMonth() + 1 < 10 ? '0' + (parseDate.getMonth() + 1) : (parseDate.getMonth() + 1),
                 date = parseDate.getDate() < 10 ? '0' + parseDate.getDate() : parseDate.getDate()

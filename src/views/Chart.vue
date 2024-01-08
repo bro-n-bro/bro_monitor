@@ -34,12 +34,12 @@
             {{ $t('message.chart_current_block_time_page_title') }}
         </div>
 
-        <div class="title" v-if="store.currentChart == 'new_users'">
-            {{ $t('message.chart_new_users_page_title') }}
+        <div class="title" v-if="store.currentChart == 'new_accounts'">
+            {{ $t('message.chart_new_accounts_page_title') }}
         </div>
 
-        <div class="title" v-if="store.currentChart == 'active_users'">
-            {{ $t('message.chart_active_users_page_title') }}
+        <div class="title" v-if="store.currentChart == 'active_accounts'">
+            {{ $t('message.chart_active_accounts_page_title') }}
         </div>
 
         <div class="title" v-if="store.currentChart == 'total_adresses'">
@@ -94,8 +94,8 @@
             {{ $t('message.chart_inactive_accounts_page_title') }}
         </div>
 
-        <div class="title" v-if="store.currentChart == 'active_restake_users'">
-            {{ $t('message.chart_active_auto_restake_users_page_title') }}
+        <div class="title" v-if="store.currentChart == 'active_restake_accounts'">
+            {{ $t('message.chart_active_auto_restake_accounts_page_title') }}
         </div>
 
         <div class="title" v-if="store.currentChart == 'uptime'">
@@ -125,9 +125,9 @@
 
         <CurrentBlockTimeChart v-if="store.currentChart == 'current_block_time'" />
 
-        <NewUsersChart v-if="store.currentChart == 'new_users'" />
+        <NewAccountsChart v-if="store.currentChart == 'new_accounts'" />
 
-        <ActiveUsersChart v-if="store.currentChart == 'active_users'" />
+        <ActiveAccountsChart v-if="store.currentChart == 'active_accounts'" />
 
         <TotalNumberAddressesChart v-if="store.currentChart == 'total_adresses'" />
 
@@ -155,7 +155,7 @@
 
         <InactiveAccounts v-if="store.currentChart == 'inactive_accounts'" />
 
-        <ActiveAutoRestakeUsers v-if="store.currentChart == 'active_restake_users'" />
+        <ActiveAutoRestakeAccounts v-if="store.currentChart == 'active_restake_accounts'" />
 
         <ValidatorUptime v-if="store.currentChart == 'uptime'" />
 
@@ -178,8 +178,8 @@
     import TotalBondedTokensChart from  '@/components/chart/TotalBondedTokens.vue'
     import TotalBondedRatioChart from  '@/components/chart/TotalBondedRatio.vue'
     import CurrentBlockTimeChart from  '@/components/chart/CurrentBlockTime.vue'
-    import NewUsersChart from  '@/components/chart/NewUsers.vue'
-    import ActiveUsersChart from  '@/components/chart/ActiveUsers.vue'
+    import NewAccountsChart from  '@/components/chart/NewAccounts.vue'
+    import ActiveAccountsChart from  '@/components/chart/ActiveAccounts.vue'
     import TotalNumberAddressesChart from  '@/components/chart/TotalNumberAddresses.vue'
     import GasPaidChart from  '@/components/chart/GasPaid.vue'
     import TransactionsChart from  '@/components/chart/Transactions.vue'
@@ -193,7 +193,7 @@
     import TransactionsTOGasPaidChart from  '@/components/chart/TransactionsTOGasPaid.vue'
     import UniqueVotesPerProposalChart from  '@/components/chart/UniqueVotesPerProposal.vue'
     import InactiveAccounts from  '@/components/chart/InactiveAccounts.vue'
-    import ActiveAutoRestakeUsers from  '@/components/chart/ActiveAutoRestakeUsers.vue'
+    import ActiveAutoRestakeAccounts from  '@/components/chart/ActiveAutoRestakeAccounts.vue'
     import ValidatorUptime from  '@/components/chart/ValidatorUptime.vue'
     import AccountsStatistics from  '@/components/chart/AccountsStatistics.vue'
 

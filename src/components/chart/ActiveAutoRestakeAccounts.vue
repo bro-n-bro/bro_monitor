@@ -1,5 +1,5 @@
 <template>
-    <div class="chart big" @mouseover="emitter.emit('setNotification', $t('message.notice_active_auto_restake_users'))">
+    <div class="chart big" @mouseover="emitter.emit('setNotification', $t('message.notice_active_auto_restake_accounts'))">
         <Loader v-if="loading" />
 
         <apexchart v-else height="710px" :options="chartOptions" :series="series" />
@@ -21,7 +21,7 @@
     const store = useGlobalStore(),
         i18n = inject('i18n'),
         emitter = inject('emitter'),
-        responseData = ref(store.cache.charts.active_restake_users),
+        responseData = ref(store.cache.charts.active_restake_accounts),
         from_date = ref(store.currentTimeRangeDates[0]),
         to_date = ref(store.currentTimeRangeDates[1]),
         detailing = ref(store.currentTimeRangeDetailing),
@@ -116,7 +116,7 @@
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                             '<div class="tooltip_date">' + responseData.value[dataPointIndex].x + '</div>' +
-                            '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_active_auto_restake_users_title') + ': ' + responseData.value[dataPointIndex].y.toLocaleString('ru-RU') + '</div>' +
+                            '<div class="tooltip_val">'+ i18n.global.t('message.network_charts_active_auto_restake_accounts_title') + ': ' + responseData.value[dataPointIndex].y.toLocaleString('ru-RU') + '</div>' +
                         '</div>'
 
                     return html
@@ -171,7 +171,7 @@
 
 
     onBeforeMount(async () => {
-        if (typeof store.cache.charts.active_restake_users !== 'undefined') {
+        if (typeof store.cache.charts.active_restake_accounts !== 'undefined') {
             // Init chart
             initChart()
         } else {
@@ -213,7 +213,7 @@
                 .then(res => res.json())
                 .then(response => {
                     cacheEnable
-                        ? responseData.value = store.cache.charts.active_restake_users = response.data
+                        ? responseData.value = store.cache.charts.active_restake_accounts = response.data
                         : responseData.value = response.data
                 })
 

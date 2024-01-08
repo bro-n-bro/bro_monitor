@@ -1,17 +1,17 @@
 <template>
-    <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.blocks.newUsers'] }" @mouseover="emitter.emit('setNotification', $t('message.notice_new_users'))">
+    <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.blocks.newAccounts'] }" @mouseover="emitter.emit('setNotification', $t('message.notice_new_accounts'))">
         <div class="btns">
-            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.blocks.newUsers')">
+            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.blocks.newAccounts')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
 
-            <router-link :to="`/${store.currentNetwork}/chart/new_users`" class="btn">
+            <router-link :to="`/${store.currentNetwork}/chart/new_accounts`" class="btn">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_fullscreen"></use></svg>
             </router-link>
         </div>
 
         <div class="title">
-            {{ $t('message.network_blocks_new_users_title') }}
+            {{ $t('message.network_blocks_new_accounts_title') }}
         </div>
 
         <div class="val">
@@ -109,7 +109,7 @@
                         top = w.globals.seriesYvalues[0][dataPointIndex],
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_date">' + store.cache.charts.new_accounts[dataPointIndex].x + '</div>' +
-                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_new_users_title') + ': ' + store.cache.charts.new_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val">'+ i18n.global.t('message.network_blocks_new_accounts_title') + ': ' + store.cache.charts.new_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html

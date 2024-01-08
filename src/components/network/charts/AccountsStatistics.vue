@@ -38,7 +38,7 @@
         emitter = inject('emitter'),
         loading = ref(true),
         limit = ref(6),
-        chartDataUsers = ref([]),
+        chartDataAccounts = ref([]),
         chartDataActive = ref([]),
         chartDataNew = ref([]),
         chartDataInactive = ref([]),
@@ -46,22 +46,22 @@
         chartLabels = ref([]),
         series = reactive([
             {
-                name: 'Users',
+                name: 'Total Accounts',
                 group: 'group1',
-                data: computed(() => chartDataUsers.value.slice(0, limit.value))
+                data: computed(() => chartDataAccounts.value.slice(0, limit.value))
             },
             {
-                name: 'New Users',
+                name: 'New Accounts',
                 group: 'group1',
                 data: computed(() => chartDataNew.value.slice(0, limit.value))
             },
             {
-                name: 'Active Users',
+                name: 'Active Accounts',
                 group: 'group2',
                 data: computed(() => chartDataActive.value.slice(0, limit.value))
             },
             {
-                name: 'Inactive Users',
+                name: 'Inactive Accounts',
                 group: 'group2',
                 data: computed(() => chartDataInactive.value.slice(0, limit.value))
             }
@@ -154,12 +154,12 @@
                         if (seriesIndex == 0 || seriesIndex == 1) {
                             html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_val green">' +
-                                        '<span class="label">Users:</span>' +
+                                        '<span class="label">Total Accounts:</span>' +
                                         '<span>' + store.cache.charts.total_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</span>' +
                                     '</div>' +
 
                                     '<div class="tooltip_val blue">' +
-                                        '<span class="label">New Users:</span>' +
+                                        '<span class="label">New Accounts:</span>' +
                                         '<span>' + store.cache.charts.new_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</span>' +
                                     '</div>' +
 
@@ -170,12 +170,12 @@
                         if (seriesIndex == 2 || seriesIndex == 3) {
                             html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_val yellow">' +
-                                        '<span class="label">Active Users:</span>' +
+                                        '<span class="label">Active Accounts:</span>' +
                                         '<span>' + store.cache.charts.active_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</span>' +
                                     '</div>' +
 
                                     '<div class="tooltip_val red">' +
-                                        '<span class="label">Inactive Users:</span>' +
+                                        '<span class="label">Inactive Accounts:</span>' +
                                         '<span>' + store.cache.charts.inactive_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</span>' +
                                     '</div>' +
 
@@ -307,6 +307,7 @@
         // Show loader
         loading.value = true
 
+        chartDataAccounts.value = []
         chartDataActive.value = []
         chartDataNew.value = []
         chartDataInactive.value = []
@@ -317,7 +318,7 @@
     // Init chart
     function initChart() {
         // Set chart data APR
-        store.cache.charts.total_accounts.forEach(el => chartDataUsers.value.push(el.y))
+        store.cache.charts.total_accounts.forEach(el => chartDataAccounts.value.push(el.y))
         store.cache.charts.active_accounts.forEach(el => chartDataActive.value.push(el.y))
         store.cache.charts.new_accounts.forEach(el => chartDataNew.value.push(el.y))
         store.cache.charts.inactive_accounts.forEach(el => chartDataInactive.value.push(el.y))
