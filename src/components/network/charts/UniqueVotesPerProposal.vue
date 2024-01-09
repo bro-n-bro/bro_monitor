@@ -149,26 +149,22 @@
                                     '<div class="tooltip_status">' + i18n.global.t('message.network_status_tooltip_label') + formatStatus(store.cache.charts.votes[dataPointIndex].status) + '</div>' +
 
                                     '<div class="tooltip_val green">' +
-                                        Number((store.cache.charts.votes[dataPointIndex].shares_option_yes / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') +
-                                        ' <span>(' + store.cache.charts.votes[dataPointIndex].amount_option_yes.toLocaleString('ru-RU') + ' users)</span>' +
+                                        '<div>' + store.cache.charts.votes[dataPointIndex].amount_option_yes.toLocaleString('ru-RU') + ' users</span>' + '</div>' +
                                         '<div class="type">Yes</div>' +
                                     '</div>' +
 
                                     '<div class="tooltip_val yellow">' +
-                                        Number((store.cache.charts.votes[dataPointIndex].shares_option_no / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') +
-                                        ' <span>(' + store.cache.charts.votes[dataPointIndex].amount_option_no.toLocaleString('ru-RU') + ' users)</span>' +
+                                        '<div>' + store.cache.charts.votes[dataPointIndex].amount_option_no.toLocaleString('ru-RU') + ' users</span>' + '</div>' +
                                         '<div class="type">No</div>' +
                                     '</div>' +
 
                                     '<div class="tooltip_val red">' +
-                                        Number((store.cache.charts.votes[dataPointIndex].shares_option_nvw / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') +
-                                        ' <span>(' + store.cache.charts.votes[dataPointIndex].amount_option_nwv.toLocaleString('ru-RU') + ' users)</span>' +
+                                        '<div>' + store.cache.charts.votes[dataPointIndex].amount_option_nwv.toLocaleString('ru-RU') + ' users</span>' + '</div>' +
                                         '<div class="type">No with veto:</div>' +
                                     '</div>' +
 
                                     '<div class="tooltip_val grey">' +
-                                        Number((store.cache.charts.votes[dataPointIndex].shares_option_abstain / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') +
-                                        ' <span>(' + store.cache.charts.votes[dataPointIndex].amount_option_abstain.toLocaleString('ru-RU') + ' users)</span>' +
+                                        '<div>' + store.cache.charts.votes[dataPointIndex].amount_option_abstain.toLocaleString('ru-RU') + ' users</span>' + '</div>' +
                                         '<div class="type">Abstain:</div>' +
                                     '</div>' +
 

@@ -130,32 +130,28 @@
                     position: 'topLeft'
                 },
                 custom: function({ dataPointIndex, w }) {
-                    let left = w.globals.seriesXvalues[0][dataPointIndex] - 84,
-                        top = w.globals.seriesYvalues[0][dataPointIndex],
+                    let left = w.globals.seriesXvalues[0][dataPointIndex] - 75,
+                        top = w.globals.seriesYvalues[0][dataPointIndex] - w.globals.translateY,
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_status">' + i18n.global.t('message.network_status_tooltip_label') + formatStatus(responseData.value[dataPointIndex].status) + '</div>' +
 
                                     '<div class="tooltip_val green">' +
-                                        Number((responseData.value[dataPointIndex].shares_option_yes / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') +
-                                        ' <span>(' + responseData.value[dataPointIndex].amount_option_yes.toLocaleString('ru-RU') + ' users)</span>' +
+                                        '<div>' + responseData.value[dataPointIndex].amount_option_yes.toLocaleString('ru-RU') + ' users</span>' + '</div>' +
                                         '<div class="type">Yes</div>' +
                                     '</div>' +
 
                                     '<div class="tooltip_val yellow">' +
-                                        Number((responseData.value[dataPointIndex].shares_option_no / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') +
-                                        ' <span>(' + responseData.value[dataPointIndex].amount_option_no.toLocaleString('ru-RU') + ' users)</span>' +
+                                        '<div>' + responseData.value[dataPointIndex].amount_option_no.toLocaleString('ru-RU') + ' users</span>' + '</div>' +
                                         '<div class="type">No</div>' +
                                     '</div>' +
 
                                     '<div class="tooltip_val red">' +
-                                        Number((responseData.value[dataPointIndex].shares_option_nvw / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') +
-                                        ' <span>(' + responseData.value[dataPointIndex].amount_option_nwv.toLocaleString('ru-RU') + ' users)</span>' +
+                                        '<div>' + responseData.value[dataPointIndex].amount_option_nwv.toLocaleString('ru-RU') + ' users</span>' + '</div>' +
                                         '<div class="type">No with veto:</div>' +
                                     '</div>' +
 
                                     '<div class="tooltip_val grey">' +
-                                        Number((responseData.value[dataPointIndex].shares_option_abstain / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') +
-                                        ' <span>(' + responseData.value[dataPointIndex].amount_option_abstain.toLocaleString('ru-RU') + ' users)</span>' +
+                                        '<div>' + responseData.value[dataPointIndex].amount_option_abstain.toLocaleString('ru-RU') + ' users</span>' + '</div>' +
                                         '<div class="type">Abstain:</div>' +
                                     '</div>' +
 

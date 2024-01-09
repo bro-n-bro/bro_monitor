@@ -775,6 +775,11 @@ button
     width: 92px;
 }
 
+.chart_tooltip .tooltip_val .label.big
+{
+    width: 112px;
+}
+
 .chart_tooltip .tooltip_val .label + *
 {
     text-align: right;

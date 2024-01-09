@@ -52,7 +52,7 @@
             },
             {
                 name: 'New Accounts',
-                group: 'group1',
+                group: 'group2',
                 data: computed(() => chartDataNew.value.slice(0, limit.value))
             },
             {
@@ -62,7 +62,7 @@
             },
             {
                 name: 'Inactive Accounts',
-                group: 'group2',
+                group: 'group1',
                 data: computed(() => chartDataInactive.value.slice(0, limit.value))
             }
         ]),
@@ -146,20 +146,20 @@
                     position: 'topLeft'
                 },
                 custom: function({ seriesIndex, dataPointIndex, w }) {
-                    let offsetX = seriesIndex == 0 || seriesIndex == 1 ? -6 : 12,
+                    let offsetX = seriesIndex == 1 || seriesIndex == 2 ? 13 : -2,
                         left = w.globals.seriesXvalues[seriesIndex][dataPointIndex] + offsetX,
-                        top = w.globals.seriesYvalues[seriesIndex][dataPointIndex] + 28,
+                        top = w.globals.seriesYvalues[seriesIndex][dataPointIndex] + 32,
                         html = ''
 
-                        if (seriesIndex == 0 || seriesIndex == 1) {
+                        if (seriesIndex == 1 || seriesIndex == 2) {
                             html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_val green">' +
-                                        '<span class="label">Total Accounts:</span>' +
-                                        '<span>' + store.cache.charts.total_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</span>' +
+                                    '<div class="tooltip_val yellow">' +
+                                        '<span class="label big">Active Accounts:</span>' +
+                                        '<span>' + store.cache.charts.active_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</span>' +
                                     '</div>' +
 
                                     '<div class="tooltip_val blue">' +
-                                        '<span class="label">New Accounts:</span>' +
+                                        '<span class="label big">New Accounts:</span>' +
                                         '<span>' + store.cache.charts.new_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</span>' +
                                     '</div>' +
 
@@ -167,15 +167,15 @@
                                 '</div>'
                         }
 
-                        if (seriesIndex == 2 || seriesIndex == 3) {
+                        if (seriesIndex == 0 || seriesIndex == 3) {
                             html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
-                                    '<div class="tooltip_val yellow">' +
-                                        '<span class="label">Active Accounts:</span>' +
-                                        '<span>' + store.cache.charts.active_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</span>' +
+                                    '<div class="tooltip_val green">' +
+                                        '<span class="label big">Total Accounts:</span>' +
+                                        '<span>' + store.cache.charts.total_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</span>' +
                                     '</div>' +
 
                                     '<div class="tooltip_val red">' +
-                                        '<span class="label">Inactive Accounts:</span>' +
+                                        '<span class="label big">Inactive Accounts:</span>' +
                                         '<span>' + store.cache.charts.inactive_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</span>' +
                                     '</div>' +
 
