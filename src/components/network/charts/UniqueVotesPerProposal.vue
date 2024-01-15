@@ -250,7 +250,13 @@
         // Request
         await fetch('https://rpc.bronbro.io/gov/votes?order_by=DESC')
             .then(res => res.json())
-            .then(response => store.cache.charts.votes = response.votes)
+            .then(response => {
+                // Set data
+                store.cache.charts.votes = response.votes
+
+                // Set pagination total
+                store.paginationTotal = response.total
+            })
     }
 
 

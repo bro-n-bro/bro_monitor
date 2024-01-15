@@ -194,7 +194,7 @@
     // Get chart data
     async function getChartData() {
         // Request
-        await fetch(`https://rpc.bronbro.io/statistics/validators/${store.currentValidatorAddress}/rewards?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
+        await fetch(`https://rpc.bronbro.io/statistics/validators/${store.currentValidatorAddress}/commissions?from_date=${store.currentTimeRangeDates[0]}&to_date=${store.currentTimeRangeDates[1]}&detailing=${store.currentTimeRangeDetailing}`)
             .then(res => res.json())
             .then(response => store.cache.charts.commision_earned = response.data)
     }

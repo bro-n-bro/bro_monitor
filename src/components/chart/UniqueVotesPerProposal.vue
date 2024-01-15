@@ -209,6 +209,9 @@
 
     onBeforeMount(async () => {
         if (!store.isLocked()) {
+            // Set pagination
+            store.pagination = true
+
             if (typeof store.cache.charts.votes !== 'undefined') {
                 // Init chart
                 initChart()
@@ -241,12 +244,15 @@
     async function getChartData(cacheEnable = true) {
         try {
             // Request
-            await fetch('https://rpc.bronbro.io/gov/votes')
+            await fetch(`https://rpc.bronbro.io/gov/votes?limit=${store.paginationLimit}&offset=${store.paginationOffset}&order_by=DESC`)
                 .then(res => res.json())
                 .then(response => {
                     cacheEnable
                         ? responseData.value = store.cache.charts.votes = response.votes
                         : responseData.value = response.votes
+
+                    // Set pagination total
+                    store.paginationTotal = response.total
                 })
 
             // Init chart

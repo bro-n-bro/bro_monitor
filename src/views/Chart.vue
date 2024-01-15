@@ -106,7 +106,9 @@
             {{ $t('message.chart_accounts_statistics_title') }}
         </div>
 
-        <TimeRange />
+        <Pagination v-if="store.pagination" />
+
+        <TimeRange v-else />
     </div>
 
 
@@ -170,6 +172,7 @@
 
     // Components
     import TimeRange from  '@/components/TimeRange.vue'
+    import Pagination from  '@/components/Pagination.vue'
 
     import APRChart from  '@/components/chart/APR.vue'
     import InflationChart from  '@/components/chart/Inflation.vue'
