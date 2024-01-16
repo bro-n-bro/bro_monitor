@@ -1,5 +1,25 @@
 <template>
     <div class="chart big" @mouseover="emitter.emit('setNotification', $t('message.notice_unique_votes_per_proposal'))">
+        <div class="pagination">
+            <button class="btn prev" :class="{ disabled: !hasPrev }" @click="goPrev">
+                <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_arr_hor"></use></svg>
+            </button>
+
+            <!-- <pre>{{ buttons }}</pre> -->
+
+            <template v-for="(button, index) in buttons" :key="index">
+                <div v-if="button.ellipsis" class="sep">...</div>
+
+                <button v-else class="btn" :class="{ 'active': button.active }" @click="page = button.page">
+                    {{ button.page }}
+                </button>
+            </template>
+
+            <button class="btn next" :class="{ disabled: !hasNext }" @click="goNext">
+                <svg class="icon"><use xlink:href="@/assets/sprite.svg#ic_arr_hor"></use></svg>
+            </button>
+        </div>
+
         <Loader v-if="loading" />
 
         <apexchart v-else-if="!store.isLocked()" height="710px" :options="chartOptions" :series="series" />
@@ -12,8 +32,9 @@
 
 
 <script setup>
-    import { inject, ref, reactive, onBeforeMount, computed } from 'vue'
+    import { inject, ref, reactive, onBeforeMount, computed, watch } from 'vue'
     import { useGlobalStore } from '@/stores'
+    import usePaginator from 'vue-use-paginator'
 
     // Components
     import Loader from '@/components/Loader.vue'
@@ -24,6 +45,8 @@
         i18n = inject('i18n'),
         emitter = inject('emitter'),
         responseData = ref(store.cache.charts.votes),
+        limit = ref(10),
+        offset= ref(0),
         loading = ref(true),
         chartDataYes = ref([]),
         chartDataNo = ref([]),
@@ -206,6 +229,12 @@
             },
         })
 
+    var { page, pageSize, numItems, buttons, hasPrev, hasNext, goPrev, goNext } = usePaginator({
+        pageSize: 10,
+        numItems: 10,
+        numButtons: 5
+    })
+
 
     onBeforeMount(async () => {
         if (!store.isLocked()) {
@@ -223,10 +252,11 @@
     })
 
 
-    // Event "updateChartTimeRange"
-    emitter.on('updateChartTimeRange', async ({ type, dates }) => {
+    watch([page, pageSize], ([newPage, newPageSize]) => {
         // Show loader
         loading.value = true
+
+        offset.value = newPageSize * (newPage - 1)
 
         // Reset chart data
         chartDataNo.value = []
@@ -235,8 +265,7 @@
         chartDataYes.value = []
         chartLabels.value = []
 
-        // Get chart data
-        await getChartData(false)
+        getChartData(false)
     })
 
 
@@ -244,15 +273,14 @@
     async function getChartData(cacheEnable = true) {
         try {
             // Request
-            await fetch(`https://rpc.bronbro.io/gov/votes?limit=${store.paginationLimit}&offset=${store.paginationOffset}&order_by=DESC`)
+            await fetch(`https://rpc.bronbro.io/gov/votes?limit=${limit.value}&offset=${offset.value}&order_by=DESC`)
                 .then(res => res.json())
                 .then(response => {
                     cacheEnable
                         ? responseData.value = store.cache.charts.votes = response.votes
                         : responseData.value = response.votes
 
-                    // Set pagination total
-                    store.paginationTotal = response.total
+                    store.cache.charts.votesTotal = response.total
                 })
 
             // Init chart
@@ -274,6 +302,9 @@
         // Set labels
         responseData.value.forEach(el => chartLabels.value.push('#' + el.id))
 
+        // Set pagination total
+        numItems.value = store.cache.charts.votesTotal
+
         // Hide loader
         loading.value = false
     }
@@ -294,3 +325,17 @@
         return html
     }
 </script>
+
+
+<style scoped>
+.pagination
+{
+    position: absolute;
+    right: 0;
+    bottom: 100%;
+
+    margin-bottom: 20px;
+}
+
+
+</style>

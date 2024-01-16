@@ -28,6 +28,12 @@
 
 
 <style>
+    .head
+    {
+        min-height: 74px;
+    }
+
+
     .head .back_btn
     {
         margin-right: 16px;

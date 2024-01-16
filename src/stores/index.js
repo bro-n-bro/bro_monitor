@@ -100,9 +100,6 @@ export const useGlobalStore = defineStore('global', {
         validatorManageModal: {},
 
         pagination: false,
-        paginationTotal: 0,
-        paginationLimit: 10,
-        paginationOffset: 0,
 
         manageError: ''
     }),
