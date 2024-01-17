@@ -150,9 +150,9 @@
                         html = '<div class="chart_tooltip" style="'+ `left: ${left}px; top: ${top}px;` +'">' +
                                     '<div class="tooltip_date">' + responseDataGas.value[dataPointIndex].x + '</div>' +
 
-                                    '<div class="tooltip_val green"><span style="width: 130px;">'+ i18n.global.t('message.network_charts_transactions_amount_title') + ':</span> ' + Number(responseDataTransactions.value[dataPointIndex].y.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val violet"><span style="width: 130px;">'+ i18n.global.t('message.network_charts_transactions_amount_title') + ':</span> ' + Number(responseDataTransactions.value[dataPointIndex].y.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
 
-                                    '<div class="tooltip_val violet"><span style="width: 130px;">' + i18n.global.t('message.network_charts_gas_paid_title') + ':</span> ' + Number(responseDataGas.value[dataPointIndex].y.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
+                                    '<div class="tooltip_val green"><span style="width: 130px;">' + i18n.global.t('message.network_charts_gas_paid_title') + ':</span> ' + Number(responseDataGas.value[dataPointIndex].y.toFixed(0)).toLocaleString('ru-RU') + '</div>' +
                                 '</div>'
 
                     return html

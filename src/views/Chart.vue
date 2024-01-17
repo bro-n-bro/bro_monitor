@@ -215,7 +215,6 @@
     .full_chart .chart
     {
         position: relative;
-        z-index: 3;
 
         height: 730px;
         padding: 8px;
