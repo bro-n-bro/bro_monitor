@@ -32,7 +32,7 @@
 
 
 <script setup>
-    import { inject, ref, reactive, onBeforeMount, computed, watch } from 'vue'
+    import { inject, ref, reactive, onBeforeMount, computed, watch, onUnmounted } from 'vue'
     import { useGlobalStore } from '@/stores'
     import usePaginator from 'vue-use-paginator'
 
@@ -45,7 +45,7 @@
         i18n = inject('i18n'),
         emitter = inject('emitter'),
         responseData = ref(store.cache.charts.votes),
-        limit = ref(10),
+        limit = ref(30),
         offset= ref(0),
         loading = ref(true),
         chartDataYes = ref([]),
@@ -230,8 +230,8 @@
         })
 
     var { page, pageSize, numItems, buttons, hasPrev, hasNext, goPrev, goNext } = usePaginator({
-        pageSize: 10,
-        numItems: 10,
+        pageSize: limit.value,
+        numItems: limit.value,
         numButtons: 5
     })
 
@@ -241,15 +241,13 @@
             // Set pagination
             store.pagination = true
 
-            if (typeof store.cache.charts.votes !== 'undefined') {
-                // Init chart
-                initChart()
-            } else {
-                // Get chart data
-                await getChartData()
-            }
+            // Get chart data
+            await getChartData(false)
         }
     })
+
+
+    onUnmounted(() => store.pagination = false)
 
 
     watch([page, pageSize], ([newPage, newPageSize]) => {
@@ -293,6 +291,8 @@
 
     // Init chart
     function initChart() {
+        responseData.value.reverse()
+
         // Set chart data
         responseData.value.forEach(el => chartDataNo.value.push(el.amount_option_no))
         responseData.value.forEach(el => chartDataAbstain.value.push(el.amount_option_abstain))
@@ -328,14 +328,12 @@
 
 
 <style scoped>
-.pagination
-{
-    position: absolute;
-    right: 0;
-    bottom: 100%;
+    .pagination
+    {
+        position: absolute;
+        right: 0;
+        bottom: 100%;
 
-    margin-bottom: 20px;
-}
-
-
+        margin-bottom: 20px;
+    }
 </style>
