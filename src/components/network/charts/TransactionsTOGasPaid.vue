@@ -340,7 +340,6 @@
     .block .chart
     {
         position: relative;
-        z-index: 3;
     }
 
 
