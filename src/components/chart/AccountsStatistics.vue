@@ -35,7 +35,7 @@
         chartDataActive = ref([]),
         chartDataNew = ref([]),
         chartDataInactive = ref([]),
-        chartColors = ref(['#1BC562', '#0343E8', '#FFA927', '#EB3636']),
+        chartColors = ref(['#1BC562', '#EB3636', '#FFA927', '#0343E8']),
         chartLabels = ref([]),
         series = reactive([
             {
@@ -151,7 +151,7 @@
                                         '<span>' + store.cache.charts.active_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</span>' +
                                     '</div>' +
 
-                                    '<div class="tooltip_val blue">' +
+                                    '<div class="tooltip_val red">' +
                                         '<span class="label big">New Accounts:</span>' +
                                         '<span>' + store.cache.charts.new_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</span>' +
                                     '</div>' +
@@ -167,7 +167,7 @@
                                         '<span>' + store.cache.charts.total_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</span>' +
                                     '</div>' +
 
-                                    '<div class="tooltip_val red">' +
+                                    '<div class="tooltip_val blue">' +
                                         '<span class="label big">Inactive Accounts:</span>' +
                                         '<span>' + store.cache.charts.inactive_accounts[dataPointIndex].y.toLocaleString('ru-RU') + '</span>' +
                                     '</div>' +
