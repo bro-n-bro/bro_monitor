@@ -60,13 +60,7 @@
         series = computed(() => chartData.value),
         chartOptions = reactive({
             chart: {
-                type: 'donut',
-                events: {
-                    dataPointSelection: function(event, chartContext, config) {
-                        console.log(config.w.config.labels[config.dataPointIndex]);
-                        console.log(config.w.config.series[config.dataPointIndex]);
-                    }
-                }
+                type: 'donut'
             },
             colors: computed(() => chartColors.value),
             theme: {
@@ -101,7 +95,7 @@
             tooltip: {
                 custom: function({ seriesIndex }) {
                     let html = '<div class="chart_tooltip">' +
-                                    '<div class="tooltip_val pink">'+ store.cache.TOP_transactions[seriesIndex].type +' &mdash; '+ store.cache.TOP_transactions[seriesIndex].amount.toLocaleString('ru-RU') +'</div>' +
+                                    '<div class="tooltip_val pink">'+ transactions.value[seriesIndex].type +' &mdash; '+ transactions.value[seriesIndex].amount.toLocaleString('ru-RU') +'</div>' +
                                 '</div>'
 
                     return html
