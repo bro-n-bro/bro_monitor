@@ -12,19 +12,67 @@
         </div>
 
 
+        <router-link to="/prices" class="link" :class="{'active': route.path == '/prices'}">
+            <div class="icon">
+                <svg><use xlink:href="@/assets/sprite.svg#ic_prices"></use></svg>
+            </div>
+
+            <div>
+                <div class="name">{{ $t('message.btn_prices_label') }}</div>
+                <div class="exp">{{ $t('message.btn_prices_exp') }}</div>
+            </div>
+
+            <svg class="check" v-if="route.path == '/prices'"><use xlink:href="@/assets/sprite.svg#ic_check"></use></svg>
+        </router-link>
+
+
         <div class="list">
-            <router-link to="/prices" class="link" :class="{'active': route.path == '/prices'}">
-                <div class="icon">
-                    <svg><use xlink:href="@/assets/sprite.svg#ic_prices"></use></svg>
+            <a href="https://monitor.bronbro.io/d/agoric-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/agoric_logo.png" alt="">
                 </div>
 
                 <div>
-                    <div class="name">{{ $t('message.btn_prices_label') }}</div>
-                    <div class="exp">{{ $t('message.btn_prices_exp') }}</div>
+                    <div class="name">{{ store.networks.agoric.name }}</div>
+                    <div class="token">{{ store.networks.agoric.token_name }}</div>
+                </div>
+            </a>
+
+
+            <a href="https://monitor.bronbro.io/d/bostrom-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/bostrom_logo.png" alt="">
                 </div>
 
-                <svg class="check" v-if="route.path == '/prices'"><use xlink:href="@/assets/sprite.svg#ic_check"></use></svg>
-            </router-link>
+                <div>
+                    <div class="name">{{ store.networks.bostrom.name }}</div>
+                    <div class="token">{{ store.networks.bostrom.token_name }}</div>
+                </div>
+            </a>
+
+
+            <a href="https://monitor.bronbro.io/d/celestia-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/celestia_logo.png" alt="">
+                </div>
+
+                <div>
+                    <div class="name">{{ store.networks.celestia.name }}</div>
+                    <div class="token">{{ store.networks.celestia.token_name }}</div>
+                </div>
+            </a>
+
+
+            <a href="https://monitor.bronbro.io/d/composable-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/composable_logo.png" alt="">
+                </div>
+
+                <div>
+                    <div class="name">{{ store.networks.composable.name }}</div>
+                    <div class="token">{{ store.networks.composable.token_name }}</div>
+                </div>
+            </a>
 
 
             <router-link to="/network/cosmoshub" class="link" :class="{'active': store.currentNetwork == 'cosmoshub'}">
@@ -39,6 +87,138 @@
 
                 <svg class="check" v-if="store.currentNetwork == 'cosmoshub'"><use xlink:href="@/assets/sprite.svg#ic_check"></use></svg>
             </router-link>
+
+
+            <a href="https://monitor.bronbro.io/d/crescent-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/crescenthub_logo.png" alt="">
+                </div>
+
+                <div>
+                    <div class="name">{{ store.networks.crescenthub.name }}</div>
+                    <div class="token">{{ store.networks.crescenthub.token_name }}</div>
+                </div>
+            </a>
+
+
+            <a href="https://monitor.bronbro.io/d/desmos-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/desmos_logo.png" alt="">
+                </div>
+
+                <div>
+                    <div class="name">{{ store.networks.desmos.name }}</div>
+                    <div class="token">{{ store.networks.desmos.token_name }}</div>
+                </div>
+            </a>
+
+
+            <a href="https://monitor.bronbro.io/d/empower-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/empowerchain_logo.png" alt="">
+                </div>
+
+                <div>
+                    <div class="name">{{ store.networks.empowerchain.name }}</div>
+                    <div class="token">{{ store.networks.empowerchain.token_name }}</div>
+                </div>
+            </a>
+
+
+            <a href="https://monitor.bronbro.io/d/evmos-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/evmos_logo.png" alt="">
+                </div>
+
+                <div>
+                    <div class="name">{{ store.networks.evmos.name }}</div>
+                    <div class="token">{{ store.networks.evmos.token_name }}</div>
+                </div>
+            </a>
+
+
+            <a href="https://monitor.bronbro.io/d/gravity-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/gravity_bridge_logo.png" alt="">
+                </div>
+
+                <div>
+                    <div class="name">{{ store.networks.gravity_bridge.name }}</div>
+                    <div class="token">{{ store.networks.gravity_bridge.token_name }}</div>
+                </div>
+            </a>
+
+
+            <a href="https://monitor.bronbro.io/d/juno-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/juno_logo.png" alt="">
+                </div>
+
+                <div>
+                    <div class="name">{{ store.networks.juno.name }}</div>
+                    <div class="token">{{ store.networks.juno.token_name }}</div>
+                </div>
+            </a>
+
+
+            <a href="https://monitor.bronbro.io/d/omniflix-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/omniflixhub_logo.png" alt="">
+                </div>
+
+                <div>
+                    <div class="name">{{ store.networks.omniflixhub.name }}</div>
+                    <div class="token">{{ store.networks.omniflixhub.token_name }}</div>
+                </div>
+            </a>
+
+
+            <a href="https://monitor.bronbro.io/d/osmo-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/osmosis_logo.png" alt="">
+                </div>
+
+                <div>
+                    <div class="name">{{ store.networks.osmosis.name }}</div>
+                    <div class="token">{{ store.networks.osmosis.token_name }}</div>
+                </div>
+            </a>
+
+
+            <a href="https://monitor.bronbro.io/d/stargaze-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/stargaze_logo.png" alt="">
+                </div>
+
+                <div>
+                    <div class="name">{{ store.networks.stargaze.name }}</div>
+                    <div class="token">{{ store.networks.stargaze.token_name }}</div>
+                </div>
+            </a>
+
+
+            <a href="https://monitor.bronbro.io/d/stride-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/stride_logo.png" alt="">
+                </div>
+
+                <div>
+                    <div class="name">{{ store.networks.stride.name }}</div>
+                    <div class="token">{{ store.networks.stride.token_name }}</div>
+                </div>
+            </a>
+
+
+            <a href="https://monitor.bronbro.io/d/qwoyn-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/qwoyn_logo.png" alt="">
+                </div>
+
+                <div>
+                    <div class="name">{{ store.networks.qwoyn.name }}</div>
+                    <div class="token">{{ store.networks.qwoyn.token_name }}</div>
+                </div>
+            </a>
         </div>
     </section>
 </template>
@@ -168,6 +348,35 @@
         transition: transform .2s linear;
     }
 
+
+    .networks .list
+    {
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        width: calc(100% + 6px);
+        max-height: calc(100vh - 296px);
+        margin-top: 4px;
+        margin-right: -6px;
+
+        scrollbar-color: #950fff var(--bg);
+        scrollbar-width: thin;
+        overscroll-behavior-y: contain;
+    }
+
+    .networks .list::-webkit-scrollbar
+    {
+        width: 2px;
+        height: 2px;
+
+        background-color: var(--bg);
+    }
+
+    .networks .list::-webkit-scrollbar-thumb
+    {
+        border-radius: 5px;
+        background-color: #950fff;
+    }
 
     .networks .list > * + *
     {
