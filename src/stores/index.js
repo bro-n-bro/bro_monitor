@@ -120,59 +120,63 @@ export const useGlobalStore = defineStore('global', {
 
         // Connect wallet
         async connectWallet() {
-            // Set Keplr status
-            this.isKeplrConnected = false
-
-            if (window.keplr) {
-                // Keplr connect
-                await createKeplrOfflineSinger('cosmoshub-4')
-
-                // Set jsCyber
-                if (!this.jsCyber) {
-                    let tendermintClient = await Tendermint34Client.connect('https://rpc.bostrom.bronbro.io')
-
-                    this.jsCyber = new CyberClient(tendermintClient)
-                }
-
-                // Get moon passport
-                await this.getMoonPassport()
-
-                // Get user blance
-                if (!this.user.moonPassport || !this.user.moonPassport.extension.addresses) {
-                    // Without passport
-                    await this.getUserBalance([this.Keplr.account.address])
-                } else {
-                    // With passport
-                    let addresses = [],
-                        uniqWallets = []
-
-                    // Create uniq wallets array
-                    this.user.moonPassport.extension.addresses.forEach(address => {
-                        // Drop eth and terra addresses
-                        if (address.address.substring(0, 2) != '0x' && address.address.substring(0, 5) != 'terra') {
-                            let tempAddress = generateAddress('cosmos', address.address)
-
-                            if (!uniqWallets[tempAddress]) {
-                                uniqWallets[tempAddress] = false
-                                addresses.push(tempAddress)
-                            }
-                        }
-                    })
-
-                    await this.getUserBalance(addresses)
-                }
-
-                // Get user delegations
-                this.getUserDelegations()
-
-                // Get user available balance
-                this.getUserAvailableBalance()
-
-                // Get user validators
-                this.getUserValidators()
-
+            try {
                 // Set Keplr status
-                this.isKeplrConnected = true
+                this.isKeplrConnected = false
+
+                if (window.keplr) {
+                    // Keplr connect
+                    await createKeplrOfflineSinger('cosmoshub-4')
+
+                    // Set jsCyber
+                    if (!this.jsCyber) {
+                        let tendermintClient = await Tendermint34Client.connect('https://rpc.bostrom.bronbro.io')
+
+                        this.jsCyber = new CyberClient(tendermintClient)
+                    }
+
+                    // Get moon passport
+                    await this.getMoonPassport()
+
+                    // Get user blance
+                    if (!this.user.moonPassport || !this.user.moonPassport.extension.addresses) {
+                        // Without passport
+                        await this.getUserBalance([this.Keplr.account.address])
+                    } else {
+                        // With passport
+                        let addresses = [],
+                            uniqWallets = []
+
+                        // Create uniq wallets array
+                        this.user.moonPassport.extension.addresses.forEach(address => {
+                            // Drop eth and terra addresses
+                            if (address.address.substring(0, 2) != '0x' && address.address.substring(0, 5) != 'terra') {
+                                let tempAddress = generateAddress('cosmos', address.address)
+
+                                if (!uniqWallets[tempAddress]) {
+                                    uniqWallets[tempAddress] = false
+                                    addresses.push(tempAddress)
+                                }
+                            }
+                        })
+
+                        await this.getUserBalance(addresses)
+                    }
+
+                    // Get user delegations
+                    this.getUserDelegations()
+
+                    // Get user available balance
+                    this.getUserAvailableBalance()
+
+                    // Get user validators
+                    this.getUserValidators()
+
+                    // Set Keplr status
+                    this.isKeplrConnected = true
+                }
+            } catch (error) {
+                console.error(error)
             }
         },
 
