@@ -12,7 +12,6 @@ const network = {
     address_prefix: 'cosmos',
     exponent: 6,
     unbonding_time: 0,
-    stakeMin: 20000000,
     commision: 7.5,
     min_delegation: 20000000,
     delegations: [],
