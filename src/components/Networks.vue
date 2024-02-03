@@ -354,28 +354,14 @@
         overflow-x: hidden;
         overflow-y: auto;
 
-        width: calc(100% + 6px);
+        width: calc(100% + 10px);
         max-height: calc(100vh - 296px);
         margin-top: 4px;
-        margin-right: -6px;
+        margin-right: -8px;
 
-        scrollbar-color: #950fff var(--bg);
+        scrollbar-color: #950fff #0d0d0d;
         scrollbar-width: thin;
         overscroll-behavior-y: contain;
-    }
-
-    .networks .list::-webkit-scrollbar
-    {
-        width: 2px;
-        height: 2px;
-
-        background-color: var(--bg);
-    }
-
-    .networks .list::-webkit-scrollbar-thumb
-    {
-        border-radius: 5px;
-        background-color: #950fff;
     }
 
     .networks .list > * + *
@@ -655,5 +641,4 @@
             line-height: 26px;
         }
     }
-
 </style>
