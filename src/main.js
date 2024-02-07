@@ -7,6 +7,9 @@ import i18n from './locale'
 import mitt from 'mitt'
 import VueApexCharts from 'vue3-apexcharts'
 import Notifications from '@kyvg/vue3-notification'
+import PerfectScrollbar from 'vue3-perfect-scrollbar'
+
+import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css'
 
 
 // Create App
@@ -27,6 +30,14 @@ app.use(router)
 app.use(i18n)
 app.use(VueApexCharts)
 app.use(Notifications)
+
+app.use(PerfectScrollbar, {
+    watchOptions: true,
+    options: {
+        wheelPropagation: false,
+        suppressScrollX: true
+    }
+})
 
 
 // Vue provide

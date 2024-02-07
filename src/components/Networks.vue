@@ -26,7 +26,7 @@
         </router-link>
 
 
-        <div class="list">
+        <perfect-scrollbar class="list">
             <a href="https://monitor.bronbro.io/d/agoric-stats/" class="link" target="_blank" rel="noopener nofollow">
                 <div class="logo">
                     <img src="@/assets/agoric_logo.png" alt="">
@@ -219,7 +219,7 @@
                     <div class="token">{{ store.networks.qwoyn.token_name }}</div>
                 </div>
             </a>
-        </div>
+        </perfect-scrollbar>
     </section>
 </template>
 
@@ -351,16 +351,14 @@
 
     .networks .list
     {
-        overflow-x: hidden;
-        overflow-y: auto;
+        overflow: hidden;
 
-        width: calc(100% + 10px);
+        width: calc(100% + 8px);
         max-height: calc(100vh - 296px);
         margin-top: 4px;
         margin-right: -8px;
+        padding-right: 8px;
 
-        scrollbar-color: #950fff #0d0d0d;
-        scrollbar-width: thin;
         overscroll-behavior-y: contain;
     }
 
