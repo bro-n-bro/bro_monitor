@@ -30,6 +30,10 @@
             <div class="col_unbound_token">
                 <span>{{ $t('message.network_richlist_label_unbound_token') }}</span>
             </div>
+
+            <div class="col_total_supply">
+                <span>{{ $t('message.network_richlist_label_total_supply') }}</span>
+            </div>
         </div>
 
 
@@ -70,6 +74,10 @@
 
                 <div class="col_unbound_token">
                     <span>{{ Number((account.unbonding / Math.pow(10, store.networks[store.currentNetwork].exponent)).toFixed(0)).toLocaleString('ru-RU') }}</span>
+                </div>
+
+                <div class="col_total_supply">
+                    <span>{{ Number(account.total_supply_ratio * 100).toFixed(2).toLocaleString('ru-RU') }}%</span>
                 </div>
             </div>
         </div>
@@ -130,6 +138,13 @@
         background: none;
     }
 
+    .block.big .loader_wrap
+    {
+        position: absolute;
+
+        padding: 0;
+    }
+
 
     .titles
     {
@@ -183,6 +198,9 @@
         overflow: auto;
 
         max-height: 650px;
+
+        scrollbar-color: #950fff rgba(255, 255, 255, .10);
+        scrollbar-width: thin;
     }
 
     .block.big .scroll::-webkit-scrollbar
@@ -215,7 +233,8 @@
     .col_amount,
     .col_liquid_tokens,
     .col_stacked_tokens,
-    .col_unbound_token
+    .col_unbound_token,
+    .col_total_supply
     {
         width: 150px;
         min-width: 150px;

@@ -309,6 +309,7 @@ export default {
             'network_richlist_label_liquid_tokens': 'Liquid Tokens',
             'network_richlist_label_stacked_tokens': 'Staked Tokens',
             'network_richlist_label_unbound_token': 'Unbound Tokens',
+            'network_richlist_label_total_supply': '% of total supply',
 
             'network_richlist_account_type_base': 'Base',
             'network_richlist_account_type_interchain': 'Interchain',

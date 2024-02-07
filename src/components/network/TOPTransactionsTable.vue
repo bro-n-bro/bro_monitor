@@ -314,6 +314,9 @@
         overflow: auto;
 
         max-height: 308px;
+
+        scrollbar-color: #950fff rgba(255, 255, 255, .10);
+        scrollbar-width: thin;
     }
 
     .table .scroll::-webkit-scrollbar
@@ -442,4 +445,5 @@
     {
         max-height: 608px;
     }
+
 </style>

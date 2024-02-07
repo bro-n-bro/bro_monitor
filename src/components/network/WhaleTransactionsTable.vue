@@ -214,6 +214,9 @@
     .block .block .scroll
     {
         border-radius: 0 0 14px 14px;
+
+        scrollbar-color: #950fff rgba(255, 255, 255, .10);
+        scrollbar-width: thin;
     }
 
 
