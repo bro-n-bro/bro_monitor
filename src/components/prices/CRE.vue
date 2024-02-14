@@ -7,7 +7,7 @@
         </div>
 
         <div class="title" :style="`color: ${color};`">
-            <b>{{ $t('message.prices_CRE_title') }}</b>
+            <b>{{ store.networks.crescenthub.token_name }}</b>
         </div>
 
         <div class="val">

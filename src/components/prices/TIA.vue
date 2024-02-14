@@ -7,7 +7,7 @@
         </div>
 
         <div class="title" :style="`color: ${color};`">
-            <b>{{ $t('message.prices_TIA_title') }}</b>
+            <b>{{ store.networks.celestia.token_name }}</b>
         </div>
 
         <div class="val">

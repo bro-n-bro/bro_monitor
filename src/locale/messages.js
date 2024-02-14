@@ -222,23 +222,6 @@ export default {
 
             // Prices page
             'prices_page_title': 'Network Prices',
-            'prices_BOOT_title': 'BOOT',
-            'prices_ATOM_title': 'ATOM',
-            'prices_JUNO_title': 'JUNO',
-            'prices_OSMO_title': 'OSMO',
-            'prices_GRAV_title': 'GRAV',
-            'prices_STARS_title': 'STARS',
-            'prices_CRE_title': 'CRE',
-            'prices_DSM_title': 'DSM',
-            'prices_EVMOS_title': 'EVMOS',
-            'prices_FLIX_title': 'FLIX',
-            'prices_MPWR_title': 'MPWR',
-            'prices_PICA_title': 'PICA',
-            'prices_QWOYN_title': 'QWOYN',
-            'prices_STRD_title': 'STRD',
-            'prices_TIA_title': 'TIA',
-            'prices_BLD_title': 'BLD',
-            'prices_NTRN_title': 'NTRN',
 
 
             // Chart page

@@ -13,6 +13,7 @@ import composable from '@/stores/networks/composable'
 import cosmoshub from '@/stores/networks/cosmoshub'
 import crescenthub from '@/stores/networks/crescenthub'
 import desmos from '@/stores/networks/desmos'
+import dymension from '@/stores/networks/dymension'
 import empowerchain from '@/stores/networks/empowerchain'
 import evmos from '@/stores/networks/evmos'
 import gravity_bridge from '@/stores/networks/gravity_bridge'
@@ -31,6 +32,7 @@ const networks = {
     cosmoshub,
     crescenthub,
     desmos,
+    dymension,
     empowerchain,
     evmos,
     gravity_bridge,

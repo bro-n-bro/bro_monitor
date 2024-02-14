@@ -130,6 +130,23 @@
                         </a>
                     </div>
 
+                    <div :class="{ pinned: store.pinnedBlocks['networks.dymension'] }">
+                        <a href="https://monitor.bronbro.io/d/dymension-stats/" class="link" target="_blank" rel="noopener nofollow">
+                            <button class="pin_btn" @click.prevent="emitter.emit('togglePinBlock', 'networks.dymension')">
+                                <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
+                            </button>
+
+                            <div class="logo">
+                                <img src="@/assets/dymension_logo.png" alt="">
+                            </div>
+
+                            <div>
+                                <div class="name">{{ store.networks.dymension.name }}</div>
+                                <div class="token">{{ store.networks.dymension.token_name }}</div>
+                            </div>
+                        </a>
+                    </div>
+
                     <div :class="{ pinned: store.pinnedBlocks['networks.empowerchain'] }">
                         <a href="https://monitor.bronbro.io/d/empower-stats/" class="link" target="_blank" rel="noopener nofollow">
                             <button class="pin_btn" @click.prevent="emitter.emit('togglePinBlock', 'networks.empowerchain')">

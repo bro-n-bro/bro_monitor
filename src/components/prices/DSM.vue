@@ -7,7 +7,7 @@
         </div>
 
         <div class="title" :style="`color: ${color};`">
-            <b>{{ $t('message.prices_DSM_title') }}</b>
+            <b>{{ store.networks.desmos.token_name }}</b>
         </div>
 
         <div class="val">

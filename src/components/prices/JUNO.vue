@@ -7,7 +7,7 @@
         </div>
 
         <div class="title" :style="`color: ${color};`">
-            <b>{{ $t('message.prices_JUNO_title') }}</b>
+            <b>{{ store.networks.juno.token_name }}</b>
         </div>
 
         <div class="val">

@@ -22,6 +22,9 @@
             <!-- DSM -->
             <DSM />
 
+            <!-- DYM -->
+            <DYM />
+
             <!-- EVMOS -->
             <EVMOS />
 
@@ -75,6 +78,7 @@
     import STARS from  '@/components/prices/STARS.vue'
     import CRE from  '@/components/prices/CRE.vue'
     import DSM from  '@/components/prices/DSM.vue'
+    import DYM from  '@/components/prices/DYM.vue'
     import EVMOS from  '@/components/prices/EVMOS.vue'
     import FLIX from  '@/components/prices/FLIX.vue'
     import MPWR from  '@/components/prices/MPWR.vue'

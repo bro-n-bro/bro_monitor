@@ -7,7 +7,7 @@
         </div>
 
         <div class="title" :style="`color: ${color};`">
-            <b>{{ $t('message.prices_STARS_title') }}</b>
+            <b>{{ store.networks.stargaze.token_name }}</b>
         </div>
 
         <div class="val">

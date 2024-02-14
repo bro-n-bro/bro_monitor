@@ -113,6 +113,18 @@
             </a>
 
 
+            <a href="https://monitor.bronbro.io/d/dymension-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/dymension_logo.png" alt="">
+                </div>
+
+                <div>
+                    <div class="name">{{ store.networks.dymension.name }}</div>
+                    <div class="token">{{ store.networks.dymension.token_name }}</div>
+                </div>
+            </a>
+
+
             <a href="https://monitor.bronbro.io/d/empower-stats/" class="link" target="_blank" rel="noopener nofollow">
                 <div class="logo">
                     <img src="@/assets/empowerchain_logo.png" alt="">

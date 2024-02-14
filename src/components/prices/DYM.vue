@@ -1,17 +1,17 @@
 <template>
-    <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.prices.BOOT'] }">
+    <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.prices.DYM'] }">
         <div class="btns">
-            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.prices.BOOT')">
+            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.prices.DYM')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
         </div>
 
         <div class="title" :style="`color: ${color};`">
-            <b>{{ store.networks.bostrom.token_name }}</b>
+            <b>{{ store.networks.dymension.token_name }}</b>
         </div>
 
         <div class="val">
-            ${{ $filters.scientificToRegular(store.prices.find(el => el.symbol == 'BOOT').price, 10) }}
+            ${{ $filters.toFixed(store.prices.find(el => el.symbol == 'DYM').price, 3) }}
         </div>
     </div>
 </template>
@@ -24,5 +24,5 @@
 
     const store = useGlobalStore(),
         emitter = inject('emitter'),
-        color = '#25FF25'
+        color = '#F0E0D3'
 </script>

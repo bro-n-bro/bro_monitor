@@ -7,7 +7,7 @@
         </div>
 
         <div class="title" :style="`color: ${color};`">
-            <b>{{ $t('message.prices_OSMO_title') }}</b>
+            <b>{{ store.networks.osmosis.token_name }}</b>
         </div>
 
         <div class="val">

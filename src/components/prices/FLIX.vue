@@ -7,7 +7,7 @@
         </div>
 
         <div class="title" :style="`color: ${color};`">
-            <b>{{ $t('message.prices_FLIX_title') }}</b>
+            <b>{{ store.networks.omniflixhub.token_name }}</b>
         </div>
 
         <div class="val">
