@@ -7,7 +7,7 @@
         </div>
 
         <div class="title" :style="`color: ${color};`">
-            <b>{{ $t('message.prices_NTRN_title') }}</b>
+            <b>{{ store.networks.neutron.token_name }}</b>
         </div>
 
         <div class="val">

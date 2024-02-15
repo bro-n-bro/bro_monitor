@@ -16,6 +16,7 @@ import desmos from '@/stores/networks/desmos'
 import dymension from '@/stores/networks/dymension'
 import empowerchain from '@/stores/networks/empowerchain'
 import evmos from '@/stores/networks/evmos'
+import neutron from '@/stores/networks/neutron'
 import gravity_bridge from '@/stores/networks/gravity_bridge'
 import juno from '@/stores/networks/juno'
 import omniflixhub from '@/stores/networks/omniflixhub'
@@ -35,6 +36,7 @@ const networks = {
     dymension,
     empowerchain,
     evmos,
+    neutron,
     gravity_bridge,
     juno,
     omniflixhub,
