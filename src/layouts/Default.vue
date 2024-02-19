@@ -105,6 +105,8 @@
 
     .tabs .btn
     {
+        font-size: 18px;
+        font-weight: 500;
         line-height: 100%;
 
         display: block;
@@ -115,7 +117,7 @@
         transition: .2s linear;
         text-align: left;
 
-        color: #555;
+        color: #b3b3b3;
         border-bottom: 1px solid rgba(255, 255, 255, .1);
     }
 
@@ -124,11 +126,10 @@
         margin-left: 8px;
     }
 
+
     .tabs .btn:hover,
     .tabs .btn.active
     {
-        font-weight: 500;
-
         color: #950fff;
         border-color: #950fff;
     }
