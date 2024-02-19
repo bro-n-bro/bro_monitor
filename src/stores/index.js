@@ -7,6 +7,8 @@ import { generateAddress, createKeplrOfflineSinger, getDefaultTimeRange, calcTim
 
 // Networks
 import agoric from '@/stores/networks/agoric'
+import archway from '@/stores/networks/archway'
+import band from '@/stores/networks/band'
 import bostrom from '@/stores/networks/bostrom'
 import celestia from '@/stores/networks/celestia'
 import composable from '@/stores/networks/composable'
@@ -18,6 +20,7 @@ import empowerchain from '@/stores/networks/empowerchain'
 import evmos from '@/stores/networks/evmos'
 import neutron from '@/stores/networks/neutron'
 import gravity_bridge from '@/stores/networks/gravity_bridge'
+import injective from '@/stores/networks/injective'
 import juno from '@/stores/networks/juno'
 import omniflixhub from '@/stores/networks/omniflixhub'
 import osmosis from '@/stores/networks/osmosis'
@@ -27,6 +30,8 @@ import qwoyn from '@/stores/networks/qwoyn'
 
 const networks = {
     agoric,
+    archway,
+    band,
     bostrom,
     celestia,
     composable,
@@ -38,6 +43,7 @@ const networks = {
     evmos,
     neutron,
     gravity_bridge,
+    injective,
     juno,
     omniflixhub,
     osmosis,

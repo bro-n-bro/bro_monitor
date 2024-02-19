@@ -39,6 +39,30 @@
             </a>
 
 
+            <a href="https://monitor.bronbro.io/d/archway-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/archway_logo.png" alt="">
+                </div>
+
+                <div>
+                    <div class="name">{{ store.networks.archway.name }}</div>
+                    <div class="token">{{ store.networks.archway.token_name }}</div>
+                </div>
+            </a>
+
+
+            <a href="https://monitor.bronbro.io/d/band-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/band_logo.png" alt="">
+                </div>
+
+                <div>
+                    <div class="name">{{ store.networks.band.name }}</div>
+                    <div class="token">{{ store.networks.band.token_name }}</div>
+                </div>
+            </a>
+
+
             <a href="https://monitor.bronbro.io/d/bostrom-stats/" class="link" target="_blank" rel="noopener nofollow">
                 <div class="logo">
                     <img src="@/assets/bostrom_logo.png" alt="">
@@ -161,6 +185,18 @@
             </a>
 
 
+            <a href="https://monitor.bronbro.io/d/injective-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/injective_logo.png" alt="">
+                </div>
+
+                <div>
+                    <div class="name">{{ store.networks.injective.name }}</div>
+                    <div class="token">{{ store.networks.injective.token_name }}</div>
+                </div>
+            </a>
+
+
             <a href="https://monitor.bronbro.io/d/juno-stats/" class="link" target="_blank" rel="noopener nofollow">
                 <div class="logo">
                     <img src="@/assets/juno_logo.png" alt="">
@@ -169,6 +205,18 @@
                 <div>
                     <div class="name">{{ store.networks.juno.name }}</div>
                     <div class="token">{{ store.networks.juno.token_name }}</div>
+                </div>
+            </a>
+
+
+            <a href="https://monitor.bronbro.io/d/neutron-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/neutron_logo.png" alt="">
+                </div>
+
+                <div>
+                    <div class="name">{{ store.networks.neutron.name }}</div>
+                    <div class="token">{{ store.networks.neutron.token_name }}</div>
                 </div>
             </a>
 

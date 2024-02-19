@@ -28,6 +28,40 @@
                         </a>
                     </div>
 
+                    <div :class="{ pinned: store.pinnedBlocks['networks.archway'] }">
+                        <a href="https://monitor.bronbro.io/d/archway-stats/" class="link" target="_blank" rel="noopener nofollow">
+                            <button class="pin_btn" @click.prevent="emitter.emit('togglePinBlock', 'networks.archway')">
+                                <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
+                            </button>
+
+                            <div class="logo">
+                                <img src="@/assets/archway_logo.png" alt="">
+                            </div>
+
+                            <div>
+                                <div class="name">{{ store.networks.archway.name }}</div>
+                                <div class="token">{{ store.networks.archway.token_name }}</div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div :class="{ pinned: store.pinnedBlocks['networks.band'] }">
+                        <a href="https://monitor.bronbro.io/d/band-stats/" class="link" target="_blank" rel="noopener nofollow">
+                            <button class="pin_btn" @click.prevent="emitter.emit('togglePinBlock', 'networks.band')">
+                                <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
+                            </button>
+
+                            <div class="logo">
+                                <img src="@/assets/band_logo.png" alt="">
+                            </div>
+
+                            <div>
+                                <div class="name">{{ store.networks.band.name }}</div>
+                                <div class="token">{{ store.networks.band.token_name }}</div>
+                            </div>
+                        </a>
+                    </div>
+
                     <div :class="{ pinned: store.pinnedBlocks['networks.bostrom'] }">
                         <a href="https://monitor.bronbro.io/d/bostrom-stats/" class="link" target="_blank" rel="noopener nofollow">
                             <button class="pin_btn" @click.prevent="emitter.emit('togglePinBlock', 'networks.bostrom')">
@@ -198,6 +232,23 @@
                         </a>
                     </div>
 
+                    <div :class="{ pinned: store.pinnedBlocks['networks.injective'] }">
+                        <a href="https://monitor.bronbro.io/d/injective-stats/" class="link" target="_blank" rel="noopener nofollow">
+                            <button class="pin_btn" @click.prevent="emitter.emit('togglePinBlock', 'networks.injective')">
+                                <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
+                            </button>
+
+                            <div class="logo">
+                                <img src="@/assets/injective_logo.png" alt="">
+                            </div>
+
+                            <div>
+                                <div class="name">{{ store.networks.injective.name }}</div>
+                                <div class="token">{{ store.networks.injective.token_name }}</div>
+                            </div>
+                        </a>
+                    </div>
+
                     <div :class="{ pinned: store.pinnedBlocks['networks.juno'] }">
                         <a href="https://monitor.bronbro.io/d/juno-stats/" class="link" target="_blank" rel="noopener nofollow">
                             <button class="pin_btn" @click.prevent="emitter.emit('togglePinBlock', 'networks.juno')">
@@ -211,6 +262,23 @@
                             <div>
                                 <div class="name">{{ store.networks.juno.name }}</div>
                                 <div class="token">{{ store.networks.juno.token_name }}</div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div :class="{ pinned: store.pinnedBlocks['networks.neutron'] }">
+                        <a href="https://monitor.bronbro.io/d/neutron-stats/" class="link" target="_blank" rel="noopener nofollow">
+                            <button class="pin_btn" @click.prevent="emitter.emit('togglePinBlock', 'networks.neutron')">
+                                <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
+                            </button>
+
+                            <div class="logo">
+                                <img src="@/assets/neutron_logo.png" alt="">
+                            </div>
+
+                            <div>
+                                <div class="name">{{ store.networks.neutron.name }}</div>
+                                <div class="token">{{ store.networks.neutron.token_name }}</div>
                             </div>
                         </a>
                     </div>
