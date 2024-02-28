@@ -10,6 +10,12 @@
             <!-- ATOM -->
             <ATOM />
 
+            <!-- ARCH -->
+            <ARCH />
+
+            <!-- BAND -->
+            <BAND />
+
             <!-- BLD -->
             <BLD />
 
@@ -33,6 +39,9 @@
 
             <!-- GRAV -->
             <GRAV />
+
+            <!-- INJ -->
+            <INJ />
 
             <!-- JUNO -->
             <JUNO />
@@ -88,6 +97,9 @@
     import TIA from  '@/components/prices/TIA.vue'
     import BLD from  '@/components/prices/BLD.vue'
     import NTRN from  '@/components/prices/NTRN.vue'
+    import BAND from  '@/components/prices/BAND.vue'
+    import INJ from  '@/components/prices/INJ.vue'
+    import ARCH from  '@/components/prices/ARCH.vue'
 
 
     const store = useGlobalStore()
