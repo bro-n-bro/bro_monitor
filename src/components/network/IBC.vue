@@ -183,13 +183,13 @@
                         <td class="col_chain">
                             <div class="chain">
                                 <div class="logo">
-                                    <img src="@/assets/crescenthub_logo.png" alt="">
+                                    <img src="@/assets/saga_logo.png" alt="">
                                 </div>
 
                                 <div>
-                                    <div class="name">crescent</div>
+                                    <div class="name">Saga</div>
 
-                                    <div class="chain_id grey">crescent-1</div>
+                                    <div class="chain_id grey">Saga-1</div>
                                 </div>
                             </div>
                         </td>

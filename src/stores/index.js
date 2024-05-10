@@ -13,7 +13,7 @@ import bostrom from '@/stores/networks/bostrom'
 import celestia from '@/stores/networks/celestia'
 import composable from '@/stores/networks/composable'
 import cosmoshub from '@/stores/networks/cosmoshub'
-import crescenthub from '@/stores/networks/crescenthub'
+import saga from '@/stores/networks/saga'
 import desmos from '@/stores/networks/desmos'
 import dymension from '@/stores/networks/dymension'
 import empowerchain from '@/stores/networks/empowerchain'
@@ -36,7 +36,7 @@ const networks = {
     celestia,
     composable,
     cosmoshub,
-    crescenthub,
+    saga,
     desmos,
     dymension,
     empowerchain,

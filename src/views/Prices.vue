@@ -22,9 +22,6 @@
             <!-- BOOT -->
             <BOOT />
 
-            <!-- CRE -->
-            <CRE />
-
             <!-- DSM -->
             <DSM />
 
@@ -61,6 +58,9 @@
             <!-- QWOYN -->
             <!-- <QWOYN /> -->
 
+            <!-- SAGA -->
+            <SAGA />
+
             <!-- STARS -->
             <STARS />
 
@@ -85,7 +85,7 @@
     import OSMO from  '@/components/prices/OSMO.vue'
     import GRAV from  '@/components/prices/GRAV.vue'
     import STARS from  '@/components/prices/STARS.vue'
-    import CRE from  '@/components/prices/CRE.vue'
+    import SAGA from  '@/components/prices/SAGA.vue'
     import DSM from  '@/components/prices/DSM.vue'
     import DYM from  '@/components/prices/DYM.vue'
     import EVMOS from  '@/components/prices/EVMOS.vue'

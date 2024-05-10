@@ -1,17 +1,17 @@
 <template>
-    <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.prices.CRE'] }">
+    <div class="block" :class="{ pinned: store.pinnedBlocks['cosmoshub.prices.SAGA'] }">
         <div class="btns">
-            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.prices.CRE')">
+            <button class="pin_btn btn" @click.prevent="emitter.emit('togglePinBlock', 'cosmoshub.prices.SAGA')">
                 <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
             </button>
         </div>
 
         <div class="title" :style="`color: ${color};`">
-            <b>{{ store.networks.crescenthub.token_name }}</b>
+            <b>{{ store.networks.saga.token_name }}</b>
         </div>
 
         <div class="val">
-            ${{ $filters.toFixed(store.prices.find(el => el.symbol == 'CRE').price, 3) }}
+            ${{ $filters.toFixed(store.prices.find(el => el.symbol == 'SAGA').price, 2) }}
         </div>
     </div>
 </template>
@@ -24,5 +24,5 @@
 
     const store = useGlobalStore(),
         emitter = inject('emitter'),
-        color = '#FFB04A'
+        color = '#fff'
 </script>

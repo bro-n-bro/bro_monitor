@@ -130,23 +130,6 @@
                         </router-link>
                     </div>
 
-                    <div :class="{ pinned: store.pinnedBlocks['networks.crescenthub'] }">
-                        <a href="https://monitor.bronbro.io/d/crescent-stats/" class="link" target="_blank" rel="noopener nofollow">
-                            <button class="pin_btn" @click.prevent="emitter.emit('togglePinBlock', 'networks.crescenthub')">
-                                <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
-                            </button>
-
-                            <div class="logo">
-                                <img src="@/assets/crescenthub_logo.png" alt="">
-                            </div>
-
-                            <div>
-                                <div class="name">{{ store.networks.crescenthub.name }}</div>
-                                <div class="token">{{ store.networks.crescenthub.token_name }}</div>
-                            </div>
-                        </a>
-                    </div>
-
                     <div :class="{ pinned: store.pinnedBlocks['networks.desmos'] }">
                         <a href="https://monitor.bronbro.io/d/desmos-stats/" class="link" target="_blank" rel="noopener nofollow">
                             <button class="pin_btn" @click.prevent="emitter.emit('togglePinBlock', 'networks.desmos')">
@@ -313,6 +296,23 @@
                             <div>
                                 <div class="name">{{ store.networks.osmosis.name }}</div>
                                 <div class="token">{{ store.networks.osmosis.token_name }}</div>
+                            </div>
+                        </a>
+                    </div>
+
+                    <div :class="{ pinned: store.pinnedBlocks['networks.saga'] }">
+                        <a href="https://monitor.bronbro.io/d/saga-stats/" class="link" target="_blank" rel="noopener nofollow">
+                            <button class="pin_btn" @click.prevent="emitter.emit('togglePinBlock', 'networks.saga')">
+                                <svg><use xlink:href="@/assets/sprite.svg#ic_pin"></use></svg>
+                            </button>
+
+                            <div class="logo">
+                                <img src="@/assets/saga_logo.png" alt="">
+                            </div>
+
+                            <div>
+                                <div class="name">{{ store.networks.saga.name }}</div>
+                                <div class="token">{{ store.networks.saga.token_name }}</div>
                             </div>
                         </a>
                     </div>
@@ -607,15 +607,6 @@
         border-radius: 50%;
 
         object-fit: cover;
-    }
-
-
-    .networks .icon svg
-    {
-        display: block;
-
-        width: 20px;
-        height: 20px;
     }
 
 

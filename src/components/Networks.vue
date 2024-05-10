@@ -113,18 +113,6 @@
             </router-link>
 
 
-            <a href="https://monitor.bronbro.io/d/crescent-stats/" class="link" target="_blank" rel="noopener nofollow">
-                <div class="logo">
-                    <img src="@/assets/crescenthub_logo.png" alt="">
-                </div>
-
-                <div>
-                    <div class="name">{{ store.networks.crescenthub.name }}</div>
-                    <div class="token">{{ store.networks.crescenthub.token_name }}</div>
-                </div>
-            </a>
-
-
             <a href="https://monitor.bronbro.io/d/desmos-stats/" class="link" target="_blank" rel="noopener nofollow">
                 <div class="logo">
                     <img src="@/assets/desmos_logo.png" alt="">
@@ -241,6 +229,18 @@
                 <div>
                     <div class="name">{{ store.networks.osmosis.name }}</div>
                     <div class="token">{{ store.networks.osmosis.token_name }}</div>
+                </div>
+            </a>
+
+
+            <a href="https://monitor.bronbro.io/d/saga-stats/" class="link" target="_blank" rel="noopener nofollow">
+                <div class="logo">
+                    <img src="@/assets/saga_logo.png" alt="">
+                </div>
+
+                <div>
+                    <div class="name">{{ store.networks.saga.name }}</div>
+                    <div class="token">{{ store.networks.saga.token_name }}</div>
                 </div>
             </a>
 
