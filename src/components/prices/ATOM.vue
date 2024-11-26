@@ -11,7 +11,7 @@
         </div>
 
         <div class="val">
-            ${{ $filters.toFixed(store.prices.find(el => el.symbol == 'ATOM').price, 3) }}
+            ${{ $filters.toFixed(store.prices.find(el => el.symbol.toLowerCase() === 'atom').price, 3) }}
         </div>
     </div>
 </template>

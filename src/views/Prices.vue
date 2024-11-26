@@ -44,7 +44,7 @@
             <JUNO />
 
             <!-- MPWR -->
-            <MPWR />
+            <!-- <MPWR /> -->
 
             <!-- NTRN -->
             <NTRN />
@@ -90,7 +90,7 @@
     import DYM from  '@/components/prices/DYM.vue'
     import EVMOS from  '@/components/prices/EVMOS.vue'
     import FLIX from  '@/components/prices/FLIX.vue'
-    import MPWR from  '@/components/prices/MPWR.vue'
+    // import MPWR from  '@/components/prices/MPWR.vue'
     import PICA from  '@/components/prices/PICA.vue'
     // import QWOYN from  '@/components/prices/QWOYN.vue'
     import STRD from  '@/components/prices/STRD.vue'

@@ -11,7 +11,7 @@
         </div>
 
         <div class="val">
-            ${{ $filters.scientificToRegular(store.prices.find(el => el.symbol == 'BOOT').price, 10) }}
+            ${{ $filters.scientificToRegular(store.prices.find(el => el.symbol.toLowerCase() === 'boot').price, 10) }}
         </div>
     </div>
 </template>
